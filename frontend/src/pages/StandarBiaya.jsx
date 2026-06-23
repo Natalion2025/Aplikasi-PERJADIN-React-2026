@@ -470,7 +470,9 @@ const StandarBiaya = () => {
 
       {/* Upload Confirmation Modal */}
       {uploadModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+          onClick={(e) => { if (e.target === e.currentTarget && !uploading) setUploadModalOpen(false); }}
+        >
           <div className="bg-white dark:bg-slate-800 w-full max-w-md rounded-3xl p-6 shadow-xl border border-slate-100 dark:border-slate-700 space-y-6">
             <div className="flex justify-between items-start">
               <div className="flex items-center gap-2.5 text-emerald-600 dark:text-emerald-400">

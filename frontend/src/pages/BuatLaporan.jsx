@@ -1996,7 +1996,9 @@ const BuatLaporan = () => {
 
       {/* --- MODAL PEMBATALAN TUGAS --- */}
       {cancelModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={(e) => { if (e.target === e.currentTarget) setCancelModalOpen(false); }}
+        >
           <div className="w-full max-w-lg bg-white rounded-3xl border border-slate-100 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
             {/* Modal Header */}
             <div className="px-6 py-5 bg-gradient-to-r from-red-600 to-rose-500 text-white flex items-center justify-between">

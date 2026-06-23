@@ -789,7 +789,9 @@ const Pembayaran = () => {
 
       {/* --- MODAL 1: BUKTI PEMBAYARAN FORM --- */}
       {pembayaranModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={(e) => { if (e.target === e.currentTarget) setPembayaranModalOpen(false); }}
+        >
           <div className="w-full max-w-4xl bg-white rounded-3xl border border-slate-100 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 text-left">
             {/* Header */}
             <div className="px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 text-white flex items-center justify-between">
@@ -1077,7 +1079,9 @@ const Pembayaran = () => {
 
       {/* --- MODAL 2: PENGELUARAN RIIL FORM --- */}
       {riilModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={(e) => { if (e.target === e.currentTarget) setRiilModalOpen(false); }}
+        >
           <div className="w-full max-w-lg bg-white rounded-3xl border border-slate-100 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 text-left">
             {/* Header */}
             <div className="px-6 py-5 bg-gradient-to-r from-teal-600 to-emerald-500 text-white flex items-center justify-between">

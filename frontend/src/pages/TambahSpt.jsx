@@ -767,7 +767,9 @@ const TambahSpt = () => {
 
       {/* Conflict Alert Modal */}
       {conflictMessage && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={(e) => { if (e.target === e.currentTarget) setConflictMessage(''); }}
+        >
           <div className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-2xl w-full max-w-md mx-auto flex flex-col p-6 animate-zoomIn">
             <div className="text-center space-y-3">
               <div className="h-12 w-12 bg-amber-100 dark:bg-amber-950/25 rounded-full flex items-center justify-center mx-auto">
