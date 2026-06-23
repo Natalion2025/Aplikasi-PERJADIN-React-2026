@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS spt_pegawai (
     spt_id INT NOT NULL,
     pegawai_id INT NOT NULL,
     is_pengikut INT NOT NULL DEFAULT 0,
+    urutan INT NOT NULL DEFAULT 0,
     PRIMARY KEY (spt_id, pegawai_id),
     FOREIGN KEY (spt_id) REFERENCES spt(id) ON DELETE CASCADE,
     FOREIGN KEY (pegawai_id) REFERENCES pegawai(id) ON DELETE CASCADE
