@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standar Biaya - Aplikasi Perjadin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="/css/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100vh;
+            z-index: 50;
+            transition: left 0.3s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .sidebar.visible {
+            left: 0;
+        }
+
+        /* Saat sidebar terlihat, geser konten utama di semua ukuran layar */
+        .sidebar.visible+.main-content {
+            margin-left: 280px;
+        }
+
+        #sidebar a.active {
+            background-color: #4a5568;
+            /* Warna latar belakang lebih gelap untuk item aktif */
+            color: #ffffff;
+            /* Warna teks putih */
+            font-weight: bold;
+            /* Membuat teks menjadi tebal */
+        }
+
+        .main-content {
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-container {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-bar {
+            height: 4px;
+            width: 0%;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+
+        /** Style untuk item dan statistik pencarian **/
+        .item.hidden {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body class="bg-slate-50 dark:bg-gray-900">
+    <!-- Modal Overlay -->
+    <div class="modal-overlay flex items-center justify-center" id="uploadModal">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-md">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Konfirmasi Upload Standar Biaya</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">Apakah anda sudah memeriksa template dan yakin ingin
+                mengupload SBU?</p>
+
+            <div class="mb-4 hidden" id="uploadProgress">
+                <div class="flex justify-between text-sm text-gray-600 mb-1">
+                    <span>Mengupload file...</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="progress-bar h-2 rounded-full"></div>
+                </div>
+            </div>
+
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="excelFile" name="excelFile" accept=".xlsx,.xls" class="hidden">
+                <input type="hidden" id="currentTipeBiaya" name="tipe_biaya">
+            </form>
+
+            <div class="flex justify-end space-x-3">
+                <button type="button" id="cancelUpload"
+                    class="px-4 py-2 text-gray-700 bg-gray-200 rounded hover:bg-gray-300 dark:bg-slate-600 dark:text-gray-200 dark:hover:bg-slate-500 transition-colors">
+                    Batal
+                </button>
+                <button type="button" id="confirmUpload"
+                    class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 transition-colors">
+                    Upload
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar bg-gradient-to-br from-dark-navy to-dark-blue text-white" id="sidebar">
+        <!-- Sidebar content akan dimuat di sini -->
+    </aside>
+
+    <!-- Konten utama -->
+    <div class="main-content">
+        <!-- Header -->
+        <header id="header-container">
+            <!-- Header content akan dimuat di sini -->
+        </header>
+
+        <!-- Page content -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-800 p-6">
+            <div class="container mx-auto">
+                <!-- Judul Halaman -->
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Standar Biaya Perjalanan Dinas</h2>
+                    <p class="text-gray-600 dark:text-gray-400">Referensi satuan biaya berdasarkan peraturan yang
+                        berlaku.</p>
+                </div>
+
+                <!-- Konten Utama -->
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg">
+                    <div class="text-center mb-8">
+                        <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200">BERDASARKAN PERATURAN BUPATI
+                            MELAWI</h3>
+                        <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200">NOMOR xxx TAHUN 2026</h3>
+                        <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 mt-4">TENTANG</h3>
+                        <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase">PERJALANAN DINAS
+                            ATAS BEBAN
+                            ANGGARAN PENDAPATAN</h3>
+                        <h3 class="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase">DAN BELANJA DAERAH
+                            TAHUN ANGGARAN
+                            2026</h3>
+                    </div>
+
+                    <!-- Accordion Container -->
+                    <div id="accordion-standar-biaya" class="border item dark:border-gray-700 rounded-2xl">
+                        <!-- Item A -->
+                        <div class="accordion-item border-b">
+                            <button type="button"
+                                class="accordion-header rounded-t-2xl flex justify-between items-center w-full p-4 text-left font-semibold text-gray-700 dark:text-gray-400 dark:hover:text-gray-700 hover:bg-gray-300 focus:outline-none">
+                                <span class="flex-1 text-sm">A. SATUAN BIAYA UANG HARIAN PERJALANAN DINAS DALAM
+                                    KOTA/KABUPATEN
+                                    LEBIH DARI 8 JAM</span>
+                                <div class="flex items-center space-x-6 ml-4">
+                                    <a href="/api/standar-biaya/template/A"
+                                        download="A_Template Uang Harian Dalam Kota_Kabupaten.xlsx"
+                                        title="Download Template Excel"
+                                        class="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-download fa-lg"></i>
+                                    </a>
+                                    <a href="#" title="Upload Data dari Excel" data-tipe="A"
+                                        class="upload-excel-btn text-green-600 hover:text-green-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-upload fa-lg"></i>
+                                    </a>
+                                    <i
+                                        class="accordion-arrow fas fa-chevron-down transform transition-transform duration-200"></i>
+                                </div>
+                            </button>
+                            <div class="accordion-content hidden p-4 bg-gray-50">
+                                <!-- Konten tabel tetap sama -->
+                            </div>
+                        </div>
+
+                        <!-- Item B sampai K dengan struktur yang sama, hanya tambahkan data-tipe yang sesuai -->
+                        <!-- Contoh untuk Item B -->
+                        <div class="accordion-item border-b">
+                            <button type="button"
+                                class="accordion-header flex justify-between items-center w-full p-4 text-left font-semibold text-gray-700 dark:text-gray-400 dark:hover:text-gray-700 hover:bg-gray-300 focus:outline-none">
+                                <span class="flex-1 text-sm">B. SATUAN BIAYA PENGINAPAN PERJALANAN DINAS DALAM
+                                    KOTA/KABUPATEN
+                                    LEBIH DARI 8 JAM</span>
+                                <div class="flex items-center space-x-6 ml-4">
+                                    <a href="/api/standar-biaya/template/B"
+                                        download="B_Template Biaya Penginapan Dalam Kota_Kabupaten.xlsx"
+                                        title="Download Template Excel"
+                                        class="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-download fa-lg"></i>
+                                    </a>
+                                    <a href="#" title="Upload Data dari Excel" data-tipe="B"
+                                        class="upload-excel-btn text-green-600 hover:text-green-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-upload fa-lg"></i>
+                                    </a>
+                                    <i
+                                        class="accordion-arrow fas fa-chevron-down transform transition-transform duration-200"></i>
+                                </div>
+                            </button>
+                            <div class="accordion-content hidden p-4 bg-gray-50">
+                                <!-- Konten tabel tetap sama -->
+                            </div>
+                        </div>
+
+                        <!-- Item C -->
+                        <div class="accordion-item border-b">
+                            <button type="button"
+                                class="accordion-header flex justify-between items-center w-full p-4 text-left font-semibold text-gray-700 dark:text-gray-400 dark:hover:text-gray-700 hover:bg-gray-300 focus:outline-none">
+                                <span class="flex-1 text-sm">C. SATUAN BIAYA UANG HARIAN PERJALANAN DINAS DALAM
+                                    NEGERI</span>
+                                <div class="flex items-center space-x-6 ml-4">
+                                    <a href="/api/standar-biaya/template/C"
+                                        download="C_Template Uang Harian Dalam Negeri.xlsx"
+                                        title="Download Template Excel"
+                                        class="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-download fa-lg"></i>
+                                    </a>
+                                    <a href="#" title="Upload Data dari Excel" data-tipe="C"
+                                        class="upload-excel-btn text-green-600 hover:text-green-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-upload fa-lg"></i>
+                                    </a>
+                                    <i
+                                        class="accordion-arrow fas fa-chevron-down transform transition-transform duration-200"></i>
+                                </div>
+                            </button>
+                            <div class="accordion-content hidden p-4 bg-gray-50">
+                                <!-- Konten tabel akan dimuat di sini -->
+                            </div>
+                        </div>
+
+                        <!-- Item D -->
+                        <div class="accordion-item border-b">
+                            <button type="button"
+                                class="accordion-header flex justify-between items-center w-full p-4 text-left font-semibold text-gray-700 dark:text-gray-400 dark:hover:text-gray-700 hover:bg-gray-300 focus:outline-none">
+                                <span class="flex-1 text-sm">D. SATUAN BIAYA UANG REPRESENTASI</span>
+                                <div class="flex items-center space-x-6 ml-4">
+                                    <a href="/api/standar-biaya/template/D"
+                                        download="D_Template Biaya Uang Representasi.xlsx"
+                                        title="Download Template Excel"
+                                        class="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-download fa-lg"></i>
+                                    </a>
+                                    <a href="#" title="Upload Data dari Excel" data-tipe="D"
+                                        class="upload-excel-btn text-green-600 hover:text-green-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-upload fa-lg"></i>
+                                    </a>
+                                    <i
+                                        class="accordion-arrow fas fa-chevron-down transform transition-transform duration-200"></i>
+                                </div>
+                            </button>
+                            <div class="accordion-content hidden p-4 bg-gray-50">
+                                <!-- Konten tabel akan dimuat di sini -->
+                            </div>
+                        </div>
+
+                        <!-- Item E -->
+                        <div class="accordion-item border-b">
+                            <button type="button"
+                                class="accordion-header flex justify-between items-center w-full p-4 text-left font-semibold text-gray-700 dark:text-gray-400 dark:hover:text-gray-700 hover:bg-gray-300 focus:outline-none">
+                                <span class="flex-1 text-sm">E. SATUAN BIAYA PENGINAPAN PERJALANAN DINAS DALAM
+                                    NEGERI</span>
+                                <div class="flex items-center space-x-6 ml-4">
+                                    <a href="/api/standar-biaya/template/E"
+                                        download="E_Template Biaya Penginapan Dalam Negeri.xlsx"
+                                        title="Download Template Excel"
+                                        class="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-download fa-lg"></i>
+                                    </a>
+                                    <a href="#" title="Upload Data dari Excel" data-tipe="E"
+                                        class="upload-excel-btn text-green-600 hover:text-green-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-upload fa-lg"></i>
+                                    </a>
+                                    <i
+                                        class="accordion-arrow fas fa-chevron-down transform transition-transform duration-200"></i>
+                                </div>
+                            </button>
+                            <div class="accordion-content hidden p-4 bg-gray-50">
+                                <!-- Konten tabel akan dimuat di sini -->
+                            </div>
+                        </div>
+
+                        <!-- Item F -->
+                        <div class="accordion-item border-b">
+                            <button type="button"
+                                class="accordion-header flex justify-between items-center w-full p-4 text-left font-semibold text-gray-700 dark:text-gray-400 dark:hover:text-gray-700 hover:bg-gray-300 focus:outline-none">
+                                <span class="flex-1 text-sm">F. SATUAN BIAYA TRANSPORTASI PERJALANAN DINAS DARI IBUKOTA
+                                    KABUPATEN MELAWI KE IBUKOTA KECAMATAN</span>
+                                <div class="flex items-center space-x-6 ml-4">
+                                    <a href="/api/standar-biaya/template/F"
+                                        download="F_Template Biaya Transportasi Kab_Kecamatan.xlsx"
+                                        title="Download Template Excel"
+                                        class="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-download fa-lg"></i>
+                                    </a>
+                                    <a href="#" title="Upload Data dari Excel" data-tipe="F"
+                                        class="upload-excel-btn text-green-600 hover:text-green-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-upload fa-lg"></i>
+                                    </a>
+                                    <i
+                                        class="accordion-arrow fas fa-chevron-down transform transition-transform duration-200"></i>
+                                </div>
+                            </button>
+                            <div class="accordion-content hidden p-4 bg-gray-50">
+                                <!-- Konten tabel akan dimuat di sini -->
+                            </div>
+                        </div>
+
+                        <!-- Item G -->
+                        <div class="accordion-item border-b">
+                            <button type="button"
+                                class="accordion-header flex justify-between items-center w-full p-4 text-left font-semibold text-gray-700 dark:text-gray-400 dark:hover:text-gray-700 hover:bg-gray-300 focus:outline-none">
+                                <span class="flex-1 text-sm">G. SATUAN BIAYA TRANSPORTASI PERJALANAN DINAS DARI IBUKOTA
+                                    KECAMATAN KE DESA</span>
+                                <div class="flex items-center space-x-6 ml-4">
+                                    <a href="/api/standar-biaya/template/G"
+                                        download="G_Template Biaya Transportasi Ibu Kota_Kecamatan_Desa.xlsx"
+                                        title="Download Template Excel"
+                                        class="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-download fa-lg"></i>
+                                    </a>
+                                    <a href="#" title="Upload Data dari Excel" data-tipe="G"
+                                        class="upload-excel-btn text-green-600 hover:text-green-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-upload fa-lg"></i>
+                                    </a>
+                                    <i
+                                        class="accordion-arrow fas fa-chevron-down transform transition-transform duration-200"></i>
+                                </div>
+                            </button>
+                            <div class="accordion-content hidden p-4 bg-gray-50">
+                                <!-- Konten tabel akan dimuat di sini -->
+                            </div>
+                        </div>
+
+                        <!-- Item I -->
+                        <div class="accordion-item border-b">
+                            <button type="button"
+                                class="accordion-header flex justify-between items-center w-full p-4 text-left font-semibold text-gray-700 dark:text-gray-400 dark:hover:text-gray-700 hover:bg-gray-300 focus:outline-none">
+                                <span class="flex-1 text-sm">H. SATUAN BIAYA TIKET PESAWAT PERJALANAN DINAS DALAM NEGERI
+                                    PULANG PERGI (PP) DARI PONTIANAK</span>
+                                <div class="flex items-center space-x-6 ml-4">
+                                    <a href="/api/standar-biaya/template/H"
+                                        download="H_Template Biaya Tiket Pesawat Dalam Negeri PP dari Pontianak.xlsx"
+                                        title="Download Template Excel"
+                                        class="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-download fa-lg"></i>
+                                    </a>
+                                    <a href="#" title="Upload Data dari Excel" data-tipe="H"
+                                        class="upload-excel-btn text-green-600 hover:text-green-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-upload fa-lg"></i>
+                                    </a>
+                                    <i
+                                        class="accordion-arrow fas fa-chevron-down transform transition-transform duration-200"></i>
+                                </div>
+                            </button>
+                            <div class="accordion-content hidden p-4 bg-gray-50">
+                                <!-- Konten tabel akan dimuat di sini -->
+                            </div>
+                        </div>
+
+                        <!-- Item J -->
+                        <div class="accordion-item border-b">
+                            <button type="button"
+                                class="accordion-header flex justify-between items-center w-full p-4 text-left font-semibold text-gray-700 dark:text-gray-400 dark:hover:text-gray-700 hover:bg-gray-300 focus:outline-none">
+                                <span class="flex-1 text-sm">I. SATUAN BIAYA TIKET PESAWAT PERJALANAN DINAS DALAM NEGERI
+                                    PULANG PERGI (PP) DARI JAKARTA</span>
+                                <div class="flex items-center space-x-6 ml-4">
+                                    <a href="/api/standar-biaya/template/I"
+                                        download="I_Template Biaya Tiket Pesawat Dalam Negeri PP dari Jakarta (Transit).xlsx"
+                                        title="Download Template Excel"
+                                        class="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-download fa-lg"></i>
+                                    </a>
+                                    <a href="#" title="Upload Data dari Excel" data-tipe="I"
+                                        class="upload-excel-btn text-green-600 hover:text-green-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-upload fa-lg"></i>
+                                    </a>
+                                    <i
+                                        class="accordion-arrow fas fa-chevron-down transform transition-transform duration-200"></i>
+                                </div>
+                            </button>
+                            <div class="accordion-content hidden p-4 bg-gray-50">
+                                <!-- Konten tabel akan dimuat di sini -->
+                            </div>
+                        </div>
+
+                        <!-- Item K -->
+                        <div class="accordion-item border-b">
+                            <button type="button"
+                                class="accordion-header flex justify-between items-center w-full p-4 text-left font-semibold text-gray-700 dark:text-gray-400 dark:hover:text-gray-700 hover:bg-gray-300 focus:outline-none">
+                                <span class="flex-1 text-sm">J. SATUAN BIAYA TRANSPORTASI PERJALANAN DINAS LUAR DAERAH
+                                    DALAM PROVINSI PULANG PERGI (PP) DARI MELAWI</span>
+                                <div class="flex items-center space-x-6 ml-4">
+                                    <a href="/api/standar-biaya/template/J"
+                                        download="J_Template Biaya Transportasi Dalam Provinsi PP dari Melawi.xlsx"
+                                        title="Download Template Excel"
+                                        class="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-download fa-lg"></i>
+                                    </a>
+                                    <a href="#" title="Upload Data dari Excel" data-tipe="J"
+                                        class="upload-excel-btn text-green-600 hover:text-green-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-upload fa-lg"></i>
+                                    </a>
+                                    <i
+                                        class="accordion-arrow fas fa-chevron-down transform transition-transform duration-200"></i>
+                                </div>
+                            </button>
+                            <div class="accordion-content hidden p-4 bg-gray-50">
+                                <!-- Konten tabel akan dimuat di sini -->
+                            </div>
+                        </div>
+
+                        <!-- Item L -->
+                        <div class="accordion-item">
+                            <button type="button"
+                                class="accordion-header rounded-b-2xl flex justify-between items-center w-full p-4 text-left font-semibold text-gray-700 dark:text-gray-400 dark:hover:text-gray-700 hover:bg-gray-300 focus:outline-none">
+                                <span class="flex-1 text-sm">K. SATUAN BIAYA TAKSI PERJALANAN DINAS DALAM NEGERI</span>
+                                <div class="flex items-center space-x-6 ml-4">
+                                    <a href="/api/standar-biaya/template/K"
+                                        download="K_Template Biaya Taksi Dalam Negeri.xlsx"
+                                        title="Download Template Excel"
+                                        class="text-blue-600 hover:text-blue-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-download fa-lg"></i>
+                                    </a>
+                                    <a href="#" title="Upload Data dari Excel" data-tipe="K"
+                                        class="upload-excel-btn text-green-600 hover:text-green-800 transition-colors duration-200"
+                                        onclick="event.stopPropagation()">
+                                        <i class="fas fa-file-upload fa-lg"></i>
+                                    </a>
+                                    <i
+                                        class="accordion-arrow fas fa-chevron-down transform transition-transform duration-200"></i>
+                                </div>
+                            </button>
+                            <div class="accordion-content hidden p-4 bg-gray-50">
+                                <!-- Konten tabel akan dimuat di sini -->
+                            </div>
+                        </div>
+
+                        <!-- Lanjutkan untuk item C sampai K dengan menambahkan data-tipe yang sesuai -->
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/main1.js"></script>
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/standar-biaya.js"></script>
+    <script src="/js/header-notification.js"></script>
+</body>
+
+</html>

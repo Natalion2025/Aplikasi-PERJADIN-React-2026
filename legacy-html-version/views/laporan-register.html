@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Perjalanan Dinas - Aplikasi Perjadin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="/css/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <!-- PERBAIKAN: Pindahkan utils.js ke head agar dimuat lebih awal -->
+    <script src="/js/utils.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100vh;
+            z-index: 50;
+            transition: left 0.3s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .sidebar.visible {
+            left: 0;
+        }
+
+        /* Saat sidebar terlihat, geser konten utama di semua ukuran layar */
+        .sidebar.visible+.main-content {
+            margin-left: 280px;
+        }
+
+        #sidebar a.active {
+            background-color: #4a5568;
+            /* Warna latar belakang lebih gelap untuk item aktif */
+            color: #ffffff;
+            /* Warna teks putih */
+            font-weight: bold;
+            /* Membuat teks menjadi tebal */
+        }
+
+        .main-content {
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-container {
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-bar {
+            height: 4px;
+            width: 0%;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+
+        /** Style untuk item dan statistik pencarian **/
+        .item.hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 dark:bg-gray-900">
+    <!-- Sidebar -->
+    <aside class="sidebar bg-gradient-to-br from-dark-navy to-dark-blue text-white" id="sidebar"></aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header id="header-container"></header>
+
+        <!-- Page Content -->
+        <main class="p-8 bg-[#f5f9fc] dark:bg-gray-800 min-h-screen" data-page-script="/js/laporan-register.js">
+            <div class="flex justify-between items-center mb-6 item">
+                <h2 class="text-2xl font-semibold text-mainNavy uppercase font-sans dark:text-gray-200">Hasil Perjalanan
+                    Dinas</h2>
+                <div class="flex fixed space-x-4 right-4">
+                    <button id="pembatalan-tugas-btn"
+                        class="bg-red-500 text-white px-4 py-2 rounded-3xl shadow-md text-sm font-semibold hover:bg-red-700 dark:shadow-md dark:bg-red-800 dark:hover:bg-red-900 dark:shadow-red-500 transition-colors">
+                        <i class="fas fa-ban mr-2"></i>Batal Tugas
+                    </button>
+                    <a href="/buat-laporan"
+                        class="bg-navy-500 text-white px-4 py-2 rounded-3xl shadow-md text-sm font-semibold hover:bg-navy-400 dark:shadow-md dark:bg-sky-800 dark:hover:bg-sky-900 dark:shadow-sky-500 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>Laporan
+                    </a>
+                </div>
+            </div>
+
+            <!-- Kontainer Tab -->
+            <div class="w-full bg-white rounded-2xl shadow-md dark:bg-slate-800">
+                <!-- Navigasi Tab dan Filter -->
+                <div class="justify-between item flex items-center p-0 border-b border-gray-200 dark:border-gray-700">
+                    <ul class="flex flex-wrap -mb-px text-center" id="report-tabs" role="tablist">
+                        <li class="me-2" role="presentation">
+                            <button
+                                class="inline-block uppercase font-semibold p-4 border-b-2 rounded-t-lg text-sm text-gray-700 hover:text-gray-500 dark:text-gray-300  dark:hover:text-gray-500"
+                                id="laporan-tab" type="button" role="tab" aria-controls="laporan-panel"
+                                aria-selected="true">Daftar Laporan</button>
+                        </li>
+                        <li class="me-2" role="presentation">
+                            <button
+                                class="inline-block uppercase font-semibold p-4 border-b-2 rounded-t-lg text-sm text-gray-700 hover:text-gray-500 dark:text-gray-300 dark:hover:text-gray-500"
+                                id="pembatalan-tab" type="button" role="tab" aria-controls="pembatalan-panel"
+                                aria-selected="false">Daftar Pembatalan Tugas</button>
+                        </li>
+                    </ul>
+                    <!-- Filter Jumlah Tampilan -->
+                    <div class="pr-4">
+                        <label for="page-limit-select"
+                            class="text-sm font-medium text-gray-700 dark:text-gray-400 mr-2">Tampilkan:</label>
+                        <select id="page-limit-select"
+                            class="rounded-md border-gray-300 text-sm text-gray-700 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-slate-700 dark:border-gray-600 dark:text-white">
+                            <option value="5">5</option>
+                            <option value="15">15</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Konten Tab -->
+                <div id="report-tab-content">
+                    <!-- Panel 1: Daftar Laporan -->
+                    <div class="px-3 py-3" id="laporan-panel" role="tabpanel" aria-labelledby="laporan-tab">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <!-- Thead untuk Daftar Laporan -->
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr class="bg-blue-50 dark:bg-gray-600 item">
+                                        <th scope="col"
+                                            class="pl-4 pr-3 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                            No.</th>
+                                        <th scope="col"
+                                            class="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                            Judul Laporan</th>
+                                        <th scope="col"
+                                            class="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                            Nomor SPT Terkait</th>
+                                        <th scope="col"
+                                            class="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                            Tanggal Laporan</th>
+                                        <th scope="col" class="relative pr-4 pl-3 py-3"><span
+                                                class="sr-only">Aksi</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="laporan-table-body"
+                                    class="bg-white item dark:bg-slate-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                </tbody>
+                            </table>
+                            <!-- Pagination -->
+                            <div id="laporan-pagination-container">
+                                <!-- Paginasi akan muncul di sini -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Panel 2: Register Pembatalan -->
+                    <div class="hidden px-3 py-3" id="pembatalan-panel" role="tabpanel"
+                        aria-labelledby="pembatalan-tab">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <!-- Thead untuk Register Pembatalan -->
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr class="bg-blue-50 dark:bg-gray-600 item">
+                                        <th scope="col"
+                                            class="pl-4 pr-3 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                            No.</th>
+                                        <th scope="col"
+                                            class="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                            Nomor SPT</th>
+                                        <th scope="col"
+                                            class="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                            Tanggal Pembatalan</th>
+                                        <th scope="col"
+                                            class="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                            Nama Pelaksana</th>
+                                        <th scope="col"
+                                            class="px-3 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                            Alasan</th>
+                                        <th scope="col" class="relative pr-4 pl-3 py-3"><span
+                                                class="sr-only">Aksi</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pembatalan-table-body"
+                                    class="bg-white item dark:bg-slate-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                </tbody>
+                            </table>
+                            <!-- Pagination -->
+                            <div id="pembatalan-pagination-container">
+                                <!-- Paginasi akan muncul di sini -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Pembatalan Tugas -->
+    <div id="pembatalan-modal" class="modal-overlay hidden p-5">
+        <div
+            class="bg-white dark:bg-slate-800 rounded-lg shadow-xl w-full max-w-lg mx-auto relative flex flex-col max-h-[95vh]">
+            <!-- Modal Header -->
+            <div
+                class="flex justify-between items-center pl-4 pr-0 pt-2 pb-0 mb-0 border-b-[3px] border-green-500 bg-dark-navy rounded-t-lg">
+                <h3 class="text-xl font-semibold text-white font-poppins">Formulir Pembatalan Tugas</h3>
+                <button id="close-pembatalan-modal" class="text-gray-300 hover:text-white mr-2 mb-2">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="p-6 pt-4 mt-0 space-y-3 overflow-y-auto max-h-[70vh]">
+                <form id="form-pembatalan" class="space-y-6">
+                    <div>
+                        <label for="pembatalan_spt_id"
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nomor SPT yang
+                            Dibatalkan</label>
+                        <select id="pembatalan_spt_id" name="spt_id" required
+                            class="mt-1 block w-full px-3 py-2 border text-slate-600 text-sm border-slate-300 dark:border-gray-600 dark:bg-slate-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-[0.6px] focus:ring-green-500 focus:border-green-500">
+                            <option value="">-- Pilih SPT --</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="pembatalan_pegawai_id"
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">Pegawai yang
+                            Dibatalkan</label>
+                        <select id="pembatalan_pegawai_id" name="pegawai_id" required disabled
+                            class="mt-1 block w-full px-3 py-2 border text-slate-600 text-sm border-slate-300 dark:border-gray-600 dark:bg-slate-700 dark:text-white rounded-md shadow-sm disabled:bg-slate-200 disabled:cursor-not-allowed focus:outline-none focus:ring-[0.6px] focus:ring-green-500 focus:border-green-500">
+                            <option value="">-- Pilih SPT terlebih dahulu --</option>
+                        </select>
+                    </div>
+                    <!-- Elemen Notifikasi Baru -->
+                    <div id="pembatalan-pegawai-notif" class="hidden"></div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="tempat_pembatalan"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tempat</label>
+                            <input type="text" id="tempat_pembatalan" name="tempat_pembatalan" required
+                                value="Nanga Pinoh"
+                                class="mt-1 block w-full px-3 py-2 border text-slate-600 text-sm border-slate-300 dark:border-gray-600 dark:bg-slate-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-[0.6px] focus:ring-green-500 focus:border-green-500">
+                        </div>
+                        <div>
+                            <label for="tanggal_pembatalan"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tanggal</label>
+                            <input type="date" id="tanggal_pembatalan" name="tanggal_pembatalan" required
+                                class="mt-1 block w-full px-3 py-2 border text-slate-600 text-sm border-slate-300 dark:border-gray-600 dark:bg-slate-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-[0.6px] focus:ring-green-500 focus:border-green-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="alasan_pembatalan"
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">Alasan
+                            Pembatalan</label>
+                        <textarea id="alasan_pembatalan" name="alasan" rows="4" required placeholder=""
+                            class="mt-1 block w-full px-3 py-2 border text-slate-600 text-sm border-slate-300 dark:border-gray-600 dark:bg-slate-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-[0.6px] focus:ring-green-500 focus:border-green-500"></textarea>
+                    </div>
+
+                    <!-- Rincian Biaya Hangus -->
+                    <div class="border-t border-gray-200 dark:border-gray-600 pt-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Perincian Biaya
+                                Hangus</label>
+                            <div class="flex items-center">
+                                <span class="text-sm text-gray-500 dark:text-gray-400 mr-2">Ambil dari Uang
+                                    Muka</span>
+                                <label for="pembatalan-panjar-toggle"
+                                    class="inline-flex relative items-center cursor-pointer">
+                                    <input type="checkbox" id="pembatalan-panjar-toggle" class="sr-only peer">
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <input type="text" id="pembatalan_rincian_biaya" name="rincian_biaya"
+                                placeholder="Contoh: Tiket Pesawat, Reservasi Hotel"
+                                class="block w-full px-3 py-2 border text-slate-600 text-sm border-slate-300 dark:border-gray-600 dark:bg-slate-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-[0.6px] focus:ring-green-500 focus:border-green-500">
+                            <input type="text" id="pembatalan_nominal_biaya" name="nominal_biaya" placeholder="Rp 0"
+                                class="block w-full px-3 py-2 border text-slate-600 text-sm border-slate-300 dark:border-gray-600 dark:bg-slate-700 dark:text-white rounded-md shadow-sm text-right focus:outline-none focus:ring-[0.6px] focus:ring-green-500 focus:border-green-500">
+                        </div>
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Isi manual jika tidak ada uang muka,
+                            atau aktifkan toggle untuk mengambil data otomatis.</p>
+                    </div>
+
+                    <div id="pembatalan-panjar-notif" class="hidden p-2 text-sm text-center rounded-md border">
+                    </div>
+                </form>
+            </div>
+            <!-- Modal Footer -->
+            <div class="flex justify-end p-4 items-center rounded-b-md">
+                <button id="kembali-pembatalan-btn" type="button"
+                    class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md mr-2 font-semibold hover:bg-gray-300">Kembali</button>
+                <button type="submit" id="submit-pembatalan-btn"
+                    class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 font-semibold">Batalkan
+                    Tugas</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/main1.js"></script>
+    <script src="/js/header-notification.js"></script>
+</body>
+
+</html>

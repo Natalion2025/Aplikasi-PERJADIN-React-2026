@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+/* Kustomisasi Gaya Desain Modern Antigravity */
+:root {
+  --color-primary: #1e3a8a;
+  --color-secondary: #0f172a;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom CSS untuk Media Cetak SPT & SPPD */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background-color: white !important;
+    color: #000000 !important;
+  }
+
+  .print-page-container {
+    width: 21cm !important;
+    min-height: 29.7cm !important;
+    padding: 1cm !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
