@@ -126,14 +126,14 @@ const TambahSpt = () => {
         const spt = res.data;
         setForm({
           nomor_surat: spt.nomor_surat || '',
-          tanggal_surat: spt.tanggal_surat || '',
+          tanggal_surat: spt.tanggal_surat ? spt.tanggal_surat.split('T')[0] : '',
           dasar_surat: spt.dasar_surat || '',
           pejabat_pemberi_tugas_id: spt.pejabat_pemberi_tugas_id || '',
           maksud_perjalanan: spt.maksud_perjalanan || '',
           lokasi_tujuan: spt.lokasi_tujuan || '',
           tempat_berangkat: spt.tempat_berangkat || 'Nanga Pinoh',
-          tanggal_berangkat: spt.tanggal_berangkat || '',
-          tanggal_kembali: spt.tanggal_kembali || '',
+          tanggal_berangkat: spt.tanggal_berangkat ? spt.tanggal_berangkat.split('T')[0] : '',
+          tanggal_kembali: spt.tanggal_kembali ? spt.tanggal_kembali.split('T')[0] : '',
           lama_perjalanan: spt.lama_perjalanan || '',
           sumber_dana: spt.sumber_dana || 'APBD Murni',
           kendaraan: spt.kendaraan || 'Transportasi Umum',

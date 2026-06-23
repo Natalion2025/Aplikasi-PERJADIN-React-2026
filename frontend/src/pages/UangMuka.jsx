@@ -159,7 +159,7 @@ const UangMuka = () => {
         setForm({
           spt_id: panjar.spt_id || '',
           tempat: panjar.tempat || 'Nanga Pinoh',
-          tanggal_panjar: panjar.tanggal_panjar || '',
+          tanggal_panjar: panjar.tanggal_panjar ? panjar.tanggal_panjar.split('T')[0] : '',
           bendahara_id: panjar.bendahara_id || '',
           pelaksana_id: panjar.pelaksana_id || '',
           pejabat_id: panjar.pejabat_id || '',
