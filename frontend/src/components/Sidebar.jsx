@@ -44,6 +44,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { path: '/laporan-bpk-apip', label: 'Laporan BPK / APIP', icon: <Calendar size={20} /> },
         { path: '/standar-biaya', label: 'Standar Biaya (SBU)', icon: <Building size={20} /> },
         { path: '/daftar-pejabat', label: 'Daftar Pejabat', icon: <UserCheck size={20} /> },
+        { path: '/setelan', label: 'Pengaturan Aplikasi', icon: <Settings size={20} /> },
     ];
 
     const adminItems = [

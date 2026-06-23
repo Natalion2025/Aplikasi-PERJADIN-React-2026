@@ -86,8 +86,8 @@ const Setelan = () => {
     <div className="max-w-xl mx-auto space-y-6">
       {/* Title */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Setelan Akun</h1>
-        <p className="text-sm text-slate-500">Kelola keamanan akun dan preferensi tampilan aplikasi Anda.</p>
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Pengaturan Aplikasi</h1>
+        <p className="text-sm text-slate-500 font-medium">Kelola preferensi tampilan, tema, dan keamanan akun Anda.</p>
       </div>
 
       {/* Theme Card */}
