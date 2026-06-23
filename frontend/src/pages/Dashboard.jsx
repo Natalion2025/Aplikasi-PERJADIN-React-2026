@@ -10,7 +10,8 @@ import {
   LinearScale,
   PointElement,
   LineElement,
-  Title
+  Title,
+  Filler
 } from 'chart.js';
 import { 
   Briefcase, 
@@ -30,7 +31,8 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
-  Title
+  Title,
+  Filler
 );
 
 const Dashboard = () => {

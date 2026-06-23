@@ -51,6 +51,37 @@ const getKolomGolongan = (tingkatBiaya) => {
     return mapping[tingkatBiaya] || 'gol_d';
 };
 
+const cleanDecimal = (val) => {
+    if (val === null || val === undefined) return null;
+    let str = String(val).trim();
+    if (!str || str === '-') return null;
+
+    // Hapus simbol mata uang seperti "Rp", spasi, dan karakter non-numerik kecuali titik, koma, minus
+    str = str.replace(/Rp\.?/gi, '').replace(/\s+/g, '');
+
+    if (str.includes('.') && str.includes(',')) {
+        // Format Indonesia: 20.000,50 -> 20000.50
+        str = str.replace(/\./g, '').replace(/,/g, '.');
+    } else if (str.includes(',')) {
+        // Cek jika koma adalah ribuan (misal: 20,000) atau desimal (misal: 20,50)
+        const parts = str.split(',');
+        if (parts[1] && parts[1].length === 3) {
+            str = str.replace(/,/g, '');
+        } else {
+            str = str.replace(/,/g, '.');
+        }
+    } else if (str.includes('.')) {
+        // Cek jika titik adalah pemisah ribuan (misal: 20.000)
+        const parts = str.split('.');
+        if (parts[1] && parts[1].length === 3) {
+            str = str.replace(/\./g, '');
+        }
+    }
+
+    const parsed = parseFloat(str);
+    return isNaN(parsed) ? null : parsed;
+};
+
 router.get('/api/standar-biaya', isApiAuthenticated, async (req, res) => {
     try {
         const rows = await dbAll("SELECT * FROM standar_biaya ORDER BY tipe_biaya, id", []);
@@ -127,12 +158,12 @@ router.post('/api/standar-biaya/upload', isApiAuthenticated, isApiAdminOrSuperAd
                         uraian: rowData[2] || null,
                         provinsi: null,
                         satuan: rowData[3] || null,
-                        gol_a: rowData[4] || null,
-                        gol_b: rowData[5] || null,
-                        gol_c: rowData[6] || null,
-                        gol_d: rowData[7] || null,
+                        gol_a: cleanDecimal(rowData[4]),
+                        gol_b: cleanDecimal(rowData[5]),
+                        gol_c: cleanDecimal(rowData[6]),
+                        gol_d: cleanDecimal(rowData[7]),
                         besaran: null,
-                        biaya_kontribusi: rowData[8] || null
+                        biaya_kontribusi: cleanDecimal(rowData[8])
                     };
                 } else if (tipeBiaya === 'C') {
                     data = {
@@ -144,8 +175,8 @@ router.post('/api/standar-biaya/upload', isApiAuthenticated, isApiAdminOrSuperAd
                         gol_b: null,
                         gol_c: null,
                         gol_d: null,
-                        besaran: rowData[4] || null,
-                        biaya_kontribusi: rowData[5] || null
+                        besaran: cleanDecimal(rowData[4]),
+                        biaya_kontribusi: cleanDecimal(rowData[5])
                     };
                 } else if (tipeBiaya === 'D') {
                     data = {
@@ -157,8 +188,8 @@ router.post('/api/standar-biaya/upload', isApiAuthenticated, isApiAdminOrSuperAd
                         gol_b: null,
                         gol_c: null,
                         gol_d: null,
-                        besaran: rowData[4] || null,
-                        biaya_kontribusi: rowData[5] || null
+                        besaran: cleanDecimal(rowData[4]),
+                        biaya_kontribusi: cleanDecimal(rowData[5])
                     };
                 } else if (tipeBiaya === 'E') {
                     data = {
@@ -166,10 +197,10 @@ router.post('/api/standar-biaya/upload', isApiAuthenticated, isApiAdminOrSuperAd
                         uraian: null,
                         provinsi: rowData[2] || null,
                         satuan: rowData[3] || null,
-                        gol_a: rowData[4] || null,
-                        gol_b: rowData[5] || null,
-                        gol_c: rowData[6] || null,
-                        gol_d: rowData[7] || null,
+                        gol_a: cleanDecimal(rowData[4]),
+                        gol_b: cleanDecimal(rowData[5]),
+                        gol_c: cleanDecimal(rowData[6]),
+                        gol_d: cleanDecimal(rowData[7]),
                         besaran: null,
                         biaya_kontribusi: null
                     };
@@ -179,10 +210,10 @@ router.post('/api/standar-biaya/upload', isApiAuthenticated, isApiAdminOrSuperAd
                         uraian: rowData[2] || null,
                         provinsi: null,
                         satuan: rowData[3] || null,
-                        gol_a: rowData[4] || null,
-                        gol_b: rowData[5] || null,
-                        gol_c: rowData[6] || null,
-                        gol_d: rowData[7] || null,
+                        gol_a: cleanDecimal(rowData[4]),
+                        gol_b: cleanDecimal(rowData[5]),
+                        gol_c: cleanDecimal(rowData[6]),
+                        gol_d: cleanDecimal(rowData[7]),
                         besaran: null,
                         biaya_kontribusi: null
                     };
@@ -192,10 +223,10 @@ router.post('/api/standar-biaya/upload', isApiAuthenticated, isApiAdminOrSuperAd
                         uraian: rowData[2] || null,
                         provinsi: null,
                         satuan: rowData[3] || null,
-                        gol_a: rowData[4] || null,
-                        gol_b: rowData[5] || null,
-                        gol_c: rowData[6] || null,
-                        gol_d: rowData[7] || null,
+                        gol_a: cleanDecimal(rowData[4]),
+                        gol_b: cleanDecimal(rowData[5]),
+                        gol_c: cleanDecimal(rowData[6]),
+                        gol_d: cleanDecimal(rowData[7]),
                         besaran: null,
                         biaya_kontribusi: null
                     };
@@ -205,10 +236,10 @@ router.post('/api/standar-biaya/upload', isApiAuthenticated, isApiAdminOrSuperAd
                         uraian: rowData[2] || null,
                         provinsi: null,
                         satuan: rowData[3] || null,
-                        gol_a: rowData[4] || null,
-                        gol_b: rowData[5] || null,
-                        gol_c: rowData[6] || null,
-                        gol_d: rowData[7] || null,
+                        gol_a: cleanDecimal(rowData[4]),
+                        gol_b: cleanDecimal(rowData[5]),
+                        gol_c: cleanDecimal(rowData[6]),
+                        gol_d: cleanDecimal(rowData[7]),
                         besaran: null,
                         biaya_kontribusi: null
                     };
@@ -218,10 +249,10 @@ router.post('/api/standar-biaya/upload', isApiAuthenticated, isApiAdminOrSuperAd
                         uraian: rowData[2] || null,
                         provinsi: null,
                         satuan: rowData[3] || null,
-                        gol_a: rowData[4] || null,
-                        gol_b: rowData[5] || null,
-                        gol_c: rowData[6] || null,
-                        gol_d: rowData[7] || null,
+                        gol_a: cleanDecimal(rowData[4]),
+                        gol_b: cleanDecimal(rowData[5]),
+                        gol_c: cleanDecimal(rowData[6]),
+                        gol_d: cleanDecimal(rowData[7]),
                         besaran: null,
                         biaya_kontribusi: null
                     };
@@ -231,10 +262,10 @@ router.post('/api/standar-biaya/upload', isApiAuthenticated, isApiAdminOrSuperAd
                         uraian: rowData[2] || null,
                         provinsi: null,
                         satuan: rowData[3] || null,
-                        gol_a: rowData[4] || null,
-                        gol_b: rowData[5] || null,
-                        gol_c: rowData[6] || null,
-                        gol_d: rowData[7] || null,
+                        gol_a: cleanDecimal(rowData[4]),
+                        gol_b: cleanDecimal(rowData[5]),
+                        gol_c: cleanDecimal(rowData[6]),
+                        gol_d: cleanDecimal(rowData[7]),
                         besaran: null,
                         biaya_kontribusi: null
                     };
@@ -248,7 +279,7 @@ router.post('/api/standar-biaya/upload', isApiAuthenticated, isApiAdminOrSuperAd
                         gol_b: null,
                         gol_c: null,
                         gol_d: null,
-                        besaran: rowData[4] || null,
+                        besaran: cleanDecimal(rowData[4]),
                         biaya_kontribusi: null
                     };
                 }

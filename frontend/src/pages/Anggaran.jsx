@@ -126,7 +126,7 @@ const Anggaran = () => {
                 sub_kegiatan: data.sub_kegiatan || '',
                 mata_anggaran_kode: data.mata_anggaran_kode || '',
                 mata_anggaran_nama: data.mata_anggaran_nama || '',
-                nilai_anggaran: data.nilai_anggaran || '',
+                nilai_anggaran: data.nilai_anggaran ? String(data.nilai_anggaran).replace(/\.00$/, '').replace(/\./g, '') : '',
                 pptk_id: data.pptk_id || ''
             });
             setModalOpen(true);
