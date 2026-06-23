@@ -43,7 +43,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { path: '/pembayaran', label: 'Kuitansi & Bayar', icon: <Printer size={20} /> },
         { path: '/laporan-bpk-apip', label: 'Laporan BPK / APIP', icon: <Calendar size={20} /> },
         { path: '/standar-biaya', label: 'Standar Biaya (SBU)', icon: <Building size={20} /> },
-        { path: '/pengaturan/aplikasi', label: 'Daftar Pejabat', icon: <UserCheck size={20} /> },
+        { path: '/daftar-pejabat', label: 'Daftar Pejabat', icon: <UserCheck size={20} /> },
     ];
 
     const adminItems = [

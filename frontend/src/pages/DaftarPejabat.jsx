@@ -14,7 +14,7 @@ import {
   ShieldAlert
 } from 'lucide-react';
 
-const PengaturanAplikasi = () => {
+const DaftarPejabat = () => {
   const { user } = useAuth();
   const isAdminOrSuper = user && (user.role === 'admin' || user.role === 'superadmin');
   const [pejabatList, setPejabatList] = useState([]);
@@ -335,4 +335,4 @@ const PengaturanAplikasi = () => {
   );
 };
 
-export default PengaturanAplikasi;
+export default DaftarPejabat;

@@ -16,7 +16,7 @@ import Pembayaran from './pages/Pembayaran';
 import LaporanBpkApip from './pages/LaporanBpkApip';
 import StandarBiaya from './pages/StandarBiaya';
 import Pengguna from './pages/Pengguna';
-import PengaturanAplikasi from './pages/PengaturanAplikasi';
+import DaftarPejabat from './pages/DaftarPejabat';
 import Profil from './pages/Profil';
 import Setelan from './pages/Setelan';
 
@@ -87,7 +87,7 @@ const Layout = () => {
                         <Route path="/pembayaran" element={<Pembayaran />} />
                         <Route path="/laporan-bpk-apip" element={<LaporanBpkApip />} />
                         <Route path="/standar-biaya" element={<StandarBiaya />} />
-                        <Route path="/pengaturan/aplikasi" element={<PengaturanAplikasi />} />
+                        <Route path="/daftar-pejabat" element={<DaftarPejabat />} />
                         <Route path="/pengguna" element={<Pengguna />} />
                         <Route path="/profil" element={<Profil />} />
                         <Route path="/setelan" element={<Setelan />} />
