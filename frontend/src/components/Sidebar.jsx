@@ -18,6 +18,7 @@ import {
   Menu,
   UserCheck
 } from 'lucide-react';
+import logoMelawi from '../assets/logo_kab_melawi.png';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
     const { user, logout } = useAuth();
@@ -44,11 +45,11 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { path: '/laporan-bpk-apip', label: 'Laporan BPK / APIP', icon: <Calendar size={20} /> },
         { path: '/standar-biaya', label: 'Standar Biaya (SBU)', icon: <Building size={20} /> },
         { path: '/daftar-pejabat', label: 'Daftar Pejabat', icon: <UserCheck size={20} /> },
-        { path: '/setelan', label: 'Pengaturan Aplikasi', icon: <Settings size={20} /> },
     ];
-
+    
     const adminItems = [
         { path: '/pengguna', label: 'Manajemen User', icon: <UserSquare2 size={20} /> },
+        { path: '/setelan', label: 'Pengaturan Aplikasi', icon: <Settings size={20} /> },
     ];
 
     return (
@@ -69,12 +70,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 <div className="flex flex-col flex-1 overflow-y-auto">
                     {/* Header Logo */}
                     <div className="flex items-center justify-between px-6 py-5 border-b border-slate-800">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2.5 bg-indigo-600 rounded-xl shadow-lg shadow-indigo-600/30">
-                                <FileText size={22} className="text-white" />
+                        <div className="flex items-center gap-4">
+                            <div className="p-2 rounded-full bg-white">
+                                <img src={logoMelawi} className="bg-white w-6 h-8" />
                             </div>
                             <div>
-                                <h1 className="font-bold text-lg leading-tight tracking-wide">PERJADIN</h1>
+                                <h1 className="font-bold text-lg leading-tight tracking-wide">ASS PERJADIN</h1>
                                 <p className="text-xs text-slate-400">Pemkab Melawi</p>
                             </div>
                         </div>
@@ -109,7 +110,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                         {/* Admin Settings Section */}
                         {isAdminOrSuper && (
                             <>
-                                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider px-3 mt-6 mb-2">Administrasi</div>
+                                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider px-3 mt-6 mb-2">Pengaturan Apl & Peran Pengguna</div>
                                 {adminItems.map((item) => (
                                     <NavLink
                                         key={item.path}
@@ -132,22 +133,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 </div>
 
                 {/* Profile Card & Logout */}
-                <div className="p-4 border-t border-slate-800 bg-slate-950/30">
-                    <div className="flex items-center gap-3 mb-4 px-2">
-                        <img 
-                            src={user?.foto_profil ? `/${user.foto_profil}` : 'https://api.dicebear.com/7.x/adventurer/svg?seed=Felix'} 
-                            alt="User Profile" 
-                            className="w-10 h-10 rounded-xl object-cover ring-2 ring-slate-800"
-                        />
-                        <div className="flex-1 min-w-0">
-                            <p className="text-sm font-semibold truncate text-slate-200">{user?.name || 'Administrator'}</p>
-                            <p className="text-xs truncate text-slate-500 capitalize">{user?.role || 'User'}</p>
-                        </div>
-                    </div>
-                    
+                <div className="p-4 border-t border-slate-800">                   
                     <button 
                         onClick={handleLogout}
-                        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold bg-red-600/10 hover:bg-red-600 text-red-500 hover:text-white border border-red-500/10 transition-all duration-200"
+                        className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-md font-bold bg-red-600/10 hover:bg-red-600 text-red-200 hover:text-white border border-red-500/10 transition-all duration-200"
                     >
                         <LogOut size={16} />
                         <span>Keluar Sesi</span>

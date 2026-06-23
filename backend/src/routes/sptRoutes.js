@@ -220,7 +220,7 @@ router.post('/api/spt', isApiAuthenticated, async (req, res) => {
             AND s.status = 'aktif'
         AND(
             (? BETWEEN s.tanggal_berangkat AND s.tanggal_kembali) OR
-                (?BETWEEN s.tanggal_berangkat AND s.tanggal_kembali) OR
+                (? BETWEEN s.tanggal_berangkat AND s.tanggal_kembali) OR
                     (s.tanggal_berangkat BETWEEN ? AND ?)
               )
             LIMIT 1;
@@ -315,7 +315,7 @@ router.put('/api/spt/:id', isApiAuthenticated, isApiAdminOrSuperAdmin, async (re
               AND s.status = 'aktif'
 AND(
     (? BETWEEN s.tanggal_berangkat AND s.tanggal_kembali) OR
-        (?BETWEEN s.tanggal_berangkat AND s.tanggal_kembali) OR
+        (? BETWEEN s.tanggal_berangkat AND s.tanggal_kembali) OR
             (s.tanggal_berangkat BETWEEN ? AND ?)
               )
             LIMIT 1;
