@@ -15,7 +15,8 @@ import {
   Building,
   Coins,
   ChevronLeft,
-  Menu
+  Menu,
+  UserCheck
 } from 'lucide-react';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
@@ -42,10 +43,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { path: '/pembayaran', label: 'Kuitansi & Bayar', icon: <Printer size={20} /> },
         { path: '/laporan-bpk-apip', label: 'Laporan BPK / APIP', icon: <Calendar size={20} /> },
         { path: '/standar-biaya', label: 'Standar Biaya (SBU)', icon: <Building size={20} /> },
+        { path: '/pengaturan/aplikasi', label: 'Daftar Pejabat', icon: <UserCheck size={20} /> },
     ];
 
     const adminItems = [
-        { path: '/pengaturan/aplikasi', label: 'Daftar Pejabat', icon: <Settings size={20} /> },
         { path: '/pengguna', label: 'Manajemen User', icon: <UserSquare2 size={20} /> },
     ];
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 import {
   UserCheck,
   Search,
@@ -14,6 +15,8 @@ import {
 } from 'lucide-react';
 
 const PengaturanAplikasi = () => {
+  const { user } = useAuth();
+  const isAdminOrSuper = user && (user.role === 'admin' || user.role === 'superadmin');
   const [pejabatList, setPejabatList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -147,13 +150,15 @@ const PengaturanAplikasi = () => {
               className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
             />
           </div>
-          <button
-            onClick={handleOpenAdd}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all cursor-pointer"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Tambah Pejabat</span>
-          </button>
+          {isAdminOrSuper && (
+            <button
+              onClick={handleOpenAdd}
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all cursor-pointer"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Tambah Pejabat</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -179,7 +184,7 @@ const PengaturanAplikasi = () => {
                   <th className="px-6 py-4">Nama Lengkap</th>
                   <th className="px-6 py-4">Jabatan Resmi</th>
                   <th className="px-6 py-4">NIP</th>
-                  <th className="px-6 py-4 text-right w-24">Aksi</th>
+                  {isAdminOrSuper && <th className="px-6 py-4 text-right w-24">Aksi</th>}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -195,22 +200,24 @@ const PengaturanAplikasi = () => {
                     <td className="px-6 py-4 whitespace-nowrap font-mono text-xs text-slate-600 dark:text-slate-400">
                       {pejabat.nip || '-'}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right space-x-2">
-                      <button
-                        onClick={() => handleOpenEdit(pejabat)}
-                        className="p-1.5 text-slate-500 hover:text-amber-600 bg-slate-50 hover:bg-amber-50 dark:bg-slate-800 dark:hover:bg-amber-950/30 rounded-lg transition-all"
-                        title="Edit Pejabat"
-                      >
-                        <Edit className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(pejabat)}
-                        className="p-1.5 text-slate-500 hover:text-red-600 bg-slate-50 hover:bg-red-50 dark:bg-slate-800 dark:hover:bg-red-950/30 rounded-lg transition-all"
-                        title="Hapus Pejabat"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </td>
+                    {isAdminOrSuper && (
+                      <td className="px-6 py-4 whitespace-nowrap text-right space-x-2">
+                        <button
+                          onClick={() => handleOpenEdit(pejabat)}
+                          className="p-1.5 text-slate-500 hover:text-amber-600 bg-slate-50 hover:bg-amber-50 dark:bg-slate-800 dark:hover:bg-amber-950/30 rounded-lg transition-all"
+                          title="Edit Pejabat"
+                        >
+                          <Edit className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(pejabat)}
+                          className="p-1.5 text-slate-500 hover:text-red-600 bg-slate-50 hover:bg-red-50 dark:bg-slate-800 dark:hover:bg-red-950/30 rounded-lg transition-all"
+                          title="Hapus Pejabat"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
