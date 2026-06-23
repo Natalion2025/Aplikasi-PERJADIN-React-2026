@@ -109,7 +109,7 @@ const Profil = () => {
         {/* Left Column: Avatar Display */}
         <div className="lg:col-span-1 bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col items-center justify-center text-center space-y-4">
           <div className="relative group">
-            <img src={profilePic} alt="Rita Handayani, S.M." className="w-36 h-36 rounded-full object-cover" />
+            <img src={previewUrl || (user?.foto_profil ? `/${user.foto_profil}` : profilePic)} alt="Rita Handayani, S.M." className="w-36 h-36 rounded-full object-cover border-4 border-slate-50 dark:border-slate-700 shadow-md" />
 
             <label className="absolute bottom-0 right-0 p-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full cursor-pointer shadow-lg transition-all">
               <Upload className="w-4 h-4" />

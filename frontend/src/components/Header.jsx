@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import profilePic from '../assets/pns_female_profile.png';
 import { 
   Bell, 
   Menu, 
@@ -86,7 +87,7 @@ const Header = ({ toggleSidebar }) => {
                         className="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-slate-100 transition-colors text-left"
                     >
                         <img 
-                            src={user?.foto_profil ? `/${user.foto_profil}` : 'https://api.dicebear.com/7.x/adventurer/svg?seed=Felix'} 
+                            src={user?.foto_profil ? `/${user.foto_profil}` : profilePic} 
                             alt="User Profile" 
                             className="w-8 h-8 rounded-lg object-cover ring-2 ring-slate-100"
                         />
