@@ -200,7 +200,7 @@ const Dashboard = () => {
     );
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 bg-mauve-100">
             {/* Error Message */}
             {error && (
                 <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-600 text-sm flex items-start gap-2.5">
@@ -242,8 +242,8 @@ const Dashboard = () => {
                         <h3 className="text-3xl font-extrabold text-emerald-600">{realisasiPersen}%</h3>
                         <p className="text-xs text-slate-500">Dari total Rp {new Intl.NumberFormat('id-ID').format(totalNilaiAnggaran)}</p>
                     </div>
-                    <div className="p-4 bg-emerald-50 text-emerald-600 rounded-2xl group-hover:scale-105 transition-transform">
-                        <BadgePercent size={24} />
+                    <div className="p-4 bg-emerald-50 text-emerald-600 rounded-2xl">
+                        <BadgePercent size={24} className='group-hover:scale-110 duration-300 transition-all'/>
                     </div>
                 </div>
             </div>

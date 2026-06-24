@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import logoMelawi from '../../assets/logo_kab_Melawi.png';
 
 // Helper: Format tanggal Indonesia
 const formatDate = (dateString, defVal = '-') => {
@@ -19,7 +20,7 @@ const formatCurrency = (amount) => {
 const KopSurat = () => (
   <div className="flex items-center text-center border-b-[4px] border-double border-black pb-3.5 mb-5 relative text-black" style={{ fontFamily: 'Arial, sans-serif' }}>
     <img
-      src="/assets/logomelawi.png"
+      src={logoMelawi}
       alt="Logo Pemkab Melawi"
       className="absolute left-1 top-0 w-24 h-24 object-contain"
       onError={(e) => { e.target.src = 'https://upload.wikimedia.org/wikipedia/commons/b/b3/Melawi_Regency_Logo.png'; }}
@@ -39,13 +40,14 @@ const pageStyle = `
   body {
     background-color: #fff;
     color: #000;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 11.5pt;
+    font-family: 'Arial', Times, serif;
+    font-size: 12pt;
   }
   .print-page {
     width: 21cm;
     min-height: 29.7cm;
     padding: 1.5cm;
+    padding-top: 0.8cm;
     margin: 0 auto;
     background: white;
     color: black;
@@ -57,11 +59,15 @@ const pageStyle = `
       print-color-adjust: exact;
     }
     .print-page {
-      margin: 0;
-      padding: 1cm;
+      padding: 0;
       width: auto;
       min-height: auto;
       border: none;
+      page-break-after: always;
+      margin-top: -0.8cm;
+    }
+    .print-page:last-child {
+      page-break-after: avoid;
     }
     .no-print {
       display: none !important;
@@ -129,10 +135,10 @@ export const CetakSPT = () => {
         </button>
       </div>
 
-      <div className="print-page border border-slate-200 shadow-lg rounded-xl">
+      <div className="print-page border border-slate-200  rounded-xl">
         <KopSurat />
 
-        <div className="text-center mt-6 mb-5">
+        <div className="text-center mt-3 mb-5">
           <h3 className="text-base font-bold underline tracking-wider m-0">SURAT PERINTAH TUGAS</h3>
           <p className="text-sm m-0 mt-0.5">Nomor: {spt.nomor_surat}</p>
         </div>
@@ -206,14 +212,20 @@ export const CetakSPT = () => {
 // 2. CetakSPPD
 // ==========================================
 export const CetakSPPD = () => {
-  const { spt_id, pegawai_id } = useParams();
+  const { spt_id, pegawai_id, sppd_id } = useParams();
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        const response = await axios.get(`/api/sppd/by-spt/${spt_id}?id_type=spt`);
+        let endpoint = '';
+        if (sppd_id) {
+          endpoint = `/api/sppd/by-spt/${sppd_id}?id_type=sppd`;
+        } else {
+          endpoint = `/api/sppd/by-spt/${spt_id}?id_type=spt`;
+        }
+        const response = await axios.get(endpoint);
         setData(response.data);
         setTimeout(() => {
           window.print();
@@ -224,18 +236,28 @@ export const CetakSPPD = () => {
       }
     };
     loadData();
-  }, [spt_id]);
+  }, [spt_id, sppd_id]);
 
   if (error) return <div className="p-8 text-center text-red-500 font-bold">{error}</div>;
   if (!data) return <div className="p-8 text-center text-slate-500 font-semibold">Memuat Surat Perjalanan Dinas (SPPD)...</div>;
 
   const { sppdList, spt, pengikut, anggaran, penggunaAnggaran, penandatanganSppd } = data;
 
-  // Temukan SPPD spesifik untuk pegawai yang dipilih
-  const sppd = sppdList.find(s => s.pegawai_id == pegawai_id) || sppdList[0];
-  if (!sppd) return <div className="p-8 text-center text-red-500 font-bold">Data SPPD untuk pegawai tersebut tidak ditemukan.</div>;
+  // Tentukan SPPD mana saja yang akan dicetak
+  let sppdsToRender = [];
+  if (sppd_id) {
+    const sppd = sppdList.find(s => s.id == sppd_id);
+    if (sppd) sppdsToRender = [sppd];
+  } else if (pegawai_id) {
+    const sppd = sppdList.find(s => s.pegawai_id == pegawai_id);
+    if (sppd) sppdsToRender = [sppd];
+  } else {
+    sppdsToRender = sppdList;
+  }
 
-  const pegawai = sppd.pegawai;
+  if (sppdsToRender.length === 0) {
+    return <div className="p-8 text-center text-red-500 font-bold">Data SPPD tidak ditemukan.</div>;
+  }
 
   const getTingkatBiaya = (peg) => {
     const jab = (peg.jabatan || '').toLowerCase();
@@ -253,150 +275,155 @@ export const CetakSPPD = () => {
           onClick={() => window.print()}
           className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-md cursor-pointer"
         >
-          Cetak SPPD
+          {sppdsToRender.length > 1 ? 'Cetak SPPD Kolektif' : 'Cetak SPPD'}
         </button>
       </div>
 
-      <div className="print-page border border-slate-200 shadow-lg rounded-xl">
-        <KopSurat />
+      {sppdsToRender.map((sppd, idx) => {
+        const pegawai = sppd.pegawai || { nama_lengkap: 'Data Pegawai Tidak Ditemukan' };
+        return (
+          <div key={sppd.id || idx} className="print-page border border-slate-200  rounded-xl mb-2 last:mb-0">
+            <KopSurat />
 
-        <div className="flex justify-end text-xs leading-normal mt-2 pr-6">
-          <div className="grid grid-cols-2 gap-x-2">
-            <span>Lembar ke</span><span>: 1 (satu)</span>
-            <span>Kode No.</span><span>: 090</span>
-            <span>Nomor</span><span>: {sppd.nomor_sppd || 'N/A'}</span>
-          </div>
-        </div>
-
-        <div className="text-center my-5">
-          <h3 className="text-base font-bold tracking-wide m-0">SURAT PERJALANAN DINAS (SPD)</h3>
-          <p className="text-[10.5pt] m-0 mt-0.5">(Berdasarkan Surat Perintah Tugas Nomor: {spt.nomor_surat || ''})</p>
-        </div>
-
-        {/* Tabel SPPD */}
-        <table className="w-full text-xs text-black border border-black border-collapse" style={{ fontFamily: 'Arial', fontSize: '9.5pt' }}>
-          <tbody>
-            <tr className="border-b border-black">
-              <td className="p-2 border-r border-black w-8 text-center">1.</td>
-              <td className="p-2 border-r border-black w-[45%] font-medium">Pengguna Anggaran</td>
-              <td className="p-2 font-semibold" colSpan={2}>{penggunaAnggaran ? penggunaAnggaran.nama_lengkap : 'Kepala Dinas'}</td>
-            </tr>
-            <tr className="border-b border-black">
-              <td className="p-2 border-r border-black text-center">2.</td>
-              <td className="p-2 border-r border-black font-medium">Nama/NIP Pegawai yang diperintahkan</td>
-              <td className="p-2" colSpan={2}>
-                <div className="font-bold">{pegawai.nama_lengkap}</div>
-                <div className="font-mono text-xs">{pegawai.nip}</div>
-              </td>
-            </tr>
-            <tr className="border-b border-black">
-              <td className="p-2 border-r border-black text-center">3.</td>
-              <td className="p-2 border-r border-black font-medium space-y-1">
-                <div>a. Pangkat dan Golongan</div>
-                <div>b. Jabatan / Instansi</div>
-                <div>c. Tingkat Biaya Perjalanan Dinas</div>
-              </td>
-              <td className="p-2 space-y-1" colSpan={2}>
-                <div>a. {pegawai.pangkat} ({pegawai.golongan})</div>
-                <div>b. {pegawai.jabatan}</div>
-                <div>c. {getTingkatBiaya(pegawai)}</div>
-              </td>
-            </tr>
-            <tr className="border-b border-black">
-              <td className="p-2 border-r border-black text-center">4.</td>
-              <td className="p-2 border-r border-black font-medium">Maksud Perjalanan Dinas</td>
-              <td className="p-2" colSpan={2}>{spt.maksud_perjalanan}</td>
-            </tr>
-            <tr className="border-b border-black">
-              <td className="p-2 border-r border-black text-center">5.</td>
-              <td className="p-2 border-r border-black font-medium">Alat angkutan yang dipergunakan</td>
-              <td className="p-2" colSpan={2}>{spt.kendaraan || 'Kendaraan Dinas / Umum'}</td>
-            </tr>
-            <tr className="border-b border-black">
-              <td className="p-2 border-r border-black text-center">6.</td>
-              <td className="p-2 border-r border-black font-medium space-y-1">
-                <div>a. Tempat berangkat</div>
-                <div>b. Tempat tujuan</div>
-              </td>
-              <td className="p-2 space-y-1" colSpan={2}>
-                <div>a. {spt.tempat_berangkat || 'Nanga Pinoh'}</div>
-                <div>b. {spt.lokasi_tujuan}</div>
-              </td>
-            </tr>
-            <tr className="border-b border-black">
-              <td className="p-2 border-r border-black text-center">7.</td>
-              <td className="p-2 border-r border-black font-medium space-y-1">
-                <div>a. Lama Perjalanan Dinas</div>
-                <div>b. Tanggal berangkat</div>
-                <div>c. Tanggal harus kembali</div>
-              </td>
-              <td className="p-2 space-y-1" colSpan={2}>
-                <div>a. {spt.lama_perjalanan} hari</div>
-                <div>b. {formatDate(spt.tanggal_berangkat)}</div>
-                <div>c. {formatDate(spt.tanggal_kembali)}</div>
-              </td>
-            </tr>
-            <tr className="border-b border-black">
-              <td className="p-2 border-r border-black text-center" rowSpan={2}>8.</td>
-              <td className="p-2 border-r border-black font-medium">Pengikut: Nama</td>
-              <td className="p-2 border-r border-black font-medium">NIP / Jabatan</td>
-              <td className="p-2 font-medium">Keterangan</td>
-            </tr>
-            <tr className="border-b border-black">
-              <td className="p-2 border-r border-black min-h-[40px]">
-                {pengikut && pengikut.length > 0 ? (
-                  pengikut.map((p, index) => <div key={p.id}>{index + 1}. {p.nama_lengkap}</div>)
-                ) : (
-                  <span className="text-slate-400">-</span>
-                )}
-              </td>
-              <td className="p-2 border-r border-black">
-                {pengikut && pengikut.length > 0 ? (
-                  pengikut.map((p, index) => <div key={p.id} className="font-mono text-xs">{p.nip}</div>)
-                ) : (
-                  <span className="text-slate-400">-</span>
-                )}
-              </td>
-              <td className="p-2"></td>
-            </tr>
-            <tr className="border-b border-black">
-              <td className="p-2 border-r border-black text-center">9.</td>
-              <td className="p-2 border-r border-black font-medium space-y-1">
-                <div>Pembebanan Anggaran:</div>
-                <div className="pl-4">a. Instansi</div>
-                <div className="pl-4">b. Mata Anggaran</div>
-              </td>
-              <td className="p-2 space-y-1" colSpan={2}>
-                <div><br/></div>
-                <div>a. Dinas Komunikasi dan Informatika</div>
-                <div className="font-mono">b. {anggaran ? anggaran.mata_anggaran_kode : ''}</div>
-              </td>
-            </tr>
-            <tr>
-              <td className="p-2 border-r border-black text-center">10.</td>
-              <td className="p-2 border-r border-black font-medium">Keterangan lain-lain</td>
-              <td className="p-2" colSpan={2}>{spt.keterangan || '-'}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        {/* Tanda Tangan */}
-        <div className="flex justify-between items-start mt-6 text-xs leading-normal pr-6">
-          <div className="w-[45%]"></div>
-          <div className="w-[50%] flex flex-col items-start pl-16">
-            <div className="grid grid-cols-2 gap-x-1.5 mb-3.5">
-              <span>Dikeluarkan di</span><span>: Nanga Pinoh</span>
-              <span>Pada tanggal</span><span>: {formatDate(sppd.tanggal_sppd)}</span>
+            <div className="flex justify-end text-xs leading-normal pr-6">
+              <div className="grid grid-cols-2 gap-x-2">
+                <span>Lembar ke</span><span>: 1 (satu)</span>
+                <span>Kode No.</span><span>: 090</span>
+                <span>Nomor</span><span>: {sppd.nomor_sppd || 'N/A'}</span>
+              </div>
             </div>
-            <p className="font-bold uppercase m-0 leading-normal">
-              {penandatanganSppd?.jabatan || 'KEPALA DINAS'}
-            </p>
-            <p className="font-bold uppercase m-0 pb-12 leading-normal">KOMUNIKASI DAN INFORMATIKA KABUPATEN MELAWI</p>
-            <p className="font-bold underline uppercase m-0 text-nowrap">{penandatanganSppd?.nama || '.....................................'}</p>
-            <p className="m-0 font-mono">{penandatanganSppd?.nip ? `NIP. ${penandatanganSppd.nip}` : ''}</p>
+
+            <div className="text-center my-5">
+              <h3 className="text-base font-bold tracking-wide m-0">SURAT PERJALANAN DINAS (SPD)</h3>
+              <p className="text-[10.5pt] m-0 mt-0.5">(Berdasarkan Surat Perintah Tugas Nomor: {spt.nomor_surat || ''})</p>
+            </div>
+
+            {/* Tabel SPPD */}
+            <table className="w-full text-xs text-black border border-black border-collapse" style={{ fontFamily: 'Arial', fontSize: '9.5pt' }}>
+              <tbody>
+                <tr className="border-b border-black">
+                  <td className="p-2 border-r border-black w-8 text-center">1.</td>
+                  <td className="p-2 border-r border-black w-[45%] font-medium">Pengguna Anggaran</td>
+                  <td className="p-2 font-semibold" colSpan={2}>{penggunaAnggaran ? penggunaAnggaran.nama_lengkap : 'Kepala Dinas'}</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="p-2 border-r border-black text-center">2.</td>
+                  <td className="p-2 border-r border-black font-medium">Nama/NIP Pegawai yang diperintahkan</td>
+                  <td className="p-2" colSpan={2}>
+                    <div className="font-bold">{pegawai.nama_lengkap}</div>
+                    <div className="font-mono text-xs">{pegawai.nip}</div>
+                  </td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="p-2 border-r border-black text-center">3.</td>
+                  <td className="p-2 border-r border-black font-medium space-y-1">
+                    <div>a. Pangkat dan Golongan</div>
+                    <div>b. Jabatan / Instansi</div>
+                    <div>c. Tingkat Biaya Perjalanan Dinas</div>
+                  </td>
+                  <td className="p-2 space-y-1" colSpan={2}>
+                    <div>a. {pegawai.pangkat} ({pegawai.golongan})</div>
+                    <div>b. {pegawai.jabatan}</div>
+                    <div>c. {getTingkatBiaya(pegawai)}</div>
+                  </td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="p-2 border-r border-black text-center">4.</td>
+                  <td className="p-2 border-r border-black font-medium">Maksud Perjalanan Dinas</td>
+                  <td className="p-2" colSpan={2}>{spt.maksud_perjalanan}</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="p-2 border-r border-black text-center">5.</td>
+                  <td className="p-2 border-r border-black font-medium">Alat angkutan yang dipergunakan</td>
+                  <td className="p-2" colSpan={2}>{spt.kendaraan || 'Kendaraan Dinas / Umum'}</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="p-2 border-r border-black text-center">6.</td>
+                  <td className="p-2 border-r border-black font-medium space-y-1">
+                    <div>a. Tempat berangkat</div>
+                    <div>b. Tempat tujuan</div>
+                  </td>
+                  <td className="p-2 space-y-1" colSpan={2}>
+                    <div>a. {spt.tempat_berangkat || 'Nanga Pinoh'}</div>
+                    <div>b. {spt.lokasi_tujuan}</div>
+                  </td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="p-2 border-r border-black text-center">7.</td>
+                  <td className="p-2 border-r border-black font-medium space-y-1">
+                    <div>a. Lama Perjalanan Dinas</div>
+                    <div>b. Tanggal berangkat</div>
+                    <div>c. Tanggal harus kembali</div>
+                  </td>
+                  <td className="p-2 space-y-1" colSpan={2}>
+                    <div>a. {spt.lama_perjalanan} hari</div>
+                    <div>b. {formatDate(spt.tanggal_berangkat)}</div>
+                    <div>c. {formatDate(spt.tanggal_kembali)}</div>
+                  </td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="p-2 border-r border-black text-center" rowSpan={2}>8.</td>
+                  <td className="p-2 border-r border-black font-medium">Pengikut: Nama</td>
+                  <td className="p-2 border-r border-black font-medium">NIP / Jabatan</td>
+                  <td className="p-2 font-medium">Keterangan</td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="p-2 border-r border-black min-h-[40px]">
+                    {pengikut && pengikut.length > 0 ? (
+                      pengikut.map((p, index) => <div key={p.id || index}>{index + 1}. {p.nama_lengkap}</div>)
+                    ) : (
+                      <span className="text-slate-400">-</span>
+                    )}
+                  </td>
+                  <td className="p-2 border-r border-black">
+                    {pengikut && pengikut.length > 0 ? (
+                      pengikut.map((p, index) => <div key={p.id || index} className="font-mono text-xs">{p.nip}</div>)
+                    ) : (
+                      <span className="text-slate-400">-</span>
+                    )}
+                  </td>
+                  <td className="p-2"></td>
+                </tr>
+                <tr className="border-b border-black">
+                  <td className="p-2 border-r border-black text-center">9.</td>
+                  <td className="p-2 border-r border-black font-medium space-y-1">
+                    <div>Pembebanan Anggaran:</div>
+                    <div className="pl-4">a. Instansi</div>
+                    <div className="pl-4">b. Mata Anggaran</div>
+                  </td>
+                  <td className="p-2 space-y-1" colSpan={2}>
+                    <div><br/></div>
+                    <div>a. Dinas Komunikasi dan Informatika</div>
+                    <div className="font-mono">b. {anggaran ? anggaran.mata_anggaran_kode : ''}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="p-2 border-r border-black text-center">10.</td>
+                  <td className="p-2 border-r border-black font-medium">Keterangan lain-lain</td>
+                  <td className="p-2" colSpan={2}>{spt.keterangan || '-'}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            {/* Tanda Tangan */}
+            <div className="flex justify-between items-start mt-6 text-xs leading-normal pr-6">
+              <div className="w-[45%]"></div>
+              <div className="w-[50%] flex flex-col items-start pl-16">
+                <div className="grid grid-cols-2 gap-x-1.5 mb-3.5">
+                  <span>Dikeluarkan di</span><span>: Nanga Pinoh</span>
+                  <span>Pada tanggal</span><span>: {formatDate(sppd.tanggal_sppd)}</span>
+                </div>
+                <p className="font-bold uppercase m-0 leading-normal">
+                  {penandatanganSppd?.jabatan || 'KEPALA DINAS'}
+                </p>
+                <p className="font-bold uppercase m-0 pb-12 leading-normal">KOMUNIKASI DAN INFORMATIKA KABUPATEN MELAWI</p>
+                <p className="font-bold underline uppercase m-0 text-nowrap">{penandatanganSppd?.nama || '.....................................'}</p>
+                <p className="m-0 font-mono">{penandatanganSppd?.nip ? `NIP. ${penandatanganSppd.nip}` : ''}</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        );
+      })}
     </div>
   );
 };
@@ -475,7 +502,7 @@ export const CetakVisum = () => {
         </button>
       </div>
 
-      <div className="print-page border border-slate-200 shadow-lg rounded-xl" style={{ padding: '0.8cm 0.8cm' }}>
+      <div className="print-page border border-slate-200  rounded-xl" style={{ padding: '0.8cm 0.8cm' }}>
         <div className="border border-black">
           {/* Section I */}
           <div className="visum-section">
@@ -519,7 +546,7 @@ export const CetakVisum = () => {
               </div>
               <div className="visum-sig text-[8.5pt]">
                 <p className="visum-sig-name font-normal">(......................................................)</p>
-                <p className="m-0 font-mono">NIP. ...............................................</p>
+                <p className="m-0 font-mono">NIP. ..........................................</p>
               </div>
             </div>
             <div className="visum-half">
@@ -531,7 +558,7 @@ export const CetakVisum = () => {
               </div>
               <div className="visum-sig text-[8.5pt]">
                 <p className="visum-sig-name font-normal">(......................................................)</p>
-                <p className="m-0 font-mono">NIP. ...............................................</p>
+                <p className="m-0 font-mono">NIP. ..........................................</p>
               </div>
             </div>
           </div>
@@ -547,7 +574,7 @@ export const CetakVisum = () => {
               </div>
               <div className="visum-sig text-[8.5pt]">
                 <p className="visum-sig-name font-normal">(......................................................)</p>
-                <p className="m-0 font-mono">NIP. ...............................................</p>
+                <p className="m-0 font-mono">NIP. ..........................................</p>
               </div>
             </div>
             <div className="visum-half">
@@ -559,7 +586,7 @@ export const CetakVisum = () => {
               </div>
               <div className="visum-sig text-[8.5pt]">
                 <p className="visum-sig-name font-normal">(......................................................)</p>
-                <p className="m-0 font-mono">NIP. ...............................................</p>
+                <p className="m-0 font-mono">NIP. ..........................................</p>
               </div>
             </div>
           </div>

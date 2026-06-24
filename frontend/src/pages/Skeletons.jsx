@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const createSkeleton = (title) => {
     return () => (
-        <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+        <div className="bg-mauve-100 p-8 rounded-3xl border border-slate-100 shadow-sm space-y-4">
             <h1 className="text-2xl font-bold text-slate-800">{title}</h1>
             <p className="text-sm text-slate-500">Halaman ini sedang dalam proses pemindahan dari versi HTML legacy ke React.</p>
             <div className="flex gap-4">

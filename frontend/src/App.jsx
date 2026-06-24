@@ -73,7 +73,7 @@ const Layout = () => {
                 <Header toggleSidebar={toggleSidebar} />
                 
                 {/* Halaman Konten */}
-                <main className="flex-1 p-6 md:p-8 max-w-7xl w-full mx-auto">
+                <main className="flex-1 bg-mauve-100 p-6 md:p-8 max-w-7xl w-full mx-auto">
                     <Routes>
                         <Route path="/" element={<Navigate to="/dashboard" replace />} />
                         <Route path="/dashboard" element={<Dashboard />} />
@@ -109,6 +109,8 @@ const App = () => {
                     {/* Rute Cetak Mandiri (Tanpa Sidebar/Header) */}
                     <Route path="/cetak/spt/:id" element={<ProtectedRoute><CetakSPT /></ProtectedRoute>} />
                     <Route path="/cetak/sppd/:spt_id/:pegawai_id" element={<ProtectedRoute><CetakSPPD /></ProtectedRoute>} />
+                    <Route path="/cetak/sppd/:spt_id" element={<ProtectedRoute><CetakSPPD /></ProtectedRoute>} />
+                    <Route path="/cetak/sppd-detail/:sppd_id" element={<ProtectedRoute><CetakSPPD /></ProtectedRoute>} />
                     <Route path="/cetak/visum/:spt_id" element={<ProtectedRoute><CetakVisum /></ProtectedRoute>} />
                     <Route path="/cetak/panjar/:id" element={<ProtectedRoute><CetakPanjar /></ProtectedRoute>} />
                     <Route path="/cetak/pembayaran/:id" element={<ProtectedRoute><CetakPembayaran /></ProtectedRoute>} />

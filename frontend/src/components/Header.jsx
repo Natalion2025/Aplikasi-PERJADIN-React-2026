@@ -46,7 +46,7 @@ const Header = ({ toggleSidebar }) => {
     };
 
     return (
-        <header className="sticky top-0 z-30 flex items-center justify-between bg-white border-b border-slate-200 px-6 py-4 no-print shadow-sm">
+        <header className="sticky top-0 z-30 flex items-center justify-between bg-linear-to-l/hsl from-rose-900 to-rose-300 border-b border-slate-200 px-6 py-4 no-print shadow-sm">
             {/* Left Side: Mobile Menu Button & App Title */}
             <div className="flex items-center gap-4">
                 <button 
@@ -57,7 +57,7 @@ const Header = ({ toggleSidebar }) => {
                     <Menu size={22} />
                 </button>
                 <div className="hidden md:flex flex-col">
-                    <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Aplikasi Administrasi</h2>
+                    <h2 className="text-sm font-semibold text-white uppercase tracking-wider">Aplikasi Administrasi</h2>
                     <h1 className="text-lg font-bold text-slate-800 leading-tight">Perjalanan Dinas Pemkab Melawi</h1>
                 </div>
             </div>
@@ -68,12 +68,12 @@ const Header = ({ toggleSidebar }) => {
                 <div className="relative">
                     <button 
                         onClick={() => navigate('/spt')}
-                        className="p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition-colors relative"
+                        className="p-1 text-slate-200 hover:text-slate-600 rounded-xl hover:bg-slate-100 duration-300 cursor-pointer transition-all relative"
                         title={notifCount > 0 ? `Ada ${notifCount} SPT yang belum dilaporkan` : 'Tidak ada notifikasi baru'}
                     >
                         <Bell size={22} />
                         {notifCount > 0 && (
-                            <span className="absolute top-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-[10px] font-bold text-white ring-2 ring-white">
+                            <span className="absolute top-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-100 text-[10px] font-bold text-white ring-2 ring-white">
                                 {notifCount > 99 ? '99+' : notifCount}
                             </span>
                         )}
@@ -84,16 +84,16 @@ const Header = ({ toggleSidebar }) => {
                 <div className="relative">
                     <button 
                         onClick={() => setDropdownOpen(!dropdownOpen)}
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-slate-100 transition-colors text-left"
+                        className="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-mauve-100/10 transition-colors text-left"
                     >
                         <img 
                             src={user?.foto_profil ? `/${user.foto_profil}` : profilePic} 
                             alt="User Profile" 
-                            className="w-8 h-8 rounded-lg object-cover ring-2 ring-slate-100"
+                            className="w-8 h-8 rounded-full object-cover ring-2 ring-slate-100"
                         />
                         <div className="hidden sm:block">
-                            <p className="text-xs font-semibold text-slate-700 leading-tight">{user?.name || 'Administrator'}</p>
-                            <p className="text-[10px] text-slate-400 font-medium capitalize">{user?.role || 'User'}</p>
+                            <p className="text-md font-semibold text-slate-200 capitalize leading-tight">{user?.name || 'Administrator'}</p>
+                            <p className="text-xs text-slate-400 font-medium capitalize">{user?.role || 'User'}</p>
                         </div>
                         <ChevronDown size={14} className="text-slate-400 hidden sm:block" />
                     </button>

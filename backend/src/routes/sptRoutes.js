@@ -630,26 +630,23 @@ router.get('/api/cetak/visum/:spt_id', isApiAuthenticated, async (req, res) => {
     const { spt_id } = req.params;
     try {
         const sql = `
-SELECT
-s.tempat_berangkat,
-    s.lokasi_tujuan,
-    s.tanggal_berangkat,
-    s.tanggal_kembali,
-    --Data Kepala Dinas(diambil dari tabel pegawai)
-kadis.nama_lengkap as kadis_nama,
-    kadis.nip as kadis_nip,
-    kadis.jabatan as kadis_jabatan,
-    --Data PPTK dari anggaran terkait
-pptk.nama_lengkap as pptk_nama,
-    pptk.nip as pptk_nip,
-    pptk.jabatan as pptk_jabatan
+            SELECT
+                s.tempat_berangkat,
+                s.lokasi_tujuan,
+                s.tanggal_berangkat,
+                s.tanggal_kembali,
+                kadis.nama_lengkap as kadis_nama,
+                kadis.nip as kadis_nip,
+                kadis.jabatan as kadis_jabatan,
+                pptk.nama_lengkap as pptk_nama,
+                pptk.nip as pptk_nip,
+                pptk.jabatan as pptk_jabatan
             FROM spt s
---Subquery untuk mencari Kepala Dinas secara dinamis
-            CROSS JOIN(SELECT * FROM pegawai WHERE jabatan LIKE '%Kepala Dinas%' LIMIT 1) as kadis
+            CROSS JOIN (SELECT * FROM pegawai WHERE jabatan LIKE '%Kepala Dinas%' LIMIT 1) as kadis
             LEFT JOIN anggaran a ON s.anggaran_id = a.id
             LEFT JOIN pegawai pptk ON a.pptk_id = pptk.id
             WHERE s.id = ?
-    `;
+        `;
         const data = await dbGet(sql, [spt_id]);
         if (!data) {
             return res.status(404).json({ message: 'Data SPT atau data terkait tidak ditemukan.' });

@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { 
-  Plus, 
-  Printer, 
-  Edit, 
-  Trash2, 
-  FileText, 
-  Coins, 
-  X, 
-  Check, 
-  ChevronLeft, 
-  ChevronRight, 
-  AlertCircle, 
-  User, 
-  Calendar, 
-  MapPin, 
+import {
+  Plus,
+  Printer,
+  Edit,
+  Trash2,
+  FileText,
+  Coins,
+  X,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  AlertCircle,
+  User,
+  Calendar,
+  MapPin,
   FileCheck,
   Search,
-  Loader2
+  Loader2,
 } from 'lucide-react';
 
 const SptRegister = () => {
@@ -26,18 +26,18 @@ const SptRegister = () => {
 
   // Tabs: 'spt' or 'sppd'
   const [activeTab, setActiveTab] = useState('spt');
-  
+
   // Data lists
   const [sptList, setSptList] = useState([]);
   const [sppdList, setSppdList] = useState([]);
-  
+
   // Pagination & limit
   const [sptPage, setSptPage] = useState(1);
   const [sppdPage, setSppdPage] = useState(1);
   const [limit, setLimit] = useState(5);
   const [sptPagination, setSptPagination] = useState({ totalPages: 1, totalItems: 0 });
   const [sppdPagination, setSppdPagination] = useState({ totalPages: 1, totalItems: 0 });
-  
+
   // Loading & search
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -56,7 +56,7 @@ const SptRegister = () => {
     bendahara_id: '',
     pelaksana_id: '',
     pejabat_id: '',
-    rincian: [{ uraian: '', jumlah: '', keterangan: '' }]
+    rincian: [{ uraian: '', jumlah: '', keterangan: '' }],
   });
   const [panjarNotif, setPanjarNotif] = useState('');
   const [panjarError, setPanjarError] = useState('');
@@ -85,15 +85,15 @@ const SptRegister = () => {
         params: {
           page: sptPage,
           limit: limit,
-          q: searchQuery
-        }
+          q: searchQuery,
+        },
       });
       if (res.data) {
         setSptList(res.data.data || []);
         if (res.data.pagination) {
           setSptPagination({
             totalPages: res.data.pagination.totalPages || 1,
-            totalItems: res.data.pagination.totalItems || 0
+            totalItems: res.data.pagination.totalItems || 0,
           });
         }
       }
@@ -112,15 +112,15 @@ const SptRegister = () => {
         params: {
           page: sppdPage,
           limit: limit,
-          q: searchQuery
-        }
+          q: searchQuery,
+        },
       });
       if (res.data) {
         setSppdList(res.data.data || []);
         if (res.data.pagination) {
           setSppdPagination({
             totalPages: res.data.pagination.totalPages || 1,
-            totalItems: res.data.pagination.totalItems || 0
+            totalItems: res.data.pagination.totalItems || 0,
           });
         }
       }
@@ -167,25 +167,29 @@ const SptRegister = () => {
   const openPanjarModal = async () => {
     setPanjarError('');
     setPanjarNotif('');
-    
+
     // Fetch all SPTs (limit=0 to fetch all)
     try {
       const [sptRes, pegawaiRes] = await Promise.all([
         axios.get('/api/spt?limit=0'),
-        axios.get('/api/pegawai?limit=1000')
+        axios.get('/api/pegawai?limit=1000'),
       ]);
 
       const spts = sptRes.data || [];
       const pegawais = pegawaiRes.data?.data || pegawaiRes.data || [];
-      
+
       setAllSptsForPanjar(spts);
       setAllPegawai(pegawais);
 
       // Find Bendahara (title contains 'bendahara pengeluaran')
-      const bendahara = pegawais.find(p => p.jabatan && p.jabatan.toLowerCase().includes('bendahara pengeluaran'));
-      
+      const bendahara = pegawais.find(
+        (p) => p.jabatan && p.jabatan.toLowerCase().includes('bendahara pengeluaran')
+      );
+
       // Find Kepala Dinas (title equals 'kepala dinas' or similar)
-      const kadis = pegawais.find(p => p.jabatan && p.jabatan.toLowerCase().includes('kepala dinas'));
+      const kadis = pegawais.find(
+        (p) => p.jabatan && p.jabatan.toLowerCase().includes('kepala dinas')
+      );
 
       setPanjarForm({
         spt_id: '',
@@ -194,7 +198,7 @@ const SptRegister = () => {
         bendahara_id: bendahara ? bendahara.id : '',
         pelaksana_id: '',
         pejabat_id: kadis ? kadis.id : '',
-        rincian: [{ uraian: '', jumlah: '', keterangan: '' }]
+        rincian: [{ uraian: '', jumlah: '', keterangan: '' }],
       });
       setAvailablePelaksana([]);
       setPanjarModalOpen(true);
@@ -208,7 +212,7 @@ const SptRegister = () => {
   const handlePanjarSptChange = async (sptId) => {
     if (!sptId) {
       setAvailablePelaksana([]);
-      setPanjarForm(prev => ({ ...prev, spt_id: '', pelaksana_id: '' }));
+      setPanjarForm((prev) => ({ ...prev, spt_id: '', pelaksana_id: '' }));
       return;
     }
 
@@ -217,7 +221,7 @@ const SptRegister = () => {
     try {
       const [sptDetailRes, existingPanjarRes] = await Promise.all([
         axios.get(`/api/spt/${sptId}`),
-        axios.get(`/api/panjar/by-spt/${sptId}`)
+        axios.get(`/api/panjar/by-spt/${sptId}`),
       ]);
 
       const sptDetail = sptDetailRes.data;
@@ -226,14 +230,14 @@ const SptRegister = () => {
 
       // Filter employees who don't have advance payment yet
       const filtered = (sptDetail.pegawai || []).filter(
-        p => !pegawaiDenganPanjar.includes(p.pegawai_id.toString())
+        (p) => !pegawaiDenganPanjar.includes(p.pegawai_id.toString())
       );
 
       setAvailablePelaksana(filtered);
-      setPanjarForm(prev => ({
+      setPanjarForm((prev) => ({
         ...prev,
         spt_id: sptId,
-        pelaksana_id: filtered.length > 0 ? filtered[0].pegawai_id : ''
+        pelaksana_id: filtered.length > 0 ? filtered[0].pegawai_id : '',
       }));
 
       if (filtered.length === 0) {
@@ -256,20 +260,20 @@ const SptRegister = () => {
     } else {
       newRincian[index][field] = value;
     }
-    setPanjarForm(prev => ({ ...prev, rincian: newRincian }));
+    setPanjarForm((prev) => ({ ...prev, rincian: newRincian }));
   };
 
   const addRincianRow = () => {
-    setPanjarForm(prev => ({
+    setPanjarForm((prev) => ({
       ...prev,
-      rincian: [...prev.rincian, { uraian: '', jumlah: '', keterangan: '' }]
+      rincian: [...prev.rincian, { uraian: '', jumlah: '', keterangan: '' }],
     }));
   };
 
   const removeRincianRow = (index) => {
     if (panjarForm.rincian.length === 1) return;
     const newRincian = panjarForm.rincian.filter((_, i) => i !== index);
-    setPanjarForm(prev => ({ ...prev, rincian: newRincian }));
+    setPanjarForm((prev) => ({ ...prev, rincian: newRincian }));
   };
 
   // Submit Panjar Form
@@ -277,13 +281,20 @@ const SptRegister = () => {
     e.preventDefault();
     setPanjarError('');
 
-    if (!panjarForm.spt_id || !panjarForm.pelaksana_id || !panjarForm.bendahara_id || !panjarForm.pejabat_id) {
+    if (
+      !panjarForm.spt_id ||
+      !panjarForm.pelaksana_id ||
+      !panjarForm.bendahara_id ||
+      !panjarForm.pejabat_id
+    ) {
       setPanjarError('Semua field wajib diisi.');
       return;
     }
 
     // Validate details
-    const isRincianValid = panjarForm.rincian.every(item => item.uraian.trim() !== '' && item.jumlah > 0);
+    const isRincianValid = panjarForm.rincian.every(
+      (item) => item.uraian.trim() !== '' && item.jumlah > 0
+    );
     if (!isRincianValid) {
       setPanjarError('Setiap baris rincian harus diisi Uraian dan Jumlah (harus > 0).');
       return;
@@ -292,10 +303,10 @@ const SptRegister = () => {
     try {
       const payload = {
         ...panjarForm,
-        rincian: panjarForm.rincian.map(item => ({
+        rincian: panjarForm.rincian.map((item) => ({
           ...item,
-          jumlah: parseFloat(item.jumlah)
-        }))
+          jumlah: parseFloat(item.jumlah),
+        })),
       };
 
       const res = await axios.post('/api/panjar', payload);
@@ -343,7 +354,7 @@ const SptRegister = () => {
 
           <Link
             to="/tambah-spt"
-            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white rounded-xl font-semibold shadow-md shadow-indigo-600/15 transition-all text-sm transform hover:-translate-y-0.5"
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-800 to-green-600 hover:from-indigo-900 hover:to-green-700 text-white rounded-xl font-semibold shadow-md shadow-indigo-600/15 transition-all text-sm transform hover:-translate-y-0.5"
           >
             <Plus className="h-4 w-4" />
             Buat Surat Tugas
@@ -356,21 +367,27 @@ const SptRegister = () => {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 border-b border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/50">
           <div className="flex gap-2">
             <button
-              onClick={() => { setActiveTab('spt'); setSearchQuery(''); }}
-              className={`px-4 py-2.5 rounded-xl text-sm font-semibold tracking-wide transition-all ${
+              onClick={() => {
+                setActiveTab('spt');
+                setSearchQuery('');
+              }}
+              className={`px-4 py-2.5 rounded-t-2xl rounded-l-none  text-sm font-semibold tracking-wide transition-all ${
                 activeTab === 'spt'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
+                  ? 'bg-mauve-500 text-white shadow-md shadow-indigo-600/10'
+                  : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
               }`}
             >
               Register Surat Tugas (ST)
             </button>
             <button
-              onClick={() => { setActiveTab('sppd'); setSearchQuery(''); }}
-              className={`px-4 py-2.5 rounded-xl text-sm font-semibold tracking-wide transition-all ${
+              onClick={() => {
+                setActiveTab('sppd');
+                setSearchQuery('');
+              }}
+              className={`px-4 py-2.5 rounded-t-2xl rounded-l-none text-sm font-semibold tracking-wide transition-all ${
                 activeTab === 'sppd'
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
+                  ? 'bg-mauve-500 text-white shadow-md shadow-indigo-600/10'
+                  : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
               }`}
             >
               Register Perjalanan Dinas (SPD)
@@ -383,10 +400,14 @@ const SptRegister = () => {
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               <input
                 type="text"
-                placeholder={activeTab === 'spt' ? 'Cari Nomor ST atau Maksud...' : 'Cari Nomor SPD atau Pegawai...'}
+                placeholder={
+                  activeTab === 'spt'
+                    ? 'Cari Nomor ST atau Maksud...'
+                    : 'Cari Nomor SPD atau Pegawai...'
+                }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-400 focus:border-none "
               />
             </div>
 
@@ -395,7 +416,11 @@ const SptRegister = () => {
               <span>Tampilkan:</span>
               <select
                 value={limit}
-                onChange={(e) => { setLimit(Number(e.target.value)); setSptPage(1); setSppdPage(1); }}
+                onChange={(e) => {
+                  setLimit(Number(e.target.value));
+                  setSptPage(1);
+                  setSppdPage(1);
+                }}
                 className="px-2.5 py-1.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-xl focus:outline-none text-slate-800 dark:text-slate-200"
               >
                 <option value={5}>5</option>
@@ -419,19 +444,34 @@ const SptRegister = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-sm">
                 <thead>
-                  <tr className="border-b border-slate-100 bg-slate-50/50 text-slate-500 font-semibold dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-400">
-                    <th className="py-4 px-6 text-center w-12">No.</th>
-                    <th className="py-4 px-4 w-60">Nomor & Tgl Surat</th>
-                    <th className="py-4 px-4">Maksud Perjalanan</th>
-                    <th className="py-4 px-4">Pegawai Ditugaskan</th>
-                    <th className="py-4 px-4 w-52">Tujuan & Tgl Berangkat</th>
-                    <th className="py-4 px-6 text-right w-64">Aksi</th>
+                  <tr className="bg-red-900/90   text-slate-100 border-b-2 border-red-900/90 border-double font-semibold dark:bg-slate-800/50 dark:text-slate-400">
+                    <th className="py-3 px-6 text-center  w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
+                      No.
+                    </th>
+                    <th className="py-3 px-4 w-60 shadow-[inset_0_-2px_0_0_#ffffff]">
+                      Nomor & Tgl Surat
+                    </th>
+                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">
+                      Maksud Perjalanan
+                    </th>
+                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">
+                      Pegawai Ditugaskan
+                    </th>
+                    <th className="py-3 px-4 w-52 shadow-[inset_0_-2px_0_0_#ffffff]">
+                      Tujuan & Tgl Berangkat
+                    </th>
+                    <th className="py-3 px-6 text-right w-64 shadow-[inset_0_-2px_0_0_#ffffff]">
+                      Aksi
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-700/50">
                   {sptList.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="py-12 text-center text-slate-400 dark:text-slate-500">
+                      <td
+                        colSpan={6}
+                        className="py-12 text-center text-slate-400 dark:text-slate-500"
+                      >
                         Tidak ada data Surat Perintah Tugas yang ditemukan.
                       </td>
                     </tr>
@@ -446,7 +486,8 @@ const SptRegister = () => {
                       if (isCancelled) {
                         rowBgClass = 'bg-red-50/40 dark:bg-red-950/10 hover:bg-red-50/60';
                       } else if (hasPayment) {
-                        rowBgClass = 'bg-emerald-50/40 dark:bg-emerald-950/10 hover:bg-emerald-50/60';
+                        rowBgClass =
+                          'bg-emerald-50/40 dark:bg-emerald-950/10 hover:bg-emerald-50/60';
                       }
 
                       const canceledPegawaiSet = new Set(spt.pegawai_dibatalkan || []);
@@ -465,21 +506,24 @@ const SptRegister = () => {
                             </span>
                           </td>
                           <td className="py-4 px-4 text-slate-700 dark:text-slate-300">
-                            <span className="block font-medium leading-relaxed max-w-sm line-clamp-2" title={spt.maksud_perjalanan}>
+                            <span
+                              className="block font-medium leading-relaxed max-w-sm line-clamp-2"
+                              title={spt.maksud_perjalanan}
+                            >
                               {spt.maksud_perjalanan}
                             </span>
                           </td>
                           <td className="py-4 px-4">
                             <ul className="space-y-1">
                               {spt.pegawai && spt.pegawai.length > 0 ? (
-                                spt.pegawai.map(p => {
+                                spt.pegawai.map((p) => {
                                   const isCanceled = canceledPegawaiSet.has(p.nama_lengkap);
                                   return (
-                                    <li 
-                                      key={p.id} 
+                                    <li
+                                      key={p.id}
                                       className={`text-xs ${
-                                        isCanceled 
-                                          ? 'line-through text-red-500 font-medium' 
+                                        isCanceled
+                                          ? 'line-through text-red-500 font-medium'
                                           : 'text-slate-600 dark:text-slate-400'
                                       }`}
                                     >
@@ -488,7 +532,9 @@ const SptRegister = () => {
                                   );
                                 })
                               ) : (
-                                <span className="text-xs text-slate-400 italic">Tidak ada pegawai</span>
+                                <span className="text-xs text-slate-400 italic">
+                                  Tidak ada pegawai
+                                </span>
                               )}
                             </ul>
                           </td>
@@ -531,7 +577,10 @@ const SptRegister = () => {
                                 Batal
                               </span>
                             ) : hasReport ? (
-                              <span className="inline-flex items-center justify-center p-2 text-slate-400 cursor-not-allowed" title="Sudah Dilaporkan">
+                              <span
+                                className="inline-flex items-center justify-center p-2 text-slate-400 cursor-not-allowed"
+                                title="Sudah Dilaporkan"
+                              >
                                 <FileCheck className="h-4 w-4" />
                               </span>
                             ) : (
@@ -545,36 +594,37 @@ const SptRegister = () => {
                             )}
 
                             {/* Edit / Delete Buttons for Admin */}
-                            {(userRole === 'admin' || userRole === 'superadmin') && !isCancelled && (
-                              <>
-                                <Link
-                                  to={`/edit-spt/${spt.id}`}
-                                  className="inline-flex items-center justify-center p-2 text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-lg transition-colors"
-                                  title="Edit SPT"
-                                >
-                                  <Edit className="h-4 w-4" />
-                                </Link>
-                                <button
-                                  onClick={() => handleDeleteSpt(spt.id, spt.nomor_surat)}
-                                  className="inline-flex items-center justify-center p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
-                                  title="Hapus SPT"
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                </button>
-                                
-                                {/* Form Visum */}
-                                <a
-                                  href={`/cetak/visum/${spt.id}`}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-sky-700 bg-sky-50 dark:bg-sky-950/20 hover:bg-sky-100 rounded-lg transition-all"
-                                  title="Cetak Form Visum"
-                                >
-                                  <Printer className="h-3 w-3" />
-                                  Visum
-                                </a>
-                              </>
-                            )}
+                            {(userRole === 'admin' || userRole === 'superadmin') &&
+                              !isCancelled && (
+                                <>
+                                  <Link
+                                    to={`/edit-spt/${spt.id}`}
+                                    className="inline-flex items-center justify-center p-2 text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-lg transition-colors"
+                                    title="Edit SPT"
+                                  >
+                                    <Edit className="h-4 w-4" />
+                                  </Link>
+                                  <button
+                                    onClick={() => handleDeleteSpt(spt.id, spt.nomor_surat)}
+                                    className="inline-flex items-center justify-center p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                                    title="Hapus SPT"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </button>
+
+                                  {/* Form Visum */}
+                                  <a
+                                    href={`/cetak/visum/${spt.id}`}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-sky-700 bg-sky-50 dark:bg-sky-950/20 hover:bg-sky-100 rounded-lg transition-all"
+                                    title="Cetak Form Visum"
+                                  >
+                                    <Printer className="h-3 w-3" />
+                                    Visum
+                                  </a>
+                                </>
+                              )}
                           </td>
                         </tr>
                       );
@@ -588,19 +638,30 @@ const SptRegister = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-sm">
                 <thead>
-                  <tr className="border-b border-slate-100 bg-slate-50/50 text-slate-500 font-semibold dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-400">
-                    <th className="py-4 px-6 text-center w-12">No.</th>
-                    <th className="py-4 px-4 w-72">Nomor SPPD</th>
-                    <th className="py-4 px-4">Nomor SPT Terkait</th>
-                    <th className="py-4 px-4">Pegawai</th>
-                    <th className="py-4 px-4 w-44">Tanggal SPPD</th>
-                    <th className="py-4 px-6 text-right w-28">Aksi</th>
+                  <tr className="bg-red-900/90 text-slate-100 border-b-2 border-red-900/90 border-double font-semibold dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-400">
+                    <th className="py-3 px-6 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
+                      No.
+                    </th>
+                    <th className="py-3 px-4 w-72 shadow-[inset_0_-2px_0_0_#ffffff]">Nomor SPPD</th>
+                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">
+                      Nomor SPT Terkait
+                    </th>
+                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">Pegawai</th>
+                    <th className="py-3 px-4 w-44 shadow-[inset_0_-2px_0_0_#ffffff]">
+                      Tanggal SPPD
+                    </th>
+                    <th className="py-3 px-6 text-right w-28 shadow-[inset_0_-2px_0_0_#ffffff]">
+                      Aksi
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-700/50">
                   {sppdList.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="py-12 text-center text-slate-400 dark:text-slate-500">
+                      <td
+                        colSpan={6}
+                        className="py-12 text-center text-slate-400 dark:text-slate-500"
+                      >
                         Tidak ada data Surat Perjalanan Dinas (SPPD) yang ditemukan.
                       </td>
                     </tr>
@@ -608,8 +669,8 @@ const SptRegister = () => {
                     sppdList.map((sppd, idx) => {
                       const isCanceled = sppd.is_canceled === 1;
                       return (
-                        <tr 
-                          key={sppd.id} 
+                        <tr
+                          key={sppd.id}
                           className={`hover:bg-slate-50/40 dark:hover:bg-slate-700/20 transition-all ${
                             isCanceled ? 'bg-red-50/40 dark:bg-red-950/10' : ''
                           }`}
@@ -663,21 +724,42 @@ const SptRegister = () => {
           {/* Pagination Controls */}
           <div className="flex flex-col sm:flex-row items-center justify-between p-5 border-t border-slate-100 dark:border-slate-700/50 bg-slate-50/30 dark:bg-slate-800/10 gap-4">
             <span className="text-sm text-slate-500 dark:text-slate-400">
-              Menampilkan Halaman <span className="font-semibold text-slate-800 dark:text-slate-200">{activeTab === 'spt' ? sptPage : sppdPage}</span> dari <span className="font-semibold text-slate-800 dark:text-slate-200">{activeTab === 'spt' ? sptPagination.totalPages : sppdPagination.totalPages}</span> ({activeTab === 'spt' ? sptPagination.totalItems : sppdPagination.totalItems} total data)
+              Menampilkan Halaman{' '}
+              <span className="font-semibold text-slate-800 dark:text-slate-200">
+                {activeTab === 'spt' ? sptPage : sppdPage}
+              </span>{' '}
+              dari{' '}
+              <span className="font-semibold text-slate-800 dark:text-slate-200">
+                {activeTab === 'spt' ? sptPagination.totalPages : sppdPagination.totalPages}
+              </span>{' '}
+              ({activeTab === 'spt' ? sptPagination.totalItems : sppdPagination.totalItems} total
+              data)
             </span>
 
             <div className="flex items-center gap-2">
               <button
-                onClick={() => activeTab === 'spt' ? setSptPage(prev => Math.max(prev - 1, 1)) : setSppdPage(prev => Math.max(prev - 1, 1))}
+                onClick={() =>
+                  activeTab === 'spt'
+                    ? setSptPage((prev) => Math.max(prev - 1, 1))
+                    : setSppdPage((prev) => Math.max(prev - 1, 1))
+                }
                 disabled={activeTab === 'spt' ? sptPage === 1 : sppdPage === 1}
                 className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
-              
+
               <button
-                onClick={() => activeTab === 'spt' ? setSptPage(prev => Math.min(prev + 1, sptPagination.totalPages)) : setSppdPage(prev => Math.min(prev + 1, sppdPagination.totalPages))}
-                disabled={activeTab === 'spt' ? sptPage === sptPagination.totalPages : sppdPage === sppdPagination.totalPages}
+                onClick={() =>
+                  activeTab === 'spt'
+                    ? setSptPage((prev) => Math.min(prev + 1, sptPagination.totalPages))
+                    : setSppdPage((prev) => Math.min(prev + 1, sppdPagination.totalPages))
+                }
+                disabled={
+                  activeTab === 'spt'
+                    ? sptPage === sptPagination.totalPages
+                    : sppdPage === sppdPagination.totalPages
+                }
                 className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
               >
                 <ChevronRight className="h-4 w-4" />
@@ -689,8 +771,11 @@ const SptRegister = () => {
 
       {/* ================= MODAL TAMBAH PANJAR (UANG MUKA) ================= */}
       {panjarModalOpen && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={(e) => { if (e.target === e.currentTarget) setPanjarModalOpen(false); }}
+        <div
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setPanjarModalOpen(false);
+          }}
         >
           <div className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-2xl w-full max-w-3xl flex flex-col max-h-[90vh] overflow-hidden animate-zoomIn">
             {/* Modal Header */}
@@ -737,7 +822,9 @@ const SptRegister = () => {
                       type="text"
                       required
                       value={panjarForm.tempat}
-                      onChange={(e) => setPanjarForm(prev => ({ ...prev, tempat: e.target.value }))}
+                      onChange={(e) =>
+                        setPanjarForm((prev) => ({ ...prev, tempat: e.target.value }))
+                      }
                       className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
                     />
                   </div>
@@ -749,7 +836,9 @@ const SptRegister = () => {
                       type="date"
                       required
                       value={panjarForm.tanggal_panjar}
-                      onChange={(e) => setPanjarForm(prev => ({ ...prev, tanggal_panjar: e.target.value }))}
+                      onChange={(e) =>
+                        setPanjarForm((prev) => ({ ...prev, tanggal_panjar: e.target.value }))
+                      }
                       className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
                     />
                   </div>
@@ -766,7 +855,7 @@ const SptRegister = () => {
                     className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
                   >
                     <option value="">-- Pilih SPT --</option>
-                    {allSptsForPanjar.map(s => (
+                    {allSptsForPanjar.map((s) => (
                       <option key={s.id} value={s.id}>
                         {s.nomor_surat} (Tujuan: {s.lokasi_tujuan})
                       </option>
@@ -784,7 +873,9 @@ const SptRegister = () => {
                       required
                       disabled={loadingPelaksana || availablePelaksana.length === 0}
                       value={panjarForm.pelaksana_id}
-                      onChange={(e) => setPanjarForm(prev => ({ ...prev, pelaksana_id: e.target.value }))}
+                      onChange={(e) =>
+                        setPanjarForm((prev) => ({ ...prev, pelaksana_id: e.target.value }))
+                      }
                       className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 disabled:opacity-50"
                     >
                       {loadingPelaksana ? (
@@ -792,7 +883,7 @@ const SptRegister = () => {
                       ) : availablePelaksana.length === 0 ? (
                         <option value="">-- Pilih SPT Terlebih Dahulu --</option>
                       ) : (
-                        availablePelaksana.map(p => (
+                        availablePelaksana.map((p) => (
                           <option key={p.pegawai_id} value={p.pegawai_id}>
                             {p.nama_lengkap} (NIP: {p.nip})
                           </option>
@@ -808,13 +899,15 @@ const SptRegister = () => {
                     <select
                       required
                       value={panjarForm.bendahara_id}
-                      onChange={(e) => setPanjarForm(prev => ({ ...prev, bendahara_id: e.target.value }))}
+                      onChange={(e) =>
+                        setPanjarForm((prev) => ({ ...prev, bendahara_id: e.target.value }))
+                      }
                       className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
                     >
                       <option value="">-- Pilih Bendahara --</option>
                       {allPegawai
-                        .filter(p => p.jabatan && p.jabatan.toLowerCase().includes('bendahara'))
-                        .map(p => (
+                        .filter((p) => p.jabatan && p.jabatan.toLowerCase().includes('bendahara'))
+                        .map((p) => (
                           <option key={p.id} value={p.id}>
                             {p.nama_lengkap} (NIP: {p.nip})
                           </option>
@@ -830,13 +923,15 @@ const SptRegister = () => {
                   <select
                     required
                     value={panjarForm.pejabat_id}
-                    onChange={(e) => setPanjarForm(prev => ({ ...prev, pejabat_id: e.target.value }))}
+                    onChange={(e) =>
+                      setPanjarForm((prev) => ({ ...prev, pejabat_id: e.target.value }))
+                    }
                     className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
                   >
                     <option value="">-- Pilih Pejabat --</option>
                     {allPegawai
-                      .filter(p => p.jabatan && p.jabatan.toLowerCase().includes('kepala dinas'))
-                      .map(p => (
+                      .filter((p) => p.jabatan && p.jabatan.toLowerCase().includes('kepala dinas'))
+                      .map((p) => (
                         <option key={p.id} value={p.id}>
                           {p.nama_lengkap} - {p.jabatan}
                         </option>
@@ -924,8 +1019,11 @@ const SptRegister = () => {
 
       {/* ================= CONFLICT ALERT DIALOG ================= */}
       {alertModalOpen && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
-          onClick={(e) => { if (e.target === e.currentTarget) setAlertModalOpen(false); }}
+        <div
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setAlertModalOpen(false);
+          }}
         >
           <div className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-2xl w-full max-w-md mx-auto flex flex-col p-6 animate-zoomIn">
             <div className="text-center space-y-3">
