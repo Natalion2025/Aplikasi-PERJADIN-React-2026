@@ -163,7 +163,7 @@ const Pegawai = () => {
         </div>
         <button
           onClick={handleAdd}
-          className="flex items-center justify-center gap-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-bold rounded-2xl shadow-lg shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all text-sm w-full sm:w-auto"
+          className="flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-indigo-800 to-green-600 hover:from-indigo-900 hover:to-green-700 text-white font-bold rounded-2xl shadow-lg shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all text-sm w-full sm:w-auto"
         >
           <Plus size={18} />
           <span>Tambah Pegawai</span>
@@ -186,7 +186,7 @@ const Pegawai = () => {
                 setSearch(e.target.value);
                 setCurrentPage(1); // Reset ke halaman pertama saat mencari
               }}
-              className="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm"
+              className="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring-1 focus:ring-mauve-700/90 focus:bg-white transition-all text-sm"
             />
           </div>
           <span className="text-xs font-semibold text-slate-400 bg-slate-50 border border-slate-150 px-3 py-1.5 rounded-xl">
@@ -207,34 +207,34 @@ const Pegawai = () => {
             Tidak ada data pegawai yang ditemukan.
           </div>
         ) : (
-          <div className="overflow-x-auto rounded-2xl border border-red-900/90">
+          <div className="overflow-x-auto rounded-2xl rounded-b-none border-x border-mauve-700">
             <table className="min-w-full divide-y divide-slate-100">
               <thead className="">
-                <tr className="bg-red-900/90  text-slate-100 border-b-2 border-red-900/90 border-double">
-                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider w-16">
+                <tr className="bg-mauve-700/90 text-slate-100 border-b-2  border-mauve-700 border-double">
+                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider w-16 shadow-[inset_0_-2px_0_0_#ffffff]">
                     No
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider">
+                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
                     Nama Lengkap / NIP
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider">
+                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
                     Pangkat / Golongan
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider">
+                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
                     Jabatan
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider">
+                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
                     Bidang
                   </th>
-                  <th className="px-5 py-3 text-center text-xs font-bold  uppercase tracking-wider w-24">
+                  <th className="px-5 py-3 text-center text-xs font-bold  uppercase tracking-wider w-24 shadow-[inset_0_-2px_0_0_#ffffff]">
                     Aksi
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-sm">
                 {pegawaiList.map((pegawai, index) => (
-                  <tr key={pegawai.id} className="hover:bg-slate-50/20 transition-colors">
-                    <td className="px-5 py-4 text-slate-800">
+                  <tr key={pegawai.id} className="hover:bg-slate-50/20  transition-colors">
+                    <td className="px-5 py-4 text-slate-800 align-top">
                       {(currentPage - 1) * itemsPerPage + index + 1}
                     </td>
                     <td className="px-5 py-4">
@@ -247,9 +247,11 @@ const Pegawai = () => {
                         {pegawai.golongan ? `Gol. ${pegawai.golongan}` : '-'}
                       </p>
                     </td>
-                    <td className="px-5 py-4 text-slate-700 font-medium">{pegawai.jabatan}</td>
+                    <td className="px-5 py-4 text-slate-700 align-top font-medium capitalize">
+                      {pegawai.jabatan?.toLowerCase()}
+                    </td>
                     <td className="px-5 py-4">
-                      <span className="inline-flex px-2.5 py-1 rounded-xl text-xs font-bold bg-indigo-50/50 text-indigo-600 border border-slate-600">
+                      <span className="inline-flex px-2.5 py-1 rounded-xl text-xs font-bold bg-indigo-50/50 border text-mauve-700/90">
                         {pegawai.bidang || '-'}
                       </span>
                     </td>
@@ -257,14 +259,14 @@ const Pegawai = () => {
                       <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => handleEdit(pegawai)}
-                          className="p-2 text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all"
+                          className="p-2 text-mauve-700/90 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all"
                           title="Ubah Data"
                         >
                           <Edit size={16} />
                         </button>
                         <button
                           onClick={() => handleDelete(pegawai.id, pegawai.nama_lengkap)}
-                          className="p-2 text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
+                          className="p-2 text-mauve-700/90 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
                           title="Hapus Data"
                         >
                           <Trash2 size={16} />

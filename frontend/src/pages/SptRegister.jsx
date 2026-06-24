@@ -19,6 +19,7 @@ import {
   FileCheck,
   Search,
   Loader2,
+  ChevronDown,
 } from 'lucide-react';
 
 const SptRegister = () => {
@@ -26,6 +27,9 @@ const SptRegister = () => {
 
   // Tabs: 'spt' or 'sppd'
   const [activeTab, setActiveTab] = useState('spt');
+
+  // Dropdown Action state
+  const [openDropdownId, setOpenDropdownId] = useState(null);
 
   // Data lists
   const [sptList, setSptList] = useState([]);
@@ -133,6 +137,19 @@ const SptRegister = () => {
 
   useEffect(() => {
     fetchSession();
+  }, []);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (!e.target.closest('.dropdown-trigger') && !e.target.closest('.dropdown-menu')) {
+        setOpenDropdownId(null);
+      }
+    };
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
   }, []);
 
   useEffect(() => {
@@ -407,33 +424,35 @@ const SptRegister = () => {
                 }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-400 focus:border-none "
+                className="w-full pl-10 pr-4 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring focus:ring-mauve-700/90 focus:border-none "
               />
             </div>
 
             {/* Limit Selector */}
             <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 flex-shrink-0">
               <span>Tampilkan:</span>
-              <select
-                value={limit}
-                onChange={(e) => {
-                  setLimit(Number(e.target.value));
-                  setSptPage(1);
-                  setSppdPage(1);
-                }}
-                className="px-2.5 py-1.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-xl focus:outline-none text-slate-800 dark:text-slate-200"
-              >
-                <option value={5}>5</option>
-                <option value={15}>15</option>
-                <option value={25}>25</option>
-                <option value={50}>50</option>
-              </select>
+              <div className="relative border border-slate-300 dark:border-slate-700 focus-within:outline-none focus-within:ring focus-within:ring-mauve-700/90 focus-within:border-none rounded-lg">
+                <select
+                  value={limit}
+                  onChange={(e) => {
+                    setLimit(Number(e.target.value));
+                    setSptPage(1);
+                    setSppdPage(1);
+                  }}
+                  className="px-2.5 py-1.5  bg-white dark:bg-slate-900 rounded-lg outline-none  text-slate-800 dark:text-slate-200"
+                >
+                  <option value={5}>5</option>
+                  <option value={15}>15</option>
+                  <option value={25}>25</option>
+                  <option value={50}>50</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Tab Content Panels */}
-        <div className="p-0">
+        <div className="p-6">
           {loading ? (
             <div className="py-20 flex flex-col items-center justify-center text-slate-400">
               <Loader2 className="h-8 w-8 animate-spin text-indigo-600 mb-2" />
@@ -441,8 +460,8 @@ const SptRegister = () => {
             </div>
           ) : activeTab === 'spt' ? (
             /* ================= REGISTER SPT TABLE ================= */
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-sm">
+            <div className="overflow-x-auto rounded-2xl rounded-b-none border-x border-red-900/90">
+              <table className="min-w-full text-left border-collapse text-sm">
                 <thead>
                   <tr className="bg-red-900/90   text-slate-100 border-b-2 border-red-900/90 border-double font-semibold dark:bg-slate-800/50 dark:text-slate-400">
                     <th className="py-3 px-6 text-center  w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
@@ -457,10 +476,10 @@ const SptRegister = () => {
                     <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">
                       Pegawai Ditugaskan
                     </th>
-                    <th className="py-3 px-4 w-52 shadow-[inset_0_-2px_0_0_#ffffff]">
-                      Tujuan & Tgl Berangkat
+                    <th className="py-3 whitespace-nowrap px-4 w-52 shadow-[inset_0_-2px_0_0_#ffffff]">
+                      Lokasi Tujuan
                     </th>
-                    <th className="py-3 px-6 text-right w-64 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-6 w-64 text-center shadow-[inset_0_-2px_0_0_#ffffff]">
                       Aksi
                     </th>
                   </tr>
@@ -494,10 +513,10 @@ const SptRegister = () => {
 
                       return (
                         <tr key={spt.id} className={`transition-all ${rowBgClass}`}>
-                          <td className="py-4 px-6 text-center text-slate-500 dark:text-slate-400 font-medium">
+                          <td className="py-4 px-6 text-center text-slate-500 dark:text-slate-400 font-medium align-top">
                             {(sptPage - 1) * limit + idx + 1}.
                           </td>
-                          <td className="py-4 px-4">
+                          <td className="py-4 px-4 align-top">
                             <span className="font-semibold text-slate-800 dark:text-slate-200 block break-words">
                               {spt.nomor_surat}
                             </span>
@@ -505,15 +524,17 @@ const SptRegister = () => {
                               {formatDate(spt.tanggal_surat)}
                             </span>
                           </td>
-                          <td className="py-4 px-4 text-slate-700 dark:text-slate-300">
+                          <td className="py-4 px-4 whitespace-nowrap text-slate-700 dark:text-slate-300 align-top">
                             <span
-                              className="block font-medium leading-relaxed max-w-sm line-clamp-2"
+                              className="block font-medium  max-w-sm "
                               title={spt.maksud_perjalanan}
                             >
-                              {spt.maksud_perjalanan}
+                              {spt.maksud_perjalanan && spt.maksud_perjalanan.length > 25
+                                ? `${spt.maksud_perjalanan.substring(0, 25)}...`
+                                : spt.maksud_perjalanan}
                             </span>
                           </td>
-                          <td className="py-4 px-4">
+                          <td className="py-4 px-4 align-top">
                             <ul className="space-y-1">
                               {spt.pegawai && spt.pegawai.length > 0 ? (
                                 spt.pegawai.map((p) => {
@@ -523,8 +544,8 @@ const SptRegister = () => {
                                       key={p.id}
                                       className={`text-xs ${
                                         isCanceled
-                                          ? 'line-through text-red-500 font-medium'
-                                          : 'text-slate-600 dark:text-slate-400'
+                                          ? 'line-through whitespace-nowrap text-red-500 font-medium'
+                                          : 'text-slate-600 whitespace-nowrap dark:text-slate-400'
                                       }`}
                                     >
                                       • {p.nama_lengkap}
@@ -538,9 +559,9 @@ const SptRegister = () => {
                               )}
                             </ul>
                           </td>
-                          <td className="py-4 px-4 text-slate-600 dark:text-slate-400">
+                          <td className="py-4 px-4 text-slate-600 dark:text-slate-400 align-top">
                             <div className="font-medium text-slate-800 dark:text-slate-200 flex items-center gap-1.5 text-xs">
-                              <MapPin className="h-3 w-3 text-slate-400" />
+                              <MapPin className="h-6 w-6 text-slate-800 " />
                               {spt.lokasi_tujuan}
                             </div>
                             <div className="text-xs text-slate-400 mt-1 flex items-center gap-1.5">
@@ -548,83 +569,115 @@ const SptRegister = () => {
                               {formatDate(spt.tanggal_berangkat)}
                             </div>
                           </td>
-                          <td className="py-4 px-6 text-right space-x-1.5 whitespace-nowrap">
-                            {/* Print SPT */}
-                            <a
-                              href={`/cetak/spt/${spt.id}`}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex items-center justify-center p-2 text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-colors"
-                              title="Cetak SPT"
-                            >
-                              <Printer className="h-4 w-4" />
-                            </a>
-
-                            {/* Print SPPD (Prints sheets for all employees in SPT) */}
-                            <a
-                              href={`/cetak/sppd/${spt.id}`}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex items-center justify-center p-2 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 rounded-lg transition-colors"
-                              title="Cetak SPPD Kolektif"
-                            >
-                              <FileText className="h-4 w-4" />
-                            </a>
-
-                            {/* Report Status */}
-                            {isCancelled ? (
-                              <span className="text-xs font-semibold text-red-500 px-2 py-1 bg-red-50 dark:bg-red-950/20 rounded-md">
-                                Batal
-                              </span>
-                            ) : hasReport ? (
-                              <span
-                                className="inline-flex items-center justify-center p-2 text-slate-400 cursor-not-allowed"
-                                title="Sudah Dilaporkan"
+                          <td className="py-4 px-6 text-right align-top relative">
+                            <div className="inline-block text-left">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setOpenDropdownId(openDropdownId === spt.id ? null : spt.id);
+                                }}
+                                className="dropdown-trigger inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-50 hover:bg-indigo-100/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 text-indigo-600 dark:text-indigo-400 text-xs font-bold rounded-xl transition-all shadow-sm active:scale-95"
                               >
-                                <FileCheck className="h-4 w-4" />
-                              </span>
-                            ) : (
-                              <Link
-                                to={`/buat-laporan?spt_id=${spt.id}`}
-                                className="inline-flex items-center justify-center p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors"
-                                title="Buat Laporan Perjadin"
-                              >
-                                <Plus className="h-4 w-4" />
-                              </Link>
-                            )}
+                                <span>Aksi</span>
+                                <ChevronDown
+                                  className={`h-3.5 w-3.5 transition-transform duration-200 ${openDropdownId === spt.id ? 'rotate-180' : ''}`}
+                                />
+                              </button>
 
-                            {/* Edit / Delete Buttons for Admin */}
-                            {(userRole === 'admin' || userRole === 'superadmin') &&
-                              !isCancelled && (
-                                <>
-                                  <Link
-                                    to={`/edit-spt/${spt.id}`}
-                                    className="inline-flex items-center justify-center p-2 text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-lg transition-colors"
-                                    title="Edit SPT"
-                                  >
-                                    <Edit className="h-4 w-4" />
-                                  </Link>
-                                  <button
-                                    onClick={() => handleDeleteSpt(spt.id, spt.nomor_surat)}
-                                    className="inline-flex items-center justify-center p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
-                                    title="Hapus SPT"
-                                  >
-                                    <Trash2 className="h-4 w-4" />
-                                  </button>
+                              {openDropdownId === spt.id && (
+                                <div className="dropdown-menu absolute right-6 mt-1.5 w-52 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl rounded-2xl z-50 py-1.5 text-left divide-y divide-slate-100 dark:divide-slate-700/50">
+                                  {/* Section Cetak */}
+                                  <div className="py-1">
+                                    <div className="px-3 py-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                                      Cetak Dokumen
+                                    </div>
+                                    <a
+                                      href={`/cetak/spt/${spt.id}`}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="flex items-center gap-2.5 px-3 py-2 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
+                                    >
+                                      <Printer className="h-4 w-4 text-indigo-500" />
+                                      <span>Cetak SPT</span>
+                                    </a>
+                                    <a
+                                      href={`/cetak/sppd/${spt.id}`}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="flex items-center gap-2.5 px-3 py-2 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
+                                    >
+                                      <FileText className="h-4 w-4 text-emerald-500" />
+                                      <span>Cetak SPPD Kolektif</span>
+                                    </a>
+                                    {(userRole === 'admin' || userRole === 'superadmin') && (
+                                      <a
+                                        href={`/cetak/visum/${spt.id}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="flex items-center gap-2.5 px-3 py-2 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
+                                      >
+                                        <Printer className="h-4 w-4 text-sky-500" />
+                                        <span>Cetak Visum</span>
+                                      </a>
+                                    )}
+                                  </div>
 
-                                  {/* Form Visum */}
-                                  <a
-                                    href={`/cetak/visum/${spt.id}`}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-sky-700 bg-sky-50 dark:bg-sky-950/20 hover:bg-sky-100 rounded-lg transition-all"
-                                    title="Cetak Form Visum"
-                                  >
-                                    <Printer className="h-3 w-3" />
-                                    Visum
-                                  </a>
-                                </>
+                                  {/* Section Tindakan */}
+                                  <div className="py-1">
+                                    <div className="px-3 py-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                                      Tindakan & Laporan
+                                    </div>
+                                    {isCancelled ? (
+                                      <div className="flex items-center gap-2.5 px-3 py-2 text-red-500 text-xs font-bold">
+                                        <span className="h-2 w-2 rounded-full bg-red-500"></span>
+                                        <span>SPT Batal</span>
+                                      </div>
+                                    ) : hasReport ? (
+                                      <div className="flex items-center gap-2.5 px-3 py-2 text-slate-400 text-xs font-semibold">
+                                        <FileCheck className="h-4 w-4 text-slate-400" />
+                                        <span>Sudah Dilaporkan</span>
+                                      </div>
+                                    ) : (
+                                      <Link
+                                        to={`/buat-laporan?spt_id=${spt.id}`}
+                                        className="flex items-center gap-2.5 px-3 py-2 text-blue-600 dark:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
+                                      >
+                                        <Plus className="h-4 w-4" />
+                                        <span>Buat Laporan</span>
+                                      </Link>
+                                    )}
+                                  </div>
+
+                                  {/* Section Admin */}
+                                  {(userRole === 'admin' || userRole === 'superadmin') &&
+                                    !isCancelled && (
+                                      <div className="py-1">
+                                        <div className="px-3 py-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                                          Kelola
+                                        </div>
+                                        <Link
+                                          to={`/edit-spt/${spt.id}`}
+                                          className="flex items-center gap-2.5 px-3 py-2 text-amber-600 dark:text-amber-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
+                                        >
+                                          <Edit className="h-4 w-4" />
+                                          <span>Edit SPT</span>
+                                        </Link>
+                                        <button
+                                          type="button"
+                                          onClick={() => {
+                                            setOpenDropdownId(null);
+                                            handleDeleteSpt(spt.id, spt.nomor_surat);
+                                          }}
+                                          className="w-full flex items-center gap-2.5 px-3 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 text-xs font-semibold transition-colors text-left"
+                                        >
+                                          <Trash2 className="h-4 w-4" />
+                                          <span>Hapus SPT</span>
+                                        </button>
+                                      </div>
+                                    )}
+                                </div>
                               )}
+                            </div>
                           </td>
                         </tr>
                       );
@@ -690,7 +743,7 @@ const SptRegister = () => {
                             {sppd.nomor_surat}
                           </td>
                           <td className="py-4 px-4">
-                            <span className="font-semibold text-slate-800 dark:text-slate-200 block text-xs">
+                            <span className="font-semibold whitespace-nowrap text-slate-800 dark:text-slate-200 block text-xs">
                               {sppd.pegawai_nama}
                             </span>
                             <span className="text-[10px] text-slate-400 block mt-0.5">
