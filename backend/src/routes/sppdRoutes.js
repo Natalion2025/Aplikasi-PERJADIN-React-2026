@@ -27,7 +27,7 @@ router.get('/api/sppd', isApiAuthenticated, async (req, res) => {
         const sppdSql = `
             SELECT 
                 sp.id, sp.nomor_sppd, sp.tanggal_sppd, sp.spt_id,
-                s.nomor_surat,
+                s.nomor_surat, s.maksud_perjalanan,
                 p.nama_lengkap as pegawai_nama,
                 p.nip as pegawai_nip,
                 CASE WHEN ps.id IS NOT NULL THEN 1 ELSE 0 END as is_canceled

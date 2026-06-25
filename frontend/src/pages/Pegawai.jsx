@@ -215,10 +215,10 @@ const Pegawai = () => {
                     No
                   </th>
                   <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
-                    Nama Lengkap / NIP
+                    Nama Lengkap/NIP
                   </th>
                   <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
-                    Pangkat / Golongan
+                    Pangkat/Gol
                   </th>
                   <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
                     Jabatan
@@ -234,16 +234,16 @@ const Pegawai = () => {
               <tbody className="divide-y divide-slate-100 text-sm">
                 {pegawaiList.map((pegawai, index) => (
                   <tr key={pegawai.id} className="hover:bg-slate-50/20  transition-colors">
-                    <td className="px-5 py-4 text-slate-800 align-top">
+                    <td className="px-5 py-4 text-center text-slate-800 align-top">
                       {(currentPage - 1) * itemsPerPage + index + 1}
                     </td>
                     <td className="px-5 py-4">
                       <p className="font-semibold text-slate-800">{pegawai.nama_lengkap}</p>
-                      <p className="text-xs text-slate-400 font-mono mt-0.5">{pegawai.nip}</p>
+                      <p className="text-xs text-slate-500 font-mono mt-0.5">{pegawai.nip}</p>
                     </td>
                     <td className="px-5 py-4">
                       <p className="text-slate-700 font-medium">{pegawai.pangkat || '-'}</p>
-                      <p className="text-xs text-slate-400 mt-0.5">
+                      <p className="text-xs text-slate-500 mt-0.5">
                         {pegawai.golongan ? `Gol. ${pegawai.golongan}` : '-'}
                       </p>
                     </td>

@@ -13,7 +13,7 @@ import {
   ChevronLeft,
   ChevronRight,
   AlertCircle,
-  User,
+  Users,
   Calendar,
   MapPin,
   FileCheck,
@@ -21,6 +21,8 @@ import {
   Loader2,
   ChevronDown,
 } from 'lucide-react';
+import IconCetakVisum from '../components/IconCetakVisum';
+import IconBuatLaporan from '../components/IconBuatLaporan';
 
 const SptRegister = () => {
   const navigate = useNavigate();
@@ -452,7 +454,7 @@ const SptRegister = () => {
         </div>
 
         {/* Tab Content Panels */}
-        <div className="p-6">
+        <div className="p-6 pt-3">
           {loading ? (
             <div className="py-20 flex flex-col items-center justify-center text-slate-400">
               <Loader2 className="h-8 w-8 animate-spin text-indigo-600 mb-2" />
@@ -464,7 +466,7 @@ const SptRegister = () => {
               <table className="min-w-full text-left border-collapse text-sm">
                 <thead>
                   <tr className="bg-red-900/90   text-slate-100 border-b-2 border-red-900/90 border-double font-semibold dark:bg-slate-800/50 dark:text-slate-400">
-                    <th className="py-3 px-6 text-center  w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3  pl-6 pr-3 text-center  w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
                       No.
                     </th>
                     <th className="py-3 px-4 w-60 shadow-[inset_0_-2px_0_0_#ffffff]">
@@ -513,28 +515,35 @@ const SptRegister = () => {
 
                       return (
                         <tr key={spt.id} className={`transition-all ${rowBgClass}`}>
-                          <td className="py-4 px-6 text-center text-slate-500 dark:text-slate-400 font-medium align-top">
+                          <td className="py-3 pl-6 pr-3 text-center text-slate-800 dark:text-slate-400 font-medium align-top">
                             {(sptPage - 1) * limit + idx + 1}.
                           </td>
-                          <td className="py-4 px-4 align-top">
-                            <span className="font-semibold text-slate-800 dark:text-slate-200 block break-words">
+                          <td className="py-3 px-4 align-top">
+                            <span className="font-semibold text-xs text-slate-800 dark:text-slate-200 block">
                               {spt.nomor_surat}
                             </span>
-                            <span className="text-xs text-slate-400 block mt-0.5">
+                            <span className="text-xs text-slate-500 block mt-0.5">
                               {formatDate(spt.tanggal_surat)}
                             </span>
                           </td>
-                          <td className="py-4 px-4 whitespace-nowrap text-slate-700 dark:text-slate-300 align-top">
-                            <span
-                              className="block font-medium  max-w-sm "
-                              title={spt.maksud_perjalanan}
-                            >
-                              {spt.maksud_perjalanan && spt.maksud_perjalanan.length > 25
-                                ? `${spt.maksud_perjalanan.substring(0, 25)}...`
-                                : spt.maksud_perjalanan}
-                            </span>
+                          <td className="py-3 px-4 whitespace-nowrap text-slate-800 dark:text-slate-300 align-top">
+                            <div className="flex flex-col">
+                              <span
+                                className="block font-medium  max-w-sm text-xs"
+                                title={spt.maksud_perjalanan}
+                              >
+                                {spt.maksud_perjalanan && spt.maksud_perjalanan.length > 25
+                                  ? `${spt.maksud_perjalanan.substring(0, 25)}...`
+                                  : spt.maksud_perjalanan}
+                              </span>{' '}
+                              <span className="text-xs text-slate-500 flex items-center gap-1.5">
+                                <Calendar className="h-3 w-3 text-slate-400" />
+                                {formatDate(spt.tanggal_berangkat)} -{' '}
+                                {formatDate(spt.tanggal_kembali)}
+                              </span>
+                            </div>
                           </td>
-                          <td className="py-4 px-4 align-top">
+                          <td className="py-3 px-4 align-top">
                             <ul className="space-y-1">
                               {spt.pegawai && spt.pegawai.length > 0 ? (
                                 spt.pegawai.map((p) => {
@@ -545,7 +554,7 @@ const SptRegister = () => {
                                       className={`text-xs ${
                                         isCanceled
                                           ? 'line-through whitespace-nowrap text-red-500 font-medium'
-                                          : 'text-slate-600 whitespace-nowrap dark:text-slate-400'
+                                          : 'text-slate-800 font-medium whitespace-nowrap dark:text-slate-400'
                                       }`}
                                     >
                                       • {p.nama_lengkap}
@@ -559,24 +568,25 @@ const SptRegister = () => {
                               )}
                             </ul>
                           </td>
-                          <td className="py-4 px-4 text-slate-600 dark:text-slate-400 align-top">
-                            <div className="font-medium text-slate-800 dark:text-slate-200 flex items-center gap-1.5 text-xs">
-                              <MapPin className="h-6 w-6 text-slate-800 " />
-                              {spt.lokasi_tujuan}
-                            </div>
-                            <div className="text-xs text-slate-400 mt-1 flex items-center gap-1.5">
-                              <Calendar className="h-3 w-3 text-slate-400" />
-                              {formatDate(spt.tanggal_berangkat)}
+                          <td className="py-3 px-4 text-slate-600 dark:text-slate-400 align-top">
+                            <div
+                              className="font-medium whitespace-nowrap text-slate-800 dark:text-slate-200 flex gap-1.5 text-xs"
+                              title={spt.lokasi_tujuan}
+                            >
+                              <MapPin className="h-3 w-3 text-slate-800 " />
+                              {spt.lokasi_tujuan && spt.lokasi_tujuan.length > 25
+                                ? `${spt.lokasi_tujuan.substring(0, 25)}...`
+                                : spt.lokasi_tujuan}
                             </div>
                           </td>
-                          <td className="py-4 px-6 text-right align-top relative">
+                          <td className="py-3 px-6 text-right align-top relative">
                             <div className="inline-block text-left">
                               <button
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   setOpenDropdownId(openDropdownId === spt.id ? null : spt.id);
                                 }}
-                                className="dropdown-trigger inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-50 hover:bg-indigo-100/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 text-indigo-600 dark:text-indigo-400 text-xs font-bold rounded-xl transition-all shadow-sm active:scale-95"
+                                className="dropdown-trigger inline-flex items-center gap-1.5 px-3 py-2 bg-red-100/40 hover:bg-indigo-100/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 text-red-900/90 dark:text-indigo-400 text-xs font-bold rounded-xl transition-all shadow-sm active:scale-95"
                               >
                                 <span>Aksi</span>
                                 <ChevronDown
@@ -585,38 +595,38 @@ const SptRegister = () => {
                               </button>
 
                               {openDropdownId === spt.id && (
-                                <div className="dropdown-menu absolute right-6 mt-1.5 w-52 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl rounded-2xl z-50 py-1.5 text-left divide-y divide-slate-100 dark:divide-slate-700/50">
+                                <div className="dropdown-menu absolute shrink-0 z-150 right-6 mt-1.5 w-52 bg-red-900/90 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl rounded-2xl py-1.5 text-left divide-y divide-slate-100 dark:divide-slate-700/50">
                                   {/* Section Cetak */}
                                   <div className="py-1">
-                                    <div className="px-3 py-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                                    <div className="px-3 py-1 text-[9px] font-bold text-slate-200 uppercase tracking-wider">
                                       Cetak Dokumen
                                     </div>
                                     <a
                                       href={`/cetak/spt/${spt.id}`}
                                       target="_blank"
                                       rel="noreferrer"
-                                      className="flex items-center gap-2.5 px-3 py-2 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
+                                      className="flex items-center gap-2.5 px-3 py-2 text-white dark:text-slate-200 hover:bg-mauve-200/20 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
                                     >
-                                      <Printer className="h-4 w-4 text-indigo-500" />
+                                      <Printer className="h-4 w-4 text-green-300" />
                                       <span>Cetak SPT</span>
                                     </a>
                                     <a
                                       href={`/cetak/sppd/${spt.id}`}
                                       target="_blank"
                                       rel="noreferrer"
-                                      className="flex items-center gap-2.5 px-3 py-2 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
+                                      className="flex items-center gap-2.5 px-3 py-2 text-white dark:text-slate-200 hover:bg-mauve-200/20 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
                                     >
-                                      <FileText className="h-4 w-4 text-emerald-500" />
-                                      <span>Cetak SPPD Kolektif</span>
+                                      <Users className="h-4 w-4 text-green-300" />
+                                      <span>Cetak SPD Kolektif</span>
                                     </a>
                                     {(userRole === 'admin' || userRole === 'superadmin') && (
                                       <a
                                         href={`/cetak/visum/${spt.id}`}
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="flex items-center gap-2.5 px-3 py-2 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
+                                        className="flex items-center gap-2.5 px-3 py-2 text-white dark:text-slate-200 hover:bg-mauve-200/20 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
                                       >
-                                        <Printer className="h-4 w-4 text-sky-500" />
+                                        <IconCetakVisum className="h-5 w-5 text-green-300" />
                                         <span>Cetak Visum</span>
                                       </a>
                                     )}
@@ -624,7 +634,7 @@ const SptRegister = () => {
 
                                   {/* Section Tindakan */}
                                   <div className="py-1">
-                                    <div className="px-3 py-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                                    <div className="px-3 py-1 text-[9px] font-bold text-slate-200 uppercase tracking-wider">
                                       Tindakan & Laporan
                                     </div>
                                     {isCancelled ? (
@@ -633,16 +643,16 @@ const SptRegister = () => {
                                         <span>SPT Batal</span>
                                       </div>
                                     ) : hasReport ? (
-                                      <div className="flex items-center gap-2.5 px-3 py-2 text-slate-400 text-xs font-semibold">
+                                      <div className="flex items-center gap-2.5 px-3 py-2 text-white text-xs font-semibold">
                                         <FileCheck className="h-4 w-4 text-slate-400" />
                                         <span>Sudah Dilaporkan</span>
                                       </div>
                                     ) : (
                                       <Link
                                         to={`/buat-laporan?spt_id=${spt.id}`}
-                                        className="flex items-center gap-2.5 px-3 py-2 text-blue-600 dark:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
+                                        className="flex items-center gap-2.5 px-3 py-2 text-white dark:text-blue-400 hover:bg-mauve-200/20 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
                                       >
-                                        <Plus className="h-4 w-4" />
+                                        <IconBuatLaporan className="h-4 w-4 text-sky-300" />
                                         <span>Buat Laporan</span>
                                       </Link>
                                     )}
@@ -652,14 +662,14 @@ const SptRegister = () => {
                                   {(userRole === 'admin' || userRole === 'superadmin') &&
                                     !isCancelled && (
                                       <div className="py-1">
-                                        <div className="px-3 py-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                                        <div className="px-3 py-1 text-[9px] font-bold text-slate-200 uppercase tracking-wider">
                                           Kelola
                                         </div>
                                         <Link
                                           to={`/edit-spt/${spt.id}`}
-                                          className="flex items-center gap-2.5 px-3 py-2 text-amber-600 dark:text-amber-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
+                                          className="flex items-center gap-2.5 px-3 py-2 text-white dark:text-amber-400 hover:bg-mauve-200/20 dark:hover:bg-slate-700/50 text-xs font-semibold transition-colors"
                                         >
-                                          <Edit className="h-4 w-4" />
+                                          <Edit className="h-4 w-4 text-orange-200" />
                                           <span>Edit SPT</span>
                                         </Link>
                                         <button
@@ -668,9 +678,9 @@ const SptRegister = () => {
                                             setOpenDropdownId(null);
                                             handleDeleteSpt(spt.id, spt.nomor_surat);
                                           }}
-                                          className="w-full flex items-center gap-2.5 px-3 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 text-xs font-semibold transition-colors text-left"
+                                          className="w-full flex items-center gap-2.5 px-3 py-2 text-white dark:text-red-400 hover:bg-mauve-200/20 dark:hover:bg-red-950/20 text-xs font-semibold transition-colors text-left"
                                         >
-                                          <Trash2 className="h-4 w-4" />
+                                          <Trash2 className="h-4 w-4 text-orange-200" />
                                           <span>Hapus SPT</span>
                                         </button>
                                       </div>
@@ -688,22 +698,22 @@ const SptRegister = () => {
             </div>
           ) : (
             /* ================= REGISTER SPPD TABLE ================= */
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-2xl rounded-b-none border-x border-red-900/90">
               <table className="w-full text-left border-collapse text-sm">
                 <thead>
                   <tr className="bg-red-900/90 text-slate-100 border-b-2 border-red-900/90 border-double font-semibold dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-400">
                     <th className="py-3 px-6 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
                       No.
                     </th>
-                    <th className="py-3 px-4 w-72 shadow-[inset_0_-2px_0_0_#ffffff]">Nomor SPPD</th>
+                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">Nomor SPD</th>
                     <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">
-                      Nomor SPT Terkait
+                      Nomor Surat Tugas
                     </th>
                     <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">Pegawai</th>
-                    <th className="py-3 px-4 w-44 shadow-[inset_0_-2px_0_0_#ffffff]">
-                      Tanggal SPPD
+                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">
+                      Maksud Perjalanan
                     </th>
-                    <th className="py-3 px-6 text-right w-28 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-6 text-center w-28 shadow-[inset_0_-2px_0_0_#ffffff]">
                       Aksi
                     </th>
                   </tr>
@@ -728,41 +738,49 @@ const SptRegister = () => {
                             isCanceled ? 'bg-red-50/40 dark:bg-red-950/10' : ''
                           }`}
                         >
-                          <td className="py-4 px-6 text-center text-slate-500 dark:text-slate-400 font-medium">
+                          <td className="py-3 px-6 text-center text-slate-800 dark:text-slate-400 font-medium align-top">
                             {(sppdPage - 1) * limit + idx + 1}.
                           </td>
-                          <td className="py-4 px-4 font-semibold text-slate-800 dark:text-slate-200">
-                            {sppd.nomor_sppd}
-                            {isCanceled && (
-                              <span className="inline-block text-[10px] font-bold text-red-500 bg-red-50 dark:bg-red-950/30 px-1.5 py-0.5 rounded-md ml-2">
-                                Dibatalkan
+                          <td className="py-3 px-4 text-slate-800 dark:text-slate-200 align-top">
+                            <div className="flex flex-col whitespace-nowrap">
+                              {sppd.nomor_sppd}
+                              {isCanceled && (
+                                <span className="inline-block text-[10px] font-bold text-red-500 bg-red-50 dark:bg-red-950/30 px-1.5 py-0.5 rounded-md ml-2">
+                                  Dibatalkan
+                                </span>
+                              )}
+                              <span className="text-xs text-slate-500 dark:text-slate-500">
+                                {formatDate(sppd.tanggal_sppd)}
                               </span>
-                            )}
+                            </div>
                           </td>
-                          <td className="py-4 px-4 text-slate-600 dark:text-slate-400 font-medium">
+                          <td className="py-3 px-4 text-slate-800 dark:text-slate-200 align-top">
                             {sppd.nomor_surat}
                           </td>
-                          <td className="py-4 px-4">
-                            <span className="font-semibold whitespace-nowrap text-slate-800 dark:text-slate-200 block text-xs">
-                              {sppd.pegawai_nama}
-                            </span>
-                            <span className="text-[10px] text-slate-400 block mt-0.5">
-                              NIP. {sppd.pegawai_nip}
-                            </span>
+                          <td className="py-3 px-4 align-top">
+                            <div className="flex flex-col ">
+                              <span className="font-semibold whitespace-nowrap text-slate-800 dark:text-slate-200 align-top">
+                                {sppd.pegawai_nama}
+                              </span>
+                              <span className="text-xs text-slate-500">
+                                NIP. {sppd.pegawai_nip}
+                              </span>
+                            </div>
                           </td>
-                          <td className="py-4 px-4 text-slate-600 dark:text-slate-400">
-                            {formatDate(sppd.tanggal_sppd)}
+                          <td className="py-3 px-4 text-slate-800 dark:text-slate-200 align-top">
+                            {sppd.maksud_perjalanan}
                           </td>
-                          <td className="py-4 px-6 text-right">
+                          <td className="py-3 px-6 text-right align-top">
                             {/* Print Individual SPPD sheet */}
                             <a
                               href={`/cetak/sppd-detail/${sppd.id}`}
                               target="_blank"
                               rel="noreferrer"
-                              className="inline-flex items-center justify-center p-2 text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-colors"
+                              className="inline-flex flex-row gap-2 whitespace-nowrap items-center justify-center p-2 text-slate-800 text-sm hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-colors"
                               title="Cetak SPPD Individu"
                             >
-                              <Printer className="h-4 w-4" />
+                              <Printer className="h-4 w-4 stroke-red-900/90" />
+                              Cetak SPD
                             </a>
                           </td>
                         </tr>
