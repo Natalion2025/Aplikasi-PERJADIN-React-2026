@@ -392,7 +392,7 @@ const SptRegister = () => {
               }}
               className={`px-4 py-2.5 rounded-t-2xl rounded-l-none  text-sm font-semibold tracking-wide transition-all ${
                 activeTab === 'spt'
-                  ? 'bg-mauve-500 text-white shadow-md shadow-indigo-600/10'
+                  ? 'bg-mauve-500 text-white'
                   : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
               }`}
             >
@@ -405,7 +405,7 @@ const SptRegister = () => {
               }}
               className={`px-4 py-2.5 rounded-t-2xl rounded-l-none text-sm font-semibold tracking-wide transition-all ${
                 activeTab === 'sppd'
-                  ? 'bg-mauve-500 text-white shadow-md shadow-indigo-600/10'
+                  ? 'bg-mauve-500 text-white'
                   : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
               }`}
             >
@@ -462,10 +462,10 @@ const SptRegister = () => {
             </div>
           ) : activeTab === 'spt' ? (
             /* ================= REGISTER SPT TABLE ================= */
-            <div className="overflow-x-auto rounded-2xl rounded-b-none border-x border-red-900/90">
+            <div className="overflow-x-auto rounded-2xl rounded-b-none ">
               <table className="min-w-full text-left border-collapse text-sm">
                 <thead>
-                  <tr className="bg-red-900/90   text-slate-100 border-b-2 border-red-900/90 border-double font-semibold dark:bg-slate-800/50 dark:text-slate-400">
+                  <tr className="bg-red-500/60   text-slate-100 border-b-2 border-red-500/60 border-double font-semibold dark:bg-slate-800/50 dark:text-slate-400">
                     <th className="py-3  pl-6 pr-3 text-center  w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
                       No.
                     </th>
@@ -595,7 +595,7 @@ const SptRegister = () => {
                               </button>
 
                               {openDropdownId === spt.id && (
-                                <div className="dropdown-menu absolute shrink-0 z-150 right-6 mt-1.5 w-52 bg-red-900/90 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl rounded-2xl py-1.5 text-left divide-y divide-slate-100 dark:divide-slate-700/50">
+                                <div className="dropdown-menu absolute shrink-0 z-150 right-6 mt-1.5 w-52 bg-red-900 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl rounded-2xl py-1.5 text-left divide-y divide-slate-100 dark:divide-slate-700/50">
                                   {/* Section Cetak */}
                                   <div className="py-1">
                                     <div className="px-3 py-1 text-[9px] font-bold text-slate-200 uppercase tracking-wider">
@@ -698,10 +698,10 @@ const SptRegister = () => {
             </div>
           ) : (
             /* ================= REGISTER SPPD TABLE ================= */
-            <div className="overflow-x-auto rounded-2xl rounded-b-none border-x border-red-900/90">
+            <div className="overflow-x-auto rounded-2xl rounded-b-none">
               <table className="w-full text-left border-collapse text-sm">
                 <thead>
-                  <tr className="bg-red-900/90 text-slate-100 border-b-2 border-red-900/90 border-double font-semibold dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-400">
+                  <tr className="bg-green-700/80 text-slate-100 border-b-2 border-green-700/80 border-double font-semibold dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-400">
                     <th className="py-3 px-6 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
                       No.
                     </th>

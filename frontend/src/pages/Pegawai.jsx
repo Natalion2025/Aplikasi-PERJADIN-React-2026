@@ -186,7 +186,7 @@ const Pegawai = () => {
                 setSearch(e.target.value);
                 setCurrentPage(1); // Reset ke halaman pertama saat mencari
               }}
-              className="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring-1 focus:ring-mauve-700/90 focus:bg-white transition-all text-sm"
+              className="w-full pl-11 pr-4 py-2.5 bg-gradient-to-r from-green-50 to bg-sky-50 border border-slate-300 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring-1 focus:ring-mauve-700/90 focus:bg-white transition-all text-sm"
             />
           </div>
           <span className="text-xs font-semibold text-slate-400 bg-slate-50 border border-slate-150 px-3 py-1.5 rounded-xl">
@@ -207,10 +207,10 @@ const Pegawai = () => {
             Tidak ada data pegawai yang ditemukan.
           </div>
         ) : (
-          <div className="overflow-x-auto rounded-2xl rounded-b-none border-x border-mauve-700">
+          <div className="overflow-x-auto rounded-2xl rounded-b-none ">
             <table className="min-w-full divide-y divide-slate-100">
               <thead className="">
-                <tr className="bg-mauve-700/90 text-slate-100 border-b-2  border-mauve-700 border-double">
+                <tr className="bg-mauve-500 text-slate-100 border-b-2  border-mauve-500 border-double">
                   <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider w-16 shadow-[inset_0_-2px_0_0_#ffffff]">
                     No
                   </th>
@@ -234,28 +234,28 @@ const Pegawai = () => {
               <tbody className="divide-y divide-slate-100 text-sm">
                 {pegawaiList.map((pegawai, index) => (
                   <tr key={pegawai.id} className="hover:bg-slate-50/20  transition-colors">
-                    <td className="px-5 py-4 text-center text-slate-800 align-top">
+                    <td className="px-5 py-3 text-center text-slate-800 align-top">
                       {(currentPage - 1) * itemsPerPage + index + 1}
                     </td>
-                    <td className="px-5 py-4">
+                    <td className="px-5 py-3">
                       <p className="font-semibold text-slate-800">{pegawai.nama_lengkap}</p>
                       <p className="text-xs text-slate-500 font-mono mt-0.5">{pegawai.nip}</p>
                     </td>
-                    <td className="px-5 py-4">
+                    <td className="px-5 py-3">
                       <p className="text-slate-700 font-medium">{pegawai.pangkat || '-'}</p>
                       <p className="text-xs text-slate-500 mt-0.5">
                         {pegawai.golongan ? `Gol. ${pegawai.golongan}` : '-'}
                       </p>
                     </td>
-                    <td className="px-5 py-4 text-slate-700 align-top font-medium capitalize">
+                    <td className="px-5 py-3 text-slate-700 align-top font-medium capitalize">
                       {pegawai.jabatan?.toLowerCase()}
                     </td>
-                    <td className="px-5 py-4">
+                    <td className="px-5 py-3">
                       <span className="inline-flex px-2.5 py-1 rounded-xl text-xs font-bold bg-indigo-50/50 border text-mauve-700/90">
                         {pegawai.bidang || '-'}
                       </span>
                     </td>
-                    <td className="px-5 py-4">
+                    <td className="px-5 py-3">
                       <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => handleEdit(pegawai)}
