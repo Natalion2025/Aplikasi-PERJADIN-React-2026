@@ -426,14 +426,14 @@ const SptRegister = () => {
                 }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring focus:ring-mauve-700/90 focus:border-none "
+                className="w-full pl-10 pr-4 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring focus:ring-mauve-500 focus:border-none "
               />
             </div>
 
             {/* Limit Selector */}
             <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 flex-shrink-0">
               <span>Tampilkan:</span>
-              <div className="relative border border-slate-300 dark:border-slate-700 focus-within:outline-none focus-within:ring focus-within:ring-mauve-700/90 focus-within:border-none rounded-lg">
+              <div className="relative border border-slate-300 dark:border-slate-700 focus-within:outline-none focus-within:ring focus-within:ring-mauve-500 focus-within:border-none rounded-lg">
                 <select
                   value={limit}
                   onChange={(e) => {

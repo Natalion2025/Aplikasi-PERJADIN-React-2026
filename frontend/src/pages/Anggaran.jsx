@@ -231,7 +231,7 @@ const Anggaran = () => {
                 setSearch(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full pl-11 pr-4 py-2.5 bg-gradient-to-r from-green-50 to bg-sky-50 border border-slate-300 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring focus:ring-mauve-700/90 focus:bg-white transition-all text-sm"
+              className="w-full pl-11 pr-4 py-2.5 bg-gradient-to-r from-green-50 to bg-sky-50 border border-slate-300 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring focus:ring-mauve-500 focus:bg-white transition-all text-sm"
             />
           </div>
         </div>

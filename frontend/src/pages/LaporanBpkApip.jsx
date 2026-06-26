@@ -29,7 +29,18 @@ const LaporanBpkApip = () => {
 
   const formatCurrency = (value) => {
     if (value === null || value === undefined || value === '') return 'Rp 0';
-    const number = parseFloat(String(value).replace(/[^0-9,-]+/g, '').replace(',', '.'));
+    let number;
+    if (typeof value === 'number') {
+      number = value;
+    } else {
+      const str = String(value).trim();
+      if (/^-?\d+(\.\d+)?$/.test(str)) {
+        number = parseFloat(str);
+      } else {
+        const cleaned = str.replace(/[^0-9,-]/g, '').replace(',', '.');
+        number = parseFloat(cleaned);
+      }
+    }
     if (isNaN(number)) return 'Rp 0';
     return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(number);
   };
@@ -103,8 +114,10 @@ const LaporanBpkApip = () => {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => { setActiveTab('basic'); setPage(1); }}
-              className={`px-4 py-2.5 text-xs font-bold uppercase rounded-xl transition-all duration-200 flex items-center gap-1.5 ${
-                activeTab === 'basic' ? 'bg-indigo-50 text-indigo-700 font-extrabold' : 'text-slate-500 hover:bg-slate-50'
+              className={`px-4 py-2.5 text-xs font-bold uppercase rounded-t-2xl rounded-l-none transition-all duration-200 flex items-center gap-1.5 ${
+                activeTab === 'basic'
+                  ? 'bg-mauve-500 text-white'
+                  : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
               }`}
             >
               <Info size={14} />
@@ -112,8 +125,10 @@ const LaporanBpkApip = () => {
             </button>
             <button
               onClick={() => { setActiveTab('transport'); setPage(1); }}
-              className={`px-4 py-2.5 text-xs font-bold uppercase rounded-xl transition-all duration-200 flex items-center gap-1.5 ${
-                activeTab === 'transport' ? 'bg-indigo-50 text-indigo-700 font-extrabold' : 'text-slate-500 hover:bg-slate-50'
+              className={`px-4 py-2.5 text-xs font-bold uppercase rounded-t-2xl rounded-l-none transition-all duration-200 flex items-center gap-1.5 ${
+                activeTab === 'transport'
+                  ? 'bg-mauve-500 text-white'
+                  : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
               }`}
             >
               <Plane size={14} />
@@ -121,8 +136,10 @@ const LaporanBpkApip = () => {
             </button>
             <button
               onClick={() => { setActiveTab('accomodation'); setPage(1); }}
-              className={`px-4 py-2.5 text-xs font-bold uppercase rounded-xl transition-all duration-200 flex items-center gap-1.5 ${
-                activeTab === 'accomodation' ? 'bg-indigo-50 text-indigo-700 font-extrabold' : 'text-slate-500 hover:bg-slate-50'
+              className={`px-4 py-2.5 text-xs font-bold uppercase rounded-t-2xl rounded-l-none transition-all duration-200 flex items-center gap-1.5 ${
+                activeTab === 'accomodation'
+                  ? 'bg-mauve-500 text-white'
+                  : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
               }`}
             >
               <Building size={14} />
@@ -130,8 +147,10 @@ const LaporanBpkApip = () => {
             </button>
             <button
               onClick={() => { setActiveTab('meal'); setPage(1); }}
-              className={`px-4 py-2.5 text-xs font-bold uppercase rounded-xl transition-all duration-200 flex items-center gap-1.5 ${
-                activeTab === 'meal' ? 'bg-indigo-50 text-indigo-700 font-extrabold' : 'text-slate-500 hover:bg-slate-50'
+              className={`px-4 py-2.5 text-xs font-bold uppercase rounded-t-2xl rounded-l-none transition-all duration-200 flex items-center gap-1.5 ${
+                activeTab === 'meal'
+                  ? 'bg-mauve-500 text-white'
+                  : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
               }`}
             >
               <Coins size={14} />
@@ -139,8 +158,10 @@ const LaporanBpkApip = () => {
             </button>
             <button
               onClick={() => { setActiveTab('other'); setPage(1); }}
-              className={`px-4 py-2.5 text-xs font-bold uppercase rounded-xl transition-all duration-200 flex items-center gap-1.5 ${
-                activeTab === 'other' ? 'bg-indigo-50 text-indigo-700 font-extrabold' : 'text-slate-500 hover:bg-slate-50'
+              className={`px-4 py-2.5 text-xs font-bold uppercase rounded-t-2xl rounded-l-none transition-all duration-200 flex items-center gap-1.5 ${
+                activeTab === 'other'
+                  ? 'bg-mauve-500 text-white'
+                  : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
               }`}
             >
               <Wallet size={14} />
@@ -199,22 +220,22 @@ const LaporanBpkApip = () => {
           </div>
         ) : (
           <div className="space-y-4 animate-in fade-in duration-200">
-            <div className="overflow-x-auto rounded-2xl border border-slate-100">
-              <table className="min-w-full divide-y divide-slate-100 text-left text-xs">
+            <div className="overflow-x-auto rounded-2xl rounded-b-none">
+              <table className="min-w-full divide-y divide-slate-100">
                 
                 {/* 1. INFORMASI DASAR TAB */}
                 {activeTab === 'basic' && (
                   <>
-                    <thead className="bg-slate-50 font-bold text-slate-500 uppercase tracking-wider">
-                      <tr>
-                        <th className="py-3.5 px-4 text-center w-12">No</th>
-                        <th className="py-3.5 px-4">Nama & Jabatan</th>
-                        <th className="py-3.5 px-4">Pangkat/Gol</th>
-                        <th className="py-3.5 px-4">No. Surat Tugas</th>
-                        <th className="py-3.5 px-4">No. SPD</th>
-                        <th className="py-3.5 px-4">Tgl Mulai - Selesai</th>
-                        <th className="py-3.5 px-4">Nama Kegiatan</th>
-                        <th className="py-3.5 px-4">Jenis Perjadin</th>
+                    <thead className="">
+                      <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
+                        <th className="py-3.5 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">No</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nama & Jabatan</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Pangkat/Gol</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">No. Surat Tugas</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">No. SPD</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Tgl Mulai - Selesai</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nama Kegiatan</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Jenis Perjadin</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 text-slate-600">
@@ -249,16 +270,16 @@ const LaporanBpkApip = () => {
                 {/* 2. TRANSPORTASI TAB */}
                 {activeTab === 'transport' && (
                   <>
-                    <thead className="bg-slate-50 font-bold text-slate-500 uppercase tracking-wider">
-                      <tr>
-                        <th className="py-3.5 px-4 text-center w-12">No</th>
-                        <th className="py-3.5 px-4">Nama & Jabatan</th>
-                        <th className="py-3.5 px-4">Nomor Surat Tugas</th>
-                        <th className="py-3.5 px-4">Maskapai/Perusahaan</th>
-                        <th className="py-3.5 px-4">Booking & Penerbangan</th>
-                        <th className="py-3.5 px-4">No. & Tgl. Tiket</th>
-                        <th className="py-3.5 px-4">Rute (Terminal)</th>
-                        <th className="py-3.5 px-4 text-right">Tarif</th>
+                    <thead className="">
+                      <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
+                        <th className="py-3.5 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">No</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nama & Jabatan</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nomor Surat Tugas</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Maskapai/Perusahaan</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Booking & Penerbangan</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">No. & Tgl. Tiket</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Rute (Terminal)</th>
+                        <th className="py-3.5 px-4 text-right shadow-[inset_0_-2px_0_0_#ffffff]">Tarif</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 text-slate-600">
@@ -300,17 +321,17 @@ const LaporanBpkApip = () => {
                 {/* 3. PENGINAPAN TAB */}
                 {activeTab === 'accomodation' && (
                   <>
-                    <thead className="bg-slate-50 font-bold text-slate-500 uppercase tracking-wider">
-                      <tr>
-                        <th className="py-3.5 px-4 text-center w-12">No</th>
-                        <th className="py-3.5 px-4">Nama & Jabatan</th>
-                        <th className="py-3.5 px-4">Nomor Surat Tugas</th>
-                        <th className="py-3.5 px-4">Nama Hotel</th>
-                        <th className="py-3.5 px-4">Nama Kota</th>
-                        <th className="py-3.5 px-4">Tgl Check-In / Out</th>
-                        <th className="py-3.5 px-4 text-center">Malam</th>
-                        <th className="py-3.5 px-4 text-right">Tarif</th>
-                        <th className="py-3.5 px-4 text-right">Total</th>
+                    <thead className="">
+                      <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
+                        <th className="py-3.5 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">No</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nama & Jabatan</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nomor Surat Tugas</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nama Hotel</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nama Kota</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Tgl Check-In / Out</th>
+                        <th className="py-3.5 px-4 text-center shadow-[inset_0_-2px_0_0_#ffffff]">Malam</th>
+                        <th className="py-3.5 px-4 text-right shadow-[inset_0_-2px_0_0_#ffffff]">Tarif</th>
+                        <th className="py-3.5 px-4 text-right shadow-[inset_0_-2px_0_0_#ffffff]">Total</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 text-slate-600">
@@ -346,15 +367,15 @@ const LaporanBpkApip = () => {
                 {/* 4. UANG HARIAN TAB */}
                 {activeTab === 'meal' && (
                   <>
-                    <thead className="bg-slate-50 font-bold text-slate-500 uppercase tracking-wider">
-                      <tr>
-                        <th className="py-3.5 px-4 text-center w-12">No</th>
-                        <th className="py-3.5 px-4">Nama & Jabatan</th>
-                        <th className="py-3.5 px-4">Nomor Surat Tugas</th>
-                        <th className="py-3.5 px-4 text-center">Hari</th>
-                        <th className="py-3.5 px-4 text-right">Tarif Uang Harian</th>
-                        <th className="py-3.5 px-4 text-right">Total Uang Harian</th>
-                        <th className="py-3.5 px-4 text-right">Uang Representatif</th>
+                    <thead className="">
+                      <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
+                        <th className="py-3.5 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">No</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nama & Jabatan</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nomor Surat Tugas</th>
+                        <th className="py-3.5 px-4 text-center shadow-[inset_0_-2px_0_0_#ffffff]">Hari</th>
+                        <th className="py-3.5 px-4 text-right shadow-[inset_0_-2px_0_0_#ffffff]">Tarif Uang Harian</th>
+                        <th className="py-3.5 px-4 text-right shadow-[inset_0_-2px_0_0_#ffffff]">Total Uang Harian</th>
+                        <th className="py-3.5 px-4 text-right shadow-[inset_0_-2px_0_0_#ffffff]">Uang Representatif</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 text-slate-600">
@@ -385,16 +406,16 @@ const LaporanBpkApip = () => {
                 {/* 5. BIAYA LAIN-LAIN TAB */}
                 {activeTab === 'other' && (
                   <>
-                    <thead className="bg-slate-50 font-bold text-slate-500 uppercase tracking-wider">
-                      <tr>
-                        <th className="py-3.5 px-4 text-center w-12">No</th>
-                        <th className="py-3.5 px-4">Nama & Jabatan</th>
-                        <th className="py-3.5 px-4">Nomor Surat Tugas</th>
-                        <th className="py-3.5 px-4">Jenis Biaya</th>
-                        <th className="py-3.5 px-4 text-center">Hari</th>
-                        <th className="py-3.5 px-4 text-right">Tarif Satuan</th>
-                        <th className="py-3.5 px-4 text-right">Total</th>
-                        <th className="py-3.5 px-4">Keterangan</th>
+                    <thead className="">
+                      <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
+                        <th className="py-3.5 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">No</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nama & Jabatan</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nomor Surat Tugas</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Jenis Biaya</th>
+                        <th className="py-3.5 px-4 text-center shadow-[inset_0_-2px_0_0_#ffffff]">Hari</th>
+                        <th className="py-3.5 px-4 text-right shadow-[inset_0_-2px_0_0_#ffffff]">Tarif Satuan</th>
+                        <th className="py-3.5 px-4 text-right shadow-[inset_0_-2px_0_0_#ffffff]">Total</th>
+                        <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Keterangan</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 text-slate-600">

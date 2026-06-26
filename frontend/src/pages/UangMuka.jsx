@@ -364,7 +364,7 @@ const UangMuka = () => {
       {/* List Card */}
       <div className="bg-white rounded-3xl border border-slate-100 shadow-sm dark:bg-slate-800 dark:border-slate-700/50 overflow-hidden">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 border-b border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/50">
-          <h3 className="font-bold text-slate-800 dark:text-white">Daftar Uang Muka</h3>
+          <h3 className="font-bold text-slate-700 dark:text-white">Daftar Uang Muka</h3>
 
           <div className="flex items-center gap-3 w-full md:w-auto">
             {/* Search Input */}
@@ -378,7 +378,7 @@ const UangMuka = () => {
                   setSearch(e.target.value);
                   setPage(1);
                 }}
-                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-mauve-500 focus:border-none"
               />
             </div>
 
@@ -391,7 +391,7 @@ const UangMuka = () => {
                   setLimit(Number(e.target.value));
                   setPage(1);
                 }}
-                className="px-2.5 py-1.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-xl focus:outline-none text-slate-800 dark:text-slate-200"
+                className="px-2.5 py-1.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-xl focus:outline-none focus:ring-1 focus:ring-mauve-500 focus:border-none text-slate-800 dark:text-slate-200"
               >
                 <option value={5}>5</option>
                 <option value={15}>15</option>
@@ -415,7 +415,7 @@ const UangMuka = () => {
             </div>
           ) : (
             <div className="overflow-x-auto rounded-2xl overflow-hidden">
-              <table className="min-w-full divide-y  divide-slate-100 text-xs">
+              <table className="w-full text-xs">
                 <thead className="">
                   <tr className="bg-mauve-500 text-slate-100 border-b-2  border-mauve-500 border-double dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-400">
                     <th className="py-3 px-6 text-center w-12 uppercase shadow-[inset_0_-2px_0_0_#ffffff]">
@@ -427,7 +427,7 @@ const UangMuka = () => {
                     <th className="py-3 px-4 uppercase shadow-[inset_0_-2px_0_0_#ffffff]">
                       Surat Tugas Terkait
                     </th>
-                    <th className="py-3 px-4 uppercase shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-4 uppercase whitespace-nowrap shadow-[inset_0_-2px_0_0_#ffffff]">
                       Pegawai Pelaksana
                     </th>
                     <th className="py-3 px-4 w-44 uppercase shadow-[inset_0_-2px_0_0_#ffffff]">

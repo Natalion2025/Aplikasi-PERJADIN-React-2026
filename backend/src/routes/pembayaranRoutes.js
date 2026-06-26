@@ -113,6 +113,24 @@ router.put('/api/pembayaran/:id', isApiAuthenticated, async (req, res) => {
     }
 });
 
+// Fungsi untuk generate nomor bukti unik
+const generateNomorBukti = async () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const prefix = `KWT / ${year} /${month}/`;
+
+    const lastPayment = await dbGet("SELECT nomor_bukti FROM pembayaran WHERE nomor_bukti LIKE ? ORDER BY id DESC LIMIT 1", [`${prefix}%`]);
+
+    let nextNumber = 1;
+    if (lastPayment) {
+        const lastNumber = parseInt(lastPayment.nomor_bukti.split('/').pop(), 10);
+        nextNumber = lastNumber + 1;
+    }
+
+    return `${prefix}${String(nextNumber).padStart(4, '0')}`;
+};
+
 // POST: Membuat bukti pembayaran baru
 router.post('/api/pembayaran', isApiAuthenticated, async (req, res) => {
     try {

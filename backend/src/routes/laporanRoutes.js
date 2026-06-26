@@ -17,8 +17,16 @@ const runQuery = (sql, params = []) => new Promise((resolve, reject) => {
 });
 
 const parseCurrency = (value) => {
+    if (value === null || value === undefined || value === '') return 0;
     if (typeof value === 'number') return value;
-    return parseFloat(String(value || '').replace(/[^0-9,-]+/g, '').replace(',', '.')) || 0;
+    
+    const str = String(value).trim();
+    if (/^-?\d+(\.\d+)?$/.test(str)) {
+        return parseFloat(str) || 0;
+    }
+    
+    const cleaned = str.replace(/[^0-9,-]/g, '').replace(',', '.');
+    return parseFloat(cleaned) || 0;
 };
 
 
@@ -597,7 +605,7 @@ const laporanUpload = multer({
         },
         filename: (req, file, cb) => {
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-            cb(null, `lampiran - ${uniqueSuffix}${path.extname(file.originalname)} `);
+            cb(null, `lampiran - ${uniqueSuffix}${path.extname(file.originalname)}`);
         }
     })
 });
@@ -789,7 +797,7 @@ router.put('/api/laporan/:id', isApiAuthenticated, laporanUpload.array('lampiran
             const filesToDelete = await dbAll(`SELECT file_path FROM laporan_lampiran WHERE id IN(${placeholders})`, deletedFiles);
 
             for (const file of filesToDelete) {
-                const oldFilePath = path.join(__dirname, 'public', file.file_path);
+                const oldFilePath = path.join(__dirname, '../../public', file.file_path);
                 if (fs.existsSync(oldFilePath)) {
                     fs.unlinkSync(oldFilePath);
                 }
@@ -914,7 +922,7 @@ router.delete('/api/laporan/:id', isApiAuthenticated, async (req, res) => {
         // Hapus file fisik dari server
         if (lampiran && lampiran.length > 0) {
             for (const item of lampiran) {
-                const filePath = path.join(__dirname, 'public', item.file_path);
+                const filePath = path.join(__dirname, '../../public', item.file_path);
                 if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
             }
         }

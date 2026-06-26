@@ -186,7 +186,7 @@ const Pegawai = () => {
                 setSearch(e.target.value);
                 setCurrentPage(1); // Reset ke halaman pertama saat mencari
               }}
-              className="w-full pl-11 pr-4 py-2.5 bg-gradient-to-r from-green-50 to bg-sky-50 border border-slate-300 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring-1 focus:ring-mauve-700/90 focus:bg-white transition-all text-sm"
+              className="w-full pl-11 pr-4 py-2.5 bg-gradient-to-r from-green-50 to bg-sky-50 border border-slate-300 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring-1 focus:ring-mauve-500 focus:bg-white transition-all text-sm"
             />
           </div>
           <span className="text-xs font-semibold text-slate-400 bg-slate-50 border border-slate-150 px-3 py-1.5 rounded-xl">

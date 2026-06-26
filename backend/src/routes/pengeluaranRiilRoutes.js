@@ -195,6 +195,7 @@ router.get('/api/cetak/pembayaran/:id', isApiAuthenticated, async (req, res) => 
         // 5. Proses rincian pengeluaran dan gabungkan dengan data panjar
         const panjarData = JSON.parse(pembayaran.panjar_data || '[]');
         const panjarMap = new Map(panjarData.map(p => [p.pegawai_id.toString(), p.nilai_panjar]));
+        const overridesMap = new Map(panjarData.map(p => [p.pegawai_id.toString(), p.overrides || {}]));
 
         const rincianPerPegawai = new Map();
 
@@ -209,12 +210,58 @@ router.get('/api/cetak/pembayaran/:id', isApiAuthenticated, async (req, res) => 
             });
         });
 
-        // Fungsi untuk menambahkan item biaya
-        const addBiaya = (pegawaiId, uraian, harga, satuan, hari, jumlah) => {
+        // Helper untuk menghitung default cost per pegawai
+        const getPegawaiDefaultCosts = (pegId) => {
+            const pInfo = laporanData.penerima.find(p => p.id.toString() === pegId);
+            const exp = laporanData.pengeluaran.find(p => p.pegawai_id.toString() === pegId) || {};
+            if (!pInfo) return [];
+
+            const costs = [];
+            const jumlahHariHarian = (exp.akomodasi_malam || 0) + 1;
+            costs.push({ type: 'uang_harian', total: (pInfo.uang_harian?.harga_satuan || 0) * jumlahHariHarian });
+
+            if (pInfo.biaya_representasi && pInfo.biaya_representasi.harga > 0) {
+                costs.push({ type: 'representasi', total: pInfo.biaya_representasi.harga * jumlahHariHarian });
+            }
+
+            if (exp.transportasi_nominal > 0) costs.push({ type: 'transportasi', total: exp.transportasi_nominal });
+            if (exp.akomodasi_nominal > 0) costs.push({ type: 'akomodasi', total: exp.akomodasi_nominal });
+            if (exp.kontribusi_nominal > 0) costs.push({ type: 'kontribusi', total: exp.kontribusi_nominal });
+            if (exp.lain_lain_nominal > 0) costs.push({ type: 'lain_lain', total: exp.lain_lain_nominal });
+
+            return costs;
+        };
+
+        // Fungsi untuk menambahkan item biaya dengan penanganan override
+        const addBiaya = (pegawaiId, uraian, harga, satuan, hari, defaultJumlah, type) => {
             const pegawaiData = rincianPerPegawai.get(pegawaiId.toString());
             if (pegawaiData) {
-                pegawaiData.biaya.push({ uraian, harga, satuan, hari, jumlah });
-                pegawaiData.total_biaya += jumlah;
+                const pegOverrides = overridesMap.get(pegawaiId.toString()) || {};
+                const panjarVal = pegawaiData.panjar;
+                const defaultCosts = getPegawaiDefaultCosts(pegawaiId.toString());
+                const rowIdx = pegawaiData.biaya.length;
+
+                // Alokasi panjar secara sekuensial
+                let remainingPanjar = panjarVal;
+                let allocatedPanjar = 0;
+                for (let i = 0; i <= rowIdx; i++) {
+                    const cost = defaultCosts[i]?.total || 0;
+                    const allocated = Math.min(cost, remainingPanjar);
+                    if (i === rowIdx) {
+                        allocatedPanjar = allocated;
+                    }
+                    remainingPanjar -= allocated;
+                }
+
+                // Terapkan override jika ada
+                let finalJumlah = defaultJumlah;
+                if (type && pegOverrides[type] !== undefined) {
+                    const netPaidOverride = parseFloat(pegOverrides[type]) || 0;
+                    finalJumlah = netPaidOverride + allocatedPanjar;
+                }
+
+                pegawaiData.biaya.push({ uraian, harga, satuan, hari, jumlah: finalJumlah });
+                pegawaiData.total_biaya += finalJumlah;
             }
         };
 
@@ -226,19 +273,19 @@ router.get('/api/cetak/pembayaran/:id', isApiAuthenticated, async (req, res) => 
 
             const jumlahHariHarian = (pengeluaran.akomodasi_malam || 0) + 1;
             const uangHarianTotal = (penerimaInfo.uang_harian.harga_satuan || 0) * jumlahHariHarian;
-            addBiaya(pegawaiId, `Uang Harian (${penerimaInfo.uang_harian.golongan})`, penerimaInfo.uang_harian.harga_satuan, penerimaInfo.uang_harian.satuan, jumlahHariHarian, uangHarianTotal);
+            addBiaya(pegawaiId, `Uang Harian (${penerimaInfo.uang_harian.golongan})`, penerimaInfo.uang_harian.harga_satuan, penerimaInfo.uang_harian.satuan, jumlahHariHarian, uangHarianTotal, 'uang_harian');
 
             if (penerimaInfo.biaya_representasi && penerimaInfo.biaya_representasi.harga > 0) {
                 const jumlahHariRepresentasi = (pengeluaran.akomodasi_malam || 0) + 1;
                 const totalBiayaRepresentasi = penerimaInfo.biaya_representasi.harga * jumlahHariRepresentasi;
                 const uraianRepresentasi = `${penerimaInfo.biaya_representasi.uraian} (Biaya Representasi)`;
-                addBiaya(pegawaiId, uraianRepresentasi, penerimaInfo.biaya_representasi.harga, penerimaInfo.biaya_representasi.satuan, jumlahHariRepresentasi, totalBiayaRepresentasi);
+                addBiaya(pegawaiId, uraianRepresentasi, penerimaInfo.biaya_representasi.harga, penerimaInfo.biaya_representasi.satuan, jumlahHariRepresentasi, totalBiayaRepresentasi, 'representasi');
             }
 
-            if (pengeluaran.transportasi_nominal > 0) addBiaya(pegawaiId, `Biaya Transportasi (${pengeluaran.transportasi_jenis || 'N/A'})`, pengeluaran.transportasi_nominal, 'PP', '-', pengeluaran.transportasi_nominal);
-            if (pengeluaran.akomodasi_nominal > 0) addBiaya(pegawaiId, `Biaya Akomodasi (${pengeluaran.akomodasi_jenis || 'N/A'})`, pengeluaran.akomodasi_harga_satuan, 'Malam', pengeluaran.akomodasi_malam, pengeluaran.akomodasi_nominal);
-            if (pengeluaran.kontribusi_nominal > 0) addBiaya(pegawaiId, `Biaya Kontribusi (${pengeluaran.kontribusi_jenis || 'N/A'})`, pengeluaran.kontribusi_nominal, 'OK', '-', pengeluaran.kontribusi_nominal);
-            if (pengeluaran.lain_lain_nominal > 0) addBiaya(pegawaiId, `Biaya Lain-lain (${pengeluaran.lain_lain_uraian || 'N/A'})`, pengeluaran.lain_lain_nominal, 'OK', '-', pengeluaran.lain_lain_nominal);
+            if (pengeluaran.transportasi_nominal > 0) addBiaya(pegawaiId, `Biaya Transportasi (${pengeluaran.transportasi_jenis || 'N/A'})`, pengeluaran.transportasi_nominal, 'PP', '-', pengeluaran.transportasi_nominal, 'transportasi');
+            if (pengeluaran.akomodasi_nominal > 0) addBiaya(pegawaiId, `Biaya Akomodasi (${pengeluaran.akomodasi_jenis || 'N/A'})`, pengeluaran.akomodasi_harga_satuan, 'Malam', pengeluaran.akomodasi_malam, pengeluaran.akomodasi_nominal, 'akomodasi');
+            if (pengeluaran.kontribusi_nominal > 0) addBiaya(pegawaiId, `Biaya Kontribusi (${pengeluaran.kontribusi_jenis || 'N/A'})`, pengeluaran.kontribusi_nominal, 'OK', '-', pengeluaran.kontribusi_nominal, 'kontribusi');
+            if (pengeluaran.lain_lain_nominal > 0) addBiaya(pegawaiId, `Biaya Lain-lain (${pengeluaran.lain_lain_uraian || 'N/A'})`, pengeluaran.lain_lain_nominal, 'OK', '-', pengeluaran.lain_lain_nominal, 'lain_lain');
         });
 
         // Hitung total dibayar

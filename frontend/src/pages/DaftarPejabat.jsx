@@ -176,15 +176,15 @@ const DaftarPejabat = () => {
             <p className="text-xs text-slate-400">Silakan tambahkan data pejabat baru.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left text-slate-500 dark:text-slate-400">
-              <thead className="text-xs text-slate-700 uppercase bg-slate-50 dark:bg-slate-700/50 dark:text-slate-300">
-                <tr>
-                  <th className="px-6 py-4 text-center w-16">No</th>
-                  <th className="px-6 py-4">Nama Lengkap</th>
-                  <th className="px-6 py-4">Jabatan Resmi</th>
-                  <th className="px-6 py-4">NIP</th>
-                  {isAdminOrSuper && <th className="px-6 py-4 text-right w-24">Aksi</th>}
+          <div className="overflow-x-auto rounded-2xl rounded-b-none">
+            <table className="min-w-full divide-y divide-slate-100">
+              <thead className="">
+                <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
+                  <th className="px-6 py-4 text-center w-16 shadow-[inset_0_-2px_0_0_#ffffff]">No</th>
+                  <th className="px-6 py-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nama Lengkap</th>
+                  <th className="px-6 py-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Jabatan Resmi</th>
+                  <th className="px-6 py-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">NIP</th>
+                  {isAdminOrSuper && <th className="px-6 py-4 text-right w-24 shadow-[inset_0_-2px_0_0_#ffffff]">Aksi</th>}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">

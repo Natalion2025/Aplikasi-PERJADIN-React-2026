@@ -302,35 +302,34 @@ router.put('/api/spt/:id', isApiAuthenticated, isApiAdminOrSuperAdmin, async (re
         return res.status(400).json({ message: 'Harus ada minimal satu pegawai yang ditugaskan (bukan pengikut).' });
     }
 
-    // Validasi jadwal bentrok untuk setiap pegawai, kecuali untuk SPT yang sedang diedit
-    for (const pegawaiItem of pegawai) {
-        const pegawaiId = pegawaiItem.id;
-        const overlapSql = `
-            SELECT s.nomor_surat, p.nama_lengkap
-            FROM spt s
-            JOIN spt_pegawai sp ON s.id = sp.spt_id
-            JOIN pegawai p ON sp.pegawai_id = p.id
-            WHERE sp.pegawai_id = ?
-    AND s.id != ? --Abaikan SPT yang sedang diedit
-              AND s.status = 'aktif'
-AND(
-    (? BETWEEN s.tanggal_berangkat AND s.tanggal_kembali) OR
-        (? BETWEEN s.tanggal_berangkat AND s.tanggal_kembali) OR
-            (s.tanggal_berangkat BETWEEN ? AND ?)
-              )
-            LIMIT 1;
-`;
-        const conflictingSpt = await dbGet(overlapSql, [pegawaiId, id, tanggal_berangkat, tanggal_kembali, tanggal_berangkat, tanggal_kembali]);
-
-        if (conflictingSpt) {
-            return res.status(409).json({
-                message: `Nama ${conflictingSpt.nama_lengkap} sedang menjalankan tugas kedinasan dengan ST nomor ${conflictingSpt.nomor_surat}. Alternatif pilih nama pegawai yang lain.`
-            });
-        }
-    }
-
-
     try {
+        // Validasi jadwal bentrok untuk setiap pegawai, kecuali untuk SPT yang sedang diedit
+        for (const pegawaiItem of pegawai) {
+            const pegawaiId = pegawaiItem.id;
+            const overlapSql = `
+                SELECT s.nomor_surat, p.nama_lengkap
+                FROM spt s
+                JOIN spt_pegawai sp ON s.id = sp.spt_id
+                JOIN pegawai p ON sp.pegawai_id = p.id
+                WHERE sp.pegawai_id = ?
+                  AND s.id != ?
+                  AND s.status = 'aktif'
+                  AND (
+                    (? BETWEEN s.tanggal_berangkat AND s.tanggal_kembali) OR
+                    (? BETWEEN s.tanggal_berangkat AND s.tanggal_kembali) OR
+                    (s.tanggal_berangkat BETWEEN ? AND ?)
+                  )
+                LIMIT 1;
+            `;
+            const conflictingSpt = await dbGet(overlapSql, [pegawaiId, id, tanggal_berangkat, tanggal_kembali, tanggal_berangkat, tanggal_kembali]);
+
+            if (conflictingSpt) {
+                return res.status(409).json({
+                    message: `Nama ${conflictingSpt.nama_lengkap} sedang menjalankan tugas kedinasan dengan ST nomor ${conflictingSpt.nomor_surat}. Alternatif pilih nama pegawai yang lain.`
+                });
+            }
+        }
+
         await runQuery('BEGIN TRANSACTION');
 
         const sptSql = `UPDATE spt SET
@@ -380,12 +379,12 @@ dasar_perjalanan = ?,
     } catch (err) {
         await runQuery('ROLLBACK').catch(rbErr => console.error('[API ERROR] Gagal rollback:', rbErr));
 
-        if (err.message.includes('UNIQUE constraint failed')) {
+        if (err.message.includes('UNIQUE constraint failed') || err.message.includes('ER_DUP_ENTRY') || err.code === 'ER_DUP_ENTRY') {
             return res.status(409).json({ message: 'Nomor surat sudah digunakan. Gunakan nomor surat yang berbeda.' });
-        } else if (err.message.includes('SQLITE_CONSTRAINT_FOREIGNKEY')) {
+        } else if (err.message.includes('SQLITE_CONSTRAINT_FOREIGNKEY') || err.message.includes('foreign key constraint fails') || err.code === 'ER_NO_REFERENCED_ROW_2' || err.code === 'ER_ROW_IS_REFERENCED_2') {
             return res.status(400).json({
                 message: 'Data terkait (pejabat, anggaran, atau pegawai) tidak valid. Pastikan pilihan Anda ada di daftar.',
-                error: err.message // Sertakan pesan error asli dari database untuk debugging lebih lanjut
+                error: err.message
             });
         }
 
