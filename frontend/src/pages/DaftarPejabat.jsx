@@ -11,7 +11,7 @@ import {
   X,
   AlertCircle,
   CheckCircle2,
-  ShieldAlert
+  ShieldAlert,
 } from 'lucide-react';
 
 const DaftarPejabat = () => {
@@ -27,7 +27,7 @@ const DaftarPejabat = () => {
   const [form, setForm] = useState({
     nama: '',
     jabatan: '',
-    nip: ''
+    nip: '',
   });
 
   const [error, setError] = useState('');
@@ -62,7 +62,7 @@ const DaftarPejabat = () => {
     setForm({
       nama: '',
       jabatan: '',
-      nip: ''
+      nip: '',
     });
     setError('');
     setSuccess('');
@@ -74,7 +74,7 @@ const DaftarPejabat = () => {
     setForm({
       nama: pejabat.nama || '',
       jabatan: pejabat.jabatan || '',
-      nip: pejabat.nip || ''
+      nip: pejabat.nip || '',
     });
     setError('');
     setSuccess('');
@@ -111,7 +111,11 @@ const DaftarPejabat = () => {
   };
 
   const handleDelete = async (pejabat) => {
-    if (window.confirm(`Apakah Anda yakin ingin menghapus pejabat "${pejabat.nama}"? Tindakan ini tidak dapat dibatalkan.`)) {
+    if (
+      window.confirm(
+        `Apakah Anda yakin ingin menghapus pejabat "${pejabat.nama}"? Tindakan ini tidak dapat dibatalkan.`
+      )
+    ) {
       try {
         await axios.delete(`/api/pejabat/${pejabat.id}`);
         alert('Data pejabat berhasil dihapus.');
@@ -136,8 +140,12 @@ const DaftarPejabat = () => {
       {/* Title */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Daftar Pejabat Penandatangan</h1>
-          <p className="text-sm text-slate-500">Kelola daftar pejabat yang berwenang menandatangani SPT, SPPD, dan Kuitansi.</p>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
+            Daftar Pejabat Penandatangan
+          </h1>
+          <p className="text-sm text-slate-500">
+            Kelola daftar pejabat yang berwenang menandatangani SPT, SPPD, dan Kuitansi.
+          </p>
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
           <div className="relative w-full sm:max-w-xs">
@@ -147,16 +155,16 @@ const DaftarPejabat = () => {
               placeholder="Cari pejabat..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none dark:text-slate-100"
             />
           </div>
           {isAdminOrSuper && (
             <button
               onClick={handleOpenAdd}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all cursor-pointer"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-mauve-100 hover:bg-mauve-200 text-mauve-700 rounded-2xl border border-mauve-300 text-sm font-semibold shadow-md transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4" />
-              <span>Tambah Pejabat</span>
+              <span className="whitespace-nowrap">Tambah Pejabat</span>
             </button>
           )}
         </div>
@@ -180,16 +188,29 @@ const DaftarPejabat = () => {
             <table className="min-w-full divide-y divide-slate-100">
               <thead className="">
                 <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
-                  <th className="px-6 py-4 text-center w-16 shadow-[inset_0_-2px_0_0_#ffffff]">No</th>
-                  <th className="px-6 py-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Nama Lengkap</th>
-                  <th className="px-6 py-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">Jabatan Resmi</th>
+                  <th className="px-6 py-4 text-center w-16 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    No
+                  </th>
+                  <th className="px-6 py-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                    Nama Lengkap
+                  </th>
+                  <th className="px-6 py-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                    Jabatan Resmi
+                  </th>
                   <th className="px-6 py-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">NIP</th>
-                  {isAdminOrSuper && <th className="px-6 py-4 text-right w-24 shadow-[inset_0_-2px_0_0_#ffffff]">Aksi</th>}
+                  {isAdminOrSuper && (
+                    <th className="px-6 py-4 text-right w-24 shadow-[inset_0_-2px_0_0_#ffffff]">
+                      Aksi
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 {filteredPejabat.map((pejabat, idx) => (
-                  <tr key={pejabat.id} className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors">
+                  <tr
+                    key={pejabat.id}
+                    className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors"
+                  >
                     <td className="px-6 py-4 text-center font-medium text-slate-400">{idx + 1}</td>
                     <td className="px-6 py-4 whitespace-nowrap font-semibold text-slate-800 dark:text-slate-100">
                       {pejabat.nama}
@@ -228,10 +249,12 @@ const DaftarPejabat = () => {
 
       {/* MODAL TAMBAH & EDIT PEJABAT */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
-        onClick={(e) => {
-          if (e.target === e.currentTarget) setModalOpen(false);
-        }}>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setModalOpen(false);
+          }}
+        >
           <div className="bg-white dark:bg-slate-800 w-full max-w-md rounded-3xl p-6 shadow-xl border border-slate-100 dark:border-slate-700 space-y-6">
             <div className="flex justify-between items-start">
               <div className="flex items-center gap-2">

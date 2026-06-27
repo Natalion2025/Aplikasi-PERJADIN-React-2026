@@ -5,6 +5,8 @@ const util = require('util');
 const ExcelJS = require('exceljs');
 const { isApiAuthenticated } = require('../middleware/auth');
 
+const PORT = process.env.PORT || 3000;
+
 const dbGet = util.promisify(db.get.bind(db));
 const dbAll = util.promisify(db.all.bind(db));
 

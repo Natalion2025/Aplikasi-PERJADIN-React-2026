@@ -373,7 +373,7 @@ const SptRegister = () => {
 
           <Link
             to="/tambah-spt"
-            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-800 to-green-600 hover:from-indigo-900 hover:to-green-700 text-white rounded-xl font-semibold shadow-md shadow-indigo-600/15 transition-all text-sm transform hover:-translate-y-0.5"
+            className="flex items-center gap-2 px-5 py-2.5 bg-mauve-100 hover:bg-mauve-200 text-mauve-700 rounded-2xl font-semibold shadow-md border border-mauve-300 transition-all text-sm transform hover:-translate-y-0.5"
           >
             <Plus className="h-4 w-4" />
             Buat Surat Tugas
@@ -426,7 +426,7 @@ const SptRegister = () => {
                 }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring focus:ring-mauve-500 focus:border-none "
+                className="w-full pl-10 pr-4 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none "
               />
             </div>
 

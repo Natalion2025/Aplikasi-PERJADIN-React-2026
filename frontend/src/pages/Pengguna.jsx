@@ -11,7 +11,7 @@ import {
   AlertCircle,
   CheckCircle2,
   Shield,
-  UserCheck
+  UserCheck,
 } from 'lucide-react';
 
 const Pengguna = () => {
@@ -29,7 +29,7 @@ const Pengguna = () => {
     password: '',
     role: 'user',
     nip: '',
-    jabatan: ''
+    jabatan: '',
   });
 
   const [error, setError] = useState('');
@@ -67,7 +67,7 @@ const Pengguna = () => {
       password: '',
       role: 'user',
       nip: '',
-      jabatan: ''
+      jabatan: '',
     });
     setError('');
     setSuccess('');
@@ -82,7 +82,7 @@ const Pengguna = () => {
       password: '', // Kosongkan password saat edit, diisi hanya jika ingin merubah
       role: user.role || 'user',
       nip: user.nip || '',
-      jabatan: user.jabatan || ''
+      jabatan: user.jabatan || '',
     });
     setError('');
     setSuccess('');
@@ -125,7 +125,11 @@ const Pengguna = () => {
       return;
     }
 
-    if (window.confirm(`Apakah Anda yakin ingin menghapus pengguna "${user.name}"? Tindakan ini tidak dapat dibatalkan.`)) {
+    if (
+      window.confirm(
+        `Apakah Anda yakin ingin menghapus pengguna "${user.name}"? Tindakan ini tidak dapat dibatalkan.`
+      )
+    ) {
       try {
         const response = await axios.delete(`/api/users/${user.id}`);
         alert(response.data.message || 'Pengguna berhasil dihapus.');
@@ -172,8 +176,12 @@ const Pengguna = () => {
       {/* Title */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Manajemen Pengguna</h1>
-          <p className="text-sm text-slate-500">Kelola akun administrator, operator, dan pengaudit aplikasi PERJADIN.</p>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
+            Manajemen Pengguna
+          </h1>
+          <p className="text-sm text-slate-500">
+            Kelola akun administrator, operator, dan pengaudit aplikasi PERJADIN.
+          </p>
         </div>
         <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
           <div className="relative w-full sm:max-w-xs">
@@ -183,13 +191,13 @@ const Pengguna = () => {
               placeholder="Cari pengguna..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none dark:text-slate-100"
             />
           </div>
           {isAllowedToCreate && (
             <button
               onClick={handleOpenAdd}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all cursor-pointer"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-mauve-100 hover:bg-mauve-200 text-mauve-700 rounded-2xl text-sm font-semibold shadow-md border border-mauve-300 whitespace-nowrap transition-all cursor-pointer"
             >
               <UserPlus className="w-4 h-4" />
               <span>Tambah Pengguna</span>
@@ -215,28 +223,38 @@ const Pengguna = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-slate-500 dark:text-slate-400">
               <thead className="text-xs text-slate-700 uppercase bg-slate-50 dark:bg-slate-700/50 dark:text-slate-300">
-                <tr>
-                  <th className="px-6 py-4">Nama Lengkap</th>
-                  <th className="px-6 py-4">Username</th>
-                  <th className="px-6 py-4">NIP / Jabatan</th>
-                  <th className="px-6 py-4">Peran (Role)</th>
-                  <th className="px-6 py-4 text-right">Aksi</th>
+                <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold">
+                  <th className="px-6 py-4 shadow-[inset_0_-2px_0_0_#ffffff]">Nama Lengkap</th>
+                  <th className="px-6 py-4 shadow-[inset_0_-2px_0_0_#ffffff]">Username</th>
+                  <th className="px-6 py-4 shadow-[inset_0_-2px_0_0_#ffffff]">NIP / Jabatan</th>
+                  <th className="px-6 py-4 shadow-[inset_0_-2px_0_0_#ffffff]">Peran (Role)</th>
+                  <th className="px-6 py-4 text-center shadow-[inset_0_-2px_0_0_#ffffff]">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 {filteredUsers.map((userRow) => {
                   const { canEdit, canDelete } = checkPermissions(userRow);
                   return (
-                    <tr key={userRow.id} className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors">
-                      <td className="px-6 py-4 whitespace-nowrap">
+                    <tr
+                      key={userRow.id}
+                      className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors"
+                    >
+                      <td className="px-6 py-3 whitespace-nowrap align-top">
                         <div className="flex items-center gap-3">
                           <img
-                            src={userRow.foto_profil ? `/${userRow.foto_profil}` : 'https://api.dicebear.com/7.x/adventurer/svg?seed=' + userRow.username}
+                            src={
+                              userRow.foto_profil
+                                ? `/${userRow.foto_profil}`
+                                : 'https://api.dicebear.com/7.x/adventurer/svg?seed=' +
+                                  userRow.username
+                            }
                             alt="Profile"
                             className="w-10 h-10 rounded-xl object-cover ring-2 ring-slate-100 dark:ring-slate-800"
                           />
                           <div>
-                            <div className="font-semibold text-slate-800 dark:text-slate-100">{userRow.name}</div>
+                            <div className="font-semibold text-slate-800 dark:text-slate-100">
+                              {userRow.name}
+                            </div>
                             {userRow.id === currentUser?.id && (
                               <span className="text-[10px] text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full font-bold dark:text-indigo-400 dark:bg-indigo-950/40">
                                 Sesi Anda
@@ -245,53 +263,57 @@ const Pengguna = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap font-mono text-xs text-slate-600 dark:text-slate-400">
+                      <td className="px-6 py-3 whitespace-nowrap font-mono text-xs text-slate-600 dark:text-slate-400">
                         @{userRow.username}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-slate-700 dark:text-slate-300 font-medium text-xs">{userRow.nip || '-'}</div>
-                        <div className="text-slate-400 text-[11px] mt-0.5">{userRow.jabatan || '-'}</div>
+                      <td className="px-6 py-3 whitespace-nowrap align-top">
+                        <div className="text-slate-700 dark:text-slate-300 font-medium text-xs">
+                          {userRow.nip || '-'}
+                        </div>
+                        <div className="text-slate-400 text-[11px] mt-0.5">
+                          {userRow.jabatan || '-'}
+                        </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-3 whitespace-nowrap align-top">
                         <span
                           className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold ${
                             userRow.role === 'superadmin'
                               ? 'bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-400 border border-red-100 dark:border-red-950'
                               : userRow.role === 'admin'
-                              ? 'bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-100 dark:border-amber-950'
-                              : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-950'
+                                ? 'bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-100 dark:border-amber-950'
+                                : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-950'
                           }`}
                         >
                           <Shield className="w-3.5 h-3.5" />
                           <span className="capitalize">{userRow.role}</span>
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right space-x-2">
+                      <td className="pl-10 pr-0 py-3 whitespace-nowrap text-center flex items-center space-x-2 align-top">
                         {canEdit ? (
                           <button
                             onClick={() => handleOpenEdit(userRow)}
-                            className="p-1.5 text-slate-500 hover:text-amber-600 bg-slate-50 hover:bg-amber-50 dark:bg-slate-800 dark:hover:bg-amber-950/30 rounded-lg transition-all"
+                            className="p-1  hover:text-orange-600 bg-slate-50 hover:bg-mauve-50 dark:bg-slate-800 dark:hover:bg-mauve-950/30 rounded-lg transition-all"
                             title="Edit Pengguna"
                           >
-                            <Edit className="w-4 h-4" />
+                            <Edit className="w-4 h-4 text-mauve-700" />
                           </button>
                         ) : (
-                          <span className="p-1.5 text-slate-300 dark:text-slate-600 inline-block" title="Hak akses ditolak">
-                            <Edit className="w-4 h-4" />
+                          <span className="p-1  dark:text-slate-600" title="Hak akses ditolak">
+                            <Edit className="w-4 h-4 text-mauve-700" />
                           </span>
                         )}
 
                         {canDelete ? (
                           <button
                             onClick={() => handleDelete(userRow)}
-                            className="p-1.5 text-slate-500 hover:text-red-600 bg-slate-50 hover:bg-red-50 dark:bg-slate-800 dark:hover:bg-red-950/30 rounded-lg transition-all"
+                            className="p-1 hover:text-red-600 hover:bg-red-50 dark:bg-slate-800 dark:hover:bg-red-950/30 rounded-lg transition-all"
                             title="Hapus Pengguna"
                           >
-                            <Trash2 className="w-4 h-4" />
+                            <Trash2 className="w-4 h-4 text-mauve-700" />
                           </button>
                         ) : (
-                          <span className="p-1.5 text-slate-300 dark:text-slate-600 inline-block" title="Tidak dapat dihapus">
-                            <Trash2 className="w-4 h-4" />
+                          <span className="p-1  dark:text-slate-600 " title="Tidak dapat dihapus">
+                            <Trash2 className="w-4 h-4 text-slate-300" />
                           </span>
                         )}
                       </td>
@@ -306,8 +328,11 @@ const Pengguna = () => {
 
       {/* Add / Edit User Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
-          onClick={(e) => { if (e.target === e.currentTarget && !submitting) setModalOpen(false); }}
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !submitting) setModalOpen(false);
+          }}
         >
           <div className="bg-white dark:bg-slate-800 w-full max-w-lg rounded-3xl p-6 shadow-xl border border-slate-100 dark:border-slate-700 space-y-6">
             <div className="flex justify-between items-start">
@@ -400,7 +425,12 @@ const Pengguna = () => {
                 {/* Password */}
                 <div className="col-span-2">
                   <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
-                    Password {editingId && <span className="text-[10px] text-slate-400 lowercase">(kosongkan jika tidak diubah)</span>}
+                    Password{' '}
+                    {editingId && (
+                      <span className="text-[10px] text-slate-400 lowercase">
+                        (kosongkan jika tidak diubah)
+                      </span>
+                    )}
                   </label>
                   <input
                     type="password"

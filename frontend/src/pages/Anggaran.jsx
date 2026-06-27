@@ -208,7 +208,7 @@ const Anggaran = () => {
         </div>
         <button
           onClick={handleAdd}
-          className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-800 to-green-600 hover:from-indigo-900 hover:to-green-700 text-white rounded-xl font-semibold shadow-md shadow-indigo-600/15 transition-all text-sm transform hover:-translate-y-0.5"
+          className="flex items-center gap-2 px-5 py-2.5 bg-mauve-100 hover:bg-mauve-200 text-mauve-700 rounded-2xl font-semibold shadow-md border border-mauve-300 transition-all text-sm transform hover:-translate-y-0.5"
         >
           <Plus size={18} />
           <span>Tambah Anggaran</span>
@@ -225,13 +225,13 @@ const Anggaran = () => {
             </span>
             <input
               type="text"
-              placeholder="Cari program, kegiatan, atau nama anggaran..."
+              placeholder="Cari prog, keg, atau nama anggaran..."
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full pl-11 pr-4 py-2.5 bg-gradient-to-r from-green-50 to bg-sky-50 border border-slate-300 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring focus:ring-mauve-500 focus:bg-white transition-all text-sm"
+              className="w-[70%] pl-11 pr-4 py-2.5 bg-gradient-to-r from-green-50 to bg-sky-50 border border-slate-300 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm"
             />
           </div>
         </div>

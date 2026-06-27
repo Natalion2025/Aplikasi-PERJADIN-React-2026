@@ -10,65 +10,67 @@ import {
   Loader2,
   AlertCircle,
   CheckCircle2,
-  X
+  X,
 } from 'lucide-react';
 
 const SBU_CATEGORIES = [
   {
     tipe: 'A',
     title: 'A. SATUAN BIAYA UANG HARIAN PERJALANAN DINAS DALAM KOTA/KABUPATEN LEBIH DARI 8 JAM',
-    templateName: 'A_Template Uang Harian Dalam Kota_Kabupaten.xlsx'
+    templateName: 'A_Template Uang Harian Dalam Kota_Kabupaten.xlsx',
   },
   {
     tipe: 'B',
     title: 'B. SATUAN BIAYA PENGINAPAN PERJALANAN DINAS DALAM KOTA/KABUPATEN LEBIH DARI 8 JAM',
-    templateName: 'B_Template Biaya Penginapan Dalam Kota_Kabupaten.xlsx'
+    templateName: 'B_Template Biaya Penginapan Dalam Kota_Kabupaten.xlsx',
   },
   {
     tipe: 'C',
     title: 'C. SATUAN BIAYA UANG HARIAN PERJALANAN DINAS DALAM NEGERI',
-    templateName: 'C_Template Uang Harian Dalam Negeri.xlsx'
+    templateName: 'C_Template Uang Harian Dalam Negeri.xlsx',
   },
   {
     tipe: 'D',
     title: 'D. SATUAN BIAYA UANG REPRESENTASI',
-    templateName: 'D_Template Biaya Uang Representasi.xlsx'
+    templateName: 'D_Template Biaya Uang Representasi.xlsx',
   },
   {
     tipe: 'E',
     title: 'E. SATUAN BIAYA PENGINAPAN PERJALANAN DINAS DALAM NEGERI',
-    templateName: 'E_Template Biaya Penginapan Dalam Negeri.xlsx'
+    templateName: 'E_Template Biaya Penginapan Dalam Negeri.xlsx',
   },
   {
     tipe: 'F',
-    title: 'F. SATUAN BIAYA TRANSPORTASI PERJALANAN DINAS DARI IBUKOTA KABUPATEN MELAWI KE IBUKOTA KECAMATAN',
-    templateName: 'F_Template Biaya Transportasi Kab_Kecamatan.xlsx'
+    title:
+      'F. SATUAN BIAYA TRANSPORTASI PERJALANAN DINAS DARI IBUKOTA KABUPATEN MELAWI KE IBUKOTA KECAMATAN',
+    templateName: 'F_Template Biaya Transportasi Kab_Kecamatan.xlsx',
   },
   {
     tipe: 'G',
     title: 'G. SATUAN BIAYA TRANSPORTASI PERJALANAN DINAS DARI IBUKOTA KECAMATAN KE DESA',
-    templateName: 'G_Template Biaya Transportasi Ibu Kota_Kecamatan_Desa.xlsx'
+    templateName: 'G_Template Biaya Transportasi Ibu Kota_Kecamatan_Desa.xlsx',
   },
   {
     tipe: 'H',
     title: 'H. SATUAN BIAYA TIKET PESAWAT PERJALANAN DINAS DALAM NEGERI PP DARI PONTIANAK',
-    templateName: 'H_Template Biaya Tiket Pesawat Dalam Negeri PP dari Pontianak.xlsx'
+    templateName: 'H_Template Biaya Tiket Pesawat Dalam Negeri PP dari Pontianak.xlsx',
   },
   {
     tipe: 'I',
     title: 'I. SATUAN BIAYA TIKET PESAWAT PERJALANAN DINAS DALAM NEGERI PP DARI JAKARTA (TRANSIT)',
-    templateName: 'I_Template Biaya Tiket Pesawat Dalam Negeri PP dari Jakarta (Transit).xlsx'
+    templateName: 'I_Template Biaya Tiket Pesawat Dalam Negeri PP dari Jakarta (Transit).xlsx',
   },
   {
     tipe: 'J',
-    title: 'J. SATUAN BIAYA TRANSPORTASI PERJALANAN DINAS LUAR DAERAH DALAM PROVINSI PP DARI MELAWI',
-    templateName: 'J_Template Biaya Transportasi Dalam Provinsi PP dari Melawi.xlsx'
+    title:
+      'J. SATUAN BIAYA TRANSPORTASI PERJALANAN DINAS LUAR DAERAH DALAM PROVINSI PP DARI MELAWI',
+    templateName: 'J_Template Biaya Transportasi Dalam Provinsi PP dari Melawi.xlsx',
   },
   {
     tipe: 'K',
     title: 'K. SATUAN BIAYA TAKSI PERJALANAN DINAS DALAM NEGERI',
-    templateName: 'K_Template Biaya Taksi Dalam Negeri.xlsx'
-  }
+    templateName: 'K_Template Biaya Taksi Dalam Negeri.xlsx',
+  },
 ];
 
 const StandarBiaya = () => {
@@ -90,7 +92,7 @@ const StandarBiaya = () => {
       style: 'currency',
       currency: 'IDR',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(amount);
   };
 
@@ -139,17 +141,17 @@ const StandarBiaya = () => {
 
       const response = await axios.post('/api/standar-biaya/upload', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
         },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
           setUploadProgress(percentCompleted);
-        }
+        },
       });
 
       setFeedback({
         type: 'success',
-        message: response.data.message || 'File berhasil diupload dan disimpan.'
+        message: response.data.message || 'File berhasil diupload dan disimpan.',
       });
 
       // Reload SBU data
@@ -158,12 +160,13 @@ const StandarBiaya = () => {
       setTimeout(() => {
         setUploadModalOpen(false);
       }, 1500);
-
     } catch (err) {
       console.error('Gagal mengupload SBU:', err);
       setFeedback({
         type: 'error',
-        message: err.response?.data?.message || 'Terjadi kesalahan saat mengunggah file. Pastikan format kolom sesuai.'
+        message:
+          err.response?.data?.message ||
+          'Terjadi kesalahan saat mengunggah file. Pastikan format kolom sesuai.',
       });
     } finally {
       setUploading(false);
@@ -210,35 +213,83 @@ const StandarBiaya = () => {
             <table className="w-full text-sm text-left text-slate-500 dark:text-slate-400">
               <thead className="text-xs text-slate-700 uppercase bg-slate-100 dark:bg-slate-800 dark:text-slate-300">
                 <tr>
-                  <th className="px-4 py-3 text-center border-r border-slate-200 dark:border-slate-700" rowSpan={2}>No.</th>
-                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700" rowSpan={2}>
+                  <th
+                    className="px-4 py-3 text-center border-r border-slate-200 dark:border-slate-700"
+                    rowSpan={2}
+                  >
+                    No.
+                  </th>
+                  <th
+                    className="px-6 py-3 border-r border-slate-200 dark:border-slate-700"
+                    rowSpan={2}
+                  >
                     {tipe === 'H' || tipe === 'I' || tipe === 'J' ? 'Kota Tujuan' : 'Tempat Tujuan'}
                   </th>
-                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700" rowSpan={2}>Satuan</th>
-                  <th className="px-6 py-3 text-center border-b border-slate-200 dark:border-slate-700" colSpan={4}>Tarif Per Golongan</th>
+                  <th
+                    className="px-6 py-3 border-r border-slate-200 dark:border-slate-700"
+                    rowSpan={2}
+                  >
+                    Satuan
+                  </th>
+                  <th
+                    className="px-6 py-3 text-center border-b border-slate-200 dark:border-slate-700"
+                    colSpan={4}
+                  >
+                    Tarif Per Golongan
+                  </th>
                   {tipe === 'A' && (
-                    <th className="px-6 py-3 text-center border-l border-slate-200 dark:border-slate-700" rowSpan={2}>Diklat/Bimtek/Lainnya</th>
+                    <th
+                      className="px-6 py-3 text-center border-l border-slate-200 dark:border-slate-700"
+                      rowSpan={2}
+                    >
+                      Diklat/Bimtek/Lainnya
+                    </th>
                   )}
                 </tr>
                 <tr>
-                  <th className="px-4 py-2 text-center border-r border-slate-200 dark:border-slate-700">A</th>
-                  <th className="px-4 py-2 text-center border-r border-slate-200 dark:border-slate-700">B</th>
-                  <th className="px-4 py-2 text-center border-r border-slate-200 dark:border-slate-700">C</th>
+                  <th className="px-4 py-2 text-center border-r border-slate-200 dark:border-slate-700">
+                    A
+                  </th>
+                  <th className="px-4 py-2 text-center border-r border-slate-200 dark:border-slate-700">
+                    B
+                  </th>
+                  <th className="px-4 py-2 text-center border-r border-slate-200 dark:border-slate-700">
+                    C
+                  </th>
                   <th className="px-4 py-2 text-center">D</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 {filtered.map((item, idx) => (
-                  <tr key={item.id || idx} className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors">
-                    <td className="px-4 py-3.5 text-center font-medium text-slate-400">{idx + 1}</td>
-                    <td className="px-6 py-3.5 font-medium text-slate-800 dark:text-slate-200">{item.uraian}</td>
-                    <td className="px-6 py-3.5 text-slate-600 dark:text-slate-400">{item.satuan}</td>
-                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">{formatCurrency(item.gol_a)}</td>
-                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">{formatCurrency(item.gol_b)}</td>
-                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">{formatCurrency(item.gol_c)}</td>
-                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">{formatCurrency(item.gol_d)}</td>
+                  <tr
+                    key={item.id || idx}
+                    className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors"
+                  >
+                    <td className="px-4 py-3.5 text-center font-medium text-slate-400">
+                      {idx + 1}
+                    </td>
+                    <td className="px-6 py-3.5 font-medium text-slate-800 dark:text-slate-200">
+                      {item.uraian}
+                    </td>
+                    <td className="px-6 py-3.5 text-slate-600 dark:text-slate-400">
+                      {item.satuan}
+                    </td>
+                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">
+                      {formatCurrency(item.gol_a)}
+                    </td>
+                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">
+                      {formatCurrency(item.gol_b)}
+                    </td>
+                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">
+                      {formatCurrency(item.gol_c)}
+                    </td>
+                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">
+                      {formatCurrency(item.gol_d)}
+                    </td>
                     {tipe === 'A' && (
-                      <td className="px-6 py-3.5 text-right text-indigo-600 dark:text-indigo-400 font-semibold">{formatCurrency(item.biaya_kontribusi)}</td>
+                      <td className="px-6 py-3.5 text-right text-indigo-600 dark:text-indigo-400 font-semibold">
+                        {formatCurrency(item.biaya_kontribusi)}
+                      </td>
                     )}
                   </tr>
                 ))}
@@ -253,21 +304,42 @@ const StandarBiaya = () => {
             <table className="w-full text-sm text-left text-slate-500 dark:text-slate-400">
               <thead className="text-xs text-slate-700 uppercase bg-slate-100 dark:bg-slate-800 dark:text-slate-300">
                 <tr>
-                  <th className="px-4 py-3 text-center border-r border-slate-200 dark:border-slate-700">No.</th>
-                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700">Provinsi</th>
-                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700">Satuan</th>
-                  <th className="px-6 py-3 text-right border-r border-slate-200 dark:border-slate-700">Besaran</th>
+                  <th className="px-4 py-3 text-center border-r border-slate-200 dark:border-slate-700">
+                    No.
+                  </th>
+                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700">
+                    Provinsi
+                  </th>
+                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700">
+                    Satuan
+                  </th>
+                  <th className="px-6 py-3 text-right border-r border-slate-200 dark:border-slate-700">
+                    Besaran
+                  </th>
                   <th className="px-6 py-3 text-right">Diklat / Bimtek (Kontribusi)</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 {filtered.map((item, idx) => (
-                  <tr key={item.id || idx} className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors">
-                    <td className="px-4 py-3.5 text-center font-medium text-slate-400">{idx + 1}</td>
-                    <td className="px-6 py-3.5 font-medium text-slate-800 dark:text-slate-200">{item.provinsi}</td>
-                    <td className="px-6 py-3.5 text-slate-600 dark:text-slate-400">{item.satuan}</td>
-                    <td className="px-6 py-3.5 text-right text-slate-900 dark:text-slate-100 font-semibold">{formatCurrency(item.besaran)}</td>
-                    <td className="px-6 py-3.5 text-right text-slate-700 dark:text-slate-300">{formatCurrency(item.biaya_kontribusi)}</td>
+                  <tr
+                    key={item.id || idx}
+                    className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors"
+                  >
+                    <td className="px-4 py-3.5 text-center font-medium text-slate-400">
+                      {idx + 1}
+                    </td>
+                    <td className="px-6 py-3.5 font-medium text-slate-800 dark:text-slate-200">
+                      {item.provinsi}
+                    </td>
+                    <td className="px-6 py-3.5 text-slate-600 dark:text-slate-400">
+                      {item.satuan}
+                    </td>
+                    <td className="px-6 py-3.5 text-right text-slate-900 dark:text-slate-100 font-semibold">
+                      {formatCurrency(item.besaran)}
+                    </td>
+                    <td className="px-6 py-3.5 text-right text-slate-700 dark:text-slate-300">
+                      {formatCurrency(item.biaya_kontribusi)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -281,21 +353,42 @@ const StandarBiaya = () => {
             <table className="w-full text-sm text-left text-slate-500 dark:text-slate-400">
               <thead className="text-xs text-slate-700 uppercase bg-slate-100 dark:bg-slate-800 dark:text-slate-300">
                 <tr>
-                  <th className="px-4 py-3 text-center border-r border-slate-200 dark:border-slate-700">No.</th>
-                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700">Uraian</th>
-                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700">Satuan</th>
-                  <th className="px-6 py-3 text-right border-r border-slate-200 dark:border-slate-700">Luar Daerah (PP)</th>
+                  <th className="px-4 py-3 text-center border-r border-slate-200 dark:border-slate-700">
+                    No.
+                  </th>
+                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700">
+                    Uraian
+                  </th>
+                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700">
+                    Satuan
+                  </th>
+                  <th className="px-6 py-3 text-right border-r border-slate-200 dark:border-slate-700">
+                    Luar Daerah (PP)
+                  </th>
                   <th className="px-6 py-3 text-right">Dalam Kota &gt; 8 Jam</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 {filtered.map((item, idx) => (
-                  <tr key={item.id || idx} className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors">
-                    <td className="px-4 py-3.5 text-center font-medium text-slate-400">{idx + 1}</td>
-                    <td className="px-6 py-3.5 font-medium text-slate-800 dark:text-slate-200">{item.uraian}</td>
-                    <td className="px-6 py-3.5 text-slate-600 dark:text-slate-400">{item.satuan}</td>
-                    <td className="px-6 py-3.5 text-right text-slate-950 dark:text-slate-50 font-bold">{formatCurrency(item.besaran)}</td>
-                    <td className="px-6 py-3.5 text-right text-slate-700 dark:text-slate-300">{formatCurrency(item.biaya_kontribusi)}</td>
+                  <tr
+                    key={item.id || idx}
+                    className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors"
+                  >
+                    <td className="px-4 py-3.5 text-center font-medium text-slate-400">
+                      {idx + 1}
+                    </td>
+                    <td className="px-6 py-3.5 font-medium text-slate-800 dark:text-slate-200">
+                      {item.uraian}
+                    </td>
+                    <td className="px-6 py-3.5 text-slate-600 dark:text-slate-400">
+                      {item.satuan}
+                    </td>
+                    <td className="px-6 py-3.5 text-right text-slate-950 dark:text-slate-50 font-bold">
+                      {formatCurrency(item.besaran)}
+                    </td>
+                    <td className="px-6 py-3.5 text-right text-slate-700 dark:text-slate-300">
+                      {formatCurrency(item.biaya_kontribusi)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -309,28 +402,71 @@ const StandarBiaya = () => {
             <table className="w-full text-sm text-left text-slate-500 dark:text-slate-400">
               <thead className="text-xs text-slate-700 uppercase bg-slate-100 dark:bg-slate-800 dark:text-slate-300">
                 <tr>
-                  <th className="px-4 py-3 text-center border-r border-slate-200 dark:border-slate-700" rowSpan={2}>No.</th>
-                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700" rowSpan={2}>Provinsi</th>
-                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700" rowSpan={2}>Satuan</th>
-                  <th className="px-6 py-3 text-center border-b border-slate-200 dark:border-slate-700" colSpan={4}>Tarif Hotel Per Golongan</th>
+                  <th
+                    className="px-4 py-3 text-center border-r border-slate-200 dark:border-slate-700"
+                    rowSpan={2}
+                  >
+                    No.
+                  </th>
+                  <th
+                    className="px-6 py-3 border-r border-slate-200 dark:border-slate-700"
+                    rowSpan={2}
+                  >
+                    Provinsi
+                  </th>
+                  <th
+                    className="px-6 py-3 border-r border-slate-200 dark:border-slate-700"
+                    rowSpan={2}
+                  >
+                    Satuan
+                  </th>
+                  <th
+                    className="px-6 py-3 text-center border-b border-slate-200 dark:border-slate-700"
+                    colSpan={4}
+                  >
+                    Tarif Hotel Per Golongan
+                  </th>
                 </tr>
                 <tr>
-                  <th className="px-4 py-2 text-center border-r border-slate-200 dark:border-slate-700">A</th>
-                  <th className="px-4 py-2 text-center border-r border-slate-200 dark:border-slate-700">B</th>
-                  <th className="px-4 py-2 text-center border-r border-slate-200 dark:border-slate-700">C</th>
+                  <th className="px-4 py-2 text-center border-r border-slate-200 dark:border-slate-700">
+                    A
+                  </th>
+                  <th className="px-4 py-2 text-center border-r border-slate-200 dark:border-slate-700">
+                    B
+                  </th>
+                  <th className="px-4 py-2 text-center border-r border-slate-200 dark:border-slate-700">
+                    C
+                  </th>
                   <th className="px-4 py-2 text-center">D</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 {filtered.map((item, idx) => (
-                  <tr key={item.id || idx} className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors">
-                    <td className="px-4 py-3.5 text-center font-medium text-slate-400">{idx + 1}</td>
-                    <td className="px-6 py-3.5 font-medium text-slate-800 dark:text-slate-200">{item.provinsi}</td>
-                    <td className="px-6 py-3.5 text-slate-600 dark:text-slate-400">{item.satuan}</td>
-                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">{formatCurrency(item.gol_a)}</td>
-                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">{formatCurrency(item.gol_b)}</td>
-                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">{formatCurrency(item.gol_c)}</td>
-                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">{formatCurrency(item.gol_d)}</td>
+                  <tr
+                    key={item.id || idx}
+                    className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors"
+                  >
+                    <td className="px-4 py-3.5 text-center font-medium text-slate-400">
+                      {idx + 1}
+                    </td>
+                    <td className="px-6 py-3.5 font-medium text-slate-800 dark:text-slate-200">
+                      {item.provinsi}
+                    </td>
+                    <td className="px-6 py-3.5 text-slate-600 dark:text-slate-400">
+                      {item.satuan}
+                    </td>
+                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">
+                      {formatCurrency(item.gol_a)}
+                    </td>
+                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">
+                      {formatCurrency(item.gol_b)}
+                    </td>
+                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">
+                      {formatCurrency(item.gol_c)}
+                    </td>
+                    <td className="px-4 py-3.5 text-right text-slate-700 dark:text-slate-300">
+                      {formatCurrency(item.gol_d)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -344,19 +480,36 @@ const StandarBiaya = () => {
             <table className="w-full text-sm text-left text-slate-500 dark:text-slate-400">
               <thead className="text-xs text-slate-700 uppercase bg-slate-100 dark:bg-slate-800 dark:text-slate-300">
                 <tr>
-                  <th className="px-4 py-3 text-center border-r border-slate-200 dark:border-slate-700">No.</th>
-                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700">Provinsi Tujuan</th>
-                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700">Satuan</th>
+                  <th className="px-4 py-3 text-center border-r border-slate-200 dark:border-slate-700">
+                    No.
+                  </th>
+                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700">
+                    Provinsi Tujuan
+                  </th>
+                  <th className="px-6 py-3 border-r border-slate-200 dark:border-slate-700">
+                    Satuan
+                  </th>
                   <th className="px-6 py-3 text-right">Besaran</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 {filtered.map((item, idx) => (
-                  <tr key={item.id || idx} className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors">
-                    <td className="px-4 py-3.5 text-center font-medium text-slate-400">{idx + 1}</td>
-                    <td className="px-6 py-3.5 font-medium text-slate-800 dark:text-slate-200">{item.provinsi}</td>
-                    <td className="px-6 py-3.5 text-slate-600 dark:text-slate-400">{item.satuan}</td>
-                    <td className="px-6 py-3.5 text-right text-slate-900 dark:text-slate-100 font-bold">{formatCurrency(item.besaran)}</td>
+                  <tr
+                    key={item.id || idx}
+                    className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors"
+                  >
+                    <td className="px-4 py-3.5 text-center font-medium text-slate-400">
+                      {idx + 1}
+                    </td>
+                    <td className="px-6 py-3.5 font-medium text-slate-800 dark:text-slate-200">
+                      {item.provinsi}
+                    </td>
+                    <td className="px-6 py-3.5 text-slate-600 dark:text-slate-400">
+                      {item.satuan}
+                    </td>
+                    <td className="px-6 py-3.5 text-right text-slate-900 dark:text-slate-100 font-bold">
+                      {formatCurrency(item.besaran)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -374,8 +527,12 @@ const StandarBiaya = () => {
       {/* Title */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Standar Biaya Umum (SBU)</h1>
-          <p className="text-sm text-slate-500">Referensi satuan biaya perjalanan dinas Kabupaten Melawi tahun anggaran 2026.</p>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
+            Standar Biaya Umum (SBU)
+          </h1>
+          <p className="text-sm text-slate-500">
+            Referensi satuan biaya perjalanan dinas Kabupaten Melawi tahun anggaran 2026.
+          </p>
         </div>
         <div className="relative max-w-xs w-full">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -384,7 +541,7 @@ const StandarBiaya = () => {
             placeholder="Cari dalam tabel..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+            className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none dark:text-slate-100"
           />
         </div>
       </div>
@@ -395,7 +552,8 @@ const StandarBiaya = () => {
           ACUAN PERATURAN RESMI
         </span>
         <h2 className="text-base font-bold text-slate-800 dark:text-slate-100 leading-snug">
-          BERDASARKAN PERATURAN BUPATI MELAWI TAHUN 2026<br/>
+          BERDASARKAN PERATURAN BUPATI MELAWI TAHUN 2026
+          <br />
           TENTANG PERJALANAN DINAS ATAS BEBAN ANGGARAN PENDAPATAN DAN BELANJA DAERAH
         </h2>
       </div>
@@ -445,7 +603,11 @@ const StandarBiaya = () => {
                     onClick={() => handleToggleAccordion(category.tipe)}
                     className="p-1 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-400"
                   >
-                    {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                    {isOpen ? (
+                      <ChevronUp className="w-5 h-5" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -470,14 +632,19 @@ const StandarBiaya = () => {
 
       {/* Upload Confirmation Modal */}
       {uploadModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
-          onClick={(e) => { if (e.target === e.currentTarget && !uploading) setUploadModalOpen(false); }}
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !uploading) setUploadModalOpen(false);
+          }}
         >
           <div className="bg-white dark:bg-slate-800 w-full max-w-md rounded-3xl p-6 shadow-xl border border-slate-100 dark:border-slate-700 space-y-6">
             <div className="flex justify-between items-start">
               <div className="flex items-center gap-2.5 text-emerald-600 dark:text-emerald-400">
                 <FileSpreadsheet className="w-6 h-6" />
-                <h3 className="text-lg font-bold text-slate-950 dark:text-slate-50">Upload Standar Biaya ({selectedTipe})</h3>
+                <h3 className="text-lg font-bold text-slate-950 dark:text-slate-50">
+                  Upload Standar Biaya ({selectedTipe})
+                </h3>
               </div>
               <button
                 onClick={() => !uploading && setUploadModalOpen(false)}
@@ -490,10 +657,15 @@ const StandarBiaya = () => {
 
             <div className="space-y-3">
               <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Unggah dokumen Excel untuk memperbarui data kategori <strong className="text-indigo-600 dark:text-indigo-400">SBU Tipe {selectedTipe}</strong>. data lama di kategori ini akan digantikan secara penuh.
+                Unggah dokumen Excel untuk memperbarui data kategori{' '}
+                <strong className="text-indigo-600 dark:text-indigo-400">
+                  SBU Tipe {selectedTipe}
+                </strong>
+                . data lama di kategori ini akan digantikan secara penuh.
               </p>
               <div className="text-xs p-3.5 bg-amber-50 dark:bg-amber-950/20 text-amber-800 dark:text-amber-300 rounded-xl border border-amber-100 dark:border-amber-900/40">
-                <strong>Peringatan:</strong> Pastikan Anda menggunakan file Excel yang diisi mengikuti template unduhan agar tidak terjadi error format baris dan kolom.
+                <strong>Peringatan:</strong> Pastikan Anda menggunakan file Excel yang diisi
+                mengikuti template unduhan agar tidak terjadi error format baris dan kolom.
               </div>
             </div>
 

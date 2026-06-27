@@ -5,6 +5,8 @@ const util = require('util');
 const terbilang = require('angka-menjadi-terbilang');
 const { isApiAuthenticated } = require('../middleware/auth');
 
+const PORT = process.env.PORT || 3000;
+
 const dbGet = util.promisify(db.get.bind(db));
 const dbAll = util.promisify(db.all.bind(db));
 const runQuery = (sql, params = []) => new Promise((resolve, reject) => {
@@ -241,11 +243,14 @@ router.get('/api/cetak/pembayaran/:id', isApiAuthenticated, async (req, res) => 
                 const defaultCosts = getPegawaiDefaultCosts(pegawaiId.toString());
                 const rowIdx = pegawaiData.biaya.length;
 
-                // Alokasi panjar secara sekuensial
+                // Alokasi panjar secara sekuensial (lewati akomodasi)
                 let remainingPanjar = panjarVal;
                 let allocatedPanjar = 0;
                 for (let i = 0; i <= rowIdx; i++) {
-                    const cost = defaultCosts[i]?.total || 0;
+                    const r = defaultCosts[i];
+                    if (r && r.type === 'akomodasi') continue;
+
+                    const cost = r?.total || 0;
                     const allocated = Math.min(cost, remainingPanjar);
                     if (i === rowIdx) {
                         allocatedPanjar = allocated;
@@ -255,9 +260,17 @@ router.get('/api/cetak/pembayaran/:id', isApiAuthenticated, async (req, res) => 
 
                 // Terapkan override jika ada
                 let finalJumlah = defaultJumlah;
-                if (type && pegOverrides[type] !== undefined) {
-                    const netPaidOverride = parseFloat(pegOverrides[type]) || 0;
-                    finalJumlah = netPaidOverride + allocatedPanjar;
+                if (type === 'akomodasi') {
+                    if (pegOverrides[type] !== undefined && pegOverrides[type] !== '') {
+                        finalJumlah = parseFloat(pegOverrides[type]) || 0;
+                    } else {
+                        finalJumlah = 0;
+                    }
+                } else {
+                    if (pegOverrides[type] !== undefined && pegOverrides[type] !== '') {
+                        const netPaidOverride = parseFloat(pegOverrides[type]) || 0;
+                        finalJumlah = netPaidOverride + allocatedPanjar;
+                    }
                 }
 
                 pegawaiData.biaya.push({ uraian, harga, satuan, hari, jumlah: finalJumlah });

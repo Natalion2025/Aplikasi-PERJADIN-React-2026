@@ -354,7 +354,7 @@ const UangMuka = () => {
 
         <button
           onClick={handleAddOpen}
-          className="flex items-center justify-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-800 to-green-600 hover:from-indigo-900 hover:to-green-700 text-white rounded-xl font-semibold shadow-md shadow-indigo-600/15 transition-all text-sm transform hover:-translate-y-0.5 self-start md:self-auto"
+          className="flex items-center justify-center gap-2 px-5 py-2.5 bg-mauve-100 hover:bg-mauve-200 text-mauve-700 rounded-2xl font-semibold shadow-md border border-mauve-300 transition-all text-sm transform hover:-translate-y-0.5 self-start md:self-auto"
         >
           <Plus className="h-4 w-4" />
           Tambah Uang Muka
@@ -378,7 +378,7 @@ const UangMuka = () => {
                   setSearch(e.target.value);
                   setPage(1);
                 }}
-                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-mauve-500 focus:border-none"
+                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none"
               />
             </div>
 

@@ -163,7 +163,7 @@ const Pegawai = () => {
         </div>
         <button
           onClick={handleAdd}
-          className="flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-indigo-800 to-green-600 hover:from-indigo-900 hover:to-green-700 text-white font-bold rounded-2xl shadow-lg shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all text-sm w-full sm:w-auto"
+          className="flex items-center justify-center gap-2 px-5 py-3 bg-mauve-100 hover:bg-mauve-200 text-mauve-700 rounded-2xl text-sm font-semibold shadow-md border border-mauve-300 transition-all text-sm w-full sm:w-auto"
         >
           <Plus size={18} />
           <span>Tambah Pegawai</span>
@@ -186,7 +186,7 @@ const Pegawai = () => {
                 setSearch(e.target.value);
                 setCurrentPage(1); // Reset ke halaman pertama saat mencari
               }}
-              className="w-full pl-11 pr-4 py-2.5 bg-gradient-to-r from-green-50 to bg-sky-50 border border-slate-300 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring-1 focus:ring-mauve-500 focus:bg-white transition-all text-sm"
+              className="w-[70%] pl-11 pr-4 py-2.5 bg-gradient-to-r from-green-50 to bg-sky-50 border border-slate-300 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm"
             />
           </div>
           <span className="text-xs font-semibold text-slate-400 bg-slate-50 border border-slate-150 px-3 py-1.5 rounded-xl">

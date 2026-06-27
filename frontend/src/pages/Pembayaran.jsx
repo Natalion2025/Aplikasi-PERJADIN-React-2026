@@ -70,20 +70,44 @@ const Pembayaran = () => {
     jumlah: '',
   });
 
-  const formatCurrency = (value) => {
-    if (value === null || value === undefined || value === '') return 'Rp 0';
-    let number;
-    if (typeof value === 'number') {
-      number = value;
-    } else {
-      const str = String(value).trim();
-      if (/^-?\d+(\.\d+)?$/.test(str)) {
-        number = parseFloat(str);
-      } else {
-        const cleaned = str.replace(/[^0-9,-]/g, '').replace(',', '.');
-        number = parseFloat(cleaned);
+  const parseCurrency = (value) => {
+    if (value === null || value === undefined || value === '') return 0;
+    if (typeof value === 'number') return value;
+
+    let str = String(value).trim();
+
+    // JURUS PAMUNGKAS: Jika string mengandung spasi atau huruf alfabet (seperti "NIP", "Ahmad", dsb)
+    // Berarti ini adalah data teks / nama pelaksana, BUKAN angka mata uang. Langsung return 0.
+    if (/[a-zA-Z]/.test(str) || str.includes(' ')) {
+      return 0;
+    }
+
+    // 1. Jika format mata uang mengandung desimal sen di belakang koma (misal: Rp 15.000,00)
+    if (str.includes(',')) {
+      const parts = str.split(',');
+      if (parts[1] && parts[1].length <= 2) {
+        str = parts[0];
       }
     }
+
+    // 2. Jika format mengandung titik desimal tunggal standar database/Inggris (misal: 380000.00)
+    const dotCount = (str.match(/\./g) || []).length;
+    if (dotCount === 1) {
+      const parts = str.split('.');
+      if (parts[1] && parts[1].length <= 2) {
+        str = parts[0];
+      }
+    }
+
+    // 3. Bersihkan semua karakter selain angka/digit dan tanda minus
+    const cleaned = str.replace(/[^0-9-]/g, '');
+    return parseFloat(cleaned) || 0;
+  };
+
+  const formatCurrency = (value) => {
+    if (value === null || value === undefined || value === '') return 'Rp 0';
+    // Gunakan nilai asli angka, jangan lakukan parse ulang jika value sudah berupa number
+    const number = typeof value === 'number' ? value : parseCurrency(value);
     if (isNaN(number)) return 'Rp 0';
     return new Intl.NumberFormat('id-ID', {
       style: 'currency',
@@ -94,51 +118,8 @@ const Pembayaran = () => {
 
   const formatInputCurrency = (value) => {
     if (value === null || value === undefined || value === '') return '';
-    let number;
-    if (typeof value === 'number') {
-      number = value;
-    } else {
-      const str = String(value).trim();
-      const cleaned = str
-        .replace(/\./g, '')
-        .replace(/[^0-9,-]/g, '')
-        .replace(',', '.');
-      number = parseFloat(cleaned);
-    }
+    const number = typeof value === 'number' ? value : parseCurrency(value);
     return isNaN(number) ? '' : new Intl.NumberFormat('id-ID').format(number);
-  };
-
-  const parseCurrency = (value) => {
-    if (value === null || value === undefined || value === '') return 0;
-    if (typeof value === 'number') return value;
-
-    let str = String(value).trim();
-
-    // If it contains a comma, it's Indonesian format (e.g., 1.500,00)
-    if (str.includes(',')) {
-      str = str.replace(/\./g, '').replace(',', '.');
-      return parseFloat(str) || 0;
-    }
-
-    // If it has multiple dots, they are thousands separators
-    const dotCount = (str.match(/\./g) || []).length;
-    if (dotCount > 1) {
-      str = str.replace(/\./g, '');
-      return parseFloat(str) || 0;
-    }
-
-    // If it has a single dot, check if it is followed by exactly 3 digits
-    if (dotCount === 1) {
-      const parts = str.split('.');
-      if (parts[1] && parts[1].length === 3) {
-        // Thousands separator
-        str = str.replace(/\./g, '');
-      }
-    }
-
-    // Clean any remaining non-numeric characters except minus and dot
-    const cleaned = str.replace(/[^0-9.-]/g, '');
-    return parseFloat(cleaned) || 0;
   };
 
   const formatDate = (dateString) => {
@@ -382,9 +363,13 @@ const Pembayaran = () => {
   };
 
   const getRowDefaultDibayar = (pInfo, rows, row, rowIdx, panjarVal) => {
-    let remainingPanjar = panjarVal;
+    if (row.type === 'akomodasi') return 0;
+
+    let remainingPanjar = parseCurrency(panjarVal);
     for (let i = 0; i < rows.length; i++) {
       const r = rows[i];
+      if (r.type === 'akomodasi') continue;
+
       const cost = r.total || 0;
       if (i === rowIdx) {
         return Math.max(0, cost - remainingPanjar);
@@ -394,102 +379,83 @@ const Pembayaran = () => {
     return 0;
   };
 
-  const getRowDibayarValue = (pInfo, rows, row, rowIdx) => {
-    const key = `${pInfo.id}_${row.type}`;
-    const overrideValStr = dibayarOverrides[key];
-    if (overrideValStr !== undefined && overrideValStr !== '') {
-      return parseCurrency(overrideValStr);
-    }
-    const panjarVal = parseCurrency(panjarValues[pInfo.id.toString()] || '0');
-    return getRowDefaultDibayar(pInfo, rows, row, rowIdx, panjarVal);
-  };
-
-  // Recalculate totals in real-time
+  // --- PERBAIKAN LOGIKA HITUNG TOTAL PEGAWAI (SELISIH TOTAL DIBAYAR - PANJAR) ---
   const calculateEmployeeTotal = (pegId) => {
-    const pInfo = rincianPengeluaran.penerima.find((p) => p.id.toString() === pegId);
-    const exp = rincianPengeluaran.pengeluaran.find((p) => p.pegawai_id.toString() === pegId) || {};
+    if (!pegId || typeof pegId === 'object') return { totalBiaya: 0, panjar: 0, totalBayar: 0 };
+
+    // Pastikan ID dibersihkan menjadi string angka bersih, buang jika mengandung teks non-id
+    const targetId = String(pegId).trim();
+    if (isNaN(Number(targetId))) return { totalBiaya: 0, panjar: 0, totalBayar: 0 };
+
+    const pInfo = rincianPengeluaran.penerima.find((p) => p.id.toString() === targetId);
+    const exp =
+      rincianPengeluaran.pengeluaran.find((p) => p.pegawai_id.toString() === targetId) || {};
 
     if (!pInfo) return { totalBiaya: 0, panjar: 0, totalBayar: 0 };
 
-    const harianRate = pInfo.uang_harian?.harga_satuan || 0;
+    const harianRate = parseCurrency(pInfo.uang_harian?.harga_satuan || 0);
     const qtyDays = (exp.akomodasi_malam || 0) + 1;
     const harianTotal = harianRate * qtyDays;
 
     let representasiTotal = 0;
     const isKadis = pInfo.jabatan && pInfo.jabatan.toLowerCase().includes('kepala dinas');
     if (isKadis && pInfo.biaya_representasi && pInfo.biaya_representasi.harga > 0) {
-      representasiTotal = pInfo.biaya_representasi.harga * qtyDays;
+      representasiTotal = parseCurrency(pInfo.biaya_representasi.harga) * qtyDays;
     }
 
-    const transportTotal = exp.transportasi_nominal || 0;
-    const akomodasiTotal = exp.akomodasi_nominal || 0;
-    const kontribusiTotal = exp.kontribusi_nominal || 0;
-    const lainTotal = exp.lain_lain_nominal || 0;
+    const transportTotal = parseCurrency(exp.transportasi_nominal || 0);
+    const akomodasiTotal = parseCurrency(exp.akomodasi_nominal || 0);
+    const kontribusiTotal = parseCurrency(exp.kontribusi_nominal || 0);
+    const lainTotal = parseCurrency(exp.lain_lain_nominal || 0);
 
-    const totalBiaya =
+    const panjar = parseCurrency(panjarValues[targetId] || 0);
+
+    // Hitung total akumulasi biaya asli pengeluaran riil pegawai
+    const totalBiayaRealisasi =
       harianTotal +
       representasiTotal +
       transportTotal +
       akomodasiTotal +
       kontribusiTotal +
       lainTotal;
-    const panjar = parseCurrency(panjarValues[pegId]);
 
-    // Build the rows array matching the table rendering
-    const rows = [];
-    rows.push({
-      type: 'uang_harian',
-      total: harianTotal,
+    // Kumpulkan baris biaya yang tampil di tabel untuk memvalidasi override kolom kuitansi
+    const komponenJenis = [
+      'uang_harian',
+      'representasi',
+      'transportasi',
+      'akomodasi',
+      'kontribusi',
+      'lain_lain',
+    ];
+    let totalBiayaSetelahOverride = 0;
+    let adaOverride = false;
+
+    komponenJenis.forEach((jenis) => {
+      const key = `${targetId}_${jenis}`;
+      if (dibayarOverrides[key] !== undefined && dibayarOverrides[key] !== '') {
+        adaOverride = true;
+        totalBiayaSetelahOverride += parseCurrency(dibayarOverrides[key]);
+      }
     });
 
-    if (isKadis && pInfo.biaya_representasi && pInfo.biaya_representasi.harga > 0) {
-      rows.push({
-        type: 'representasi',
-        total: representasiTotal,
-      });
-    }
+    // SEHARUSNYA JIKA DEFAULT (TIDAK ADA OVERRIDE): totalBiayaRealisasi dikurangi panjar kotor uang muka
+    const totalBayar = adaOverride
+      ? totalBiayaSetelahOverride - (panjar - totalBiayaRealisasi)
+      : totalBiayaRealisasi - panjar;
 
-    if (transportTotal > 0) {
-      rows.push({
-        type: 'transportasi',
-        total: transportTotal,
-      });
-    }
-
-    if (akomodasiTotal > 0) {
-      rows.push({
-        type: 'akomodasi',
-        total: akomodasiTotal,
-      });
-    }
-
-    if (kontribusiTotal > 0) {
-      rows.push({
-        type: 'kontribusi',
-        total: kontribusiTotal,
-      });
-    }
-
-    if (lainTotal > 0) {
-      rows.push({
-        type: 'lain_lain',
-        total: lainTotal,
-      });
-    }
-
-    let totalBayar = 0;
-    rows.forEach((row, rowIdx) => {
-      totalBayar += getRowDibayarValue(pInfo, rows, row, rowIdx);
-    });
-
-    return { totalBiaya, panjar, totalBayar };
+    return { totalBiaya: totalBiayaRealisasi, panjar, totalBayar };
   };
 
   const getGrandTotal = () => {
     let grandTotal = 0;
+    if (!rincianPengeluaran || !rincianPengeluaran.penerima) return 0;
+
     rincianPengeluaran.penerima.forEach((p) => {
-      const { totalBayar } = calculateEmployeeTotal(p.id.toString());
-      grandTotal += totalBayar;
+      if (p && p.id) {
+        const { totalBayar } = calculateEmployeeTotal(p.id.toString());
+        grandTotal += totalBayar;
+      }
     });
     return grandTotal;
   };
@@ -710,7 +676,7 @@ const Pembayaran = () => {
             </button>
             <button
               onClick={() => openPembayaranModal()}
-              className="flex items-center gap-2 px-5 py-2.5 bg-mauve-100 hover:bg-indigo-500 text-mauve-700 rounded-2xl text-sm font-semibold shadow-sm border border-mauve-200 transition-all duration-200"
+              className="flex items-center gap-2 px-5 py-2.5 bg-mauve-100 hover:bg-mauve-200 text-mauve-700 rounded-2xl text-sm font-semibold shadow-sm border border-mauve-200 transition-all duration-200"
             >
               <Plus size={16} />
               <span>Bukti Bayar</span>
@@ -1271,8 +1237,9 @@ const Pembayaran = () => {
                                 rows.push({
                                   ...pInfo.biaya_representasi,
                                   type: 'representasi',
+                                  harga: parseCurrency(pInfo.biaya_representasi.harga),
                                   hari: qtyDays,
-                                  total: pInfo.biaya_representasi.harga * qtyDays,
+                                  total: parseCurrency(pInfo.biaya_representasi.harga) * qtyDays,
                                 });
                               }
 
@@ -1281,40 +1248,40 @@ const Pembayaran = () => {
                                 rows.push({
                                   type: 'transportasi',
                                   uraian: `Biaya Transportasi (${exp.transportasi_jenis || 'N/A'})`,
-                                  harga: exp.transportasi_nominal,
+                                  harga: parseCurrency(exp.transportasi_nominal),
                                   satuan: 'PP',
                                   hari: '-',
-                                  total: exp.transportasi_nominal,
+                                  total: parseCurrency(exp.transportasi_nominal),
                                 });
                               }
                               if (exp.akomodasi_nominal > 0) {
                                 rows.push({
                                   type: 'akomodasi',
                                   uraian: `Biaya Akomodasi (${exp.akomodasi_jenis || 'N/A'})`,
-                                  harga: exp.akomodasi_harga_satuan,
+                                  harga: parseCurrency(exp.akomodasi_harga_satuan),
                                   satuan: 'Malam',
                                   hari: exp.akomodasi_malam,
-                                  total: exp.akomodasi_nominal,
+                                  total: parseCurrency(exp.akomodasi_nominal),
                                 });
                               }
                               if (exp.kontribusi_nominal > 0) {
                                 rows.push({
                                   type: 'kontribusi',
                                   uraian: `Biaya Kontribusi (${exp.kontribusi_jenis || 'N/A'})`,
-                                  harga: exp.kontribusi_nominal,
+                                  harga: parseCurrency(exp.kontribusi_nominal),
                                   satuan: 'OK',
                                   hari: '-',
-                                  total: exp.kontribusi_nominal,
+                                  total: parseCurrency(exp.kontribusi_nominal),
                                 });
                               }
                               if (exp.lain_lain_nominal > 0) {
                                 rows.push({
                                   type: 'lain_lain',
                                   uraian: `Biaya Lain-lain (${exp.lain_lain_uraian || 'N/A'})`,
-                                  harga: exp.lain_lain_nominal,
+                                  harga: parseCurrency(exp.lain_lain_nominal),
                                   satuan: 'OK',
                                   hari: '-',
-                                  total: exp.lain_lain_nominal,
+                                  total: parseCurrency(exp.lain_lain_nominal),
                                 });
                               }
 
@@ -1389,9 +1356,7 @@ const Pembayaran = () => {
                                                     rows,
                                                     row,
                                                     rIdx,
-                                                    parseCurrency(
-                                                      panjarValues[pInfo.id.toString()] || '0'
-                                                    )
+                                                    panjarValues[pInfo.id.toString()] || '0'
                                                   ) > 0
                                                 ? formatInputCurrency(
                                                     getRowDefaultDibayar(
@@ -1399,10 +1364,8 @@ const Pembayaran = () => {
                                                       rows,
                                                       row,
                                                       rIdx,
-                                                      parseCurrency(
-                                                        panjarValues[pInfo.id.toString()] || '0'
-                                                      )
-                                                    ).toString()
+                                                      panjarValues[pInfo.id.toString()] || '0'
+                                                    )
                                                   )
                                                 : ''
                                           }

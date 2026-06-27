@@ -94,51 +94,40 @@ const BuatLaporan = () => {
   const [submitting, setSubmitting] = useState(false);
 
   // --- Helper Functions ---
-  const formatCurrency = (value) => {
-    if (value === null || value === undefined || value === '') return '';
-    let number;
-    if (typeof value === 'number') {
-      number = value;
-    } else {
-      const str = String(value).trim();
-      const cleaned = str.replace(/\./g, '').replace(/[^0-9,-]/g, '').replace(',', '.');
-      number = parseFloat(cleaned);
-    }
-    if (isNaN(number)) return '';
-    return new Intl.NumberFormat('id-ID').format(number);
-  };
-
   const parseCurrency = (value) => {
     if (value === null || value === undefined || value === '') return 0;
     if (typeof value === 'number') return value;
 
     let str = String(value).trim();
 
-    // If it contains a comma, it's Indonesian format (e.g., 1.500,00)
+    // 1. Jika format mata uang mengandung desimal sen di belakang koma (misal: Rp 15.000,00)
+    // Kita buang bagian sen (,00) agar tidak mengacaukan konversi angka bulat
     if (str.includes(',')) {
-      str = str.replace(/\./g, '').replace(',', '.');
-      return parseFloat(str) || 0;
-    }
-
-    // If it has multiple dots, they are thousands separators
-    const dotCount = (str.match(/\./g) || []).length;
-    if (dotCount > 1) {
-      str = str.replace(/\./g, '');
-      return parseFloat(str) || 0;
-    }
-
-    // If it has a single dot, check if it is followed by exactly 3 digits
-    if (dotCount === 1) {
-      const parts = str.split('.');
-      if (parts[1] && parts[1].length === 3) {
-        // Thousands separator
-        str = str.replace(/\./g, '');
+      const parts = str.split(',');
+      if (parts[1] && parts[1].length <= 2) {
+        str = parts[0]; // Ambil bagian depan sebelum koma
       }
     }
 
-    // Clean any remaining non-numeric characters except minus and dot
-    const cleaned = str.replace(/[^0-9.-]/g, '');
+    // 2. Jika format mengandung titik desimal tunggal standar database/Inggris (misal: 380000.00)
+    // Kita buang desimalnya (.00) sebelum menghapus titik pemisah lainnya
+    const dotCount = (str.match(/\./g) || []).length;
+    if (dotCount === 1) {
+      const parts = str.split('.');
+      if (parts[1] && parts[1].length <= 2) {
+        str = parts[0];
+      }
+    }
+
+    // 3. Bersihkan semua karakter selain angka/digit dan tanda minus
+    const cleaned = str.replace(/[^0-9-]/g, '');
     return parseFloat(cleaned) || 0;
+  };
+
+  const formatCurrency = (value) => {
+    if (value === null || value === undefined || value === '') return '';
+    const number = parseCurrency(value);
+    return isNaN(number) ? '' : new Intl.NumberFormat('id-ID').format(number);
   };
 
   const formatDate = (dateString) => {
@@ -1194,7 +1183,7 @@ const BuatLaporan = () => {
               </button>
               <button
                 onClick={() => openFormView()}
-                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-800 to-green-600 hover:from-indigo-900 hover:to-green-700 text-white rounded-xl text-sm font-semibold shadow-md shadow-indigo-600/10 transition-all duration-200"
+                className="flex items-center gap-2 px-5 py-2.5 bg-mauve-100 hover:bg-mauve-200 text-mauve-700 rounded-2xl text-sm font-semibold shadow-sm border border-mauve-200 transition-all duration-200"
               >
                 <Plus size={16} />
                 <span>Buat Laporan</span>
@@ -1247,7 +1236,7 @@ const BuatLaporan = () => {
                       setSearch(e.target.value);
                       setPage(1);
                     }}
-                    className="w-full pl-9 pr-4 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:border-none focus:ring-1 focus:ring-mauve-500"
+                    className="w-full pl-9 pr-4 py-2 text-sm border border-slate-300 rounded-xl focus:outline-none focus:border-none focus:ring-2 focus:ring-mauve-500"
                   />
                 </div>
               )}
@@ -1284,7 +1273,7 @@ const BuatLaporan = () => {
               <div className="overflow-x-auto rounded-2xl rounded-b-none">
                 <table className="min-w-full divide-y divide-slate-100">
                   <thead className="">
-                    <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
+                    <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold">
                       <th className="py-3 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
                         No
                       </th>
