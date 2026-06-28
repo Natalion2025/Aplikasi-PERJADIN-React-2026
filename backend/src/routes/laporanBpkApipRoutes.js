@@ -10,6 +10,31 @@ const PORT = process.env.PORT || 3000;
 const dbGet = util.promisify(db.get.bind(db));
 const dbAll = util.promisify(db.all.bind(db));
 
+// Helper functions getTingkatBiaya dan getKolomGolongan
+const getTingkatBiaya = (pegawai) => {
+  const jabatan = (pegawai.jabatan || "").toLowerCase().trim();
+  if (jabatan.includes("kepala dinas")) {
+    return "Golongan B";
+  }
+  if (
+    jabatan.startsWith("sekretaris") ||
+    jabatan.startsWith("kepala bagian") ||
+    jabatan.startsWith("kepala bidang")
+  ) {
+    return "Golongan C";
+  }
+  return "Golongan D";
+};
+
+const getKolomGolongan = (tingkatBiaya) => {
+  const mapping = {
+    "Golongan B": "gol_b",
+    "Golongan C": "gol_c",
+    "Golongan D": "gol_d",
+  };
+  return mapping[tingkatBiaya] || "gol_d";
+};
+
 router.get("/api/laporan-bpk-apip", isApiAuthenticated, async (req, res) => {
   const usePagination = req.query.limit !== "0"; // PERBAIKAN KOMPREHENSIF: Tangani kasus limit=0 secara eksplisit untuk mengambil semua data.
   // Jika paginasi aktif, gunakan nilai dari query atau default ke 5. Jika tidak, limit adalah 0.

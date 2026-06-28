@@ -15,6 +15,37 @@ import {
   AlertCircle,
 } from 'lucide-react';
 
+const formatCurrency = (value) => {
+  if (value === null || value === undefined || value === '') return 'Rp 0';
+  let number;
+  if (typeof value === 'number') {
+    number = value;
+  } else {
+    const str = String(value).trim();
+    if (/^-?\d+(\.\d+)?$/.test(str)) {
+      number = parseFloat(str);
+    } else {
+      const cleaned = str.replace(/[^0-9,-]/g, '').replace(',', '.');
+      number = parseFloat(cleaned);
+    }
+  }
+  if (isNaN(number)) return 'Rp 0';
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+  }).format(number);
+};
+
+const formatDate = (dateString) => {
+  if (!dateString) return '-';
+  return new Date(dateString).toLocaleDateString('id-ID', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+};
+
 const LaporanBpkApip = () => {
   const [activeTab, setActiveTab] = useState('basic'); // 'basic', 'transport', 'accomodation', 'meal', 'other'
   const [direction, setDirection] = useState('berangkat'); // 'berangkat' or 'kembali' (for transport tab)
@@ -130,36 +161,6 @@ const LaporanBpkApip = () => {
     }
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) return '-';
-    return new Date(dateString).toLocaleDateString('id-ID', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-    });
-  };
-  const formatCurrency = (value) => {
-    if (value === null || value === undefined || value === '') return 'Rp 0';
-    let number;
-    if (typeof value === 'number') {
-      number = value;
-    } else {
-      const str = String(value).trim();
-      if (/^-?\d+(\.\d+)?$/.test(str)) {
-        number = parseFloat(str);
-      } else {
-        const cleaned = str.replace(/[^0-9,-]/g, '').replace(',', '.');
-        number = parseFloat(cleaned);
-      }
-    }
-    if (isNaN(number)) return 'Rp 0';
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(number);
-  };
-
   // Fetch data depending on activeTab & direction
   useEffect(() => {
     fetchData();
@@ -168,9 +169,14 @@ const LaporanBpkApip = () => {
   const fetchData = async () => {
     setLoading(true);
     setError('');
+
     try {
       const currentTab = TABS.find((t) => t.id === activeTab);
-      let endpoint = currentTab.endpoint;
+      if (!currentTab) {
+        throw new Error(`Tab dengan id "${activeTab}" tidak ditemukan.`);
+      }
+
+      const endpoint = currentTab.endpoint;
       let params = { page, limit };
 
       if (activeTab === 'transport') {
@@ -330,7 +336,7 @@ const LaporanBpkApip = () => {
                   ) : (
                     data.map((item, idx) => (
                       <TableRow
-                        key={`${item.id}-${item.pegawai_id || idx}`}
+                        key={`${item.id || 'item'}-${item.pegawai_id || idx}`}
                         item={item}
                         index={idx}
                         page={page}
