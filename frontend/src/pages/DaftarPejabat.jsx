@@ -188,18 +188,18 @@ const DaftarPejabat = () => {
             <table className="min-w-full divide-y divide-slate-100">
               <thead className="">
                 <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
-                  <th className="px-6 py-4 text-center w-16 shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-6 py-3 text-center w-16 shadow-[inset_0_-2px_0_0_#ffffff]">
                     No
                   </th>
-                  <th className="px-6 py-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-6 py-3 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
                     Nama Lengkap
                   </th>
-                  <th className="px-6 py-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-6 py-3 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
                     Jabatan Resmi
                   </th>
-                  <th className="px-6 py-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">NIP</th>
+                  <th className="px-6 py-3 text-left shadow-[inset_0_-2px_0_0_#ffffff]">NIP</th>
                   {isAdminOrSuper && (
-                    <th className="px-6 py-4 text-right w-24 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="px-6 py-3 text-center w-24 shadow-[inset_0_-2px_0_0_#ffffff]">
                       Aksi
                     </th>
                   )}
@@ -211,28 +211,30 @@ const DaftarPejabat = () => {
                     key={pejabat.id}
                     className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors"
                   >
-                    <td className="px-6 py-4 text-center font-medium text-slate-400">{idx + 1}</td>
-                    <td className="px-6 py-4 whitespace-nowrap font-semibold text-slate-800 dark:text-slate-100">
+                    <td className="px-6 py-3 text-center text-sm font-medium text-slate-700">
+                      {idx + 1}
+                    </td>
+                    <td className="px-6 py-3 whitespace-nowrap font-semibold text-sm text-slate-700 dark:text-slate-100">
                       {pejabat.nama}
                     </td>
-                    <td className="px-6 py-4 text-slate-700 dark:text-slate-300">
+                    <td className="px-6 py-3 text-sm text-slate-700 font-semibold dark:text-slate-300">
                       {pejabat.jabatan}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap font-mono text-xs text-slate-600 dark:text-slate-400">
+                    <td className="px-6 py-3 whitespace-nowrap text-sm text-slate-700 dark:text-slate-400">
                       {pejabat.nip || '-'}
                     </td>
                     {isAdminOrSuper && (
-                      <td className="px-6 py-4 whitespace-nowrap text-right space-x-2">
+                      <td className="px-6 py-3 whitespace-nowrap text-right space-x-2">
                         <button
                           onClick={() => handleOpenEdit(pejabat)}
-                          className="p-1.5 text-slate-500 hover:text-amber-600 bg-slate-50 hover:bg-amber-50 dark:bg-slate-800 dark:hover:bg-amber-950/30 rounded-lg transition-all"
+                          className="p-1.5 text-mauve-700 hover:text-amber-600 bg-slate-50 hover:bg-amber-50 dark:bg-slate-800 dark:hover:bg-amber-950/30 rounded-lg transition-all"
                           title="Edit Pejabat"
                         >
                           <Edit className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => handleDelete(pejabat)}
-                          className="p-1.5 text-slate-500 hover:text-red-600 bg-slate-50 hover:bg-red-50 dark:bg-slate-800 dark:hover:bg-red-950/30 rounded-lg transition-all"
+                          className="p-1.5 text-mauve-700 hover:text-red-600 bg-slate-50 hover:bg-red-50 dark:bg-slate-800 dark:hover:bg-red-950/30 rounded-lg transition-all"
                           title="Hapus Pejabat"
                         >
                           <Trash2 className="w-4 h-4" />

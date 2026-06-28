@@ -44,6 +44,8 @@ const Pembayaran = () => {
   const [allAnggaran, setAllAnggaran] = useState([]);
   const [allPptk, setAllPptk] = useState([]);
   const [pembayaranForm, setPembayaranForm] = useState({
+    nomor_bukti: '',
+    tanggal_bukti: new Date().toISOString().split('T')[0],
     spt_id: '',
     anggaran_id: '',
     nama_penerima: '',
@@ -74,33 +76,34 @@ const Pembayaran = () => {
     if (value === null || value === undefined || value === '') return 0;
     if (typeof value === 'number') return value;
 
-    let str = String(value).trim();
+    const str = String(value).trim();
 
-    // JURUS PAMUNGKAS: Jika string mengandung spasi atau huruf alfabet (seperti "NIP", "Ahmad", dsb)
-    // Berarti ini adalah data teks / nama pelaksana, BUKAN angka mata uang. Langsung return 0.
-    if (/[a-zA-Z]/.test(str) || str.includes(' ')) {
+    // PERBAIKAN BARU: Logika yang lebih ketat.
+    // 1. Cek apakah string hanya berisi angka, titik, koma, dan simbol "Rp".
+    // Jika ada karakter lain (seperti huruf 'a'-'z', atau simbol lain), anggap tidak valid.
+    if (/[^0-9.,\sRp-]/i.test(str)) {
       return 0;
     }
 
-    // 1. Jika format mata uang mengandung desimal sen di belakang koma (misal: Rp 15.000,00)
-    if (str.includes(',')) {
-      const parts = str.split(',');
-      if (parts[1] && parts[1].length <= 2) {
-        str = parts[0];
-      }
+    // 2. Bersihkan dari "Rp" dan spasi
+    let cleaned = str.replace(/Rp\.?\s*/g, '').trim();
+
+    // 3. Logika baru untuk menangani titik dan koma
+    const hasDot = cleaned.includes('.');
+    const hasComma = cleaned.includes(',');
+
+    if (hasDot && hasComma) {
+      // Format Indonesia: "1.500.000,50" -> "1500000.50"
+      cleaned = cleaned.replace(/\./g, '').replace(',', '.');
+    } else if (hasComma && !hasDot) {
+      // Format hanya koma: "1500000,50" -> "1500000.50"
+      cleaned = cleaned.replace(',', '.');
+    } else if (hasDot && !hasComma && cleaned.lastIndexOf('.') < cleaned.length - 3) {
+      // Format hanya titik ribuan: "1.500.000" -> "1500000"
+      cleaned = cleaned.replace(/\./g, '');
     }
 
-    // 2. Jika format mengandung titik desimal tunggal standar database/Inggris (misal: 380000.00)
-    const dotCount = (str.match(/\./g) || []).length;
-    if (dotCount === 1) {
-      const parts = str.split('.');
-      if (parts[1] && parts[1].length <= 2) {
-        str = parts[0];
-      }
-    }
-
-    // 3. Bersihkan semua karakter selain angka/digit dan tanda minus
-    const cleaned = str.replace(/[^0-9-]/g, '');
+    // 3. Konversi ke angka. Jika hasilnya bukan angka (NaN), kembalikan 0.
     return parseFloat(cleaned) || 0;
   };
 
@@ -247,6 +250,10 @@ const Pembayaran = () => {
         const data = res.data;
 
         setPembayaranForm({
+          nomor_bukti: data.nomor_bukti || '',
+          tanggal_bukti: data.tanggal_bukti
+            ? data.tanggal_bukti.split('T')[0]
+            : new Date().toISOString().split('T')[0],
           spt_id: data.spt_id || '',
           anggaran_id: data.anggaran_id || '',
           nama_penerima: data.nama_penerima || '',
@@ -263,6 +270,8 @@ const Pembayaran = () => {
       }
     } else {
       setPembayaranForm({
+        nomor_bukti: '',
+        tanggal_bukti: new Date().toISOString().split('T')[0],
         spt_id: '',
         anggaran_id: '',
         nama_penerima: '',
@@ -388,6 +397,7 @@ const Pembayaran = () => {
     if (isNaN(Number(targetId))) return { totalBiaya: 0, panjar: 0, totalBayar: 0 };
 
     const pInfo = rincianPengeluaran.penerima.find((p) => p.id.toString() === targetId);
+    // PERBAIKAN: Ambil data pengeluaran spesifik untuk pegawai ini dari array yang benar.
     const exp =
       rincianPengeluaran.pengeluaran.find((p) => p.pegawai_id.toString() === targetId) || {};
 
@@ -403,6 +413,7 @@ const Pembayaran = () => {
       representasiTotal = parseCurrency(pInfo.biaya_representasi.harga) * qtyDays;
     }
 
+    // PERBAIKAN: Ambil nilai dari objek 'exp' yang sudah difilter dengan benar.
     const transportTotal = parseCurrency(exp.transportasi_nominal || 0);
     const akomodasiTotal = parseCurrency(exp.akomodasi_nominal || 0);
     const kontribusiTotal = parseCurrency(exp.kontribusi_nominal || 0);
@@ -431,17 +442,21 @@ const Pembayaran = () => {
     let totalBiayaSetelahOverride = 0;
     let adaOverride = false;
 
+    // Hitung total dari semua override yang diinput manual
     komponenJenis.forEach((jenis) => {
       const key = `${targetId}_${jenis}`;
       if (dibayarOverrides[key] !== undefined && dibayarOverrides[key] !== '') {
         adaOverride = true;
-        totalBiayaSetelahOverride += parseCurrency(dibayarOverrides[key]);
+        // Hanya tambahkan override jika ada nilainya
+        if (parseCurrency(dibayarOverrides[key]) > 0) {
+          totalBiayaSetelahOverride += parseCurrency(dibayarOverrides[key]);
+        }
       }
     });
 
-    // SEHARUSNYA JIKA DEFAULT (TIDAK ADA OVERRIDE): totalBiayaRealisasi dikurangi panjar kotor uang muka
+    // Jika ada override, total bayar adalah jumlah semua override dikurangi panjar. Jika tidak, total bayar adalah total realisasi dikurangi panjar.
     const totalBayar = adaOverride
-      ? totalBiayaSetelahOverride - (panjar - totalBiayaRealisasi)
+      ? totalBiayaSetelahOverride - panjar
       : totalBiayaRealisasi - panjar;
 
     return { totalBiaya: totalBiayaRealisasi, panjar, totalBayar };
@@ -503,6 +518,8 @@ const Pembayaran = () => {
     });
 
     const payload = {
+      nomor_bukti: pembayaranForm.nomor_bukti,
+      tanggal_bukti: pembayaranForm.tanggal_bukti,
       spt_id: pembayaranForm.spt_id,
       anggaran_id: pembayaranForm.anggaran_id,
       nama_penerima: pembayaranForm.nama_penerima,
@@ -762,7 +779,7 @@ const Pembayaran = () => {
                     <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
                       Nominal
                     </th>
-                    <th className="py-3.5 px-4 text-right shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3.5 px-4 text-center shadow-[inset_0_-2px_0_0_#ffffff]">
                       Aksi
                     </th>
                   </tr>
@@ -777,52 +794,52 @@ const Pembayaran = () => {
                   ) : (
                     pembayaranList.map((item, idx) => (
                       <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
-                        <td className="py-4 px-4 text-center font-medium text-slate-400">
+                        <td className="py-4 px-4 text-center font-medium text-slate-800 align-top">
                           {(page - 1) * limit + idx + 1}.
                         </td>
-                        <td className="py-4 px-4">
-                          <span className="font-semibold text-slate-800 block text-xs font-mono">
+                        <td className="py-4 px-4 align-top">
+                          <span className="font-semibold text-slate-800 block text-sm font-mono">
                             {item.nomor_surat}
                           </span>
-                          <span className="text-[11px] text-slate-400 font-medium">
+                          <span className="text-[11px] text-slate-500 font-medium">
                             {formatDate(item.tanggal_surat)}
                           </span>
                         </td>
-                        <td className="py-4 px-4">
-                          <span className="font-semibold text-slate-700 block text-xs">
+                        <td className="py-4 px-4 align-top">
+                          <span className="font-semibold text-slate-800 whitespace-nowrap block text-sm">
                             {item.nomor_bukti}
                           </span>
-                          <span className="text-[11px] text-slate-400 font-medium">
+                          <span className="text-[11px] text-slate-500 font-medium">
                             {formatDate(item.tanggal_bukti)}
                           </span>
                         </td>
-                        <td className="py-4 px-4 text-xs font-medium text-slate-600 whitespace-pre-line">
+                        <td className="py-4 px-4 text-xs font-semibold text-slate-800 whitespace-pre-line align-top">
                           {item.nama_penerima}
                         </td>
-                        <td className="py-4 px-4 font-bold text-slate-800">
+                        <td className="py-4 px-4 text-slate-800 font-semibold align-top">
                           {formatCurrency(item.nominal_bayar)}
                         </td>
-                        <td className="py-4 px-4 text-right">
-                          <div className="flex items-center justify-end gap-3">
+                        <td className="py-4 px-4 items-center flex text-center">
+                          <div className="flex gap-3">
                             <a
                               href={`/cetak/pembayaran/${item.id}`}
                               target="_blank"
                               rel="noreferrer"
-                              className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-all"
+                              className="p-1.5 text-mauve-700 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-all"
                               title="Cetak Kuitansi"
                             >
                               <Printer size={16} />
                             </a>
                             <button
                               onClick={() => openPembayaranModal(item.id)}
-                              className="p-1.5 text-slate-400 hover:text-amber-600 hover:bg-slate-100 rounded-lg transition-all"
+                              className="p-1.5 text-mauve-700 hover:text-amber-600 hover:bg-slate-100 rounded-lg transition-all"
                               title="Edit Bukti Bayar"
                             >
                               <Edit size={16} />
                             </button>
                             <button
                               onClick={() => handleDeletePembayaran(item.id)}
-                              className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-slate-100 rounded-lg transition-all"
+                              className="p-1.5 text-mauve-700 hover:text-rose-600 hover:bg-slate-100 rounded-lg transition-all"
                               title="Hapus Bukti Bayar"
                             >
                               <Trash2 size={16} />
@@ -893,7 +910,7 @@ const Pembayaran = () => {
                     <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
                       Jumlah
                     </th>
-                    <th className="py-3.5 px-4 text-right shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3.5 px-4 text-center shadow-[inset_0_-2px_0_0_#ffffff]">
                       Aksi
                     </th>
                   </tr>
@@ -908,37 +925,37 @@ const Pembayaran = () => {
                   ) : (
                     riilList.map((item, idx) => (
                       <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
-                        <td className="py-4 px-4 text-center font-medium text-slate-400">
+                        <td className="py-4 px-4 text-center font-medium text-slate-700">
                           {(page - 1) * limit + idx + 1}.
                         </td>
-                        <td className="py-4 px-4 font-semibold text-slate-800">
+                        <td className="py-4 px-4 font-semibold text-slate-700">
                           {item.nama_pegawai}
                         </td>
-                        <td className="py-4 px-4 text-slate-500">{item.uraian}</td>
-                        <td className="py-4 px-4 font-bold text-slate-850">
+                        <td className="py-4 px-4 text-slate-700">{item.uraian}</td>
+                        <td className="py-4 px-4 font-bold text-slate-700">
                           {formatCurrency(item.jumlah)}
                         </td>
-                        <td className="py-4 px-4 text-right">
-                          <div className="flex items-center justify-end gap-3">
+                        <td className="py-4 px-4 text-center">
+                          <div className="flex items-center justify-center gap-3">
                             <a
                               href={`/cetak/pengeluaran-riil/${item.id}`}
                               target="_blank"
                               rel="noreferrer"
-                              className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-all"
+                              className="p-1.5 text-mauve-700 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-all"
                               title="Cetak Pengeluaran Riil"
                             >
                               <Printer size={16} />
                             </a>
                             <button
                               onClick={() => openRiilModal(item.id)}
-                              className="p-1.5 text-slate-400 hover:text-amber-600 hover:bg-slate-100 rounded-lg transition-all"
+                              className="p-1.5 text-mauve-700 hover:text-amber-600 hover:bg-slate-100 rounded-lg transition-all"
                               title="Edit Pengeluaran Riil"
                             >
                               <Edit size={16} />
                             </button>
                             <button
                               onClick={() => handleDeleteRiil(item.id)}
-                              className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-slate-100 rounded-lg transition-all"
+                              className="p-1.5 text-mauve-700 hover:text-rose-600 hover:bg-slate-100 rounded-lg transition-all"
                               title="Hapus Pengeluaran Riil"
                             >
                               <Trash2 size={16} />
@@ -1026,6 +1043,38 @@ const Pembayaran = () => {
               onSubmit={handlePembayaranSubmit}
               className="flex-1 overflow-y-auto p-6 space-y-4"
             >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                    Nomor Bukti
+                  </label>
+                  <input
+                    type="text"
+                    value={pembayaranForm.nomor_bukti}
+                    onChange={(e) =>
+                      setPembayaranForm((prev) => ({ ...prev, nomor_bukti: e.target.value }))
+                    }
+                    required
+                    placeholder="Contoh: 001/KWT/VI/2026"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                    Tanggal Bukti
+                  </label>
+                  <input
+                    type="date"
+                    value={pembayaranForm.tanggal_bukti}
+                    onChange={(e) =>
+                      setPembayaranForm((prev) => ({ ...prev, tanggal_bukti: e.target.value }))
+                    }
+                    required
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white"
+                  />
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-500 mb-1.5">
