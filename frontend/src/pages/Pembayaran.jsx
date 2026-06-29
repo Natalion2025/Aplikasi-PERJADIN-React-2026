@@ -686,14 +686,14 @@ const Pembayaran = () => {
           <div className="flex items-center gap-3 self-end sm:self-auto">
             <button
               onClick={() => openRiilModal()}
-              className="flex items-center gap-2 px-4 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 rounded-2xl text-sm font-semibold border border-emerald-100 shadow-sm transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-2.5 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-200 text-emerald-600 rounded-2xl text-sm font-semibold border border-emerald-100 shadow-sm transition-all duration-200"
             >
               <FileSpreadsheet size={16} />
               <span>Pengeluaran Riil</span>
             </button>
             <button
               onClick={() => openPembayaranModal()}
-              className="flex items-center gap-2 px-5 py-2.5 bg-mauve-100 hover:bg-mauve-200 text-mauve-700 rounded-2xl text-sm font-semibold shadow-sm border border-mauve-200 transition-all duration-200"
+              className="flex items-center gap-2 px-5 py-2.5 bg-mauve-100 hover:bg-mauve-200 hover:border-mauve-300 text-mauve-700 rounded-2xl text-sm font-semibold shadow-sm border border-mauve-200 transition-all duration-200"
             >
               <Plus size={16} />
               <span>Bukti Bayar</span>
@@ -798,25 +798,25 @@ const Pembayaran = () => {
                           {(page - 1) * limit + idx + 1}.
                         </td>
                         <td className="py-4 px-4 align-top">
-                          <span className="font-semibold text-slate-800 block text-sm font-mono">
+                          <span className="font-medium text-slate-700 block text-xs">
                             {item.nomor_surat}
                           </span>
-                          <span className="text-[11px] text-slate-500 font-medium">
+                          <span className="text-xs text-slate-500 font-medium">
                             {formatDate(item.tanggal_surat)}
                           </span>
                         </td>
                         <td className="py-4 px-4 align-top">
-                          <span className="font-semibold text-slate-800 whitespace-nowrap block text-sm">
+                          <span className="font-medium text-slate-700 text-xs whitespace-nowrap block">
                             {item.nomor_bukti}
                           </span>
-                          <span className="text-[11px] text-slate-500 font-medium">
+                          <span className="text-slate-500 font-medium text-xs">
                             {formatDate(item.tanggal_bukti)}
                           </span>
                         </td>
                         <td className="py-4 px-4 text-xs font-semibold text-slate-800 whitespace-pre-line align-top">
                           {item.nama_penerima}
                         </td>
-                        <td className="py-4 px-4 text-slate-800 font-semibold align-top">
+                        <td className="py-4 px-4 text-slate-700 font-medium align-top">
                           {formatCurrency(item.nominal_bayar)}
                         </td>
                         <td className="py-4 px-4 items-center flex text-center">
@@ -826,7 +826,7 @@ const Pembayaran = () => {
                               target="_blank"
                               rel="noreferrer"
                               className="p-1.5 text-mauve-700 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-all"
-                              title="Cetak Kuitansi"
+                              title="Cetak Bukti Pembayaran"
                             >
                               <Printer size={16} />
                             </a>

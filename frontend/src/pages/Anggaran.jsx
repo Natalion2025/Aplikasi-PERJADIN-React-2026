@@ -225,7 +225,7 @@ const Anggaran = () => {
             </span>
             <input
               type="text"
-              placeholder="Cari prog, keg, atau nama anggaran..."
+              placeholder="Cari prog/keg/anggaran..."
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);

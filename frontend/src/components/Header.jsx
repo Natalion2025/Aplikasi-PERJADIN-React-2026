@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import profilePic from '../assets/pns_female_profile.png';
-import { Bell, Menu, User, Settings, LogOut, ChevronDown } from 'lucide-react';
+import { Bell, Menu, User, Settings, LogOut, ChevronDown, CalendarDays } from 'lucide-react';
 
 const Header = ({ toggleSidebar }) => {
   const { user, logout } = useAuth();
@@ -41,13 +41,16 @@ const Header = ({ toggleSidebar }) => {
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between bg-linear-to-l/hsl from-rose-900 to-rose-300 border-b border-slate-200 px-6 py-4 no-print shadow-sm">
       {/* Left Side: Mobile Menu Button & App Title */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <button
           onClick={toggleSidebar}
           className="p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100 md:hidden"
           title="Buka Menu"
         >
           <Menu size={22} />
+        </button>
+        <button className="cursor-pointer" title="Lihat Agenda Dinas">
+          <CalendarDays size={36} className="stroke-slate-200"></CalendarDays>
         </button>
         <div className="hidden md:flex flex-col">
           <h2 className="text-sm font-semibold text-white uppercase tracking-wider">

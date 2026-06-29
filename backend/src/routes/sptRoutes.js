@@ -64,35 +64,31 @@ router.get("/api/spt", isApiAuthenticated, async (req, res) => {
   try {
     const sptsSql =
       `
-            SELECT
-                s.id, s.nomor_surat, s.tanggal_surat, s.maksud_perjalanan, s.lokasi_tujuan,
-                s.tanggal_berangkat, s.tanggal_kembali, s.status, s.keterangan,
-                a.mata_anggaran_kode,
-                COALESCE(pj.nama, pg_pejabat.nama_lengkap) as pejabat_nama,
-                COALESCE(pj.jabatan, pg_pejabat.jabatan) as pejabat_jabatan,
-                (SELECT COUNT(*) FROM laporan_perjadin WHERE spt_id = s.id) as laporan_count, (SELECT COUNT(*) FROM pembayaran WHERE spt_id = s.id) as pembayaran_count,
-                COALESCE('[' || (SELECT GROUP_CONCAT(JSON_OBJECT('id', p.id, 'nama_lengkap', p.nama_lengkap, 'nip', p.nip)) FROM spt_pegawai sp_inner JOIN pegawai p ON sp_inner.pegawai_id = p.id WHERE sp_inner.spt_id = s.id) || ']', '[]') as pegawai_json
-            FROM spt s
-            LEFT JOIN anggaran a ON s.anggaran_id = a.id
-            LEFT JOIN pejabat pj ON s.pejabat_pemberi_tugas_id = pj.id
-            LEFT JOIN pegawai pg_pejabat ON s.pejabat_pemberi_tugas_id = pg_pejabat.id
-            GROUP BY s.id
-            ORDER BY s.tanggal_surat DESC, s.id DESC
+        SELECT
+            s.id, s.nomor_surat, s.tanggal_surat, s.maksud_perjalanan, s.lokasi_tujuan,
+            s.tanggal_berangkat, s.tanggal_kembali, s.status, s.keterangan,
+            a.mata_anggaran_kode,
+            COALESCE(pj.nama, pg_pejabat.nama_lengkap) as pejabat_nama,
+            COALESCE(pj.jabatan, pg_pejabat.jabatan) as pejabat_jabatan,
+            (SELECT COUNT(*) FROM laporan_perjadin WHERE spt_id = s.id) as laporan_count, 
+            (SELECT COUNT(*) FROM pembayaran WHERE spt_id = s.id) as pembayaran_count
+        FROM spt s
+        LEFT JOIN anggaran a ON s.anggaran_id = a.id
+        LEFT JOIN pejabat pj ON s.pejabat_pemberi_tugas_id = pj.id
+        LEFT JOIN pegawai pg_pejabat ON s.pejabat_pemberi_tugas_id = pg_pejabat.id
+        ORDER BY s.tanggal_surat DESC, s.id DESC
         ` + (usePagination ? " LIMIT ? OFFSET ?" : "");
     const params = usePagination ? [limit, offset] : [];
     const spts = await dbAll(sptsSql, params);
 
     for (const spt of spts) {
-      if (spt.pegawai_json) {
-        try {
-          spt.pegawai = JSON.parse(spt.pegawai_json);
-        } catch (e) {
-          spt.pegawai = [];
-        }
-      } else {
-        spt.pegawai = [];
-      }
-      delete spt.pegawai_json;
+      // Query terpisah untuk mengambil data pegawai untuk setiap SPT
+      const pegawaiSql = `
+        SELECT p.id, p.nama_lengkap, p.nip 
+        FROM spt_pegawai sp 
+        JOIN pegawai p ON sp.pegawai_id = p.id 
+        WHERE sp.spt_id = ?`;
+      spt.pegawai = await dbAll(pegawaiSql, [spt.id]);
 
       // Ambil pegawai yang tugasnya dibatalkan untuk SPT ini
       const canceledPegawaiSql = `

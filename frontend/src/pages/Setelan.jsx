@@ -1,30 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import {
-  Lock,
-  Loader2,
-  CheckCircle2,
-  AlertCircle,
-  Sun,
-  Moon
-} from 'lucide-react';
+import { Lock, Loader2, CheckCircle2, AlertCircle, Sun, Moon, Type } from 'lucide-react';
 
 const Setelan = () => {
   const { user } = useAuth();
   const [passwords, setPasswords] = useState({
     newPassword: '',
-    confirmPassword: ''
+    confirmPassword: '',
   });
   const [darkMode, setDarkMode] = useState(false);
+  const [fontSize, setFontSize] = useState('base');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   // Load theme settings from localStorage on mount
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains('dark') || localStorage.getItem('theme') === 'dark';
+    const isDark =
+      document.documentElement.classList.contains('dark') ||
+      localStorage.getItem('theme') === 'dark';
     setDarkMode(isDark);
+
+    const savedFontSize = localStorage.getItem('fontSize') || 'base';
+    setFontSize(savedFontSize);
+    // Hapus kelas ukuran font lain sebelum menerapkan yang baru
+    document.documentElement.classList.remove('text-sm', 'text-base', 'text-lg');
+    if (savedFontSize === 'sm') {
+      document.documentElement.classList.add('text-sm');
+    } else if (savedFontSize === 'lg') {
+      document.documentElement.classList.add('text-lg');
+    }
   }, []);
 
   const handlePasswordChange = (e) => {
@@ -42,6 +48,17 @@ const Setelan = () => {
       document.documentElement.classList.remove('dark');
       localStorage.setItem('theme', 'light');
     }
+  };
+
+  const handleFontSizeChange = (size) => {
+    setFontSize(size);
+    localStorage.setItem('fontSize', size);
+    document.documentElement.classList.remove('text-sm', 'text-base', 'text-lg');
+    if (size === 'sm') {
+      document.documentElement.classList.add('text-sm');
+    } else if (size === 'lg') {
+      document.documentElement.classList.add('text-lg');
+    } // 'base' (normal) tidak memerlukan kelas tambahan
   };
 
   const handleSubmitPassword = async (e) => {
@@ -69,7 +86,7 @@ const Setelan = () => {
         username: user.username,
         nip: user.nip || '',
         jabatan: user.jabatan || '',
-        newPassword: passwords.newPassword
+        newPassword: passwords.newPassword,
       });
 
       setSuccess(response.data.message || 'Password berhasil diperbarui.');
@@ -86,19 +103,29 @@ const Setelan = () => {
     <div className="max-w-xl mx-auto space-y-6">
       {/* Title */}
       <div>
-        <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Pengaturan Aplikasi</h1>
-        <p className="text-sm text-slate-500 font-medium">Kelola preferensi tampilan, tema, dan keamanan akun Anda.</p>
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
+          Pengaturan Aplikasi
+        </h1>
+        <p className="text-sm text-slate-500 font-medium">
+          Kelola preferensi tampilan, tema, dan keamanan akun Anda.
+        </p>
       </div>
 
       {/* Theme Card */}
       <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-4">
         <div>
-          <h3 className="text-sm font-semibold text-slate-650 dark:text-slate-400 uppercase tracking-wider">Tampilan & Preferensi</h3>
+          <h3 className="text-sm font-semibold text-slate-650 dark:text-slate-400 uppercase tracking-wider">
+            Tampilan & Preferensi
+          </h3>
           <p className="text-xs text-slate-400 mt-0.5">Atur tema gelap dan kustomisasi visual.</p>
         </div>
         <div className="flex items-center justify-between py-2 border-t border-slate-100 dark:border-slate-700 pt-4">
           <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
-            {darkMode ? <Moon className="w-5 h-5 text-indigo-400" /> : <Sun className="w-5 h-5 text-amber-500" />}
+            {darkMode ? (
+              <Moon className="w-5 h-5 text-indigo-400" />
+            ) : (
+              <Sun className="w-5 h-5 text-amber-500" />
+            )}
             <span className="text-sm font-medium">Mode Tampilan Gelap</span>
           </div>
           <button
@@ -114,13 +141,57 @@ const Setelan = () => {
             />
           </button>
         </div>
+
+        {/* Font Size Setting */}
+        <div className="flex items-center justify-between py-2 border-t border-slate-100 dark:border-slate-700 pt-4">
+          <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
+            <Type className="w-5 h-5 text-slate-500" />
+            <span className="text-sm font-medium">Ukuran Tulisan</span>
+          </div>
+          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-700 p-1 rounded-xl">
+            <button
+              onClick={() => handleFontSizeChange('sm')}
+              className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                fontSize === 'sm'
+                  ? 'bg-white dark:bg-slate-600 text-indigo-600 dark:text-white shadow-sm'
+                  : 'text-slate-500 dark:text-slate-400'
+              }`}
+            >
+              Kecil
+            </button>
+            <button
+              onClick={() => handleFontSizeChange('base')}
+              className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                fontSize === 'base'
+                  ? 'bg-white dark:bg-slate-600 text-indigo-600 dark:text-white shadow-sm'
+                  : 'text-slate-500 dark:text-slate-400'
+              }`}
+            >
+              Normal
+            </button>
+            <button
+              onClick={() => handleFontSizeChange('lg')}
+              className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                fontSize === 'lg'
+                  ? 'bg-white dark:bg-slate-600 text-indigo-600 dark:text-white shadow-sm'
+                  : 'text-slate-500 dark:text-slate-400'
+              }`}
+            >
+              Besar
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Change Password Card */}
       <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-6">
         <div>
-          <h3 className="text-sm font-semibold text-slate-650 dark:text-slate-400 uppercase tracking-wider">Keamanan & Ubah Password</h3>
-          <p className="text-xs text-slate-400 mt-0.5">Ubah kata sandi secara berkala untuk menjaga keamanan akses sistem.</p>
+          <h3 className="text-sm font-semibold text-slate-650 dark:text-slate-400 uppercase tracking-wider">
+            Keamanan & Ubah Password
+          </h3>
+          <p className="text-xs text-slate-400 mt-0.5">
+            Ubah kata sandi secara berkala untuk menjaga keamanan akses sistem.
+          </p>
         </div>
 
         {error && (

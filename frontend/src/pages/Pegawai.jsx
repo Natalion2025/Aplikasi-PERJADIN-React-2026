@@ -180,7 +180,7 @@ const Pegawai = () => {
             </span>
             <input
               type="text"
-              placeholder="Cari nama, NIP, atau jabatan..."
+              placeholder="Cari nama/NIP/jabatan..."
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);

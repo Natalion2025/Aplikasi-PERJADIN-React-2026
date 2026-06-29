@@ -1176,14 +1176,14 @@ const BuatLaporan = () => {
             <div className="flex items-center gap-3 self-end sm:self-auto">
               <button
                 onClick={() => openCancelModal()}
-                className="flex items-center gap-2 px-4 py-2.5 bg-yellow-300   text-orange-600 rounded-xl text-sm font-semibold border border-orange-100 shadow-sm transition-all duration-200"
+                className="flex items-center gap-2 px-4 py-2.5 bg-yellow-100 hover:bg-yellow-200 hover:border-yellow-300  text-orange-500 rounded-xl text-sm font-semibold border border-yellow-200 shadow-sm transition-all duration-200"
               >
                 <Ban size={16} />
                 <span>Batal Tugas</span>
               </button>
               <button
                 onClick={() => openFormView()}
-                className="flex items-center gap-2 px-5 py-2.5 bg-mauve-100 hover:bg-mauve-200 text-mauve-700 rounded-2xl text-sm font-semibold shadow-sm border border-mauve-200 transition-all duration-200"
+                className="flex items-center gap-2 px-5 py-2.5 bg-mauve-100 hover:bg-mauve-200 hover:border-mauve-300 text-mauve-700 rounded-2xl text-sm font-semibold shadow-sm border border-mauve-200 transition-all duration-200"
               >
                 <Plus size={16} />
                 <span>Buat Laporan</span>

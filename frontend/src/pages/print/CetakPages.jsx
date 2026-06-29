@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Loader2, Weight } from 'lucide-react';
 import logoMelawi from '../../assets/logo_kab_Melawi.png';
 
 // Helper: Format tanggal Indonesia
@@ -14,6 +15,45 @@ const formatDate = (dateString, defVal = '-') => {
 const formatCurrency = (amount) => {
   if (amount === null || amount === undefined || isNaN(parseFloat(amount))) return '0';
   return new Intl.NumberFormat('id-ID').format(amount);
+};
+
+// Helper: Ubah angka menjadi teks terbilang
+const terbilang = (angka) => {
+  if (angka === null || angka === undefined) return '';
+  angka = Number(angka);
+  if (isNaN(angka)) return '';
+
+  const bilangan = [
+    '',
+    'satu',
+    'dua',
+    'tiga',
+    'empat',
+    'lima',
+    'enam',
+    'tujuh',
+    'delapan',
+    'sembilan',
+    'sepuluh',
+    'sebelas',
+  ];
+  if (angka < 12) return bilangan[angka];
+  if (angka < 20) return terbilang(angka - 10) + ' belas';
+  if (angka < 100) return terbilang(Math.floor(angka / 10)) + ' puluh ' + terbilang(angka % 10);
+  if (angka < 200) return 'seratus ' + terbilang(angka - 100);
+  if (angka < 1000) return terbilang(Math.floor(angka / 100)) + ' ratus ' + terbilang(angka % 100);
+  if (angka < 2000) return 'seribu ' + terbilang(angka - 1000);
+  if (angka < 1000000)
+    return terbilang(Math.floor(angka / 1000)) + ' ribu ' + terbilang(angka % 1000);
+  if (angka < 1000000000)
+    return terbilang(Math.floor(angka / 1000000)) + ' juta ' + terbilang(angka % 1000000);
+  if (angka < 1000000000000)
+    return terbilang(Math.floor(angka / 1000000000)) + ' milyar ' + terbilang(angka % 1000000000);
+  if (angka < 1000000000000000)
+    return (
+      terbilang(Math.floor(angka / 1000000000000)) + ' triliun ' + terbilang(angka % 1000000000000)
+    );
+  return 'Angka terlalu besar';
 };
 
 // --- STYLING BERSAMA UNTUK SURAT RESMI (KOP SURAT) ---
@@ -85,6 +125,9 @@ const pageStyle = `
     }
     .no-print {
       display: none !important;
+    }
+    .shadow, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-inner {
+      box-shadow: none !important;
     }
   }
 `;
@@ -780,35 +823,6 @@ export const CetakPanjar = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
 
-  const terbilang = (angka) => {
-    const bilangan = [
-      '',
-      'satu',
-      'dua',
-      'tiga',
-      'empat',
-      'lima',
-      'enam',
-      'tujuh',
-      'delapan',
-      'sembilan',
-      'sepuluh',
-      'sebelas',
-    ];
-    if (angka < 12) return bilangan[angka];
-    if (angka < 20) return terbilang(angka - 10) + ' belas';
-    if (angka < 100) return terbilang(Math.floor(angka / 10)) + ' puluh ' + terbilang(angka % 10);
-    if (angka < 200) return 'seratus ' + terbilang(angka - 100);
-    if (angka < 1000)
-      return terbilang(Math.floor(angka / 100)) + ' ratus ' + terbilang(angka % 100);
-    if (angka < 2000) return 'seribu ' + terbilang(angka - 1000);
-    if (angka < 1000000)
-      return terbilang(Math.floor(angka / 1000)) + ' ribu ' + terbilang(angka % 1000);
-    if (angka < 1000000000)
-      return terbilang(Math.floor(angka / 1000000)) + ' juta ' + terbilang(angka % 1000000);
-    return 'Angka terlalu besar';
-  };
-
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -870,10 +884,7 @@ export const CetakPanjar = () => {
         </div>
 
         {/* Tabel Rincian */}
-        <table
-          className="w-full text-xs text-black border border-black border-collapse mb-5"
-          style={{ fontFamily: 'Arial' }}
-        >
+        <table className="w-full text-xs text-black border border-black border-collapse mb-5 font-sans">
           <thead>
             <tr className="bg-slate-50 border-b border-black">
               <th className="p-2 border-r border-black w-10 text-center font-normal">No.</th>
@@ -905,8 +916,14 @@ export const CetakPanjar = () => {
               <td className="p-2"></td>
             </tr>
             <tr>
-              <td className="p-2 text-left font-bold italic" colSpan={4}>
-                Terbilang: {terbilangStr}
+              <td className="p-2 text-left text-slate-800 font-bold italic" colSpan={4}>
+                Terbilang:{' '}
+                <span className="font-bold">
+                  {terbilang(totalBiaya)
+                    .replace(/\s+/g, ' ')
+                    .trim()
+                    .replace(/^(.)/, (c) => c.toUpperCase()) + ' rupiah'}
+                </span>
               </td>
             </tr>
           </tbody>
@@ -988,7 +1005,8 @@ export const CetakPembayaran = () => {
       </div>
     );
 
-  const { pembayaran, anggaran, spt, rincian, pejabat, terbilang } = data;
+  // PERBAIKAN: Hapus 'terbilang' dari destrukturisasi data, karena kita akan menggunakan fungsi global.
+  const { pembayaran, anggaran, spt, rincian, pejabat } = data;
 
   let grandTotalBiaya = 0;
   let grandTotalPanjar = 0;
@@ -1000,9 +1018,9 @@ export const CetakPembayaran = () => {
       <div className="text-center mb-6 no-print">
         <button
           onClick={() => window.print()}
-          className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-md cursor-pointer"
+          className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-sm font-semibold shadow-md cursor-pointer"
         >
-          Cetak Kuitansi
+          Cetak
         </button>
       </div>
 
@@ -1011,7 +1029,7 @@ export const CetakPembayaran = () => {
         style={{ padding: '1cm 1cm' }}
       >
         <h3 className="text-center font-bold text-sm tracking-wide uppercase m-0 border-b border-black pb-2.5">
-          KUITANSI (TANDA BUKTI PEMBAYARAN)
+          TANDA BUKTI PEMBAYARAN
         </h3>
 
         {/* Header Kuitansi BKU */}
@@ -1057,7 +1075,10 @@ export const CetakPembayaran = () => {
             uang sebesar{' '}
             <strong className="text-sm">Rp {formatCurrency(pembayaran.nominal_bayar)}</strong>
           </p>
-          <p className="m-0 font-bold italic">({terbilang})</p>
+          {/* PERBAIKAN: Panggil fungsi terbilang dengan nilai yang benar */}
+          <p className="m-0 font-bold italic">
+            ({terbilang(pembayaran.nominal_bayar).replace(/\s+/g, ' ').trim()})
+          </p>
           <p className="m-0 text-justify pt-1">
             Untuk {pembayaran.uraian_pembayaran} kepada {pembayaran.nama_penerima.split('\n')[0]}{' '}
             dan kawan-kawan, sesuai dengan Surat Tugas Nomor: {spt.nomor_surat} tanggal{' '}
@@ -1199,6 +1220,15 @@ export const CetakPembayaran = () => {
             </tr>
           </tbody>
         </table>
+        {/*Terbilang*/}
+        <p className="text-slate-800 italic">
+          Terbilang : {/** PERBAIKAN: Ganti terbilang2 menjadi terbilang */}
+          {terbilang(grandTotalDibayar)
+            .replace(/\s+/g, ' ')
+            .trim()
+            .replace(/^(.)/, (c) => c.toUpperCase())}{' '}
+          Rupiah
+        </p>
 
         {/* Tandatangan Triplet */}
         <div
@@ -2041,6 +2071,9 @@ export const CetakLaporanBpk = () => {
     }
     .nowrap-cell {
       white-space: nowrap;
+    }
+    .shadow, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-inner {
+      box-shadow: none !important;
     }
   `;
 
