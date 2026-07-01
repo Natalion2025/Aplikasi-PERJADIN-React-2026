@@ -61,7 +61,7 @@ const Dashboard = () => {
 
       // 3. Ambil data pegawai on-duty (dari SPT aktif bulan ini)
       const sptRes = await axios.get('/api/spt?limit=0');
-      const allSpts = sptRes.data.data || [];
+      const allSpts = sptRes.data || [];
 
       const now = new Date(statsRes.data.server_time || Date.now());
       const currentYear = now.getFullYear();
@@ -74,15 +74,21 @@ const Dashboard = () => {
       allSpts.forEach((spt) => {
         const startDate = new Date(spt.tanggal_berangkat);
         const endDate = new Date(spt.tanggal_kembali);
+        const canceledPegawaiSet = new Set(spt.pegawai_dibatalkan || []);
 
         if (spt.status === 'aktif' && startDate <= endOfMonth && endDate >= startOfMonth) {
-          // Masukkan pegawai utama
-          if (spt.pegawai_nama || spt.nama_pegawai) {
-            activeOnDuty.push({
-              nama: spt.pegawai_nama || spt.nama_pegawai,
-              nip: spt.pegawai_nip || spt.nip,
-              nomor_surat: spt.nomor_surat,
-              tanggal: `${new Date(spt.tanggal_berangkat).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })} s.d. ${new Date(spt.tanggal_kembali).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}`,
+          // Iterasi melalui setiap pegawai dalam SPT
+          if (spt.pegawai && Array.isArray(spt.pegawai)) {
+            spt.pegawai.forEach((pegawai) => {
+              // Pastikan pegawai tidak ada di daftar yang dibatalkan
+              if (!canceledPegawaiSet.has(pegawai.nama_lengkap)) {
+                activeOnDuty.push({
+                  nama: pegawai.nama_lengkap,
+                  nip: pegawai.nip,
+                  nomor_surat: spt.nomor_surat,
+                  tanggal: `${new Date(spt.tanggal_berangkat).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })} s.d. ${new Date(spt.tanggal_kembali).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}`,
+                });
+              }
             });
           }
         }
@@ -111,9 +117,9 @@ const Dashboard = () => {
   }
 
   // Perhitungan Donut Chart
-  const totalSisaAnggaran = anggaranList.reduce((sum, a) => sum + (a.sisa || 0), 0);
   const totalRealisasi = anggaranList.reduce((sum, a) => sum + (a.realisasi || 0), 0);
-  const totalNilaiAnggaran = totalRealisasi + totalSisaAnggaran;
+  const totalNilaiAnggaran = anggaranList.reduce((sum, a) => sum + (a.nilai_anggaran || 0), 0);
+  const totalSisaAnggaran = totalNilaiAnggaran - totalRealisasi;
   const realisasiPersen =
     totalNilaiAnggaran > 0 ? ((totalRealisasi / totalNilaiAnggaran) * 100).toFixed(1) : 0;
 
@@ -355,7 +361,7 @@ const Dashboard = () => {
             <table className="min-w-full divide-y divide-slate-100">
               <thead className="bg-slate-50/50">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider w-16">
+                  <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase text-center tracking-wider w-16">
                     No
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">
@@ -375,7 +381,7 @@ const Dashboard = () => {
               <tbody className="divide-y divide-slate-100 text-sm">
                 {paginatedPegawai.map((pegawai, index) => (
                   <tr key={index} className="hover:bg-slate-50/30 transition-colors">
-                    <td className="px-4 py-3 text-slate-500">
+                    <td className="px-4 pl-0 py-3 text-center text-slate-500">
                       {(currentPage - 1) * itemsPerPage + index + 1}
                     </td>
                     <td className="px-4 py-3 font-semibold text-slate-800">{pegawai.nama}</td>

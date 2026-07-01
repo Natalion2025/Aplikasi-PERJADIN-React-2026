@@ -154,13 +154,20 @@ const SptRegister = () => {
     };
   }, []);
 
+  // PERBAIKAN: Pisahkan useEffect untuk setiap tab agar dependensi lebih jelas dan efisien.
+  // useEffect untuk tab SPT
   useEffect(() => {
     if (activeTab === 'spt') {
       fetchSpts();
-    } else {
+    }
+  }, [activeTab, sptPage, limit, searchQuery]);
+
+  // useEffect untuk tab SPPD
+  useEffect(() => {
+    if (activeTab === 'sppd') {
       fetchSppds();
     }
-  }, [activeTab, sptPage, sppdPage, limit, searchQuery]);
+  }, [activeTab, sppdPage, limit, searchQuery]);
 
   // Handle SPT Delete
   const handleDeleteSpt = async (id, nomor) => {

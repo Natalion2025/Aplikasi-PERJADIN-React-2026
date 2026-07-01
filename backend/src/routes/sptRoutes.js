@@ -8,8 +8,16 @@ const {
   isApiAdminOrSuperAdmin,
 } = require("../middleware/auth");
 
-const dbGet = util.promisify(db.get.bind(db));
-const dbAll = util.promisify(db.all.bind(db));
+// Helper untuk menggunakan db.query yang sudah promise-based
+const dbQuery = db.query;
+
+const dbGet = async (sql, params) => {
+  const results = await dbQuery(sql, params);
+  return results[0];
+};
+const dbAll = async (sql, params) => {
+  return await dbQuery(sql, params);
+};
 const runQuery = (sql, params = []) =>
   new Promise((resolve, reject) => {
     db.run(sql, params, function (err) {
@@ -18,7 +26,7 @@ const runQuery = (sql, params = []) =>
     });
   });
 
-router.get("/api/spt/active-count", isApiAuthenticated, async (req, res) => {
+router.get("/spt/active-count", isApiAuthenticated, async (req, res) => {
   try {
     const userNip = req.session.user?.nip;
     if (!userNip) {
@@ -54,7 +62,7 @@ router.get("/api/spt/active-count", isApiAuthenticated, async (req, res) => {
 });
 
 // GET: Mengambil semua data SPT untuk ditampilkan di register
-router.get("/api/spt", isApiAuthenticated, async (req, res) => {
+router.get("/spt", isApiAuthenticated, async (req, res) => {
   const usePagination =
     req.query.limit !== "0" && req.query.limit !== undefined;
   const limit = usePagination ? parseInt(req.query.limit, 10) || 5 : 0;
@@ -65,7 +73,7 @@ router.get("/api/spt", isApiAuthenticated, async (req, res) => {
     const sptsSql =
       `
         SELECT
-            s.id, s.nomor_surat, s.tanggal_surat, s.maksud_perjalanan, s.lokasi_tujuan,
+            s.id, s.nomor_surat, s.tanggal_surat, s.maksud_perjalanan, s.lokasi_tujuan, s.lama_perjalanan,
             s.tanggal_berangkat, s.tanggal_kembali, s.status, s.keterangan,
             a.mata_anggaran_kode,
             COALESCE(pj.nama, pg_pejabat.nama_lengkap) as pejabat_nama,
@@ -127,7 +135,7 @@ router.get("/api/spt", isApiAuthenticated, async (req, res) => {
 });
 
 // GET: Mengambil semua SPT yang dibatalkan
-router.get("/api/spt/canceled", isApiAuthenticated, async (req, res) => {
+router.get("/spt/canceled", isApiAuthenticated, async (req, res) => {
   const limit = parseInt(req.query.limit) || 5;
   const page = parseInt(req.query.page) || 1;
   const offset = (page - 1) * limit;
@@ -166,7 +174,7 @@ router.get("/api/spt/canceled", isApiAuthenticated, async (req, res) => {
 });
 
 // GET: Mengambil data satu SPT untuk keperluan edit/cetak/detail
-router.get("/api/spt/:id", isApiAuthenticated, async (req, res) => {
+router.get("/spt/:id", isApiAuthenticated, async (req, res) => {
   try {
     const sptSql = "SELECT * FROM spt WHERE id = ?";
     const spt = await dbGet(sptSql, [req.params.id]);
@@ -203,7 +211,7 @@ router.get("/api/spt/:id", isApiAuthenticated, async (req, res) => {
 });
 
 // POST: Membuat SPT baru
-router.post("/api/spt", isApiAuthenticated, async (req, res) => {
+router.post("/spt", isApiAuthenticated, async (req, res) => {
   const {
     nomor_surat,
     tanggal_surat,
@@ -369,7 +377,7 @@ router.post("/api/spt", isApiAuthenticated, async (req, res) => {
 
 // PUT: Memperbarui SPT yang sudah ada
 router.put(
-  "/api/spt/:id",
+  "/spt/:id",
   isApiAuthenticated,
   isApiAdminOrSuperAdmin,
   async (req, res) => {
@@ -579,7 +587,7 @@ dasar_perjalanan = ?,
 
 // DELETE: Menghapus SPT
 router.delete(
-  "/api/spt/:id",
+  "/spt/:id",
   isApiAuthenticated,
   isApiAdminOrSuperAdmin,
   async (req, res) => {
@@ -639,7 +647,7 @@ router.delete(
 
 // POST: Membatalkan SPT
 router.post(
-  "/api/spt/cancel",
+  "/spt/cancel",
   isApiAuthenticated,
   isApiAdminOrSuperAdmin,
   async (req, res) => {
@@ -711,7 +719,7 @@ router.post(
 
 // API BARU: Mengambil daftar pegawai yang sudah dibatalkan untuk SPT tertentu
 router.get(
-  "/api/pembatalan/by-spt/:spt_id",
+  "/pembatalan/by-spt/:spt_id",
   isApiAuthenticated,
   async (req, res) => {
     const { spt_id } = req.params;
@@ -734,7 +742,7 @@ router.get(
 );
 
 // GET: Mengambil detail satu pembatalan untuk mode edit
-router.get("/api/pembatalan/:id", isApiAuthenticated, async (req, res) => {
+router.get("/pembatalan/:id", isApiAuthenticated, async (req, res) => {
   try {
     const sql = "SELECT * FROM pembatalan_spt WHERE id = ?";
     const pembatalan = await dbGet(sql, [req.params.id]);
@@ -758,7 +766,7 @@ router.get("/api/pembatalan/:id", isApiAuthenticated, async (req, res) => {
 
 // PUT: Memperbarui data pembatalan
 router.put(
-  "/api/pembatalan/:id",
+  "/pembatalan/:id",
   isApiAuthenticated,
   isApiAdminOrSuperAdmin,
   async (req, res) => {
@@ -813,7 +821,7 @@ router.put(
 
 // DELETE: Menghapus data pembatalan dan mengembalikan status SPT
 router.delete(
-  "/api/pembatalan/:id",
+  "/pembatalan/:id",
   isApiAuthenticated,
   isApiAdminOrSuperAdmin,
   async (req, res) => {
@@ -859,109 +867,105 @@ router.delete(
 );
 
 // GET: Data untuk cetak pembatalan
-router.get(
-  "/api/cetak/pembatalan/:id",
-  isApiAuthenticated,
-  async (req, res) => {
-    const { id } = req.params;
-    try {
-      // 1. Ambil data pembatalan
-      const pembatalanSql = `SELECT * FROM pembatalan_spt WHERE id = ? `;
-      const pembatalan = await dbGet(pembatalanSql, [id]);
-      if (!pembatalan) {
-        return res
-          .status(404)
-          .json({ message: "Data pembatalan tidak ditemukan." });
-      }
+router.get("/cetak/pembatalan/:id", isApiAuthenticated, async (req, res) => {
+  const { id } = req.params;
+  try {
+    // 1. Ambil data pembatalan
+    const pembatalanSql = `SELECT * FROM pembatalan_spt WHERE id = ? `;
+    const pembatalan = await dbGet(pembatalanSql, [id]);
+    if (!pembatalan) {
+      return res
+        .status(404)
+        .json({ message: "Data pembatalan tidak ditemukan." });
+    }
 
-      // 2. Ambil data SPT terkait
-      const sptSql = `SELECT * FROM spt WHERE id = ? `;
-      const spt = await dbGet(sptSql, [pembatalan.spt_id]);
-      if (!spt) {
-        return res
-          .status(404)
-          .json({ message: "Data SPT terkait tidak ditemukan." });
-      }
+    // 2. Ambil data SPT terkait
+    const sptSql = `SELECT * FROM spt WHERE id = ? `;
+    const spt = await dbGet(sptSql, [pembatalan.spt_id]);
+    if (!spt) {
+      return res
+        .status(404)
+        .json({ message: "Data SPT terkait tidak ditemukan." });
+    }
 
-      // 3. Ambil data pejabat yang memberi tugas
-      // Coba cari di tabel 'pejabat' dulu, jika tidak ada, cari di 'pegawai' (untuk Sekda, dll)
-      let pejabatPemberiTugas = await dbGet(
-        `SELECT nama, nip, jabatan FROM pejabat WHERE id = ? `,
+    // 3. Ambil data pejabat yang memberi tugas
+    // Coba cari di tabel 'pejabat' dulu, jika tidak ada, cari di 'pegawai' (untuk Sekda, dll)
+    let pejabatPemberiTugas = await dbGet(
+      `SELECT nama, nip, jabatan FROM pejabat WHERE id = ? `,
+      [spt.pejabat_pemberi_tugas_id],
+    );
+    if (!pejabatPemberiTugas) {
+      pejabatPemberiTugas = await dbGet(
+        `SELECT nama_lengkap as nama, nip, jabatan FROM pegawai WHERE id = ? `,
         [spt.pejabat_pemberi_tugas_id],
       );
-      if (!pejabatPemberiTugas) {
-        pejabatPemberiTugas = await dbGet(
-          `SELECT nama_lengkap as nama, nip, jabatan FROM pegawai WHERE id = ? `,
-          [spt.pejabat_pemberi_tugas_id],
-        );
-      }
-      if (!pejabatPemberiTugas) {
-        return res
-          .status(404)
-          .json({ message: "Pejabat pemberi tugas tidak ditemukan." });
-      }
-
-      // 4. Ambil data pegawai yang dibatalkan tugasnya
-      const pelaksanaSql = `SELECT nama_lengkap, nip, jabatan FROM pegawai WHERE id = ? `;
-      const pelaksana = await dbGet(pelaksanaSql, [pembatalan.pegawai_id]);
-      if (!pelaksana) {
-        return res
-          .status(404)
-          .json({ message: "Data pegawai yang dibatalkan tidak ditemukan." });
-      }
-
-      // 5. Ambil data SPPD terkait (jika ada)
-      const sppdSql = `SELECT nomor_sppd, tanggal_sppd FROM sppd WHERE spt_id = ? AND pegawai_id = ? `;
-      const sppd = await dbGet(sppdSql, [
-        pembatalan.spt_id,
-        pembatalan.pegawai_id,
-      ]);
-
-      // 6. Ambil data Anggaran terkait
-      const anggaranSql = `SELECT mata_anggaran_kode FROM anggaran WHERE id = ? `;
-      const anggaran = await dbGet(anggaranSql, [spt.anggaran_id]);
-
-      // 7. Ambil data Pengguna Anggaran (Kepala Dinas)
-      const penggunaAnggaranSql = `SELECT nama_lengkap as nama, nip, jabatan FROM pegawai WHERE jabatan LIKE '%Kepala Dinas%' LIMIT 1`;
-      let penggunaAnggaran = await dbGet(penggunaAnggaranSql);
-      if (!penggunaAnggaran) {
-        penggunaAnggaran = {
-          nama: "(Nama Kepala Dinas tidak ditemukan)",
-          nip: "-",
-          jabatan: "Pengguna Anggaran",
-        };
-      }
-
-      // 5. Gabungkan semua data
-      const responseData = {
-        pembatalan,
-        spt,
-        pejabatPemberiTugas,
-        pelaksana,
-        sppd: sppd || {
-          nomor_sppd: "......................",
-          tanggal_sppd: null,
-        }, // Fallback jika tidak ada
-        anggaran: anggaran || { mata_anggaran_kode: "......................" }, // Fallback jika tidak ada
-        penggunaAnggaran,
-      };
-
-      res.json(responseData);
-    } catch (error) {
-      console.error(
-        `[API ERROR] Gagal mengambil data cetak untuk pembatalan id ${id}: `,
-        error,
-      );
-      res.status(500).json({
-        message: "Terjadi kesalahan pada server.",
-        error: error.message,
-      });
     }
-  },
-);
+    if (!pejabatPemberiTugas) {
+      return res
+        .status(404)
+        .json({ message: "Pejabat pemberi tugas tidak ditemukan." });
+    }
+
+    // 4. Ambil data pegawai yang dibatalkan tugasnya
+    const pelaksanaSql = `SELECT nama_lengkap, nip, jabatan FROM pegawai WHERE id = ? `;
+    const pelaksana = await dbGet(pelaksanaSql, [pembatalan.pegawai_id]);
+    if (!pelaksana) {
+      return res
+        .status(404)
+        .json({ message: "Data pegawai yang dibatalkan tidak ditemukan." });
+    }
+
+    // 5. Ambil data SPPD terkait (jika ada)
+    const sppdSql = `SELECT nomor_sppd, tanggal_sppd FROM sppd WHERE spt_id = ? AND pegawai_id = ? `;
+    const sppd = await dbGet(sppdSql, [
+      pembatalan.spt_id,
+      pembatalan.pegawai_id,
+    ]);
+
+    // 6. Ambil data Anggaran terkait
+    const anggaranSql = `SELECT mata_anggaran_kode FROM anggaran WHERE id = ? `;
+    const anggaran = await dbGet(anggaranSql, [spt.anggaran_id]);
+
+    // 7. Ambil data Pengguna Anggaran (Kepala Dinas)
+    const penggunaAnggaranSql = `SELECT nama_lengkap as nama, nip, jabatan FROM pegawai WHERE jabatan LIKE '%Kepala Dinas%' LIMIT 1`;
+    let penggunaAnggaran = await dbGet(penggunaAnggaranSql);
+    if (!penggunaAnggaran) {
+      penggunaAnggaran = {
+        nama: "(Nama Kepala Dinas tidak ditemukan)",
+        nip: "-",
+        jabatan: "Pengguna Anggaran",
+      };
+    }
+
+    // 5. Gabungkan semua data
+    const responseData = {
+      pembatalan,
+      spt,
+      pejabatPemberiTugas,
+      pelaksana,
+      sppd: sppd || {
+        nomor_sppd: "......................",
+        tanggal_sppd: null,
+      }, // Fallback jika tidak ada
+      anggaran: anggaran || { mata_anggaran_kode: "......................" }, // Fallback jika tidak ada
+      penggunaAnggaran,
+    };
+
+    res.json(responseData);
+  } catch (error) {
+    console.error(
+      `[API ERROR] Gagal mengambil data cetak untuk pembatalan id ${id}: `,
+      error,
+    );
+    res.status(500).json({
+      message: "Terjadi kesalahan pada server.",
+      error: error.message,
+    });
+  }
+});
 
 // API BARU: Data untuk Cetak Visum Dinamis
-router.get("/api/cetak/visum/:spt_id", isApiAuthenticated, async (req, res) => {
+router.get("/cetak/visum/:spt_id", isApiAuthenticated, async (req, res) => {
   const { spt_id } = req.params;
   try {
     const sql = `

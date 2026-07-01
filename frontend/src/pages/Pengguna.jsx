@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import {
-  UserPlus,
   Search,
   Edit,
   Trash2,
@@ -11,6 +10,7 @@ import {
   AlertCircle,
   CheckCircle2,
   Shield,
+  UserPlus,
   UserCheck,
 } from 'lucide-react';
 
@@ -336,8 +336,8 @@ const Pengguna = () => {
         >
           <div className="bg-white dark:bg-slate-800 w-full max-w-lg rounded-3xl p-6 shadow-xl border border-slate-100 dark:border-slate-700 space-y-6">
             <div className="flex justify-between items-start">
-              <div className="flex items-center gap-2">
-                <UserSquare2 className="w-5.5 h-5.5 text-indigo-600 dark:text-indigo-400" />
+              <div className="flex items-center gap-2.5">
+                <UserPlus className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
                 <h3 className="text-lg font-bold text-slate-950 dark:text-slate-50">
                   {editingId ? 'Edit Data Pengguna' : 'Tambah Pengguna Baru'}
                 </h3>

@@ -7,8 +7,16 @@ const { isApiAuthenticated } = require("../middleware/auth");
 
 const PORT = process.env.PORT || 3000;
 
-const dbGet = util.promisify(db.get.bind(db));
-const dbAll = util.promisify(db.all.bind(db));
+// Helper untuk menggunakan db.query yang sudah promise-based
+const dbQuery = db.query;
+
+const dbGet = async (sql, params) => {
+  const results = await dbQuery(sql, params);
+  return results[0];
+};
+const dbAll = async (sql, params) => {
+  return await dbQuery(sql, params);
+};
 
 // Helper functions getTingkatBiaya dan getKolomGolongan
 const getTingkatBiaya = (pegawai) => {

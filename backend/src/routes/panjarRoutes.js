@@ -5,8 +5,16 @@ const util = require("util");
 const terbilang = require("angka-menjadi-terbilang");
 const { isApiAuthenticated } = require("../middleware/auth");
 
-const dbGet = util.promisify(db.get.bind(db));
-const dbAll = util.promisify(db.all.bind(db));
+// Helper untuk menggunakan db.query yang sudah promise-based
+const dbQuery = db.query;
+
+const dbGet = async (sql, params) => {
+  const results = await dbQuery(sql, params);
+  return results[0];
+};
+const dbAll = async (sql, params) => {
+  return await dbQuery(sql, params);
+};
 const runQuery = (sql, params = []) =>
   new Promise((resolve, reject) => {
     db.run(sql, params, function (err) {
@@ -15,7 +23,7 @@ const runQuery = (sql, params = []) =>
     });
   });
 
-router.get("/api/panjar", isApiAuthenticated, async (req, res) => {
+router.get("/panjar", isApiAuthenticated, async (req, res) => {
   const limit = parseInt(req.query.limit) || 5;
   const page = parseInt(req.query.page) || 1;
   const offset = (page - 1) * limit;
@@ -56,7 +64,7 @@ LIMIT ? OFFSET ?
 });
 
 // GET: Mengambil satu data panjar untuk edit
-router.get("/api/panjar/:id", isApiAuthenticated, async (req, res) => {
+router.get("/panjar/:id", isApiAuthenticated, async (req, res) => {
   try {
     const panjar = await dbGet("SELECT * FROM panjar WHERE id = ?", [
       req.params.id,
@@ -81,7 +89,7 @@ router.get("/api/panjar/:id", isApiAuthenticated, async (req, res) => {
 });
 
 // POST: Membuat panjar baru
-router.post("/api/panjar", isApiAuthenticated, async (req, res) => {
+router.post("/panjar", isApiAuthenticated, async (req, res) => {
   const {
     tempat,
     tanggal_panjar,
@@ -149,7 +157,7 @@ router.post("/api/panjar", isApiAuthenticated, async (req, res) => {
 });
 
 // PUT: Memperbarui panjar
-router.put("/api/panjar/:id", isApiAuthenticated, async (req, res) => {
+router.put("/panjar/:id", isApiAuthenticated, async (req, res) => {
   const { id } = req.params;
   const {
     tempat,
@@ -210,7 +218,7 @@ router.put("/api/panjar/:id", isApiAuthenticated, async (req, res) => {
 });
 
 // DELETE: Menghapus panjar
-router.delete("/api/panjar/:id", isApiAuthenticated, async (req, res) => {
+router.delete("/panjar/:id", isApiAuthenticated, async (req, res) => {
   try {
     const result = await runQuery("DELETE FROM panjar WHERE id = ?", [
       req.params.id,
@@ -233,39 +241,35 @@ router.delete("/api/panjar/:id", isApiAuthenticated, async (req, res) => {
 });
 
 // GET: Mengambil data panjar berdasarkan SPT ID
-router.get(
-  "/api/panjar/by-spt/:spt_id",
-  isApiAuthenticated,
-  async (req, res) => {
-    const { spt_id } = req.params;
-    try {
-      const sql = `
+router.get("/panjar/by-spt/:spt_id", isApiAuthenticated, async (req, res) => {
+  const { spt_id } = req.params;
+  try {
+    const sql = `
 SELECT
 p.pelaksana_id,
     (SELECT SUM(pr.jumlah) FROM panjar_rincian pr WHERE pr.panjar_id = p.id) as total_panjar
             FROM panjar p
             WHERE p.spt_id = ?
     `;
-      const panjarData = await dbAll(sql, [spt_id]);
-      // Mengubah array menjadi map untuk kemudahan akses di frontend: { pelaksana_id: total_panjar }
-      const panjarMap = panjarData.reduce((acc, item) => {
-        acc[item.pelaksana_id] = item.total_panjar;
-        return acc;
-      }, {});
-      res.json(panjarMap);
-    } catch (error) {
-      console.error(
-        `[API ERROR] Gagal mengambil data panjar untuk SPT ID ${spt_id}: `,
-        error,
-      );
-      res.status(500).json({ message: "Terjadi kesalahan pada server." });
-    }
-  },
-);
+    const panjarData = await dbAll(sql, [spt_id]);
+    // Mengubah array menjadi map untuk kemudahan akses di frontend: { pelaksana_id: total_panjar }
+    const panjarMap = panjarData.reduce((acc, item) => {
+      acc[item.pelaksana_id] = item.total_panjar;
+      return acc;
+    }, {});
+    res.json(panjarMap);
+  } catch (error) {
+    console.error(
+      `[API ERROR] Gagal mengambil data panjar untuk SPT ID ${spt_id}: `,
+      error,
+    );
+    res.status(500).json({ message: "Terjadi kesalahan pada server." });
+  }
+});
 
 // GET: Data panjar untuk satu pegawai di satu SPT
 router.get(
-  "/api/panjar/by-spt/:spt_id/pegawai/:pegawai_id",
+  "/panjar/by-spt/:spt_id/pegawai/:pegawai_id",
   isApiAuthenticated,
   async (req, res) => {
     const { spt_id, pegawai_id } = req.params;
@@ -305,7 +309,7 @@ router.get(
 );
 
 // GET: Data untuk cetak panjar
-router.get("/api/cetak/panjar/:id", isApiAuthenticated, async (req, res) => {
+router.get("/cetak/panjar/:id", isApiAuthenticated, async (req, res) => {
   try {
     const sql = `
             SELECT p.*,

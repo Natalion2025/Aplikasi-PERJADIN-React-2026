@@ -7,8 +7,16 @@ const {
   isApiAdminOrSuperAdmin,
 } = require("../middleware/auth");
 
-const dbGet = util.promisify(db.get.bind(db));
-const dbAll = util.promisify(db.all.bind(db));
+// Helper untuk menggunakan db.query yang sudah promise-based
+const dbQuery = db.query;
+
+const dbGet = async (sql, params) => {
+  const results = await dbQuery(sql, params);
+  return results[0];
+};
+const dbAll = async (sql, params) => {
+  return await dbQuery(sql, params);
+};
 const runQuery = (sql, params = []) =>
   new Promise((resolve, reject) => {
     db.run(sql, params, function (err) {
@@ -17,7 +25,7 @@ const runQuery = (sql, params = []) =>
     });
   });
 
-router.get("/api/anggaran", isApiAuthenticated, async (req, res) => {
+router.get("/anggaran", isApiAuthenticated, async (req, res) => {
   const limit =
     req.query.limit === "0" ? 0 : parseInt(req.query.limit, 10) || 5;
   const page = parseInt(req.query.page) || 1;
@@ -105,7 +113,7 @@ router.get("/api/anggaran", isApiAuthenticated, async (req, res) => {
 });
 
 // Dropdown options
-router.get("/api/anggaran/options", isApiAuthenticated, async (req, res) => {
+router.get("/anggaran/options", isApiAuthenticated, async (req, res) => {
   try {
     const sql = `
             SELECT 
@@ -125,7 +133,7 @@ router.get("/api/anggaran/options", isApiAuthenticated, async (req, res) => {
 });
 
 // GET single anggaran
-router.get("/api/anggaran/:id", isApiAuthenticated, async (req, res) => {
+router.get("/anggaran/:id", isApiAuthenticated, async (req, res) => {
   try {
     const row = await dbGet("SELECT * FROM anggaran WHERE id = ?", [
       req.params.id,
@@ -147,7 +155,7 @@ router.get("/api/anggaran/:id", isApiAuthenticated, async (req, res) => {
 
 // POST new anggaran
 router.post(
-  "/api/anggaran",
+  "/anggaran",
   isApiAuthenticated,
   isApiAdminOrSuperAdmin,
   async (req, res) => {
@@ -167,11 +175,9 @@ router.post(
     const nama = mata_anggaran_nama || req.body.mata_anggaran_nama;
 
     if (!kode || !nilai_anggaran) {
-      return res
-        .status(400)
-        .json({
-          message: "Mata Anggaran Kode dan Nilai Anggaran wajib diisi.",
-        });
+      return res.status(400).json({
+        message: "Mata Anggaran Kode dan Nilai Anggaran wajib diisi.",
+      });
     }
 
     try {
@@ -203,7 +209,7 @@ router.post(
 
 // PUT update anggaran
 router.put(
-  "/api/anggaran/:id",
+  "/anggaran/:id",
   isApiAuthenticated,
   isApiAdminOrSuperAdmin,
   async (req, res) => {
@@ -223,11 +229,9 @@ router.put(
     const nama = mata_anggaran_nama || req.body.mata_anggaran_nama;
 
     if (!kode || !nilai_anggaran) {
-      return res
-        .status(400)
-        .json({
-          message: "Mata Anggaran Kode dan Nilai Anggaran wajib diisi.",
-        });
+      return res.status(400).json({
+        message: "Mata Anggaran Kode dan Nilai Anggaran wajib diisi.",
+      });
     }
 
     try {
@@ -272,7 +276,7 @@ router.put(
 
 // DELETE anggaran
 router.delete(
-  "/api/anggaran/:id",
+  "/anggaran/:id",
   isApiAuthenticated,
   isApiAdminOrSuperAdmin,
   async (req, res) => {

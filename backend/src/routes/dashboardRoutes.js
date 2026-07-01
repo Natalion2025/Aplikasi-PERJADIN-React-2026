@@ -4,10 +4,18 @@ const db = require("../config/db");
 const util = require("util");
 const { isApiAuthenticated } = require("../middleware/auth");
 
-const dbGet = util.promisify(db.get.bind(db));
-const dbAll = util.promisify(db.all.bind(db));
+// Helper untuk menggunakan db.query yang sudah promise-based
+const dbQuery = db.query;
 
-router.get("/api/dashboard/stats", isApiAuthenticated, async (req, res) => {
+const dbGet = async (sql, params) => {
+  const results = await dbQuery(sql, params);
+  return results[0];
+};
+const dbAll = async (sql, params) => {
+  return await dbQuery(sql, params);
+};
+
+router.get("/dashboard/stats", isApiAuthenticated, async (req, res) => {
   try {
     // Menggunakan tabel 'spt' sebagai sumber utama untuk konsistensi
     const sqlTotal =

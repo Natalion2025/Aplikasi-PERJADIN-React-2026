@@ -59,6 +59,7 @@ app.use(
 const authRoutes = require("./routes/authRoutes");
 const pegawaiRoutes = require("./routes/pegawaiRoutes");
 const userRoutes = require("./routes/userRoutes");
+const userAdminRoutes = require("./routes/userAdminRoutes"); // Impor rute baru
 const pejabatRoutes = require("./routes/pejabatRoutes");
 const anggaranRoutes = require("./routes/anggaranRoutes");
 const laporanBpkApipRoutes = require("./routes/laporanBpkApipRoutes");
@@ -75,22 +76,20 @@ const searchRoutes = require("./routes/searchRoutes");
 // Daftarkan rute API
 app.use("/api/auth", authRoutes);
 app.use("/api/pegawai", pegawaiRoutes);
-app.use("/api/user", userRoutes);
-app.use("/", userRoutes);
-
-// Daftarkan rute API hasil ekstraksi (menggunakan mount path root '/' karena rute aslinya sudah lengkap dengan '/api/...')
-app.use("/", pejabatRoutes);
-app.use("/", anggaranRoutes);
-app.use("/", laporanBpkApipRoutes);
-app.use("/", sptRoutes);
-app.use("/", sppdRoutes);
-app.use("/", dashboardRoutes);
-app.use("/", standarBiayaRoutes);
-app.use("/", laporanRoutes);
-app.use("/", panjarRoutes);
-app.use("/", pembayaranRoutes);
-app.use("/", pengeluaranRiilRoutes);
-app.use("/", searchRoutes);
+app.use("/api/user", userRoutes); // PERBAIKAN: Mount di /api/user agar cocok dengan frontend
+app.use("/api", userAdminRoutes); // Daftarkan rute admin di /api
+app.use("/api", pejabatRoutes);
+app.use("/api", anggaranRoutes);
+app.use("/api", laporanBpkApipRoutes);
+app.use("/api", sptRoutes);
+app.use("/api", sppdRoutes);
+app.use("/api", dashboardRoutes);
+app.use("/api", standarBiayaRoutes);
+app.use("/api", laporanRoutes);
+app.use("/api", panjarRoutes);
+app.use("/api", pembayaranRoutes);
+app.use("/api", pengeluaranRiilRoutes);
+app.use("/api", searchRoutes);
 
 // Health check endpoint
 app.get("/health", (req, res) => {

@@ -4,8 +4,16 @@ const db = require("../config/db");
 const util = require("util");
 const { isApiAuthenticated } = require("../middleware/auth");
 
-const dbGet = util.promisify(db.get.bind(db));
-const dbAll = util.promisify(db.all.bind(db));
+// Helper untuk menggunakan db.query yang sudah promise-based
+const dbQuery = db.query;
+
+const dbGet = async (sql, params) => {
+  const results = await dbQuery(sql, params);
+  return results[0];
+};
+const dbAll = async (sql, params) => {
+  return await dbQuery(sql, params);
+};
 const runQuery = (sql, params = []) =>
   new Promise((resolve, reject) => {
     db.run(sql, params, function (err) {
@@ -14,7 +22,7 @@ const runQuery = (sql, params = []) =>
     });
   });
 
-router.get("/api/sppd", isApiAuthenticated, async (req, res) => {
+router.get("/sppd", isApiAuthenticated, async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 5;
   const offset = (page - 1) * limit;
@@ -55,7 +63,7 @@ router.get("/api/sppd", isApiAuthenticated, async (req, res) => {
   }
 });
 
-router.get("/api/sppd/:id", isApiAuthenticated, async (req, res) => {
+router.get("/sppd/:id", isApiAuthenticated, async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -120,7 +128,7 @@ router.get("/api/sppd/:id", isApiAuthenticated, async (req, res) => {
   }
 });
 
-router.post("/api/sppd/auto-create", isApiAuthenticated, async (req, res) => {
+router.post("/sppd/auto-create", isApiAuthenticated, async (req, res) => {
   try {
     const { spt_id } = req.body;
 
@@ -162,7 +170,7 @@ router.post("/api/sppd/auto-create", isApiAuthenticated, async (req, res) => {
   }
 });
 
-router.get("/api/sppd/by-spt/:spt_id", isApiAuthenticated, async (req, res) => {
+router.get("/sppd/by-spt/:spt_id", isApiAuthenticated, async (req, res) => {
   try {
     let { spt_id } = req.params;
     const { id_type } = req.query;
