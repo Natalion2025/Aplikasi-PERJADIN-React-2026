@@ -334,11 +334,11 @@ const Pengguna = () => {
             if (e.target === e.currentTarget && !submitting) setModalOpen(false);
           }}
         >
-          <div className="bg-white dark:bg-slate-800 w-full max-w-lg rounded-3xl p-6 shadow-xl border border-slate-100 dark:border-slate-700 space-y-6">
-            <div className="flex justify-between items-start">
+          <div className="bg-white dark:bg-slate-800 w-full max-w-lg rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+            <div className="flex justify-between items-start p-6 bg-gradient-to-r from-emerald-600 to-teal-500 text-white">
               <div className="flex items-center gap-2.5">
-                <UserPlus className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-                <h3 className="text-lg font-bold text-slate-950 dark:text-slate-50">
+                <UserPlus className="w-5 h-5" />
+                <h3 className="text-lg font-bold text-slate-100 dark:text-slate-50">
                   {editingId ? 'Edit Data Pengguna' : 'Tambah Pengguna Baru'}
                 </h3>
               </div>
@@ -350,150 +350,151 @@ const Pengguna = () => {
                 <X className="w-5 h-5" />
               </button>
             </div>
+            <div className="p-6 space-y-6">
+              {error && (
+                <div className="p-3.5 bg-red-50 dark:bg-red-950/20 text-red-800 dark:text-red-300 rounded-xl flex items-center gap-2.5 text-sm border border-red-100 dark:border-red-900/40">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  <span>{error}</span>
+                </div>
+              )}
 
-            {error && (
-              <div className="p-3.5 bg-red-50 dark:bg-red-950/20 text-red-800 dark:text-red-300 rounded-xl flex items-center gap-2.5 text-sm border border-red-100 dark:border-red-900/40">
-                <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                <span>{error}</span>
-              </div>
-            )}
+              {success && (
+                <div className="p-3.5 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 rounded-xl flex items-center gap-2.5 text-sm border border-emerald-100 dark:border-emerald-900/40">
+                  <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
+                  <span>{success}</span>
+                </div>
+              )}
 
-            {success && (
-              <div className="p-3.5 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 rounded-xl flex items-center gap-2.5 text-sm border border-emerald-100 dark:border-emerald-900/40">
-                <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-                <span>{success}</span>
-              </div>
-            )}
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Nama Lengkap */}
+                  <div className="col-span-2">
+                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
+                      Nama Lengkap
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={form.name}
+                      onChange={handleChange}
+                      required
+                      placeholder="Contoh: Budi Santoso"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                    />
+                  </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                {/* Nama Lengkap */}
-                <div className="col-span-2">
-                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
-                    Nama Lengkap
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                    placeholder="Contoh: Budi Santoso"
-                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
-                  />
+                  {/* Username */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
+                      Username
+                    </label>
+                    <input
+                      type="text"
+                      name="username"
+                      value={form.username}
+                      onChange={handleChange}
+                      required
+                      placeholder="budi_s"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 font-mono"
+                    />
+                  </div>
+
+                  {/* Role */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
+                      Peran (Role)
+                    </label>
+                    <select
+                      name="role"
+                      value={form.role}
+                      onChange={handleChange}
+                      required
+                      disabled={currentUser?.role === 'admin' && form.role !== 'user'}
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                    >
+                      <option value="user">User / Operator</option>
+                      {currentUser?.role === 'superadmin' && (
+                        <>
+                          <option value="admin">Admin</option>
+                          <option value="superadmin">Super Admin</option>
+                        </>
+                      )}
+                    </select>
+                  </div>
+
+                  {/* Password */}
+                  <div className="col-span-2">
+                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
+                      Password{' '}
+                      {editingId && (
+                        <span className="text-[10px] text-slate-400 lowercase">
+                          (kosongkan jika tidak diubah)
+                        </span>
+                      )}
+                    </label>
+                    <input
+                      type="password"
+                      name="password"
+                      value={form.password}
+                      onChange={handleChange}
+                      required={!editingId}
+                      placeholder="••••••••"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                    />
+                  </div>
+
+                  {/* NIP */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
+                      NIP (Opsional)
+                    </label>
+                    <input
+                      type="text"
+                      name="nip"
+                      value={form.nip}
+                      onChange={handleChange}
+                      placeholder="19901234567890"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                    />
+                  </div>
+
+                  {/* Jabatan */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
+                      Jabatan (Opsional)
+                    </label>
+                    <input
+                      type="text"
+                      name="jabatan"
+                      value={form.jabatan}
+                      onChange={handleChange}
+                      placeholder="Contoh: Bendahara Pengeluaran"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                    />
+                  </div>
                 </div>
 
-                {/* Username */}
-                <div>
-                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    name="username"
-                    value={form.username}
-                    onChange={handleChange}
-                    required
-                    placeholder="budi_s"
-                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 font-mono"
-                  />
-                </div>
-
-                {/* Role */}
-                <div>
-                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
-                    Peran (Role)
-                  </label>
-                  <select
-                    name="role"
-                    value={form.role}
-                    onChange={handleChange}
-                    required
-                    disabled={currentUser?.role === 'admin' && form.role !== 'user'}
-                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                {/* Form Actions */}
+                <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+                  <button
+                    type="button"
+                    onClick={() => setModalOpen(false)}
+                    disabled={submitting}
+                    className="px-4.5 py-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50"
                   >
-                    <option value="user">User / Operator</option>
-                    {currentUser?.role === 'superadmin' && (
-                      <>
-                        <option value="admin">Admin</option>
-                        <option value="superadmin">Super Admin</option>
-                      </>
-                    )}
-                  </select>
+                    Batal
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 hover:shadow-emerald-600/20 transition-all disabled:opacity-50 cursor-pointer"
+                  >
+                    {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
+                    <span>{editingId ? 'Simpan Perubahan' : 'Tambah Pengguna'}</span>
+                  </button>
                 </div>
-
-                {/* Password */}
-                <div className="col-span-2">
-                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
-                    Password{' '}
-                    {editingId && (
-                      <span className="text-[10px] text-slate-400 lowercase">
-                        (kosongkan jika tidak diubah)
-                      </span>
-                    )}
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    required={!editingId}
-                    placeholder="••••••••"
-                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
-                  />
-                </div>
-
-                {/* NIP */}
-                <div>
-                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
-                    NIP (Opsional)
-                  </label>
-                  <input
-                    type="text"
-                    name="nip"
-                    value={form.nip}
-                    onChange={handleChange}
-                    placeholder="19901234567890"
-                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
-                  />
-                </div>
-
-                {/* Jabatan */}
-                <div>
-                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
-                    Jabatan (Opsional)
-                  </label>
-                  <input
-                    type="text"
-                    name="jabatan"
-                    value={form.jabatan}
-                    onChange={handleChange}
-                    placeholder="Contoh: Bendahara Pengeluaran"
-                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
-                  />
-                </div>
-              </div>
-
-              {/* Form Actions */}
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-                <button
-                  type="button"
-                  onClick={() => setModalOpen(false)}
-                  disabled={submitting}
-                  className="px-4.5 py-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50"
-                >
-                  Batal
-                </button>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="flex items-center gap-2 px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all disabled:opacity-50 cursor-pointer"
-                >
-                  {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
-                  <span>{editingId ? 'Simpan Perubahan' : 'Tambah Pengguna'}</span>
-                </button>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       )}

@@ -501,10 +501,10 @@ const UangMuka = () => {
 
           {/* Pagination */}
           <div className="flex flex-col sm:flex-row items-center justify-between p-5 border-t border-slate-100 dark:border-slate-700/50 bg-slate-50/30 dark:bg-slate-800/10 gap-4">
-            <span className="text-sm text-slate-500 dark:text-slate-400">
+            <span className="text-xs text-slate-500 dark:text-slate-400">
               Menampilkan Halaman{' '}
-              <span className="font-semibold text-slate-800 dark:text-slate-200">{page}</span> dari{' '}
-              <span className="font-semibold text-slate-800 dark:text-slate-200">{totalPages}</span>{' '}
+              <span className="font-semibold text-slate-500 dark:text-slate-200">{page}</span> dari{' '}
+              <span className="font-semibold text-slate-500 dark:text-slate-200">{totalPages}</span>{' '}
               ({totalItems} total data)
             </span>
 
@@ -539,14 +539,14 @@ const UangMuka = () => {
         >
           <div className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-2xl w-full max-w-3xl flex flex-col max-h-[90vh] overflow-hidden animate-zoomIn">
             {/* Modal Header */}
-            <div className="flex justify-between items-center p-6 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-850">
+            <div className="flex justify-between items-center p-6 bg-gradient-to-r from-emerald-600 to-teal-500 text-white">
               <div>
-                <h3 className="text-xl font-bold text-slate-800 dark:text-white">
+                <h3 className="text-xl font-bold text-slate-100 dark:text-white">
                   {editId
                     ? 'Edit Uang Muka (Panjar) Perjalanan'
                     : 'Tambah Uang Muka (Panjar) Perjalanan'}
                 </h3>
-                <p className="text-slate-500 text-xs mt-1 dark:text-slate-400">
+                <p className="text-slate-200 text-xs mt-1 dark:text-slate-400">
                   Isi rincian pengajuan uang panjar pelaksana tugas luar daerah.
                 </p>
               </div>
@@ -780,7 +780,7 @@ const UangMuka = () => {
                 type="submit"
                 form="panjar-form"
                 disabled={submitting || availablePelaksana.length === 0}
-                className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-indigo-600/10 transition-all disabled:opacity-50"
+                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50"
               >
                 {submitting ? 'Menyimpan...' : 'Simpan Uang Muka'}
               </button>

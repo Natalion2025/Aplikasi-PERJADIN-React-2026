@@ -12,6 +12,7 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 15,
   queueLimit: 0,
+  dateStrings: true,
 });
 
 // Wrapper kompatibilitas SQLite untuk meminimalkan perubahan kode route legacy

@@ -804,6 +804,9 @@ export const CetakVisum = () => {
               </p>
               <div className="visum-sig text-[8.5pt] mb-4">
                 <p className="font-bold m-0 uppercase">{data.kadis_jabatan || 'KEPALA DINAS'}</p>
+                <p className="font-bold m-0 uppercase leading-normal">
+                  KOMUNIKASI DAN INFORMATIKA KABUPATEN MELAWI
+                </p>
                 <p className="visum-sig-name uppercase mt-8">{data.kadis_nama}</p>
                 <p className="m-0 font-mono">NIP. {data.kadis_nip}</p>
               </div>
@@ -916,13 +919,13 @@ export const CetakPanjar = () => {
               <td className="p-2"></td>
             </tr>
             <tr>
-              <td className="p-2 text-left text-slate-800 font-bold italic" colSpan={4}>
+              <td className="p-2 text-left text-slate-800 " colSpan={4}>
                 Terbilang:{' '}
-                <span className="font-bold">
+                <span className="font-bold italic capitalize">
                   {terbilang(totalBiaya)
                     .replace(/\s+/g, ' ')
                     .trim()
-                    .replace(/^(.)/, (c) => c.toUpperCase()) + ' rupiah'}
+                    .replace(/^(.)/, (c) => c.toUpperCase()) + ' Rupiah'}
                 </span>
               </td>
             </tr>
@@ -1076,7 +1079,7 @@ export const CetakPembayaran = () => {
             <strong className="text-sm">Rp {formatCurrency(pembayaran.nominal_bayar)}</strong>
           </p>
           {/* PERBAIKAN: Panggil fungsi terbilang dengan nilai yang benar */}
-          <p className="m-0 font-bold italic">
+          <p className="m-0 font-bold italic capitalize">
             ({terbilang(pembayaran.nominal_bayar).replace(/\s+/g, ' ').trim()})
           </p>
           <p className="m-0 text-justify pt-1">
@@ -1221,13 +1224,16 @@ export const CetakPembayaran = () => {
           </tbody>
         </table>
         {/*Terbilang*/}
-        <p className="text-slate-800 italic">
-          Terbilang : {/** PERBAIKAN: Ganti terbilang2 menjadi terbilang */}
-          {terbilang(grandTotalDibayar)
-            .replace(/\s+/g, ' ')
-            .trim()
-            .replace(/^(.)/, (c) => c.toUpperCase())}{' '}
-          Rupiah
+        <p className="text-slate-900 ">
+          Terbilang :{' '}
+          <strong className="italic font-bold capitalize">
+            {/** PERBAIKAN: Ganti terbilang2 menjadi terbilang */}
+            {terbilang(grandTotalDibayar)
+              .replace(/\s+/g, ' ')
+              .trim()
+              .replace(/^(.)/, (c) => c.toUpperCase())}{' '}
+            Rupiah
+          </strong>
         </p>
 
         {/* Tandatangan Triplet */}
@@ -1696,20 +1702,26 @@ export const CetakLaporan = () => {
     });
   }
 
+  const parseValidNumber = (value) => {
+    if (value === null || value === undefined) return 0;
+    const num = Number(value);
+    return isNaN(num) ? 0 : num;
+  };
+
   const totalTransportasi = (laporan.transportasi || []).reduce(
-    (sum, item) => sum + (item.nominal || 0),
+    (sum, item) => sum + parseValidNumber(item.nominal),
     0
   );
   const totalAkomodasi = (laporan.akomodasi || []).reduce(
-    (sum, item) => sum + (item.nominal || 0),
+    (sum, item) => sum + parseValidNumber(item.nominal),
     0
   );
   const totalKontribusi = (laporan.kontribusi || []).reduce(
-    (sum, item) => sum + (item.nominal || 0),
+    (sum, item) => sum + parseValidNumber(item.nominal),
     0
   );
   const totalLainLain = (laporan.lain_lain || []).reduce(
-    (sum, item) => sum + (item.nominal || 0),
+    (sum, item) => sum + parseValidNumber(item.nominal),
     0
   );
   const totalBiayaLaporan = totalTransportasi + totalAkomodasi + totalKontribusi + totalLainLain;

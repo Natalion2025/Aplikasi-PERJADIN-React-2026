@@ -1343,42 +1343,44 @@ const BuatLaporan = () => {
                 </table>
               </div>
 
-              {/* Pagination controls */}
-              {totalPages > 1 && (
+              {/* Pagination controls - PERBAIKAN */}
+              {!loading && totalItems > 0 && (
                 <div className="flex items-center justify-between border-t border-slate-100 pt-4 px-1">
-                  <span className="text-xs text-slate-400">
-                    Menampilkan <span className="font-semibold">{laporanList.length}</span> dari{' '}
-                    <span className="font-semibold">{totalItems}</span> laporan
+                  <span className="text-xs text-slate-500">
+                    Menampilkan Halaman <span className="font-semibold">{page}</span> dari{' '}
+                    <span className="font-semibold">{totalPages}</span> ({totalItems} total data)
                   </span>
-                  <div className="flex items-center gap-1.5">
-                    <button
-                      onClick={() => setPage((p) => Math.max(1, p - 1))}
-                      disabled={page === 1}
-                      className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50"
-                    >
-                      <ChevronLeft size={16} />
-                    </button>
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+                  {totalPages > 1 && (
+                    <div className="flex items-center gap-1.5">
                       <button
-                        key={num}
-                        onClick={() => setPage(num)}
-                        className={`w-8 h-8 rounded-lg text-xs font-semibold ${
-                          page === num
-                            ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10'
-                            : 'border border-slate-200 text-slate-600 hover:bg-slate-50'
-                        }`}
+                        onClick={() => setPage((p) => Math.max(1, p - 1))}
+                        disabled={page === 1}
+                        className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50"
                       >
-                        {num}
+                        <ChevronLeft size={16} />
                       </button>
-                    ))}
-                    <button
-                      onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                      disabled={page === totalPages}
-                      className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50"
-                    >
-                      <ChevronRight size={16} />
-                    </button>
-                  </div>
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+                        <button
+                          key={num}
+                          onClick={() => setPage(num)}
+                          className={`w-8 h-8 rounded-lg text-xs font-semibold ${
+                            page === num
+                              ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10'
+                              : 'border border-slate-200 text-slate-600 hover:bg-slate-50'
+                          }`}
+                        >
+                          {num}
+                        </button>
+                      ))}
+                      <button
+                        onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                        disabled={page === totalPages}
+                        className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50"
+                      >
+                        <ChevronRight size={16} />
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -1536,7 +1538,7 @@ const BuatLaporan = () => {
             <button
               onClick={handleSubmitReport}
               disabled={submitting}
-              className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-sm font-semibold shadow-md shadow-indigo-600/10 transition-all disabled:opacity-50"
+              className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50"
             >
               {submitting ? (
                 <>
@@ -2551,7 +2553,7 @@ const BuatLaporan = () => {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-sm font-semibold shadow-md shadow-indigo-600/10 transition-all disabled:opacity-50"
+                    className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50"
                   >
                     {submitting ? (
                       <>
@@ -2586,7 +2588,7 @@ const BuatLaporan = () => {
         >
           <div className="w-full max-w-lg bg-white rounded-3xl border border-slate-100 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
             {/* Modal Header */}
-            <div className="px-6 py-5 bg-gradient-to-r from-red-600 to-rose-500 text-white flex items-center justify-between">
+            <div className="px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 text-white flex items-center justify-between">
               <div>
                 <h3 className="font-bold text-lg leading-tight">
                   {cancelEditId ? 'Edit Formulir Pembatalan Tugas' : 'Formulir Pembatalan Tugas'}

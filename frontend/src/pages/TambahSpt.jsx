@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { 
-  ArrowLeft, 
-  FileText, 
-  Users, 
-  MapPin, 
-  Wallet, 
-  Info, 
-  Plus, 
-  Trash2, 
-  Save, 
+import {
+  ArrowLeft,
+  FileText,
+  Users,
+  MapPin,
+  Wallet,
+  Info,
+  Plus,
+  Trash2,
+  Save,
   AlertCircle,
   Loader2,
-  Calendar
+  Calendar,
 } from 'lucide-react';
 
 const TambahSpt = () => {
@@ -36,30 +36,29 @@ const TambahSpt = () => {
     sumber_dana: 'APBD Murni',
     kendaraan: 'Transportasi Umum',
     anggaran_id: '',
-    keterangan: ''
+    keterangan: '',
   });
 
   // Dynamic pegawai assignments
   // Each element is { id: '', pengikut: '1' } (first one default is '0' - Bukan Pengikut)
-  const [pegawaiAssignments, setPegawaiAssignments] = useState([
-    { id: '', pengikut: '0' }
-  ]);
+  const [pegawaiAssignments, setPegawaiAssignments] = useState([{ id: '', pengikut: '0' }]);
 
   // Options & static data lists
   const [pejabatList, setPejabatList] = useState([]);
   const [pegawaiList, setPegawaiList] = useState([]);
   const [anggaranList, setAnggaranList] = useState([]);
   const [locations, setLocations] = useState([]); // from locations.json
-  
+
   // Custom searchable selects state
   const [destinationSearch, setDestinationSearch] = useState('');
   const [destinationDropdownOpen, setDestinationDropdownOpen] = useState(false);
-  
+
   // Status states
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [conflictMessage, setConflictMessage] = useState('');
+  const [nomorSuratError, setNomorSuratError] = useState('');
 
   // Fetch dropdown options and static locations
   const loadOptions = async () => {
@@ -69,46 +68,47 @@ const TambahSpt = () => {
         axios.get('/api/pejabat'),
         axios.get('/api/pegawai?limit=1000'),
         axios.get('/api/anggaran/options'),
-        axios.get('/data/locations.json')
+        axios.get('/data/locations.json'),
       ]);
 
       const semuaPegawai = pegawaiRes.data?.data || pegawaiRes.data || [];
       const pejabatDaerah = pejabatRes.data || [];
-      
+
       // Add Sekda to Pejabat Pemberi Tugas if found
-      const sekda = semuaPegawai.find(p => p.jabatan && p.jabatan.toLowerCase() === 'sekretaris daerah');
+      const sekda = semuaPegawai.find(
+        (p) => p.jabatan && p.jabatan.toLowerCase() === 'sekretaris daerah'
+      );
       const pemberiTugas = [...pejabatDaerah];
       if (sekda) {
         pemberiTugas.push({
           id: sekda.id,
           nama: sekda.nama_lengkap,
-          jabatan: sekda.jabatan
+          jabatan: sekda.jabatan,
         });
       }
 
       setPejabatList(pemberiTugas);
-      
+
       // Filter out Sekda from regular pegawai list
       const pegawaiPelaksana = semuaPegawai.filter(
-        p => !(p.jabatan && p.jabatan.toLowerCase() === 'sekretaris daerah')
+        (p) => !(p.jabatan && p.jabatan.toLowerCase() === 'sekretaris daerah')
       );
       setPegawaiList(pegawaiPelaksana);
       setAnggaranList(anggaranRes.data || []);
-      
+
       // Flatten locations
       const flattenedLocations = [];
       if (Array.isArray(locationsRes.data)) {
-        locationsRes.data.forEach(group => {
-          group.locations.forEach(loc => {
+        locationsRes.data.forEach((group) => {
+          group.locations.forEach((loc) => {
             flattenedLocations.push({
               text: `${loc}, ${group.group}`,
-              value: `${loc}, ${group.group}`
+              value: `${loc}, ${group.group}`,
             });
           });
         });
       }
       setLocations(flattenedLocations);
-
     } catch (err) {
       console.error('Error loading options:', err);
       setError('Gagal memuat opsi form. Harap hubungi administrator.');
@@ -138,7 +138,7 @@ const TambahSpt = () => {
           sumber_dana: spt.sumber_dana || 'APBD Murni',
           kendaraan: spt.kendaraan || 'Transportasi Umum',
           anggaran_id: spt.anggaran_id || '',
-          keterangan: spt.keterangan || ''
+          keterangan: spt.keterangan || '',
         });
 
         setDestinationSearch(spt.lokasi_tujuan || '');
@@ -146,9 +146,9 @@ const TambahSpt = () => {
         // Map pegawai
         if (spt.pegawai && spt.pegawai.length > 0) {
           setPegawaiAssignments(
-            spt.pegawai.map(p => ({
+            spt.pegawai.map((p) => ({
               id: p.pegawai_id.toString(),
-              pengikut: p.is_pengikut.toString()
+              pengikut: p.is_pengikut.toString(),
             }))
           );
         }
@@ -181,32 +181,32 @@ const TambahSpt = () => {
       const end = new Date(endDate);
 
       if (end < start) {
-        setForm(prev => ({ ...prev, lama_perjalanan: '', tanggal_kembali: '' }));
+        setForm((prev) => ({ ...prev, lama_perjalanan: '', tanggal_kembali: '' }));
         alert('Tanggal kembali tidak boleh sebelum tanggal berangkat.');
       } else {
         const diffTime = Math.abs(end - start);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // Inclusive
-        setForm(prev => ({ ...prev, lama_perjalanan: diffDays }));
+        setForm((prev) => ({ ...prev, lama_perjalanan: diffDays }));
       }
     } else {
-      setForm(prev => ({ ...prev, lama_perjalanan: '' }));
+      setForm((prev) => ({ ...prev, lama_perjalanan: '' }));
     }
   }, [form.tanggal_berangkat, form.tanggal_kembali]);
 
   // Handle Input Changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   // Pegawai Rows operations
   const handleAddPegawaiRow = () => {
-    setPegawaiAssignments(prev => [...prev, { id: '', pengikut: '1' }]);
+    setPegawaiAssignments((prev) => [...prev, { id: '', pengikut: '1' }]);
   };
 
   const handleRemovePegawaiRow = (index) => {
     if (pegawaiAssignments.length === 1) return;
-    setPegawaiAssignments(prev => prev.filter((_, idx) => idx !== index));
+    setPegawaiAssignments((prev) => prev.filter((_, idx) => idx !== index));
   };
 
   const handlePegawaiChange = (index, value) => {
@@ -226,22 +226,25 @@ const TambahSpt = () => {
     e.preventDefault();
     setError('');
     setConflictMessage('');
-    
+    setNomorSuratError('');
+
     // Validate employees
-    const filteredPegawai = pegawaiAssignments.filter(p => p.id !== '');
+    const filteredPegawai = pegawaiAssignments.filter((p) => p.id !== '');
     if (filteredPegawai.length === 0) {
       setError('Harap pilih minimal satu pegawai yang ditugaskan.');
       return;
     }
 
-    const hasNonFollower = filteredPegawai.some(p => p.pengikut === '0');
+    const hasNonFollower = filteredPegawai.some((p) => p.pengikut === '0');
     if (!hasNonFollower) {
-      setError('Harus ada minimal satu pegawai yang ditugaskan sebagai Pelaksana Utama (Bukan Pengikut).');
+      setError(
+        'Harus ada minimal satu pegawai yang ditugaskan sebagai Pelaksana Utama (Bukan Pengikut).'
+      );
       return;
     }
 
     // Validate duplicate employees inside the form itself
-    const assignedIds = filteredPegawai.map(p => p.id);
+    const assignedIds = filteredPegawai.map((p) => p.id);
     const uniqueIds = new Set(assignedIds);
     if (assignedIds.length !== uniqueIds.size) {
       setError('Ada pegawai yang dipilih lebih dari sekali. Harap periksa kembali.');
@@ -252,10 +255,10 @@ const TambahSpt = () => {
     try {
       const payload = {
         ...form,
-        pegawai: filteredPegawai.map(p => ({
+        pegawai: filteredPegawai.map((p) => ({
           id: parseInt(p.id, 10),
-          pengikut: parseInt(p.pengikut, 10)
-        }))
+          pengikut: parseInt(p.pengikut, 10),
+        })),
       };
 
       const url = isEditMode ? `/api/spt/${id}` : '/api/spt';
@@ -264,7 +267,7 @@ const TambahSpt = () => {
       const res = await axios({
         url,
         method,
-        data: payload
+        data: payload,
       });
 
       alert(res.data.message || 'SPT berhasil disimpan.');
@@ -272,7 +275,15 @@ const TambahSpt = () => {
     } catch (err) {
       console.error('Error saving SPT:', err);
       if (err.response && err.response.status === 409) {
-        setConflictMessage(err.response.data.message || 'Jadwal penugasan bentrok.');
+        if (err.response.data?.field === 'nomor_surat') {
+          // Jika error terkait nomor surat atau tanggal, tampilkan sebagai error umum di atas
+          setError(err.response.data.message);
+        } else if (err.response.data?.message.includes('Tanggal berangkat tidak boleh')) {
+          // Ini juga error terkait validasi urutan, tampilkan di atas
+          setError(err.response.data.message);
+        } else {
+          setConflictMessage(err.response.data.message || 'Jadwal penugasan bentrok.');
+        }
       } else {
         setError(err.response?.data?.message || 'Gagal menyimpan SPT. Pastikan data lengkap.');
       }
@@ -282,7 +293,7 @@ const TambahSpt = () => {
   };
 
   // Filter locations based on search query
-  const filteredLocations = locations.filter(loc =>
+  const filteredLocations = locations.filter((loc) =>
     loc.text.toLowerCase().includes(destinationSearch.toLowerCase())
   );
 
@@ -290,7 +301,10 @@ const TambahSpt = () => {
     <div className="space-y-6 max-w-4xl mx-auto animate-fadeIn">
       {/* Breadcrumb / Back */}
       <div className="flex items-center justify-between">
-        <Link to="/spt" className="flex items-center gap-2 text-sm text-slate-500 font-semibold hover:text-slate-800 transition-colors">
+        <Link
+          to="/spt"
+          className="flex items-center gap-2 text-sm text-slate-500 font-semibold hover:text-slate-800 transition-colors"
+        >
           <ArrowLeft className="h-4 w-4" />
           Kembali ke Register SPT
         </Link>
@@ -303,7 +317,9 @@ const TambahSpt = () => {
           {isEditMode ? 'Edit Surat Perintah Tugas' : 'Buat Surat Perintah Tugas (SPT)'}
         </h1>
         <p className="text-slate-500 text-sm mt-1 dark:text-slate-400">
-          {isEditMode ? 'Perbarui informasi detail penugasan perjalanan dinas.' : 'Buat perintah tugas kedinasan baru untuk pegawai Pemkab Melawi.'}
+          {isEditMode
+            ? 'Perbarui informasi detail penugasan perjalanan dinas.'
+            : 'Buat perintah tugas kedinasan baru untuk pegawai Pemkab Melawi.'}
         </p>
       </div>
 
@@ -329,7 +345,9 @@ const TambahSpt = () => {
               </div>
               <div>
                 <h3 className="font-bold text-slate-800 dark:text-white">Informasi Surat Tugas</h3>
-                <p className="text-xs text-slate-400 mt-0.5">Detail penomoran dan dasar hukum pembuatan surat.</p>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Detail penomoran dan dasar hukum pembuatan surat.
+                </p>
               </div>
             </div>
 
@@ -347,6 +365,12 @@ const TambahSpt = () => {
                   onChange={handleInputChange}
                   className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
                 />
+                {nomorSuratError && (
+                  <div className="flex items-center gap-1.5 mt-2 text-xs text-red-600 font-semibold">
+                    <AlertCircle className="h-3.5 w-3.5" />
+                    <span>{nomorSuratError}</span>
+                  </div>
+                )}
               </div>
               <div>
                 <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
@@ -386,8 +410,12 @@ const TambahSpt = () => {
                 <Users className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-bold text-slate-800 dark:text-white">Pemberi Tugas & Pelaksana</h3>
-                <p className="text-xs text-slate-400 mt-0.5">Siapa yang bertanda tangan dan siapa yang ditugaskan.</p>
+                <h3 className="font-bold text-slate-800 dark:text-white">
+                  Pemberi Tugas & Pelaksana
+                </h3>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Siapa yang bertanda tangan dan siapa yang ditugaskan.
+                </p>
               </div>
             </div>
 
@@ -403,7 +431,7 @@ const TambahSpt = () => {
                 className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
               >
                 <option value="">-- Pilih Pejabat --</option>
-                {pejabatList.map(p => (
+                {pejabatList.map((p) => (
                   <option key={p.id} value={p.id}>
                     {p.nama} - {p.jabatan}
                   </option>
@@ -428,7 +456,10 @@ const TambahSpt = () => {
 
               <div className="space-y-3.5">
                 {pegawaiAssignments.map((assignment, index) => (
-                  <div key={index} className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 bg-slate-50/50 dark:bg-slate-900/20 rounded-2xl border border-slate-100/50 dark:border-slate-700/30">
+                  <div
+                    key={index}
+                    className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 bg-slate-50/50 dark:bg-slate-900/20 rounded-2xl border border-slate-100/50 dark:border-slate-700/30"
+                  >
                     {/* Pegawai select */}
                     <div className="flex-1">
                       <select
@@ -438,7 +469,7 @@ const TambahSpt = () => {
                         className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500"
                       >
                         <option value="">-- Pilih Pegawai --</option>
-                        {pegawaiList.map(p => (
+                        {pegawaiList.map((p) => (
                           <option key={p.id} value={p.id}>
                             {p.nama_lengkap} (NIP: {p.nip})
                           </option>
@@ -496,7 +527,9 @@ const TambahSpt = () => {
               </div>
               <div>
                 <h3 className="font-bold text-slate-800 dark:text-white">Rincian Perjalanan</h3>
-                <p className="text-xs text-slate-400 mt-0.5">Tujuan, waktu pelaksanaan, dan jenis transportasi.</p>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Tujuan, waktu pelaksanaan, dan jenis transportasi.
+                </p>
               </div>
             </div>
 
@@ -527,7 +560,7 @@ const TambahSpt = () => {
                 value={destinationSearch}
                 onChange={(e) => {
                   setDestinationSearch(e.target.value);
-                  setForm(prev => ({ ...prev, lokasi_tujuan: e.target.value }));
+                  setForm((prev) => ({ ...prev, lokasi_tujuan: e.target.value }));
                   setDestinationDropdownOpen(true);
                 }}
                 onFocus={() => setDestinationDropdownOpen(true)}
@@ -541,7 +574,7 @@ const TambahSpt = () => {
                       key={idx}
                       type="button"
                       onClick={() => {
-                        setForm(prev => ({ ...prev, lokasi_tujuan: loc.value }));
+                        setForm((prev) => ({ ...prev, lokasi_tujuan: loc.value }));
                         setDestinationSearch(loc.text);
                         setDestinationDropdownOpen(false);
                       }}
@@ -551,15 +584,16 @@ const TambahSpt = () => {
                     </button>
                   ))}
 
-                  {destinationSearch.trim() !== '' && !locations.some(l => l.value === destinationSearch) && (
-                    <button
-                      type="button"
-                      onClick={() => setDestinationDropdownOpen(false)}
-                      className="w-full px-4 py-2.5 text-left text-xs bg-indigo-50/50 hover:bg-indigo-50 dark:bg-indigo-950/20 text-indigo-600 dark:text-indigo-400 font-bold block"
-                    >
-                      + Gunakan Baru: "{destinationSearch}"
-                    </button>
-                  )}
+                  {destinationSearch.trim() !== '' &&
+                    !locations.some((l) => l.value === destinationSearch) && (
+                      <button
+                        type="button"
+                        onClick={() => setDestinationDropdownOpen(false)}
+                        className="w-full px-4 py-2.5 text-left text-xs bg-indigo-50/50 hover:bg-indigo-50 dark:bg-indigo-950/20 text-indigo-600 dark:text-indigo-400 font-bold block"
+                      >
+                        + Gunakan Baru: "{destinationSearch}"
+                      </button>
+                    )}
                 </div>
               )}
             </div>
@@ -652,7 +686,9 @@ const TambahSpt = () => {
               </div>
               <div>
                 <h3 className="font-bold text-slate-800 dark:text-white">Pembebanan Anggaran</h3>
-                <p className="text-xs text-slate-400 mt-0.5">Sumber dana DPA dan pos mata anggaran kegiatan.</p>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Sumber dana DPA dan pos mata anggaran kegiatan.
+                </p>
               </div>
             </div>
 
@@ -699,7 +735,7 @@ const TambahSpt = () => {
                   className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
                 >
                   <option value="">-- Pilih Mata Anggaran --</option>
-                  {anggaranList.map(a => {
+                  {anggaranList.map((a) => {
                     const infoKegiatan = [a.kegiatan, a.sub_kegiatan].filter(Boolean).join(' / ');
                     return (
                       <option key={a.id} value={a.id}>
@@ -720,7 +756,9 @@ const TambahSpt = () => {
               </div>
               <div>
                 <h3 className="font-bold text-slate-800 dark:text-white">Keterangan Tambahan</h3>
-                <p className="text-xs text-slate-400 mt-0.5">Catatan pendukung lainnya untuk Surat Perintah Tugas.</p>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Catatan pendukung lainnya untuk Surat Perintah Tugas.
+                </p>
               </div>
             </div>
 
@@ -747,7 +785,7 @@ const TambahSpt = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="flex items-center gap-2 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl text-sm shadow-md shadow-indigo-600/10 transition-all disabled:opacity-50"
+              className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-sm shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50"
             >
               {submitting ? (
                 <>
@@ -767,8 +805,11 @@ const TambahSpt = () => {
 
       {/* Conflict Alert Modal */}
       {conflictMessage && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={(e) => { if (e.target === e.currentTarget) setConflictMessage(''); }}
+        <div
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setConflictMessage('');
+          }}
         >
           <div className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-2xl w-full max-w-md mx-auto flex flex-col p-6 animate-zoomIn">
             <div className="text-center space-y-3">

@@ -350,41 +350,44 @@ const LaporanBpkApip = () => {
             </div>
 
             {/* Pagination Audit List */}
-            {totalPages > 1 && (
+            {!loading && totalItems > 0 && (
               <div className="flex items-center justify-between border-t border-slate-100 pt-4 px-1">
-                <span className="text-xs text-slate-400 font-medium">
-                  Menampilkan <span className="font-bold">{data.length}</span> dari{' '}
-                  <span className="font-bold">{totalItems}</span> baris rekap
+                <span className="text-xs text-slate-500 font-medium">
+                  Menampilkan Halaman <span className="font-bold text-slate-500">{page}</span> dari{' '}
+                  <span className="font-bold text-slate-500">{totalPages}</span> ({totalItems} total
+                  data)
                 </span>
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={() => setPage((p) => Math.max(1, p - 1))}
-                    disabled={page === 1}
-                    className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 hover:bg-slate-50"
-                  >
-                    <ChevronLeft size={16} />
-                  </button>
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+                {totalPages > 1 && (
+                  <div className="flex items-center gap-1.5">
                     <button
-                      key={num}
-                      onClick={() => setPage(num)}
-                      className={`w-8 h-8 rounded-lg text-xs font-semibold ${
-                        page === num
-                          ? 'bg-indigo-600 text-white shadow-md'
-                          : 'border border-slate-200 text-slate-600 hover:bg-slate-50'
-                      }`}
+                      onClick={() => setPage((p) => Math.max(1, p - 1))}
+                      disabled={page === 1}
+                      className="p-1.5 border border-slate-200 rounded-lg text-slate-500 disabled:opacity-40 hover:bg-slate-50"
                     >
-                      {num}
+                      <ChevronLeft size={16} />
                     </button>
-                  ))}
-                  <button
-                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                    disabled={page === totalPages}
-                    className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 hover:bg-slate-50"
-                  >
-                    <ChevronRight size={16} />
-                  </button>
-                </div>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+                      <button
+                        key={num}
+                        onClick={() => setPage(num)}
+                        className={`w-8 h-8 rounded-lg text-xs font-semibold ${
+                          page === num
+                            ? 'bg-indigo-600 text-white shadow-md'
+                            : 'border border-slate-200 text-slate-600 hover:bg-slate-50'
+                        }`}
+                      >
+                        {num}
+                      </button>
+                    ))}
+                    <button
+                      onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                      disabled={page === totalPages}
+                      className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 hover:bg-slate-50"
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>

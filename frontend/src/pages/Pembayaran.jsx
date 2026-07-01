@@ -854,41 +854,46 @@ const Pembayaran = () => {
             </div>
 
             {/* Pagination Bukti Bayar */}
-            {totalPages > 1 && (
+            {!loading && totalItems > 0 && (
               <div className="flex items-center justify-between border-t border-slate-100 pt-4 px-1">
-                <span className="text-xs text-slate-400">
-                  Menampilkan <span className="font-semibold">{pembayaranList.length}</span> dari{' '}
-                  <span className="font-semibold">{totalItems}</span> bukti bayar
+                <span className="text-xs text-slate-500">
+                  Menampilkan Halaman <span className="font-semibold">{page}</span> dari{' '}
+                  <span className="font-semibold">{totalPages}</span> ({totalItems} total data)
                 </span>
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={() => setPage((p) => Math.max(1, p - 1))}
-                    disabled={page === 1}
-                    className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 hover:bg-slate-50"
-                  >
-                    <ChevronLeft size={16} />
-                  </button>
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+                {totalPages > 1 && (
+                  <div className="flex items-center gap-1.5">
                     <button
-                      key={num}
-                      onClick={() => setPage(num)}
-                      className={`w-8 h-8 rounded-lg text-xs font-semibold ${
-                        page === num
-                          ? 'bg-indigo-600 text-white shadow-md'
-                          : 'border border-slate-200 text-slate-600 hover:bg-slate-50'
-                      }`}
+                      onClick={() => setPage((p) => Math.max(1, p - 1))}
+                      disabled={page === 1}
                     >
-                      {num}
+                      <ChevronLeft size={16} />
                     </button>
-                  ))}
-                  <button
-                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                    disabled={page === totalPages}
-                    className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 hover:bg-slate-50"
-                  >
-                    <ChevronRight size={16} />
-                  </button>
-                </div>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => {
+                      const isCurrent = page === num;
+                      const baseClasses =
+                        'w-8 h-8 rounded-lg text-xs font-semibold transition-all duration-200';
+                      const activeClasses =
+                        'bg-indigo-600 text-white shadow-md shadow-indigo-600/10';
+                      const inactiveClasses =
+                        'border border-slate-200 text-slate-600 hover:bg-slate-50';
+                      return (
+                        <button
+                          key={num}
+                          onClick={() => setPage(num)}
+                          className={`${baseClasses} ${isCurrent ? activeClasses : inactiveClasses}`}
+                        >
+                          {num}
+                        </button>
+                      );
+                    })}
+                    <button
+                      onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                      disabled={page === totalPages}
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -970,41 +975,46 @@ const Pembayaran = () => {
             </div>
 
             {/* Pagination Riil */}
-            {totalPages > 1 && (
+            {!loading && totalItems > 0 && (
               <div className="flex items-center justify-between border-t border-slate-100 pt-4 px-1">
                 <span className="text-xs text-slate-400">
-                  Menampilkan <span className="font-semibold">{riilList.length}</span> dari{' '}
-                  <span className="font-semibold">{totalItems}</span> pengeluaran riil
+                  Halaman <span className="font-semibold">{page}</span> dari{' '}
+                  <span className="font-semibold">{totalPages}</span> ({totalItems} total data)
                 </span>
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={() => setPage((p) => Math.max(1, p - 1))}
-                    disabled={page === 1}
-                    className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 hover:bg-slate-50"
-                  >
-                    <ChevronLeft size={16} />
-                  </button>
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+                {totalPages > 1 && (
+                  <div className="flex items-center gap-1.5">
                     <button
-                      key={num}
-                      onClick={() => setPage(num)}
-                      className={`w-8 h-8 rounded-lg text-xs font-semibold ${
-                        page === num
-                          ? 'bg-indigo-600 text-white shadow-md'
-                          : 'border border-slate-200 text-slate-600 hover:bg-slate-50'
-                      }`}
+                      onClick={() => setPage((p) => Math.max(1, p - 1))}
+                      disabled={page === 1}
                     >
-                      {num}
+                      <ChevronLeft size={16} />
                     </button>
-                  ))}
-                  <button
-                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                    disabled={page === totalPages}
-                    className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 hover:bg-slate-50"
-                  >
-                    <ChevronRight size={16} />
-                  </button>
-                </div>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => {
+                      const isCurrent = page === num;
+                      const baseClasses =
+                        'w-8 h-8 rounded-lg text-xs font-semibold transition-all duration-200';
+                      const activeClasses =
+                        'bg-indigo-600 text-white shadow-md shadow-indigo-600/10';
+                      const inactiveClasses =
+                        'border border-slate-200 text-slate-600 hover:bg-slate-50';
+                      return (
+                        <button
+                          key={num}
+                          onClick={() => setPage(num)}
+                          className={`${baseClasses} ${isCurrent ? activeClasses : inactiveClasses}`}
+                        >
+                          {num}
+                        </button>
+                      );
+                    })}
+                    <button
+                      onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                      disabled={page === totalPages}
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -1041,9 +1051,9 @@ const Pembayaran = () => {
             {/* Form Body */}
             <form
               onSubmit={handlePembayaranSubmit}
-              className="flex-1 overflow-y-auto p-6 space-y-4"
+              className="flex-1  overflow-y-auto p-6 pb-4 space-y-4"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2   gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-slate-500 mb-1.5">
                     Nomor Bukti
@@ -1482,17 +1492,17 @@ const Pembayaran = () => {
               )}
 
               {/* Modal Actions */}
-              <div className="flex items-center justify-end gap-3 pt-5 border-t border-slate-100 mt-6">
+              <div className="flex items-center sticky bottom-0 justify-end gap-3 pt-5 border-t border-slate-100 mt-6">
                 <button
                   type="button"
                   onClick={() => setPembayaranModalOpen(false)}
-                  className="px-5 py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-2xl text-sm font-semibold transition-all"
+                  className="px-5 py-2.5 border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl text-sm font-semibold transition-all"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-sm font-semibold shadow-md transition-all"
+                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all"
                 >
                   Simpan Bukti Pembayaran
                 </button>
@@ -1512,7 +1522,7 @@ const Pembayaran = () => {
         >
           <div className="w-full max-w-lg bg-white rounded-3xl border border-slate-100 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 text-left">
             {/* Header */}
-            <div className="px-6 py-5 bg-gradient-to-r from-teal-600 to-emerald-500 text-white flex items-center justify-between">
+            <div className="px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 text-white flex items-center justify-between">
               <div>
                 <h3 className="font-bold text-lg leading-tight">
                   {riilEditId ? 'Edit Pengeluaran Riil' : 'Tambah Pengeluaran Riil'}
@@ -1627,7 +1637,7 @@ const Pembayaran = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-semibold shadow-md transition-all"
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all"
                 >
                   Simpan Pengeluaran
                 </button>

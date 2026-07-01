@@ -639,8 +639,8 @@ const StandarBiaya = () => {
           }}
         >
           <div className="bg-white dark:bg-slate-800 w-full max-w-md rounded-3xl p-6 shadow-xl border border-slate-100 dark:border-slate-700 space-y-6">
-            <div className="flex justify-between items-start">
-              <div className="flex items-center gap-2.5 text-emerald-600 dark:text-emerald-400">
+            <div className="flex justify-between items-start p-2 -m-2 rounded-t-2xl bg-gradient-to-r from-emerald-600 to-teal-500 text-white">
+              <div className="flex items-center gap-2.5">
                 <FileSpreadsheet className="w-6 h-6" />
                 <h3 className="text-lg font-bold text-slate-950 dark:text-slate-50">
                   Upload Standar Biaya ({selectedTipe})
@@ -713,7 +713,7 @@ const StandarBiaya = () => {
                 Batal
               </button>
               <label
-                className={`px-4 py-2 text-white bg-indigo-600 hover:bg-indigo-500 dark:bg-indigo-600 dark:hover:bg-indigo-500 rounded-xl text-sm font-semibold cursor-pointer shadow-md shadow-indigo-600/10 transition-all flex items-center gap-1.5 ${
+                className={`px-4 py-2 text-white bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-xl text-sm font-semibold cursor-pointer shadow-md shadow-emerald-600/10 transition-all flex items-center gap-1.5 ${
                   uploading ? 'opacity-50 pointer-events-none' : ''
                 }`}
               >

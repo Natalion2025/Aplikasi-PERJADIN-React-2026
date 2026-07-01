@@ -1,0 +1,146 @@
+﻿[
+  {
+    "name": "assets",
+    "path": "public/assets",
+    "sha": "6467101c73526d416883cbd43670126e1353ce27",
+    "size": 0,
+    "url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/assets?ref=main",
+    "html_url": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/assets",
+    "git_url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/6467101c73526d416883cbd43670126e1353ce27",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/assets?ref=main",
+      "git": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/6467101c73526d416883cbd43670126e1353ce27",
+      "html": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/assets"
+    }
+  },
+  {
+    "name": "components",
+    "path": "public/components",
+    "sha": "106acd19da25dc4a58b42d812b57abd35866e46c",
+    "size": 0,
+    "url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/components?ref=main",
+    "html_url": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/components",
+    "git_url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/106acd19da25dc4a58b42d812b57abd35866e46c",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/components?ref=main",
+      "git": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/106acd19da25dc4a58b42d812b57abd35866e46c",
+      "html": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/components"
+    }
+  },
+  {
+    "name": "css",
+    "path": "public/css",
+    "sha": "6c3d2d19cb737b79d90a25dc84e8d0ccf6927efc",
+    "size": 0,
+    "url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/css?ref=main",
+    "html_url": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/css",
+    "git_url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/6c3d2d19cb737b79d90a25dc84e8d0ccf6927efc",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/css?ref=main",
+      "git": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/6c3d2d19cb737b79d90a25dc84e8d0ccf6927efc",
+      "html": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/css"
+    }
+  },
+  {
+    "name": "data",
+    "path": "public/data",
+    "sha": "f10920220cef5adfa42e6f2233855cc24909994e",
+    "size": 0,
+    "url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/data?ref=main",
+    "html_url": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/data",
+    "git_url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/f10920220cef5adfa42e6f2233855cc24909994e",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/data?ref=main",
+      "git": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/f10920220cef5adfa42e6f2233855cc24909994e",
+      "html": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/data"
+    }
+  },
+  {
+    "name": "fonts",
+    "path": "public/fonts",
+    "sha": "051ac12dd31270146f11e833a87e618d675e3e48",
+    "size": 0,
+    "url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/fonts?ref=main",
+    "html_url": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/fonts",
+    "git_url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/051ac12dd31270146f11e833a87e618d675e3e48",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/fonts?ref=main",
+      "git": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/051ac12dd31270146f11e833a87e618d675e3e48",
+      "html": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/fonts"
+    }
+  },
+  {
+    "name": "img",
+    "path": "public/img",
+    "sha": "2693d30867870a373f07abb8fa0b0f5571817dda",
+    "size": 0,
+    "url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/img?ref=main",
+    "html_url": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/img",
+    "git_url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/2693d30867870a373f07abb8fa0b0f5571817dda",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/img?ref=main",
+      "git": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/2693d30867870a373f07abb8fa0b0f5571817dda",
+      "html": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/img"
+    }
+  },
+  {
+    "name": "js",
+    "path": "public/js",
+    "sha": "61ffbb53067664af56bbf874319250f76caec4a2",
+    "size": 0,
+    "url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/js?ref=main",
+    "html_url": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/js",
+    "git_url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/61ffbb53067664af56bbf874319250f76caec4a2",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/js?ref=main",
+      "git": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/61ffbb53067664af56bbf874319250f76caec4a2",
+      "html": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/js"
+    }
+  },
+  {
+    "name": "templates",
+    "path": "public/templates",
+    "sha": "360657b0ad34b61c00d85257c939bff7b3cabc0a",
+    "size": 0,
+    "url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/templates?ref=main",
+    "html_url": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/templates",
+    "git_url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/360657b0ad34b61c00d85257c939bff7b3cabc0a",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/templates?ref=main",
+      "git": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/360657b0ad34b61c00d85257c939bff7b3cabc0a",
+      "html": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/templates"
+    }
+  },
+  {
+    "name": "uploads",
+    "path": "public/uploads",
+    "sha": "576e46f5c066aab9a8d4d4e31d3aa1f521160df0",
+    "size": 0,
+    "url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/uploads?ref=main",
+    "html_url": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/uploads",
+    "git_url": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/576e46f5c066aab9a8d4d4e31d3aa1f521160df0",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/contents/public/uploads?ref=main",
+      "git": "https://api.github.com/repos/Natalion2025/Aplikasi-PERJADIN/git/trees/576e46f5c066aab9a8d4d4e31d3aa1f521160df0",
+      "html": "https://github.com/Natalion2025/Aplikasi-PERJADIN/tree/main/public/uploads"
+    }
+  }
+]

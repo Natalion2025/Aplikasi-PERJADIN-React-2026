@@ -629,14 +629,16 @@ const Agenda = () => {
                       const dayEvents = filteredEvents.filter((e) => isEventOnDate(e, dayObj.date));
 
                       let cellClass =
-                        'min-h-24 sm:min-h-28 p-2 bg-white dark:bg-slate-800 transition-all flex flex-col gap-1 border-t border-l border-slate-300/50 dark:border-slate-700/50 ';
+                        'min-h-24 sm:min-h-28 p-2 transition-all flex flex-col gap-1 border-t border-l border-slate-300/50 dark:border-slate-700/50 ';
 
                       if (!dayObj.isCurrentMonth) {
                         cellClass += 'opacity-40 dark:opacity-20 ';
                       }
                       if (isSelected) {
                         cellClass +=
-                          'ring-2 ring-rose-500 ring-inset dark:ring-rose-500/80 bg-rose-50/10 dark:bg-rose-950/5 ';
+                          'ring-2 ring-rose-500 ring-inset dark:ring-rose-500/80 bg-rose-50/70 dark:bg-rose-950 ';
+                      } else {
+                        cellClass += 'bg-white dark:bg-slate-800 ';
                       }
 
                       return (
@@ -793,22 +795,33 @@ const Agenda = () => {
                       {sidebarEvents.map((event) => {
                         const theme = getThemeClasses(event.mata_anggaran_kode);
                         const isCanceled = event.status === 'dibatalkan';
-                        const startMonth = new Date(
-                          event.tanggal_berangkat.replace(/-/g, '/')
-                        ).toLocaleString('id-ID', { month: 'short' });
-                        const endMonth = new Date(
-                          event.tanggal_kembali.replace(/-/g, '/')
-                        ).toLocaleString('id-ID', { month: 'short' });
-                        const startDate = new Date(
-                          event.tanggal_berangkat.replace(/-/g, '/')
-                        ).getDate();
-                        const endDate = new Date(
-                          event.tanggal_kembali.replace(/-/g, '/')
-                        ).getDate();
-                        const dateRangeText =
-                          startMonth === endMonth
-                            ? `${startDate} - ${endDate} ${startMonth}`
-                            : `${startDate} ${startMonth} - ${endDate} ${endMonth}`;
+                        let dateRangeText = 'Periode tidak valid';
+                        // PERBAIKAN: Pastikan tanggal tidak hanya ada, tapi juga bukan string kosong.
+                        if (
+                          event.tanggal_berangkat &&
+                          event.tanggal_kembali &&
+                          event.tanggal_berangkat.trim() !== '' &&
+                          event.tanggal_kembali.trim() !== ''
+                        ) {
+                          try {
+                            const start = new Date(event.tanggal_berangkat.replace(/-/g, '/'));
+                            const end = new Date(event.tanggal_kembali.replace(/-/g, '/'));
+
+                            // Cek apakah tanggal valid setelah di-parse
+                            if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
+                              const startMonth = start.toLocaleString('id-ID', { month: 'short' });
+                              const endMonth = end.toLocaleString('id-ID', { month: 'short' });
+                              const startDate = start.getDate();
+                              const endDate = end.getDate();
+                              dateRangeText =
+                                startMonth === endMonth
+                                  ? `${startDate} - ${endDate} ${startMonth}`
+                                  : `${startDate} ${startMonth} - ${endDate} ${endMonth}`;
+                            }
+                          } catch (e) {
+                            console.error('Error parsing date:', e);
+                          }
+                        }
 
                         return (
                           <div
@@ -952,8 +965,8 @@ const Agenda = () => {
                       Waktu Pelaksanaan
                     </span>
                     <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block mt-0.5">
-                      {parseRawDateString(selectedEvent.tanggal_berangkat)} -{' '}
-                      {parseRawDateString(selectedEvent.tanggal_kembali)}
+                      {parseRawDateString(selectedEvent.tanggal_berangkat) || '...'} -{' '}
+                      {parseRawDateString(selectedEvent.tanggal_kembali) || '...'}
                     </span>
                     <span className="text-[10px] text-slate-500 mt-0.5 block">
                       Durasi: <strong>{selectedEvent.lama_perjalanan} Hari</strong>

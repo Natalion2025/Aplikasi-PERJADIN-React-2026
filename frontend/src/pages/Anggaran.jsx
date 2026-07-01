@@ -20,7 +20,7 @@ const Anggaran = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
 
   // State Form / Modal
   const [modalOpen, setModalOpen] = useState(false);
@@ -337,27 +337,42 @@ const Anggaran = () => {
         )}
 
         {/* Pagination Controls */}
-        {!loading && totalPages > 1 && (
+        {!loading && totalItems > 0 && (
           <div className="flex items-center justify-between border-t border-slate-100 pt-5">
             <span className="text-xs text-slate-400">
-              Menampilkan Halaman {currentPage} dari {totalPages}
+              Menampilkan Halaman {currentPage} dari {totalPages} ({totalItems} total data)
             </span>
-            <div className="flex gap-2">
-              <button
-                disabled={currentPage === 1}
-                onClick={() => setCurrentPage(currentPage - 1)}
-                className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
-              >
-                Sebelumnya
-              </button>
-              <button
-                disabled={currentPage === totalPages}
-                onClick={() => setCurrentPage(currentPage + 1)}
-                className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
-              >
-                Berikutnya
-              </button>
-            </div>
+            {totalPages > 1 && (
+              <div className="flex gap-2">
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                >
+                  Sebelumnya
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+                  <button
+                    key={num}
+                    onClick={() => setCurrentPage(num)}
+                    className={`px-4 py-2 rounded-xl border text-xs font-bold transition-all ${
+                      currentPage === num
+                        ? 'bg-indigo-600 text-white border-indigo-600'
+                        : 'border-slate-200 text-slate-600 hover:bg-slate-50 active:bg-slate-100'
+                    }`}
+                  >
+                    {num}
+                  </button>
+                ))}
+                <button
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                >
+                  Berikutnya
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -370,23 +385,23 @@ const Anggaran = () => {
             if (e.target === e.currentTarget) setModalOpen(false);
           }}
         >
-          <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl border border-slate-100 flex flex-col max-h-[90vh]">
+          <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl border border-slate-100 flex flex-col max-h-[90vh] overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100">
-              <h3 className="font-bold text-lg text-slate-800 flex items-center gap-2">
-                <Wallet className="text-indigo-600" size={20} />
+            <div className="flex items-center justify-between px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 text-white">
+              <h3 className="font-bold text-lg flex items-center gap-2">
+                <Wallet size={20} />
                 <span>{editId ? 'Ubah Mata Anggaran' : 'Tambah Mata Anggaran Baru'}</span>
               </h3>
               <button
                 onClick={() => setModalOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors"
+                className="p-1.5 text-emerald-100 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
               >
                 <X size={18} />
               </button>
             </div>
 
             {/* Form Body */}
-            <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 space-y-4">
+            <form onSubmit={handleSubmit} className="flex-1  p-6 space-y-4">
               {error && (
                 <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs flex items-start gap-2.5">
                   <AlertCircle className="flex-shrink-0 mt-0.5" size={16} />
@@ -401,7 +416,7 @@ const Anggaran = () => {
                 </div>
               )}
 
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 overflow-y-auto  max-h-[50vh] gap-4">
                 {/* Bidang Urusan */}
                 <div>
                   <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
@@ -547,7 +562,7 @@ const Anggaran = () => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-2xl text-sm shadow-lg shadow-indigo-600/10 hover:shadow-indigo-600/20 disabled:bg-indigo-600/40 transition-all flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-2xl text-sm shadow-lg shadow-emerald-600/10 hover:shadow-emerald-600/20 disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
                 >
                   {submitting ? (
                     <>

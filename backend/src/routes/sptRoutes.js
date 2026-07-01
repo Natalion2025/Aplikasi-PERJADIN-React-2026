@@ -26,6 +26,17 @@ const runQuery = (sql, params = []) =>
     });
   });
 
+// Helper untuk mengekstrak angka dari nomor surat (misal: 090/123/SPT -> 123)
+const parseSptNumber = (nomorSurat) => {
+  if (!nomorSurat) return null;
+  const parts = nomorSurat.split("/");
+  if (parts.length > 1) {
+    const num = parseInt(parts[1], 10);
+    return isNaN(num) ? null : num;
+  }
+  return null;
+};
+
 router.get("/spt/active-count", isApiAuthenticated, async (req, res) => {
   try {
     const userNip = req.session.user?.nip;
@@ -293,6 +304,65 @@ router.post("/spt", isApiAuthenticated, async (req, res) => {
     }
   }
 
+  // --- VALIDASI URUTAN NOMOR SURAT ---
+  const newSptNumber = parseSptNumber(nomor_surat);
+  if (newSptNumber === null) {
+    return res.status(400).json({
+      message:
+        "Format Nomor Surat tidak valid. Tidak dapat mengekstrak nomor urut.",
+    });
+  }
+
+  // 1. Cari SPT dengan nomor urut TEPAT SEBELUMNYA
+  const allSpts = await dbAll("SELECT nomor_surat, tanggal_berangkat FROM spt");
+  let prevSpt = null;
+  let maxPrevNumber = -1;
+  allSpts.forEach((spt) => {
+    const currentNum = parseSptNumber(spt.nomor_surat);
+    if (
+      currentNum !== null &&
+      currentNum < newSptNumber &&
+      currentNum > maxPrevNumber
+    ) {
+      maxPrevNumber = currentNum;
+      prevSpt = spt;
+    }
+  });
+
+  if (
+    prevSpt &&
+    new Date(tanggal_berangkat) < new Date(prevSpt.tanggal_berangkat)
+  ) {
+    return res.status(409).json({
+      message: `Tanggal berangkat tidak boleh sebelum SPT sebelumnya (No. ${prevSpt.nomor_surat} pada ${new Date(prevSpt.tanggal_berangkat).toLocaleDateString("id-ID")}). Nomor surat harus berurutan sesuai tanggal.`,
+    });
+  }
+
+  // 2. Cari SPT dengan nomor urut TEPAT SETELAHNYA
+  let nextSpt = null;
+  let minNextNumber = Infinity;
+  allSpts.forEach((spt) => {
+    const currentNum = parseSptNumber(spt.nomor_surat);
+    if (
+      currentNum !== null &&
+      currentNum > newSptNumber &&
+      currentNum < minNextNumber
+    ) {
+      minNextNumber = currentNum;
+      nextSpt = spt;
+    }
+  });
+
+  if (
+    nextSpt &&
+    new Date(tanggal_berangkat) > new Date(nextSpt.tanggal_berangkat)
+  ) {
+    return res.status(409).json({
+      message: `Tanggal berangkat tidak boleh setelah SPT berikutnya (No. ${nextSpt.nomor_surat} pada ${new Date(nextSpt.tanggal_berangkat).toLocaleDateString("id-ID")}). Nomor surat harus berurutan sesuai tanggal.`,
+    });
+  }
+  // --- AKHIR VALIDASI URUTAN ---
+
   try {
     await runQuery("BEGIN TRANSACTION");
 
@@ -355,10 +425,15 @@ router.post("/spt", isApiAuthenticated, async (req, res) => {
       console.error("[API ERROR] Gagal rollback:", rbErr),
     );
 
-    if (err.message.includes("UNIQUE constraint failed")) {
+    if (
+      err.message.includes("UNIQUE constraint failed") ||
+      err.message.includes("ER_DUP_ENTRY") ||
+      err.code === "ER_DUP_ENTRY"
+    ) {
       return res.status(409).json({
         message:
           "Nomor surat sudah digunakan. Gunakan nomor surat yang berbeda.",
+        field: "nomor_surat", // Menambahkan field untuk identifikasi di frontend
       });
     } else if (err.message.includes("SQLITE_CONSTRAINT_FOREIGNKEY")) {
       return res.status(400).json({
@@ -466,6 +541,67 @@ router.put(
         }
       }
 
+      // --- VALIDASI URUTAN NOMOR SURAT (EDIT MODE) ---
+      const newSptNumber = parseSptNumber(nomor_surat);
+      if (newSptNumber === null) {
+        return res.status(400).json({
+          message:
+            "Format Nomor Surat tidak valid. Tidak dapat mengekstrak nomor urut.",
+        });
+      }
+
+      // Ambil semua SPT kecuali yang sedang diedit
+      const allSpts = await dbAll(
+        "SELECT nomor_surat, tanggal_berangkat FROM spt WHERE id != ?",
+        [id],
+      );
+      let prevSpt = null;
+      let maxPrevNumber = -1;
+      allSpts.forEach((spt) => {
+        const currentNum = parseSptNumber(spt.nomor_surat);
+        if (
+          currentNum !== null &&
+          currentNum < newSptNumber &&
+          currentNum > maxPrevNumber
+        ) {
+          maxPrevNumber = currentNum;
+          prevSpt = spt;
+        }
+      });
+
+      if (
+        prevSpt &&
+        new Date(tanggal_berangkat) < new Date(prevSpt.tanggal_berangkat)
+      ) {
+        return res.status(409).json({
+          message: `Tanggal berangkat tidak boleh sebelum SPT sebelumnya (No. ${prevSpt.nomor_surat} pada ${new Date(prevSpt.tanggal_berangkat).toLocaleDateString("id-ID")}). Nomor surat harus berurutan sesuai tanggal.`,
+        });
+      }
+
+      let nextSpt = null;
+      let minNextNumber = Infinity;
+      allSpts.forEach((spt) => {
+        const currentNum = parseSptNumber(spt.nomor_surat);
+        if (
+          currentNum !== null &&
+          currentNum > newSptNumber &&
+          currentNum < minNextNumber
+        ) {
+          minNextNumber = currentNum;
+          nextSpt = spt;
+        }
+      });
+
+      if (
+        nextSpt &&
+        new Date(tanggal_berangkat) > new Date(nextSpt.tanggal_berangkat)
+      ) {
+        return res.status(409).json({
+          message: `Tanggal berangkat tidak boleh setelah SPT berikutnya (No. ${nextSpt.nomor_surat} pada ${new Date(nextSpt.tanggal_berangkat).toLocaleDateString("id-ID")}). Nomor surat harus berurutan sesuai tanggal.`,
+        });
+      }
+      // --- AKHIR VALIDASI URUTAN ---
+
       await runQuery("BEGIN TRANSACTION");
 
       const sptSql = `UPDATE spt SET
@@ -563,6 +699,7 @@ dasar_perjalanan = ?,
         return res.status(409).json({
           message:
             "Nomor surat sudah digunakan. Gunakan nomor surat yang berbeda.",
+          field: "nomor_surat", // Menambahkan field untuk identifikasi di frontend
         });
       } else if (
         err.message.includes("SQLITE_CONSTRAINT_FOREIGNKEY") ||

@@ -43,7 +43,7 @@ const getKolomGolongan = (tingkatBiaya) => {
   return mapping[tingkatBiaya] || "gol_d";
 };
 
-router.get("/api/laporan-bpk-apip", isApiAuthenticated, async (req, res) => {
+router.get("/laporan-bpk-apip", isApiAuthenticated, async (req, res) => {
   const usePagination = req.query.limit !== "0"; // PERBAIKAN KOMPREHENSIF: Tangani kasus limit=0 secara eksplisit untuk mengambil semua data.
   // Jika paginasi aktif, gunakan nilai dari query atau default ke 5. Jika tidak, limit adalah 0.
   const limit = usePagination ? parseInt(req.query.limit, 10) || 5 : -1; // Gunakan -1 untuk menandakan tanpa limit di SQLite
@@ -105,7 +105,7 @@ router.get("/api/laporan-bpk-apip", isApiAuthenticated, async (req, res) => {
 
 // API BARU: Mengambil data transportasi untuk laporan BPK & APIP
 router.get(
-  "/api/laporan-bpk-apip/transportasi",
+  "/laporan-bpk-apip/transportasi",
   isApiAuthenticated,
   async (req, res) => {
     const { arah = "berangkat", page = 1, limit = 5 } = req.query;
@@ -167,7 +167,7 @@ router.get(
 
 // API BARU: Mengambil data akomodasi untuk laporan BPK & APIP
 router.get(
-  "/api/laporan-bpk-apip/akomodasi",
+  "/laporan-bpk-apip/akomodasi",
   isApiAuthenticated,
   async (req, res) => {
     const { page = 1, limit = 5 } = req.query;
@@ -223,7 +223,7 @@ router.get(
 
 // API BARU: Mengambil data Uang Harian untuk laporan BPK & APIP
 router.get(
-  "/api/laporan-bpk-apip/uang-harian",
+  "/laporan-bpk-apip/uang-harian",
   isApiAuthenticated,
   async (req, res) => {
     const { page = 1, limit = 5 } = req.query;
@@ -382,7 +382,7 @@ router.get(
 
 // API BARU: Mengambil data Biaya Lain-lain untuk laporan BPK & APIP
 router.get(
-  "/api/laporan-bpk-apip/lain-lain",
+  "/laporan-bpk-apip/lain-lain",
   isApiAuthenticated,
   async (req, res) => {
     const { page = 1, limit = 5 } = req.query;
@@ -435,7 +435,7 @@ router.get(
 );
 
 // API BARU: Mengambil semua data gabungan untuk cetak Laporan BPK
-router.get("/api/cetak/laporan-bpk", isApiAuthenticated, async (req, res) => {
+router.get("/cetak/laporan-bpk", isApiAuthenticated, async (req, res) => {
   try {
     const sql = `
             SELECT
