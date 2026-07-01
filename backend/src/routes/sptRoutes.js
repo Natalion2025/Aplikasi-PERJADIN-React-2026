@@ -79,10 +79,10 @@ router.get("/spt", isApiAuthenticated, async (req, res) => {
   const limit = usePagination ? parseInt(req.query.limit, 10) || 5 : 0;
   const page = parseInt(req.query.page) || 1;
   const offset = usePagination ? (page - 1) * limit : 0;
+  const { month, year } = req.query;
 
   try {
-    const sptsSql =
-      `
+    let sptsSql = `
         SELECT
             s.id, s.nomor_surat, s.tanggal_surat, s.maksud_perjalanan, s.lokasi_tujuan, s.lama_perjalanan,
             s.tanggal_berangkat, s.tanggal_kembali, s.status, s.keterangan,
@@ -92,12 +92,28 @@ router.get("/spt", isApiAuthenticated, async (req, res) => {
             (SELECT COUNT(*) FROM laporan_perjadin WHERE spt_id = s.id) as laporan_count, 
             (SELECT COUNT(*) FROM pembayaran WHERE spt_id = s.id) as pembayaran_count
         FROM spt s
-        LEFT JOIN anggaran a ON s.anggaran_id = a.id
-        LEFT JOIN pejabat pj ON s.pejabat_pemberi_tugas_id = pj.id
-        LEFT JOIN pegawai pg_pejabat ON s.pejabat_pemberi_tugas_id = pg_pejabat.id
-        ORDER BY s.tanggal_surat DESC, s.id DESC
-        ` + (usePagination ? " LIMIT ? OFFSET ?" : "");
-    const params = usePagination ? [limit, offset] : [];
+        LEFT JOIN anggaran a ON s.anggaran_id = a.id LEFT JOIN pejabat pj ON s.pejabat_pemberi_tugas_id = pj.id LEFT JOIN pegawai pg_pejabat ON s.pejabat_pemberi_tugas_id = pg_pejabat.id
+    `;
+
+    const params = [];
+    const whereClauses = [];
+
+    if (month && year) {
+      whereClauses.push(
+        `(DATE_FORMAT(s.tanggal_berangkat, '%Y-%m') = ? OR DATE_FORMAT(s.tanggal_kembali, '%Y-%m') = ?)`,
+      );
+      const monthYear = `${year}-${String(month).padStart(2, "0")}`;
+      params.push(monthYear, monthYear);
+    }
+
+    if (whereClauses.length > 0) {
+      sptsSql += ` WHERE ${whereClauses.join(" AND ")}`;
+    }
+
+    sptsSql +=
+      ` ORDER BY s.tanggal_surat DESC, s.id DESC ` +
+      (usePagination ? " LIMIT ? OFFSET ?" : "");
+    if (usePagination) params.push(limit, offset);
     const spts = await dbAll(sptsSql, params);
 
     for (const spt of spts) {
@@ -111,11 +127,11 @@ router.get("/spt", isApiAuthenticated, async (req, res) => {
 
       // Ambil pegawai yang tugasnya dibatalkan untuk SPT ini
       const canceledPegawaiSql = `
-                SELECT p.nama_lengkap FROM pembatalan_spt ps
+                SELECT p.id as pegawai_id, p.nama_lengkap FROM pembatalan_spt ps
                 JOIN pegawai p ON ps.pegawai_id = p.id
                 WHERE ps.spt_id = ? `;
       const canceledPegawaiRows = await dbAll(canceledPegawaiSql, [spt.id]);
-      spt.pegawai_dibatalkan = canceledPegawaiRows.map((p) => p.nama_lengkap);
+      spt.pegawai_dibatalkan = canceledPegawaiRows;
     }
 
     // Jika tidak menggunakan paginasi, kembalikan semua data dalam array.

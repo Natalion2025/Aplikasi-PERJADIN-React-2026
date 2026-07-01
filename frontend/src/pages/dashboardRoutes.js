@@ -14,21 +14,21 @@ router.get('/api/dashboard/stats', isApiAuthenticated, async (req, res) => {
     const currentMonth = new Date().getMonth() + 1;
 
     // 1. Total Perjalanan Tahun Ini
-    const totalPerjalananSql = `SELECT COUNT(*) as count FROM spt WHERE strftime('%Y', tanggal_surat) = ?`;
+    const totalPerjalananSql = `SELECT COUNT(*) as count FROM spt WHERE YEAR(tanggal_surat) = ?`;
     const totalPerjalanan = await dbGet(totalPerjalananSql, [String(currentYear)]);
 
     // 2. Perjalanan Bulan Ini
-    const perjalananBulanIniSql = `SELECT COUNT(*) as count FROM spt WHERE strftime('%Y', tanggal_surat) = ? AND strftime('%m', tanggal_surat) = ?`;
+    const perjalananBulanIniSql = `SELECT COUNT(*) as count FROM spt WHERE YEAR(tanggal_surat) = ? AND MONTH(tanggal_surat) = ?`;
     const perjalananBulanIni = await dbGet(perjalananBulanIniSql, [
       String(currentYear),
-      String(currentMonth).padStart(2, '0'),
+      String(currentMonth),
     ]);
 
     // 3. Grafik Perjalanan 12 Bulan Terakhir
     const grafikPerjalananSql = `
-            SELECT strftime('%Y-%m', tanggal_surat) as month, COUNT(*) as count
+            SELECT DATE_FORMAT(tanggal_surat, '%Y-%m') as month, COUNT(*) as count
             FROM spt
-            WHERE tanggal_surat >= strftime('%Y-%m-%d', date('now', '-12 months'))
+            WHERE tanggal_surat >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
             GROUP BY month
             ORDER BY month ASC;
         `;

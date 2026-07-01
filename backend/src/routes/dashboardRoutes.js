@@ -21,10 +21,15 @@ router.get("/dashboard/stats", isApiAuthenticated, async (req, res) => {
     const sqlTotal =
       "SELECT COUNT(*) as totalPerjalanan FROM spt WHERE YEAR(tanggal_surat) = YEAR(CURDATE())";
 
-    // Menggunakan sintaks MySQL DATE_FORMAT dan CURDATE()
+    // PERBAIKAN: Logika untuk menghitung perjalanan yang aktif di bulan ini.
+    // Sebuah perjalanan dianggap aktif jika rentang tanggalnya (berangkat-kembali)
+    // tumpang tindih dengan rentang tanggal bulan ini (awal-akhir bulan).
     const sqlBulanIni = `
-            SELECT COUNT(*) as perjalananBulanIni FROM spt
-            WHERE DATE_FORMAT(tanggal_surat, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
+      SELECT COUNT(*) as perjalananBulanIni FROM spt
+      WHERE 
+        status = 'aktif' AND
+        tanggal_berangkat <= LAST_DAY(CURDATE()) AND 
+        tanggal_kembali >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
         `;
 
     // Menggunakan sintaks MySQL DATE_FORMAT, CURDATE(), dan INTERVAL

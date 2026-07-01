@@ -115,7 +115,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           >
             <div className="flex items-center gap-4">
               <div
-                className={` rounded-full bg-white transition-transform duration-200 ${isOpen ? 'py-2 px-3' : 'py-1 px-2'}`}
+                className={` rounded-full bg-white transition-transform duration-200 shadow-xl shadow-yellow-300/50 ring-2 ring-yellow-200/70 ring-offset-1 ring-offset-mauve-700 ${isOpen ? 'py-2 px-3' : 'py-1 px-2'}`}
               >
                 <img src={logoMelawi} className="bg-white w-6 h-8" />
               </div>

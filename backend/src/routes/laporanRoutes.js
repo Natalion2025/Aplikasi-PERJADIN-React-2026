@@ -42,7 +42,13 @@ const parseCurrency = (value) => {
 // Helper functions getTingkatBiaya dan getKolomGolongan
 const getTingkatBiaya = (pegawai) => {
   const jabatan = (pegawai.jabatan || "").toLowerCase().trim();
-  if (jabatan.includes("kepala dinas")) {
+  // PERBAIKAN: Logika untuk membedakan Kepala Dinas Eselon II (Gol A/B)
+  if (jabatan.includes("kepala dinas") || jabatan.includes("eselon ii")) {
+    // Asumsi: Kepala Dinas/Pejabat Eselon II bisa masuk Golongan A atau B.
+    // Di beberapa SBU, mereka dikategorikan sama. Untuk amannya, kita bisa
+    // prioritaskan Golongan A jika ada, atau B. Di sini kita coba Golongan A dulu.
+    // Jika SBU hanya punya Gol B, getKolomGolongan akan fallback ke 'gol_b'.
+    // Namun, untuk lebih akurat, kita akan coba prioritaskan Golongan B karena lebih umum.
     return "Golongan B";
   }
   if (
@@ -57,6 +63,7 @@ const getTingkatBiaya = (pegawai) => {
 
 const getKolomGolongan = (tingkatBiaya) => {
   const mapping = {
+    "Golongan A": "gol_a", // PERBAIKAN: Tambahkan penanganan untuk Golongan A
     "Golongan B": "gol_b",
     "Golongan C": "gol_c",
     "Golongan D": "gol_d",
@@ -158,7 +165,7 @@ router.get("/laporan/by-spt/:spt_id", isApiAuthenticated, async (req, res) => {
     const idUntukQuerySpt = laporan ? laporan.spt_id : spt_id;
 
     const spt = await dbGet(
-      `SELECT lokasi_tujuan, tempat_berangkat FROM spt WHERE id = ? `,
+      `SELECT lokasi_tujuan, tempat_berangkat, lama_perjalanan FROM spt WHERE id = ? `,
       [idUntukQuerySpt],
     );
     if (!spt) {
@@ -214,6 +221,7 @@ router.get("/laporan/by-spt/:spt_id", isApiAuthenticated, async (req, res) => {
         pengeluaranMap.set(item.pegawai_id, {
           pegawai_id: item.pegawai_id,
           transportasi_nominal: 0,
+          transportasi_items: [], // PERBAIKAN: Inisialisasi sebagai array
           akomodasi_nominal: 0,
           kontribusi_nominal: 0,
           lain_lain_nominal: 0,
@@ -221,25 +229,32 @@ router.get("/laporan/by-spt/:spt_id", isApiAuthenticated, async (req, res) => {
       }
       const pengeluaranPegawai = pengeluaranMap.get(item.pegawai_id);
 
+      const itemNominal = parseFloat(item.nominal) || 0;
+
       if (item.hasOwnProperty("perusahaan")) {
         // Transportasi
-        pengeluaranPegawai.transportasi_nominal += item.nominal || 0;
-        pengeluaranPegawai.transportasi_jenis = item.jenis;
+        pengeluaranPegawai.transportasi_nominal += itemNominal;
+        // PERBAIKAN: Tambahkan setiap item transportasi ke dalam array
+        pengeluaranPegawai.transportasi_items.push({
+          jenis: item.jenis,
+          nominal: itemNominal,
+          perusahaan: item.perusahaan,
+        });
       } else if (item.hasOwnProperty("malam")) {
         // Akomodasi
-        pengeluaranPegawai.akomodasi_nominal += item.nominal || 0;
-        pengeluaranPegawai.akomodasi_harga_satuan = item.harga_satuan;
+        pengeluaranPegawai.akomodasi_nominal += itemNominal;
+        pengeluaranPegawai.akomodasi_harga_satuan = parseFloat(item.harga_satuan) || 0;
         pengeluaranPegawai.akomodasi_malam = item.malam;
         pengeluaranPegawai.akomodasi_jenis = item.jenis;
       } else if (item.hasOwnProperty("uraian")) {
         // Lain-lain
-        pengeluaranPegawai.lain_lain_nominal += item.nominal || 0;
+        pengeluaranPegawai.lain_lain_nominal += itemNominal;
         pengeluaranPegawai.lain_lain_uraian = item.uraian;
       } else {
         // Kontribusi
         // PERBAIKAN: Gunakan += untuk akumulasi, bukan menimpa nilai.
         // Ini memastikan jika ada beberapa entri biaya, semuanya akan dijumlahkan.
-        pengeluaranPegawai.kontribusi_nominal += item.nominal || 0;
+        pengeluaranPegawai.kontribusi_nominal += itemNominal;
         pengeluaranPegawai.kontribusi_jenis = item.jenis;
       }
     });
@@ -265,7 +280,9 @@ router.get("/laporan/by-spt/:spt_id", isApiAuthenticated, async (req, res) => {
     let isDalamKota = false;
     let lokasiUntukQuery = lokasiTujuan;
 
-    const locationsData = require("./public/data/locations.json");
+    const locationsData = require(
+      path.join(__dirname, "public", "data", "locations.json"),
+    );
 
     const cariJenisLokasi = (lokasi) => {
       const lokasiLower = lokasi.toLowerCase().trim();
@@ -577,7 +594,7 @@ router.get("/laporan/by-spt/:spt_id", isApiAuthenticated, async (req, res) => {
       })
       .filter(Boolean);
 
-    res.json({ penerima, pengeluaran });
+    res.json({ penerima, pengeluaran, lama_perjalanan: spt.lama_perjalanan });
   } catch (error) {
     console.error(
       `[API ERROR] Gagal mengambil laporan by - spt - id ${spt_id}: `,

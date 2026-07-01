@@ -59,13 +59,20 @@ const Dashboard = () => {
       const anggaranRes = await axios.get('/api/anggaran?limit=0');
       setAnggaranList(anggaranRes.data.data || []);
 
-      // 3. Ambil data pegawai on-duty (dari SPT aktif bulan ini)
-      const sptRes = await axios.get('/api/spt?limit=0');
-      const allSpts = sptRes.data || [];
-
       const now = new Date(statsRes.data.server_time || Date.now());
       const currentYear = now.getFullYear();
       const currentMonth = now.getMonth();
+
+      // 3. Ambil data pegawai on-duty (dari SPT aktif bulan ini)
+      // PERBAIKAN: Minta data SPT yang relevan untuk bulan ini saja dari API
+      const sptRes = await axios.get('/api/spt', {
+        params: {
+          limit: 0, // Tetap ambil semua yang relevan
+          month: currentMonth + 1, // Kirim bulan (1-12)
+          year: currentYear, // Kirim tahun
+        },
+      });
+      const allSpts = sptRes.data || [];
       const startOfMonth = new Date(currentYear, currentMonth, 1);
       const endOfMonth = new Date(currentYear, currentMonth + 1, 0);
 
@@ -73,15 +80,15 @@ const Dashboard = () => {
       const activeOnDuty = [];
       allSpts.forEach((spt) => {
         const startDate = new Date(spt.tanggal_berangkat);
-        const endDate = new Date(spt.tanggal_kembali);
-        const canceledPegawaiSet = new Set(spt.pegawai_dibatalkan || []);
+        // PERBAIKAN: Gunakan ID pegawai yang dibatalkan untuk pengecekan yang lebih andal
+        const canceledPegawaiIds = new Set((spt.pegawai_dibatalkan || []).map((p) => p.pegawai_id));
 
-        if (spt.status === 'aktif' && startDate <= endOfMonth && endDate >= startOfMonth) {
+        if (spt.status === 'aktif') {
           // Iterasi melalui setiap pegawai dalam SPT
           if (spt.pegawai && Array.isArray(spt.pegawai)) {
             spt.pegawai.forEach((pegawai) => {
-              // Pastikan pegawai tidak ada di daftar yang dibatalkan
-              if (!canceledPegawaiSet.has(pegawai.nama_lengkap)) {
+              // Cek berdasarkan ID, bukan nama
+              if (!canceledPegawaiIds.has(pegawai.id)) {
                 activeOnDuty.push({
                   nama: pegawai.nama_lengkap,
                   nip: pegawai.nip,

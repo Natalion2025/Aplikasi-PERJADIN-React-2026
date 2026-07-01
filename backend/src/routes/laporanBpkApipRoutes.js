@@ -442,8 +442,10 @@ router.get("/cetak/laporan-bpk", isApiAuthenticated, async (req, res) => {
                 s.id as spt_id,
                 p.id as pegawai_id,
                 p.nama_lengkap,
+                p.pangkat,
+                p.golongan,
                 p.jabatan,
-                p.pangkat || '/' || p.golongan as pangkat_golongan,
+                CONCAT_WS('/', p.pangkat, p.golongan) as pangkat_golongan,
                 s.nomor_surat,
                 sppd.nomor_sppd,
                 s.tanggal_berangkat,
@@ -492,6 +494,12 @@ router.get("/cetak/laporan-bpk", isApiAuthenticated, async (req, res) => {
     const biayaRepresentasiEselonII = await dbGet(
       `SELECT * FROM standar_biaya WHERE tipe_biaya = 'D' AND (TRIM(UPPER(uraian)) = 'PEJABAT ESELON II' OR TRIM(UPPER(uraian)) LIKE '%ESELON II%')`,
     );
+
+    const safeNum = (val) => {
+      if (val === null || val === undefined) return 0;
+      const parsed = Number(val);
+      return isNaN(parsed) ? 0 : parsed;
+    };
 
     const results = [];
     for (const item of allItems) {
@@ -576,7 +584,7 @@ router.get("/cetak/laporan-bpk", isApiAuthenticated, async (req, res) => {
       );
 
       const sewaKendaraanDalamKota = {
-        nominal: rentalItems.reduce((sum, i) => sum + (i.nominal || 0), 0),
+        nominal: rentalItems.reduce((sum, i) => sum + safeNum(i.nominal), 0),
         uraian: rentalItems
           .map((i) => i.uraian)
           .filter(Boolean)
@@ -596,17 +604,17 @@ router.get("/cetak/laporan-bpk", isApiAuthenticated, async (req, res) => {
           .map((i) => i.keterangan)
           .filter(Boolean)
           .join(", "),
-        nominal: otherItems.reduce((sum, i) => sum + (i.nominal || 0), 0),
+        nominal: otherItems.reduce((sum, i) => sum + safeNum(i.nominal), 0),
       };
 
       totalDiterima =
-        (transportBerangkat.nominal || 0) +
-        (transportPulang.nominal || 0) +
-        (akomodasi.nominal || 0) +
-        (uangHarian.total || 0) +
-        uangRepresentatif +
-        (sewaKendaraanDalamKota.nominal || 0) +
-        (biayaLainSisa.nominal || 0);
+        safeNum(transportBerangkat.nominal) +
+        safeNum(transportPulang.nominal) +
+        safeNum(akomodasi.nominal) +
+        safeNum(uangHarian.total) +
+        safeNum(uangRepresentatif) +
+        safeNum(sewaKendaraanDalamKota.nominal) +
+        safeNum(biayaLainSisa.nominal);
 
       results.push({
         ...item,

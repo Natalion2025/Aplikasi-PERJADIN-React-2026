@@ -978,7 +978,7 @@ const Pembayaran = () => {
             {!loading && totalItems > 0 && (
               <div className="flex items-center justify-between border-t border-slate-100 pt-4 px-1">
                 <span className="text-xs text-slate-400">
-                  Halaman <span className="font-semibold">{page}</span> dari{' '}
+                  Menampilkan Halaman <span className="font-semibold">{page}</span> dari{' '}
                   <span className="font-semibold">{totalPages}</span> ({totalItems} total data)
                 </span>
                 {totalPages > 1 && (
@@ -1248,7 +1248,7 @@ const Pembayaran = () => {
                                 Satuan
                               </th>
                               <th className="py-2.5 px-3 text-center w-10 shadow-[inset_0_-2px_0_0_#ffffff]">
-                                Hari
+                                Qty
                               </th>
                               <th className="py-2.5 px-3 text-right shadow-[inset_0_-2px_0_0_#ffffff] whitespace-nowrap">
                                 Jumlah Biaya
@@ -1269,7 +1269,9 @@ const Pembayaran = () => {
                                 ) || {};
 
                               const harianRate = pInfo.uang_harian?.harga_satuan || 0;
-                              const qtyDays = (exp.akomodasi_malam || 0) + 1;
+                              const qtyDays =
+                                rincianPengeluaran.lama_perjalanan ||
+                                (exp.akomodasi_malam || 0) + 1;
                               const harianTotal = harianRate * qtyDays;
 
                               const rows = [];
@@ -1284,7 +1286,7 @@ const Pembayaran = () => {
                                 total: harianTotal,
                               });
 
-                              // 2. Representasi (if Kadis)
+                              // 2. Biaya Representasi (jika Kadis)
                               const isKadis =
                                 pInfo.jabatan &&
                                 pInfo.jabatan.toLowerCase().includes('kepala dinas');
@@ -1302,17 +1304,19 @@ const Pembayaran = () => {
                                 });
                               }
 
-                              // 3. Other fields
+                              // Menampilkan biaya transportasi secara total saja
                               if (exp.transportasi_nominal > 0) {
                                 rows.push({
                                   type: 'transportasi',
-                                  uraian: `Biaya Transportasi (${exp.transportasi_jenis || 'N/A'})`,
+                                  uraian: `Biaya Transportasi (Total)`,
                                   harga: parseCurrency(exp.transportasi_nominal),
                                   satuan: 'PP',
                                   hari: '-',
                                   total: parseCurrency(exp.transportasi_nominal),
                                 });
                               }
+
+                              // 4. Biaya Akomodasi
                               if (exp.akomodasi_nominal > 0) {
                                 rows.push({
                                   type: 'akomodasi',
@@ -1323,6 +1327,8 @@ const Pembayaran = () => {
                                   total: parseCurrency(exp.akomodasi_nominal),
                                 });
                               }
+
+                              // 5. Biaya Kontribusi
                               if (exp.kontribusi_nominal > 0) {
                                 rows.push({
                                   type: 'kontribusi',
@@ -1333,6 +1339,8 @@ const Pembayaran = () => {
                                   total: parseCurrency(exp.kontribusi_nominal),
                                 });
                               }
+
+                              // 6. Biaya Lain-lain
                               if (exp.lain_lain_nominal > 0) {
                                 rows.push({
                                   type: 'lain_lain',

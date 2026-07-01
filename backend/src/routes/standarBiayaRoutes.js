@@ -441,7 +441,9 @@ router.get(
     `;
       const pegawaiList = await dbAll(pegawaiSql, [spt_id]);
 
-      const locationsData = require("./public/data/locations.json");
+      const locationsData = require(
+        path.join(__dirname, "public", "data", "locations.json"),
+      );
 
       const cariJenisLokasi = (lokasi) => {
         const lokasiLower = lokasi.toLowerCase().trim();

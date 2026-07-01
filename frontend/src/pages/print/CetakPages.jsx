@@ -11,10 +11,11 @@ const formatDate = (dateString, defVal = '-') => {
   return new Date(dateString).toLocaleDateString('id-ID', options);
 };
 
-// Helper: Format rupiah sederhana
 const formatCurrency = (amount) => {
-  if (amount === null || amount === undefined || isNaN(parseFloat(amount))) return '0';
-  return new Intl.NumberFormat('id-ID').format(amount);
+  if (amount === null || amount === undefined) return '0';
+  const num = parseFloat(amount);
+  if (isNaN(num)) return '0';
+  return new Intl.NumberFormat('id-ID').format(num);
 };
 
 // Helper: Ubah angka menjadi teks terbilang

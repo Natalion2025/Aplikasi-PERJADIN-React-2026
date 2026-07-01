@@ -145,17 +145,17 @@ router.post("/sppd/auto-create", isApiAuthenticated, async (req, res) => {
     }
 
     const currentYear = new Date().getFullYear();
-    // PERBAIKAN: Menggunakan sintaks SQLite strftime
+    // PERBAIKAN: Menggunakan sintaks MySQL YEAR(date)
     const countSppd = await dbGet(
-      "SELECT COUNT(*) as count FROM sppd WHERE strftime('%Y', tanggal_sppd) = ?",
+      "SELECT COUNT(*) as count FROM sppd WHERE YEAR(tanggal_sppd) = ?",
       [currentYear.toString()],
     );
     const nomorSppd = `800 / ${countSppd.count + 1} /SETDA/${currentYear}`;
 
-    // PERBAIKAN: Menggunakan date('now') untuk SQLite
+    // PERBAIKAN: Menggunakan CURDATE() untuk MySQL
     const insertSql = `
             INSERT INTO sppd (nomor_sppd, tanggal_sppd, spt_id) 
-            VALUES (?, date('now'), ?)
+            VALUES (?, CURDATE(), ?)
         `;
     const result = await runQuery(insertSql, [nomorSppd, spt_id]);
 

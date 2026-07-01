@@ -778,7 +778,7 @@ const TambahSpt = () => {
           <div className="flex items-center justify-end gap-3 pt-4">
             <Link
               to="/spt"
-              className="px-5 py-2.5 border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 font-semibold rounded-xl text-sm transition-all"
+              className="px-5 py-2.5 border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 font-semibold rounded-xl text-sm transition-all"
             >
               Batal
             </Link>
