@@ -275,7 +275,7 @@ router.get("/cetak/pembayaran/:id", isApiAuthenticated, async (req, res) => {
       panjarData.map((p) => [p.pegawai_id.toString(), p.nilai_panjar]),
     );
     const overridesMap = new Map(
-      panjarData.map((p) => [p.pegawai_id.toString(), p.overrides || {}]),
+      panjarData.map((p) => [p.pegawai_id.toString(), p.overrides]),
     );
 
     const rincianPerPegawai = new Map();
@@ -360,16 +360,11 @@ router.get("/cetak/pembayaran/:id", isApiAuthenticated, async (req, res) => {
 
         // Terapkan override jika ada
         let finalJumlah = defaultJumlah;
-        if (type === "akomodasi") {
+        if (pegOverrides !== undefined) {
           if (pegOverrides[type] !== undefined && pegOverrides[type] !== "") {
             finalJumlah = parseFloat(pegOverrides[type]) || 0;
           } else {
             finalJumlah = 0;
-          }
-        } else {
-          if (pegOverrides[type] !== undefined && pegOverrides[type] !== "") {
-            const netPaidOverride = parseFloat(pegOverrides[type]) || 0;
-            finalJumlah = netPaidOverride + allocatedPanjar;
           }
         }
 

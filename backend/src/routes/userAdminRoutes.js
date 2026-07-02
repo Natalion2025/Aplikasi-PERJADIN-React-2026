@@ -67,7 +67,7 @@ router.post(
 
       const sql =
         "INSERT INTO users (name, username, password, role, nip, jabatan) VALUES (?, ?, ?, ?, ?, ?)";
-      const [result] = await dbQuery(sql, [
+      const result = await dbQuery(sql, [
         name,
         username,
         hash,
@@ -196,7 +196,7 @@ router.put(
       params.push(userIdToUpdate);
 
       const sql = `UPDATE users SET ${updateFields.join(", ")} WHERE id = ?`;
-      const [result] = await dbQuery(sql, params);
+      const result = await dbQuery(sql, params);
 
       if (result.affectedRows === 0) {
         return res

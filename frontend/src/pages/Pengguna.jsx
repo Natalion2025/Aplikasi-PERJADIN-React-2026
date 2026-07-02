@@ -14,6 +14,14 @@ import {
   UserCheck,
 } from 'lucide-react';
 
+const getAvatarUrl = (photoPath) => {
+  if (!photoPath) return '';
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+  const cleanBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const cleanPath = photoPath.startsWith('/') ? photoPath : `/${photoPath}`;
+  return `${cleanBase}${cleanPath}`;
+};
+
 const Pengguna = () => {
   const { user: currentUser } = useAuth();
   const [users, setUsers] = useState([]);
@@ -244,12 +252,12 @@ const Pengguna = () => {
                           <img
                             src={
                               userRow.foto_profil
-                                ? `/${userRow.foto_profil}`
+                                ? getAvatarUrl(userRow.foto_profil)
                                 : 'https://api.dicebear.com/7.x/adventurer/svg?seed=' +
                                   userRow.username
                             }
                             alt="Profile"
-                            className="w-10 h-10 rounded-xl object-cover ring-2 ring-slate-100 dark:ring-slate-800"
+                            className="w-10 h-10 rounded-full object-cover ring-2 ring-slate-100 dark:ring-slate-800"
                           />
                           <div>
                             <div className="font-semibold text-slate-800 dark:text-slate-100">
@@ -270,7 +278,7 @@ const Pengguna = () => {
                         <div className="text-slate-700 dark:text-slate-300 font-medium text-xs">
                           {userRow.nip || '-'}
                         </div>
-                        <div className="text-slate-400 text-[11px] mt-0.5">
+                        <div className="text-slate-700 font-medium text-xs mt-0.5">
                           {userRow.jabatan || '-'}
                         </div>
                       </td>
@@ -335,7 +343,7 @@ const Pengguna = () => {
           }}
         >
           <div className="bg-white dark:bg-slate-800 w-full max-w-lg rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden">
-            <div className="flex justify-between items-start p-6 bg-gradient-to-r from-emerald-600 to-teal-500 text-white">
+            <div className="flex justify-between items-start p-6 bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-800 dark:to-teal-700 text-white">
               <div className="flex items-center gap-2.5">
                 <UserPlus className="w-5 h-5" />
                 <h3 className="text-lg font-bold text-slate-100 dark:text-slate-50">
@@ -344,7 +352,7 @@ const Pengguna = () => {
               </div>
               <button
                 onClick={() => !submitting && setModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 transition-colors"
+                className="text-slate-400 hover:text-slate-600 transition-colors duration-200 dark:text-slate-200 dark:hover:text-slate-400 p-1 rounded-full hover:bg-slate-100/20"
                 disabled={submitting}
               >
                 <X className="w-5 h-5" />
@@ -487,7 +495,7 @@ const Pengguna = () => {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 hover:shadow-emerald-600/20 transition-all disabled:opacity-50 cursor-pointer"
+                    className="flex items-center gap-2 px-5 py-2 bg-emerald-600 dark:bg-emerald-800/40 dark:hover:bg-emerald-700/40 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 hover:shadow-emerald-600/20 transition-all disabled:opacity-50 cursor-pointer"
                   >
                     {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                     <span>{editingId ? 'Simpan Perubahan' : 'Tambah Pengguna'}</span>

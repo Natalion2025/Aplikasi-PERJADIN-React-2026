@@ -404,7 +404,7 @@ const Pembayaran = () => {
     if (!pInfo) return { totalBiaya: 0, panjar: 0, totalBayar: 0 };
 
     const harianRate = parseCurrency(pInfo.uang_harian?.harga_satuan || 0);
-    const qtyDays = (exp.akomodasi_malam || 0) + 1;
+    const qtyDays = rincianPengeluaran.lama_perjalanan || (exp.akomodasi_malam || 0) + 1;
     const harianTotal = harianRate * qtyDays;
 
     let representasiTotal = 0;
@@ -430,34 +430,36 @@ const Pembayaran = () => {
       kontribusiTotal +
       lainTotal;
 
-    // Kumpulkan baris biaya yang tampil di tabel untuk memvalidasi override kolom kuitansi
-    const komponenJenis = [
-      'uang_harian',
-      'representasi',
-      'transportasi',
-      'akomodasi',
-      'kontribusi',
-      'lain_lain',
-    ];
-    let totalBiayaSetelahOverride = 0;
-    let adaOverride = false;
+    // Reconstruct rows for this employee to compute default net paid values
+    const rows = [];
+    rows.push({ type: 'uang_harian', total: harianTotal });
+    if (representasiTotal > 0) {
+      rows.push({ type: 'representasi', total: representasiTotal });
+    }
+    if (transportTotal > 0) {
+      rows.push({ type: 'transportasi', total: transportTotal });
+    }
+    if (akomodasiTotal > 0) {
+      rows.push({ type: 'akomodasi', total: akomodasiTotal });
+    }
+    if (kontribusiTotal > 0) {
+      rows.push({ type: 'kontribusi', total: kontribusiTotal });
+    }
+    if (lainTotal > 0) {
+      rows.push({ type: 'lain_lain', total: lainTotal });
+    }
 
-    // Hitung total dari semua override yang diinput manual
-    komponenJenis.forEach((jenis) => {
-      const key = `${targetId}_${jenis}`;
+    let totalBayar = 0;
+    rows.forEach((row) => {
+      const key = `${targetId}_${row.type}`;
       if (dibayarOverrides[key] !== undefined && dibayarOverrides[key] !== '') {
-        adaOverride = true;
-        // Hanya tambahkan override jika ada nilainya
-        if (parseCurrency(dibayarOverrides[key]) > 0) {
-          totalBiayaSetelahOverride += parseCurrency(dibayarOverrides[key]);
-        }
+        totalBayar += parseCurrency(dibayarOverrides[key]);
+      } else {
+        totalBayar += 0;
       }
     });
 
-    // Jika ada override, total bayar adalah jumlah semua override dikurangi panjar. Jika tidak, total bayar adalah total realisasi dikurangi panjar.
-    const totalBayar = adaOverride
-      ? totalBiayaSetelahOverride - panjar
-      : totalBiayaRealisasi - panjar;
+    totalBayar -= panjar;
 
     return { totalBiaya: totalBiayaRealisasi, panjar, totalBayar };
   };
@@ -1418,23 +1420,7 @@ const Pembayaran = () => {
                                             dibayarOverrides[`${pInfo.id}_${row.type}`] !==
                                             undefined
                                               ? dibayarOverrides[`${pInfo.id}_${row.type}`]
-                                              : getRowDefaultDibayar(
-                                                    pInfo,
-                                                    rows,
-                                                    row,
-                                                    rIdx,
-                                                    panjarValues[pInfo.id.toString()] || '0'
-                                                  ) > 0
-                                                ? formatInputCurrency(
-                                                    getRowDefaultDibayar(
-                                                      pInfo,
-                                                      rows,
-                                                      row,
-                                                      rIdx,
-                                                      panjarValues[pInfo.id.toString()] || '0'
-                                                    )
-                                                  )
-                                                : ''
+                                              : ''
                                           }
                                           onChange={(e) => {
                                             const formatted = formatInputCurrency(e.target.value);
@@ -1460,7 +1446,7 @@ const Pembayaran = () => {
                                       className="py-2 px-3 text-right font-bold text-rose-600 border-slate-200 border-r border-r-mauve-900/90 border-t  whitespace-nowrap"
                                       colSpan={2}
                                     >
-                                      - {formatCurrency(panjar)}
+                                      ({formatCurrency(panjar)})
                                     </td>
                                   </tr>
                                   {/* Total Dibayar row per employee */}

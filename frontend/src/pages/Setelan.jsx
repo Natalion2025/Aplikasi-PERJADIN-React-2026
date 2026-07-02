@@ -16,21 +16,14 @@ const Setelan = () => {
   const [success, setSuccess] = useState('');
 
   // Load theme settings from localStorage on mount
+  // PERBAIKAN: Logika ini dipindahkan ke App.jsx agar global.
+  // Di sini kita hanya membaca state awal untuk ditampilkan di UI.
   useEffect(() => {
-    const isDark =
-      document.documentElement.classList.contains('dark') ||
-      localStorage.getItem('theme') === 'dark';
+    const isDark = localStorage.getItem('theme') !== 'light';
     setDarkMode(isDark);
 
     const savedFontSize = localStorage.getItem('fontSize') || 'base';
     setFontSize(savedFontSize);
-    // Hapus kelas ukuran font lain sebelum menerapkan yang baru
-    document.documentElement.classList.remove('text-sm', 'text-base', 'text-lg');
-    if (savedFontSize === 'sm') {
-      document.documentElement.classList.add('text-sm');
-    } else if (savedFontSize === 'lg') {
-      document.documentElement.classList.add('text-lg');
-    }
   }, []);
 
   const handlePasswordChange = (e) => {
@@ -100,7 +93,7 @@ const Setelan = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto space-y-6">
+    <div className="max-w-xl mx-auto space-y-6 dark:bg-slate-900">
       {/* Title */}
       <div>
         <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">

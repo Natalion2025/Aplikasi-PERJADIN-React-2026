@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Sidebar from './components/Sidebar';
@@ -91,7 +91,7 @@ const Layout = () => {
         <Header toggleSidebar={toggleSidebar} />
 
         {/* Halaman Konten */}
-        <main className="flex-1 bg-mauve-100 p-6 md:p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 bg-mauve-100 dark:bg-slate-900 p-6 md:p-8 max-w-7xl w-full mx-auto">
           <Routes>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<Dashboard />} />
@@ -118,6 +118,28 @@ const Layout = () => {
 };
 
 const App = () => {
+  // Efek global untuk menerapkan tema dan ukuran font saat aplikasi dimuat
+  useEffect(() => {
+    // PERBAIKAN: Logika untuk menerapkan tema berdasarkan localStorage
+    // Default ke mode gelap jika tidak ada pengaturan tema yang tersimpan
+    const isDark = localStorage.getItem('theme') !== 'light';
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    // Terapkan ukuran font yang tersimpan
+    const savedFontSize = localStorage.getItem('fontSize') || 'base';
+    document.documentElement.classList.remove('text-sm', 'text-base', 'text-lg');
+    if (savedFontSize === 'sm') {
+      document.documentElement.classList.add('text-sm');
+    } else if (savedFontSize === 'lg') {
+      document.documentElement.classList.add('text-lg');
+    }
+    // 'base' (normal) tidak memerlukan kelas tambahan
+  }, []);
+
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <AuthProvider>
