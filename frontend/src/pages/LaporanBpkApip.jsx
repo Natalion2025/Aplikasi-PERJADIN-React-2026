@@ -202,11 +202,13 @@ const LaporanBpkApip = () => {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-6">
+      <div className="bg-white p-6 dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-600 shadow-sm space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">LAPORAN BPK & APIP</h1>
-            <p className="text-sm text-slate-500">
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200 tracking-tight">
+              LAPORAN BPK & APIP
+            </h1>
+            <p className="text-sm text-slate-500 dark:text-slate-400">
               Hasil rekap audit perjalanan dinas Pemkab Melawi terperinci.
             </p>
           </div>
@@ -222,7 +224,7 @@ const LaporanBpkApip = () => {
         </div>
 
         {/* Tab Switching & Filters */}
-        <div className="flex flex-col xl:flex-row xl:items-center justify-between border-b border-slate-100 pb-2 gap-4">
+        <div className="flex flex-col xl:flex-row xl:items-center justify-between border-b border-slate-100 dark:border-slate-600 pb-2 gap-4">
           <div className="flex flex-wrap gap-2">
             {TABS.map((tab) => (
               <button
@@ -233,7 +235,7 @@ const LaporanBpkApip = () => {
                 }}
                 className={`px-4 py-2.5 text-xs font-bold uppercase rounded-t-2xl rounded-l-none transition-all duration-200 flex items-center gap-1.5 ${
                   activeTab === tab.id
-                    ? 'bg-mauve-500 text-white'
+                    ? 'bg-mauve-500 dark:bg-slate-100 text-white dark:text-mauve-700'
                     : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
                 }`}
               >
@@ -276,14 +278,14 @@ const LaporanBpkApip = () => {
             )}
 
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-400 font-semibold">Tampilkan:</span>
+              <span className="text-sm text-slate-400 font-semibold">Tampilkan:</span>
               <select
                 value={limit}
                 onChange={(e) => {
                   setLimit(parseInt(e.target.value));
                   setPage(1);
                 }}
-                className="px-2.5 py-1.5 text-xs border border-slate-200 rounded-lg text-slate-600 bg-white focus:outline-none focus:border-indigo-500"
+                className="px-1 py-1.5 text-sm dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600 border border-slate-200 rounded-lg text-slate-600 bg-white focus:outline-none focus:border-indigo-500"
               >
                 <option value={5}>5</option>
                 <option value={15}>15</option>
@@ -310,25 +312,25 @@ const LaporanBpkApip = () => {
         ) : (
           <div className="space-y-4 animate-in fade-in duration-200">
             <div className="overflow-x-auto rounded-2xl rounded-b-none">
-              <table className="min-w-full divide-y divide-slate-100">
-                <thead className="">
-                  <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
+              <table className="min-w-full divide-y divide-slate-100 text-slate-600 dark:bg-slate-800 text-xs">
+                <thead className="uppercase">
+                  <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double font-bold tracking-wider">
                     {TABLE_HEADERS[activeTab].map((header, i) => (
                       <th
                         key={i}
-                        className={`py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff] ${i === 0 ? 'text-center w-12' : 'text-left'}`}
+                        className={`py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b] ${i === 0 ? 'text-center w-12' : 'text-left'}`}
                       >
                         {header}
                       </th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-slate-600">
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-600 text-slate-600">
                   {data.length === 0 ? (
                     <tr>
                       <td
                         colSpan={TABLE_HEADERS[activeTab].length}
-                        className="py-10 text-center text-slate-400"
+                        className="py-10 text-center text-slate-400 "
                       >
                         Tidak ada data untuk kategori ini.
                       </td>
@@ -342,6 +344,7 @@ const LaporanBpkApip = () => {
                         page={page}
                         limit={limit}
                         activeTab={activeTab}
+                        className="dark:text-slate-400"
                       />
                     ))
                   )}
@@ -351,7 +354,7 @@ const LaporanBpkApip = () => {
 
             {/* Pagination Audit List */}
             {!loading && totalItems > 0 && (
-              <div className="flex items-center justify-between border-t border-slate-100 pt-4 px-1">
+              <div className="flex items-center justify-between border-t border-slate-100 dark:border-slate-600 pt-4 px-1">
                 <span className="text-xs text-slate-500 font-medium">
                   Menampilkan Halaman <span className="font-bold text-slate-500">{page}</span> dari{' '}
                   <span className="font-bold text-slate-500">{totalPages}</span> ({totalItems} total
@@ -398,162 +401,207 @@ const LaporanBpkApip = () => {
 };
 
 const BasicRow = ({ item, rowNumber }) => (
-  <tr className="hover:bg-slate-50/30 transition-colors">
-    <td className="py-3 px-4 text-center font-medium text-slate-700 text-sm align-top">
+  <tr className="dark:hover:bg-slate-700/30 transition-colors ">
+    <td className="py-3 px-4 text-center font-medium text-slate-700 dark:text-slate-200 text-sm align-top">
       {rowNumber}.
     </td>
     <td className="py-3 px-4 align-top">
-      <span className="font-semibold text-slate-700 block text-xs ">{item.nama_lengkap}</span>
+      <span className="font-semibold text-slate-700 dark:text-slate-200 block text-xs ">
+        {item.nama_lengkap}
+      </span>
       <span
-        className="text-[10px] text-slate-500 text-xs block truncate max-w-[150px]"
+        className="text-[10px] text-slate-500 dark:text-slate-400 text-xs block truncate max-w-[150px]"
         title={item.jabatan}
       >
         {item.jabatan}
       </span>
     </td>
     <td className="py-3 px-4 font-medium flex flex-col text-slate-700 align-top text-xs">
-      <span className="whitespace-nowrap">{item.pangkat}</span>
-      <span className="text-slate-500 text-xs">{item.golongan}</span>
+      <span className="whitespace-nowrap dark:text-slate-200">{item.pangkat}</span>
+      <span className="text-slate-500 text-xs dark:text-slate-400">{item.golongan}</span>
     </td>
-    <td className="py-3 px-4 font-medium text-xs text-slate-700 align-top">{item.nomor_surat}</td>
-    <td className="py-3 px-4 font-medium text-xs text-slate-700 align-top">
+    <td className="py-3 px-4 font-medium text-xs text-slate-700 align-top dark:text-slate-200">
+      {item.nomor_surat}
+    </td>
+    <td className="py-3 px-4 font-medium text-xs text-slate-700 align-top dark:text-slate-200">
       {item.nomor_sppd || '-'}
     </td>
     <td className="py-3 px-4 whitespace-nowrap align-top">
-      <span className="text-slate-700 font-medium block text-xs">
+      <span className="text-slate-700 dark:text-slate-200 font-medium block text-xs">
         {formatDate(item.tanggal_berangkat)}
       </span>
-      <span className="text-xs text-slate-700 block font-medium">
+      <span className="text-xs text-slate-700 dark:text-slate-200 block font-medium">
         s/d {formatDate(item.tanggal_kembali)}
       </span>
     </td>
     <td
-      className="py-3 px-4 max-w-[180px] truncate text-xs font-medium text-slate-700 align-top"
+      className="py-3 px-4 max-w-[180px] truncate text-xs font-medium text-slate-700 dark:text-slate-200 align-top"
       title={item.maksud_perjalanan}
     >
       {item.maksud_perjalanan}
     </td>
-    <td className="py-3 px-4 font-medium text-slate-700 align-top text-xs whitespace-nowrap">
+    <td className="py-3 px-4 font-medium text-slate-700 dark:text-slate-200 align-top text-xs whitespace-nowrap">
       {item.mata_anggaran_nama ? 'Dalam Daerah' : 'Luar Daerah'}
     </td>
   </tr>
 );
 
 const TransportRow = ({ item, rowNumber }) => (
-  <tr className="hover:bg-slate-50/30 transition-colors">
-    <td className="py-3 px-4 text-center font-medium text-sm text-slate-700 align-top">
+  <tr className="dark:hover:bg-slate-700/30 transition-colors">
+    <td className="py-3 px-4 text-center font-medium text-sm text-slate-700 dark:text-slate-200 align-top">
       {rowNumber}.
     </td>
     <td className="py-3 px-4 align-top">
-      <span className="font-semibold text-slate-700 block text-xs">{item.nama_lengkap}</span>
-      <span className="text-xs text-slate-500 block truncate max-w-[140px]" title={item.jabatan}>
+      <span className="font-semibold text-slate-700 dark:text-slate-200 block text-xs">
+        {item.nama_lengkap}
+      </span>
+      <span
+        className="text-xs text-slate-500 dark:text-slate-400 block truncate max-w-[140px]"
+        title={item.jabatan}
+      >
         {item.jabatan}
       </span>
     </td>
-    <td className="py-3 px-4 text-xs text-slate-700 align-top">{item.nomor_surat}</td>
-    <td className="py-3 px-4 font-medium text-xs text-slate-700 align-top">{item.perusahaan}</td>
+    <td className="py-3 px-4 text-xs text-slate-700 dark:text-slate-200 align-top">
+      {item.nomor_surat}
+    </td>
+    <td className="py-3 px-4 font-medium text-xs text-slate-700 dark:text-slate-200 align-top">
+      {item.perusahaan}
+    </td>
     <td className="py-3 px-4 align-top">
-      <span className="text-slate-700 block font-medium text-xs">{item.kode_boking || '-'}</span>
-      <span className="text-xs text-slate-500 block">{item.nomor_penerbangan || '-'}</span>
+      <span className="text-slate-700 dark:text-slate-200 block font-medium text-xs">
+        {item.kode_boking || '-'}
+      </span>
+      <span className="text-xs text-slate-500 dark:text-slate-400 block">
+        {item.nomor_penerbangan || '-'}
+      </span>
     </td>
     <td className="py-3 px-4 text-xs align-top">
-      <span className="text-slate-700 font-medium block">{item.nomor_tiket || '-'}</span>
-      <span className=" text-slate-500 block font-medium">
+      <span className="text-slate-700 font-medium block dark:text-slate-200">
+        {item.nomor_tiket || '-'}
+      </span>
+      <span className=" text-slate-500 block font-medium dark:text-slate-200">
         {item.tanggal_tiket ? formatDate(item.tanggal_tiket) : '-'}
       </span>
     </td>
     <td className="py-3 px-4 whitespace-nowrap text-xs align-top">
-      <span className="text-slate-700 font-medium">{item.terminal_berangkat || '-'}</span>
-      <span className="text-slate-500 mx-1">→</span>
-      <span className="text-slate-700 font-medium">{item.terminal_tiba || '-'}</span>
+      <span className="text-slate-700 dark:text-slate-200 font-medium">
+        {item.terminal_berangkat || '-'}
+      </span>
+      <span className="text-slate-500 mx-1 dark:text-slate-200">→</span>
+      <span className="text-slate-700 font-medium dark:text-slate-200">
+        {item.terminal_tiba || '-'}
+      </span>
     </td>
-    <td className="py-3 px-4 text-center font-medium text-slate-700 text-xs align-top">
+    <td className="py-3 px-4 text-center font-medium text-slate-700 dark:text-slate-200 text-xs align-top">
       {formatCurrency(item.nominal)}
     </td>
   </tr>
 );
 
 const AccomodationRow = ({ item, rowNumber }) => (
-  <tr className="hover:bg-slate-50/30 transition-colors">
-    <td className="py-3 px-4 text-center font-medium text-slate-700 text-sm align-top">
+  <tr className="dark:hover:bg-slate-700/30 transition-colors">
+    <td className="py-3 px-4 text-center font-medium text-slate-700 dark:text-slate-200 text-sm align-top">
       {rowNumber}.
     </td>
     <td className="py-3 px-4 align-top">
-      <span className="font-semibold text-slate-700 block text-xs">{item.nama_lengkap}</span>
-      <span className="text-xs text-slate-700 block truncate max-w-[140px]">{item.jabatan}</span>
+      <span className="font-semibold text-slate-700 block text-xs dark:text-slate-200">
+        {item.nama_lengkap}
+      </span>
+      <span className="text-xs text-slate-700 dark:text-slate-400 block truncate max-w-[140px]">
+        {item.jabatan}
+      </span>
     </td>
-    <td className="py-3 px-4 text-xs text-slate-700 font-medium align-top">{item.nomor_surat}</td>
-    <td className="py-3 px-4 text-xs font-medium text-slate-700 align-top">
+    <td className="py-3 px-4 text-xs text-slate-700 dark:text-slate-200 font-medium align-top">
+      {item.nomor_surat}
+    </td>
+    <td className="py-3 px-4 text-xs text-slate-700 dark:text-slate-200 font-medium align-top">
       {item.nama_hotel || '-'}
     </td>
-    <td className="py-3 px-4 text-xs text-slate-700 font-medium align-top">
+    <td className="py-3 px-4 text-xs text-slate-700 dark:text-slate-200 font-medium align-top">
       {item.lokasi_hotel || '-'}
     </td>
     <td className="py-3 px-4 text-xs align-top">
-      <span className="text-slate-700 block">{formatDate(item.tanggal_checkIn)}</span>
-      <span className="text-xs text-slate-700 block font-medium">
+      <span className="text-slate-700 dark:text-slate-200 block">
+        {formatDate(item.tanggal_checkIn)}
+      </span>
+      <span className="text-xs text-slate-700 dark:text-slate-200 block font-medium">
         s/d {formatDate(item.tanggal_checkOut)}
       </span>
     </td>
-    <td className="py-3 px-4 text-center text-xs font-medium text-slate-700 align-top">
+    <td className="py-3 px-4 text-center text-xs font-medium text-slate-700 dark:text-slate-200 align-top">
       {item.malam || 0}
     </td>
-    <td className="py-3 px-4 text-right text-xs font-medium text-slate-700 align-top">
+    <td className="py-3 px-4 text-right text-xs font-medium text-slate-700 dark:text-slate-200 align-top">
       {formatCurrency(item.harga_satuan)}
     </td>
-    <td className="py-3 px-4 text-right text-xs font-medium text-slate-700 align-top">
+    <td className="py-3 px-4 text-right text-xs font-medium text-slate-700 dark:text-slate-200 align-top">
       {formatCurrency(item.total_harga)}
     </td>
   </tr>
 );
 
 const MealRow = ({ item, rowNumber }) => (
-  <tr className="hover:bg-slate-50/30 transition-colors">
-    <td className="py-3 px-4 text-center font-medium text-sm text-slate-700 align-top">
+  <tr className="dark:hover:bg-slate-700/30 transition-colors">
+    <td className="py-3 px-4 text-center font-medium text-sm text-slate-700 dark:text-slate-200 align-top">
       {rowNumber}.
     </td>
     <td className="py-3 px-4 align-top">
-      <span className="font-semibold text-slate-700 block text-xs">{item.nama_lengkap}</span>
-      <span className="text-xs text-slate-500 block truncate max-w-[150px]">{item.jabatan}</span>
+      <span className="font-semibold text-slate-700 dark:text-slate-200 block text-xs">
+        {item.nama_lengkap}
+      </span>
+      <span className="text-xs text-slate-500 dark:text-slate-400 block truncate max-w-[150px]">
+        {item.jabatan}
+      </span>
     </td>
-    <td className="py-3 px-4 font-medium text-xs text-slate-700 align-top">{item.nomor_surat}</td>
-    <td className="py-3 px-4 text-center font-medium text-xs text-slate-700 align-top">
+    <td className="py-3 px-4 font-medium text-xs text-slate-700 dark:text-slate-200 align-top">
+      {item.nomor_surat}
+    </td>
+    <td className="py-3 px-4 text-center font-medium text-xs text-slate-700 dark:text-slate-200 align-top">
       {item.jumlah_hari || 0}
     </td>
-    <td className="py-3 px-4 text-right font-medium text-xs text-slate-700 align-top">
+    <td className="py-3 px-4 text-right font-medium text-xs text-slate-700 dark:text-slate-200 align-top">
       {formatCurrency(item.tarif_satuan)}
     </td>
-    <td className="py-3 px-4 text-right font-medium text-xs text-slate-700 align-top">
+    <td className="py-3 px-4 text-right font-medium text-xs text-slate-700 dark:text-slate-200 align-top">
       {formatCurrency(item.total)}
     </td>
-    <td className="py-3 px-4 text-right font-medium text-xs text-slate-700 align-top">
+    <td className="py-3 px-4 text-right font-medium text-xs text-slate-700 dark:text-slate-200 align-top">
       {formatCurrency(item.biaya_representatif)}
     </td>
   </tr>
 );
 
 const OtherRow = ({ item, rowNumber }) => (
-  <tr className="hover:bg-slate-50/30 transition-colors">
-    <td className="py-3 px-4 text-center font-medium text-sm text-slate-700 align-top">
+  <tr className="dark:hover:bg-slate-700/30 transition-colors">
+    <td className="py-3 px-4 text-center font-medium text-sm text-slate-700 dark:text-slate-200 align-top">
       {rowNumber}.
     </td>
     <td className="py-3 px-4 align-top">
-      <span className="font-semibold text-slate-700 block text-xs">{item.nama_lengkap}</span>
-      <span className="text-xs text-slate-500 block truncate max-w-[140px]">{item.jabatan}</span>
+      <span className="font-semibold text-slate-700 dark:text-slate-200 block text-xs">
+        {item.nama_lengkap}
+      </span>
+      <span className="text-xs text-slate-500 dark:text-slate-400 block truncate max-w-[140px]">
+        {item.jabatan}
+      </span>
     </td>
-    <td className="py-3 px-4 text-xs text-slate-700 font-medium align-top">{item.nomor_surat}</td>
-    <td className="py-3 px-4 text-xs text-slate-700 font-medium align-top">{item.uraian || '-'}</td>
-    <td className="py-3 px-4 text-center text-xs font-medium text-slate-700 align-top">
+    <td className="py-3 px-4 text-xs text-slate-700 dark:text-slate-200 font-medium align-top">
+      {item.nomor_surat}
+    </td>
+    <td className="py-3 px-4 text-xs text-slate-700 dark:text-slate-200 font-medium align-top">
+      {item.uraian || '-'}
+    </td>
+    <td className="py-3 px-4 text-center text-xs font-medium text-slate-700 dark:text-slate-200 align-top">
       {item.jumlah_hari || '-'}
     </td>
-    <td className="py-3 px-4 text-right text-xs font-medium text-slate-700 align-top">
+    <td className="py-3 px-4 text-right text-xs font-medium text-slate-700 dark:text-slate-200 align-top">
       {item.tarif_satuan > 0 ? formatCurrency(item.tarif_satuan) : '-'}
     </td>
-    <td className="py-3 px-4 text-right font-medium text-xs text-slate-700 align-top">
+    <td className="py-3 px-4 text-right font-medium text-xs text-slate-700 dark:text-slate-200 align-top">
       {formatCurrency(item.total)}
     </td>
     <td
-      className="py-3 px-4 text-slate-700 text-left font-medium italic text-xs truncate align-top max-w-[150px]"
+      className="py-3 px-4 text-slate-700 dark:text-slate-200 text-left font-medium italic text-xs truncate align-top max-w-[150px]"
       title={item.keterangan}
     >
       {item.keterangan || '-'}

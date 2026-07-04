@@ -201,8 +201,10 @@ const Anggaran = () => {
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Manajemen Mata Anggaran</h1>
-          <p className="text-sm text-slate-400">
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+            Manajemen Mata Anggaran
+          </h1>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             Kelola rincian program, kegiatan, sub-kegiatan, dan pagu anggaran dinas.
           </p>
         </div>
@@ -216,7 +218,7 @@ const Anggaran = () => {
       </div>
 
       {/* Main Table Card */}
-      <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-6">
+      <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-600 shadow-sm space-y-6">
         {/* Search & Stats */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="relative w-full sm:max-w-md">
@@ -231,7 +233,7 @@ const Anggaran = () => {
                 setSearch(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-[70%] pl-11 pr-4 py-2.5 bg-gradient-to-r from-green-50 to bg-sky-50 border border-slate-300 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm"
+              className="w-[70%] pl-11 pr-4 py-2.5 dark:bg-slate-900 dark:text-slate-200 dark:focus:bg-slate-900 dark:focus:ring-emerald-500  border border-slate-300 dark:border-slate-600 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm"
             />
           </div>
         </div>
@@ -251,24 +253,24 @@ const Anggaran = () => {
         ) : (
           <div className="overflow-x-auto  rounded-2xl">
             <table className="min-w-full divide-y divide-slate-100">
-              <thead className="">
-                <tr className="bg-mauve-500 text-slate-100 border-b-2  border-mauve-500 border-double">
-                  <th className="px-5 py-3 text-center text-xs font-bold  uppercase tracking-wider w-16 shadow-[inset_0_-2px_0_0_#ffffff]">
+              <thead className="text-xs uppercase">
+                <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double font-bold">
+                  <th className="px-5 py-3 text-center tracking-wider w-16 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     No
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-5 py-3 text-left tracking-wider shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     Kode Anggaran
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-5 py-3 text-left tracking-wider shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     Program & Sub Kegiatan
                   </th>
-                  <th className="px-5 py-3 whitespace-nowrap text-left text-xs font-bold uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-5 py-3 whitespace-nowrap text-left tracking-wider shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     Pagu Anggaran
                   </th>
-                  <th className="px-5 py-3 whitespace-nowrap text-left text-xs font-bold uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-5 py-3 whitespace-nowrap text-left tracking-wider shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     Realisasi & Sisa
                   </th>
-                  <th className="px-5 py-3 text-center text-xs font-bold uppercase tracking-wider w-24 shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-5 py-3 text-center tracking-wider w-24 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     Aksi
                   </th>
                 </tr>
@@ -277,14 +279,16 @@ const Anggaran = () => {
                 {anggaranList.map((anggaran, index) => (
                   <tr
                     key={anggaran.mata_anggaran_kode}
-                    className="hover:bg-slate-50/20 transition-colors"
+                    className="hover:bg-slate-50/20 dark:hover:bg-slate-700/30 transition-colors"
                   >
-                    <td className="px-5 py-3 text-slate-800 text-center align-top">
+                    <td className="px-5 py-3 text-slate-800 dark:text-slate-200 text-center align-top">
                       {(currentPage - 1) * itemsPerPage + index + 1}
                     </td>
                     <td className="px-5 py-3 align-top">
-                      <p className=" text-slate-800">{anggaran.mata_anggaran_nama}</p>
-                      <p className="text-xs text-slate-500 font-mono mt-0.5">
+                      <p className=" text-slate-800 dark:text-slate-200">
+                        {anggaran.mata_anggaran_nama}
+                      </p>
+                      <p className="text-xs text-slate-500 font-mono mt-0.5 dark:text-slate-400">
                         {anggaran.mata_anggaran_kode}
                       </p>
                       {anggaran.pptk_nama && (
@@ -294,20 +298,22 @@ const Anggaran = () => {
                       )}
                     </td>
                     <td className="px-5 py-3 align-top">
-                      <p className="text-slate-700 font-medium line-clamp-1">{anggaran.program}</p>
-                      <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">
+                      <p className="text-slate-700 font-medium dark:text-slate-200 font-medium line-clamp-1">
+                        {anggaran.program}
+                      </p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
                         {anggaran.sub_kegiatan}
                       </p>
                     </td>
-                    <td className="px-5 py-3 text-slate-800 align-top">
+                    <td className="px-5 py-3 text-slate-800 dark:text-slate-200 align-top">
                       {formatRupiah(anggaran.nilai_anggaran)}
                     </td>
                     <td className="px-5 py-3 align-top">
-                      <p className="text-emerald-600 font-semibold">
+                      <p className="text-emerald-600 font-semibold dark:text-emerald-400">
                         {formatRupiah(anggaran.realisasi)}{' '}
                         <span className="text-[10px] text-slate-400 font-normal">terpakai</span>
                       </p>
-                      <p className="text-xs text-slate-500 mt-0.5">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                         Sisa: {formatRupiah(anggaran.sisa)}
                       </p>
                     </td>
@@ -315,14 +321,14 @@ const Anggaran = () => {
                       <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => handleEdit(anggaran)}
-                          className="p-2 text-mauve-900/90 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all"
+                          className="p-1.5 text-mauve-700 dark:text-yellow-400 dark:hover:text-yellow-400 dark:hover:bg-slate-100/10 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg transition-all"
                           title="Ubah Anggaran"
                         >
                           <Edit size={16} />
                         </button>
                         <button
                           onClick={() => handleDelete(anggaran.id, anggaran.mata_anggaran_kode)}
-                          className="p-2 text-mauve-900/90 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
+                          className="p-2 text-mauve-700 dark:text-rose-400 dark:hover:text-rose-400 dark:hover:bg-slate-100/10 hover:text-rose-600 hover:bg-red-50 rounded-lg transition-all"
                           title="Hapus Anggaran"
                         >
                           <Trash2 size={16} />
@@ -338,7 +344,7 @@ const Anggaran = () => {
 
         {/* Pagination Controls */}
         {!loading && totalItems > 0 && (
-          <div className="flex items-center justify-between border-t border-slate-100 pt-5">
+          <div className="flex items-center justify-between dark:border-none border-t border-slate-100 dark:border-slate-600 pt-5">
             <span className="text-xs text-slate-400">
               Menampilkan Halaman {currentPage} dari {totalPages} ({totalItems} total data)
             </span>

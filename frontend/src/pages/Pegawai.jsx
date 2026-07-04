@@ -169,8 +169,10 @@ const Pegawai = () => {
       {/* Header section */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Manajemen Data Pegawai</h1>
-          <p className="text-sm text-slate-400">
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+            Manajemen Data Pegawai
+          </h1>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             Kelola informasi pangkat, golongan, jabatan, dan bidang pegawai.
           </p>
         </div>
@@ -184,7 +186,7 @@ const Pegawai = () => {
       </div>
 
       {/* Main Area Card */}
-      <div className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm space-y-6">
+      <div className="bg-white p-6 rounded-3xl dark:bg-slate-800 border border-slate-100 dark:border-slate-600 shadow-sm space-y-6">
         {/* Search & Stats */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="relative w-full sm:max-w-md">
@@ -199,10 +201,10 @@ const Pegawai = () => {
                 setSearch(e.target.value);
                 setCurrentPage(1); // Reset ke halaman pertama saat mencari
               }}
-              className="w-[70%] pl-11 pr-4 py-2.5 bg-gradient-to-r from-green-50 to bg-sky-50 border border-slate-300 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm"
+              className="w-[70%] pl-11 pr-4 py-2.5  border border-slate-300 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-600 rounded-2xl text-slate-800  placeholder-slate-400 focus:outline-none focus:border-none focus:ring-2 dark:focus:ring-emerald-500 focus:ring-mauve-500 focus:bg-white transition-all text-sm"
             />
           </div>
-          <span className="text-xs font-semibold text-slate-400 bg-slate-50 border border-slate-150 px-3 py-1.5 rounded-xl">
+          <span className="text-xs font-semibold text-slate-400 dark:bg-slate-800 dark:text-indigo-400 dark:border-indigo-400 bg-slate-50 border border-slate-150 px-3 py-1.5 rounded-xl">
             Total: {totalItems} Pegawai
           </span>
         </div>
@@ -222,64 +224,73 @@ const Pegawai = () => {
         ) : (
           <div className="overflow-x-auto rounded-2xl rounded-b-none ">
             <table className="min-w-full divide-y divide-slate-100">
-              <thead className="">
-                <tr className="bg-mauve-500 text-slate-100 border-b-2  border-mauve-500 border-double">
-                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider w-16 shadow-[inset_0_-2px_0_0_#ffffff]">
+              <thead className="text-xs uppercase">
+                <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double font-bold">
+                  <th className="px-5 py-3 text-left tracking-wider w-16 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     No
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-5 py-3 text-left tracking-wider shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     Nama Lengkap/NIP
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-5 py-3 text-left tracking-wider shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     Pangkat/Gol
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-5 py-3 text-left tracking-wider shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     Jabatan
                   </th>
-                  <th className="px-5 py-3 text-left text-xs font-bold  uppercase tracking-wider shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-5 py-3 text-left tracking-wider shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     Bidang
                   </th>
-                  <th className="px-5 py-3 text-center text-xs font-bold  uppercase tracking-wider w-24 shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-5 py-3 text-center tracking-wider w-24 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     Aksi
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 text-sm">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-600/60 text-sm">
                 {pegawaiList.map((pegawai, index) => (
-                  <tr key={pegawai.id} className="hover:bg-slate-50/20  transition-colors">
-                    <td className="px-5 py-3 text-center text-slate-800 align-top">
+                  <tr
+                    key={pegawai.id}
+                    className="hover:bg-slate-50/20 dark:hover:bg-slate-700/30  transition-colors"
+                  >
+                    <td className="px-3 py-3 text-center text-slate-800 dark:text-slate-200 align-top">
                       {(currentPage - 1) * itemsPerPage + index + 1}
                     </td>
-                    <td className="px-5 py-3">
-                      <p className="font-semibold text-slate-800">{pegawai.nama_lengkap}</p>
-                      <p className="text-xs text-slate-500 font-mono mt-0.5">{pegawai.nip}</p>
+                    <td className="px-3 py-3">
+                      <p className="font-semibold text-slate-800 dark:text-slate-200">
+                        {pegawai.nama_lengkap}
+                      </p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5">
+                        {pegawai.nip}
+                      </p>
                     </td>
-                    <td className="px-5 py-3">
-                      <p className="text-slate-700 font-medium">{pegawai.pangkat || '-'}</p>
-                      <p className="text-xs text-slate-500 mt-0.5">
+                    <td className="px-3 py-3">
+                      <p className="text-slate-700 font-medium dark:text-slate-200">
+                        {pegawai.pangkat || '-'}
+                      </p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                         {pegawai.golongan ? `Gol. ${pegawai.golongan}` : '-'}
                       </p>
                     </td>
-                    <td className="px-5 py-3 text-slate-700 align-top font-medium capitalize">
+                    <td className="px-3 py-3 text-slate-700 dark:text-slate-200 align-top font-medium capitalize">
                       {pegawai.jabatan?.toLowerCase()}
                     </td>
-                    <td className="px-5 py-3">
-                      <span className="inline-flex px-2.5 py-1 rounded-xl text-xs font-bold bg-indigo-50/50 border text-mauve-700/90">
+                    <td className="px-3 py-3">
+                      <span className="inline-flex px-2.5 py-1 rounded-xl text-xs font-bold bg-indigo-50/50 border text-mauve-700/90 dark:bg-slate-800 dark:text-emerald-400">
                         {pegawai.bidang || '-'}
                       </span>
                     </td>
-                    <td className="px-5 py-3">
+                    <td className="px-3 py-3">
                       <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => handleEdit(pegawai)}
-                          className="p-2 text-mauve-700/90 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all"
+                          className="p-1.5 text-mauve-700 dark:text-yellow-400 dark:hover:text-yellow-400 dark:hover:bg-slate-100/10 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg transition-all"
                           title="Ubah Data"
                         >
                           <Edit size={16} />
                         </button>
                         <button
                           onClick={() => handleDelete(pegawai.id, pegawai.nama_lengkap)}
-                          className="p-2 text-mauve-700/90 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
+                          className="p-1.5 text-mauve-700 dark:text-rose-400 dark:hover:text-rose-400 dark:hover:bg-slate-100/10 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
                           title="Hapus Data"
                         >
                           <Trash2 size={16} />
@@ -295,7 +306,7 @@ const Pegawai = () => {
 
         {/* Pagination Controls */}
         {!loading && totalItems > 0 && (
-          <div className="flex items-center justify-between border-t border-slate-100 pt-5">
+          <div className="flex items-center justify-between border-t border-slate-100 dark:border-none pt-5">
             <span className="text-xs text-slate-400">
               Menampilkan Halaman {currentPage} dari {totalPages} ({totalItems} total data)
             </span>
@@ -304,7 +315,7 @@ const Pegawai = () => {
                 <button
                   disabled={currentPage === 1}
                   onClick={() => setCurrentPage(currentPage - 1)}
-                  className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                  className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
                 >
                   Sebelumnya
                 </button>
@@ -314,8 +325,8 @@ const Pegawai = () => {
                     onClick={() => setCurrentPage(num)}
                     className={`px-4 py-2 rounded-xl border text-xs font-bold transition-all ${
                       currentPage === num
-                        ? 'bg-indigo-600 text-white border-indigo-600'
-                        : 'border-slate-200 text-slate-600 hover:bg-slate-50 active:bg-slate-100'
+                        ? 'bg-indigo-600 dark:bg-indigo-800 dark:text-slate-200 text-white border-indigo-600'
+                        : 'border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-slate-600 hover:bg-slate-50 active:bg-slate-100'
                     }`}
                   >
                     {num}
@@ -324,7 +335,7 @@ const Pegawai = () => {
                 <button
                   disabled={currentPage === totalPages}
                   onClick={() => setCurrentPage(currentPage + 1)}
-                  className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                  className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
                 >
                   Berikutnya
                 </button>

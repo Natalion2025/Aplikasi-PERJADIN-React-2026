@@ -339,11 +339,11 @@ const Agenda = () => {
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
             <CalendarIcon className="h-7 w-7 text-rose-600" />
             Agenda & Kalender Dinas
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Visualisasi jadwal dan koordinasi perjalanan dinas aktif Pemkab Melawi.
           </p>
         </div>
@@ -357,7 +357,7 @@ const Agenda = () => {
               placeholder="Cari agenda, tujuan, pegawai..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 pr-4 py-2 w-full md:w-64 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500 transition-all text-slate-800 dark:text-slate-200"
+              className="pl-9 pr-4 py-2 w-full md:w-64 rounded-xl border border-slate-200 focus:border-none dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500 dark:focus:ring-emerald-500 transition-all text-slate-800 dark:text-slate-200"
             />
             {searchQuery && (
               <button
@@ -371,9 +371,11 @@ const Agenda = () => {
           <button
             onClick={fetchEvents}
             title="Refresh Data"
-            className="p-2 bg-white dark:bg-slate-805 hover:bg-slate-50 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-600 dark:text-slate-300 transition-all cursor-pointer animate-duration-1000"
+            className="p-2.5 bg-white dark:bg-slate-805 hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-600 dark:text-slate-300 transition-all cursor-pointer animate-duration-1000"
           >
-            <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw
+              className={`h-4 w-4 hover:rotate-180 duration-300 transition-all ${loading ? 'animate-spin' : ''}`}
+            />
           </button>
         </div>
       </div>
@@ -580,7 +582,7 @@ const Agenda = () => {
               </div>
 
               {/* View Tabs */}
-              <div className="bg-slate-100 dark:bg-slate-905 p-1 rounded-xl flex items-center self-start sm:self-center">
+              <div className="bg-slate-100 dark:bg-slate-200 p-1 rounded-xl flex items-center self-start sm:self-center">
                 <button
                   onClick={() => setActiveTab('month')}
                   className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 cursor-pointer ${activeTab === 'month' ? 'bg-white dark:bg-slate-800 text-rose-600 dark:text-rose-400 shadow-sm' : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'}`}
@@ -611,10 +613,14 @@ const Agenda = () => {
               {/* MONTH VIEW */}
               {activeTab === 'month' && (
                 <div className="border-r border-t border-slate-300/50 dark:border-slate-700/80 rounded-2xl overflow-hidden flex flex-col">
-                  {/* Grid Header */}
-                  <div className="grid grid-cols-7 text-center bg-slate-50 dark:bg-slate-900 border-b-0 border-l   border-slate-300/50 dark:border-slate-700 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">
-                    <div>MINGGU</div>
-                    <div>SENIN</div>
+                  {/* Grid Header - PERBAIKAN: Menggunakan thead dan tr untuk konsistensi */}
+                  <div className="grid grid-cols-7 text-center bg-mauve-500 dark:bg-slate-600/60 text-slate-100 dark:text-slate-200 border-b-2 border-mauve-500 dark:border-slate-600/60 py-3 text-xs font-bold tracking-wider">
+                    <div className="shadow-[inset_1px_0_0_0_rgba(255,255,255,0.1)] dark:shadow-[inset_1px_0_0_0_rgba(0,0,0,0.2)]">
+                      MINGGU
+                    </div>
+                    <div className="shadow-[inset_1px_0_0_0_rgba(255,255,255,0.1)] dark:shadow-[inset_1px_0_0_0_rgba(0,0,0,0.2)]">
+                      SENIN
+                    </div>
                     <div>SELASA</div>
                     <div>RABU</div>
                     <div>KAMIS</div>

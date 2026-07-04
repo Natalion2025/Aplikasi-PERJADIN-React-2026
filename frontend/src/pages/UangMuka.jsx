@@ -378,20 +378,20 @@ const UangMuka = () => {
                   setSearch(e.target.value);
                   setPage(1);
                 }}
-                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none"
+                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-500 focus:border-none"
               />
             </div>
 
             {/* Limit selector */}
             <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 flex-shrink-0">
-              <span>Tampilkan:</span>
+              <span className="">Tampilkan:</span>
               <select
                 value={limit}
                 onChange={(e) => {
                   setLimit(Number(e.target.value));
                   setPage(1);
                 }}
-                className="px-2.5 py-1.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-xl focus:outline-none focus:ring-1 focus:ring-mauve-500 focus:border-none text-slate-800 dark:text-slate-200"
+                className="px-1 py-1.5 text-sm border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-xl focus:outline-none focus:ring-1 focus:ring-mauve-500 focus:border-none text-slate-800 dark:text-slate-200"
               >
                 <option value={5}>5</option>
                 <option value={15}>15</option>
@@ -416,24 +416,24 @@ const UangMuka = () => {
           ) : (
             <div className="overflow-x-auto rounded-2xl overflow-hidden">
               <table className="w-full text-xs">
-                <thead className="">
-                  <tr className="bg-mauve-500 text-slate-100 border-b-2  border-mauve-500 border-double dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-400">
-                    <th className="py-3 px-6 text-center w-12 uppercase shadow-[inset_0_-2px_0_0_#ffffff]">
+                <thead className="uppercase">
+                  <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double font-bold">
+                    <th className="py-3 px-6 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       No.
                     </th>
-                    <th className="py-3 px-4 w-44 uppercase shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-4 w-44 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Tgl Panjar
                     </th>
-                    <th className="py-3 px-4 uppercase shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Surat Tugas Terkait
                     </th>
-                    <th className="py-3 px-4 uppercase whitespace-nowrap shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-4 whitespace-nowrap shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Pegawai Pelaksana
                     </th>
-                    <th className="py-3 px-4 w-44 uppercase shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-4 w-44 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Total Biaya
                     </th>
-                    <th className="py-3 px-6 text-center w-36 uppercase shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-6 text-center w-36 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Aksi
                     </th>
                   </tr>
@@ -447,9 +447,9 @@ const UangMuka = () => {
                       <td className="py-3 px-6  text-center text-slate-800 dark:text-slate-400 font-medium align-top">
                         {(page - 1) * limit + idx + 1}.
                       </td>
-                      <td className="py-3 px-10 whitespace-nowrap text-slate-800 dark:text-slate-355 font-medium align-top">
+                      <td className="py-3 px-10 whitespace-nowrap text-slate-800 dark:text-slate-200 font-medium align-top">
                         <div className="flex  items-center gap-1.5">
-                          <Calendar className="h-3.5 w-3.5 text-slate-800" />
+                          <Calendar className="h-3.5 w-3.5 " />
                           {formatDate(panjar.tanggal_panjar)}
                         </div>
                       </td>
@@ -468,28 +468,28 @@ const UangMuka = () => {
                         {formatCurrency(panjar.total_biaya || 0)}
                       </td>
                       <td className="py-3 px-6 text-center space-x-1.5 whitespace-nowrap align-top flex-wrap">
-                        <a
+                        <button
                           href={`/cetak/panjar/${panjar.id}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center justify-center p-2 pt-0 text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-colors"
+                          className="inline-flex p-1.5  items-center justify-center text-mauve-700 dark:text-green-400 dark:hover:text-green-400 dark:hover:bg-slate-100/10 hover:text-green-600 hover:bg-green-50 rounded-lg transition-all"
                           title="Cetak Kuitansi Panjar"
                         >
-                          <Printer className="h-4 w-4 text-mauve-900/90" />
-                        </a>
+                          <Printer className="h-4 w-4 " />
+                        </button>
                         <button
                           onClick={() => handleEditOpen(panjar.id)}
-                          className="inline-flex items-center justify-center p-2 pt-0 text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/30 rounded-lg transition-colors "
+                          className="inline-flex items-center justify-center p-1.5 text-mauve-700 hover:bg-yellow-50 dark:text-yellow-400 dark:hover:text-yellow-400 dark:hover:bg-slate-100/10 hover:text-yellow-600 rounded-lg transition-colors "
                           title="Edit Uang Muka"
                         >
-                          <Edit className="h-4 w-4 text-mauve-900/90" />
+                          <Edit className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => handleDelete(panjar.id, panjar.pelaksana_nama)}
-                          className="inline-flex items-center justify-center p-2 pt-0 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors "
+                          className="inline-flex items-center justify-center p-1.5 text-mauve-700 dark:text-rose-400 dark:hover:text-rose-400 dark:hover:bg-slate-100/10 hover:text-rose-600 hover:bg-red-50 rounded-lg transition-colors "
                           title="Hapus Uang Muka"
                         >
-                          <Trash2 className="h-4 w-4 text-mauve-900/90" />
+                          <Trash2 className="h-4 w-4" />
                         </button>
                       </td>
                     </tr>

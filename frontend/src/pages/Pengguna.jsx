@@ -199,7 +199,7 @@ const Pengguna = () => {
               placeholder="Cari pengguna..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none dark:text-slate-100"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 dark:focus:ring-emerald-500 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none dark:text-slate-100"
             />
           </div>
           {isAllowedToCreate && (
@@ -230,13 +230,23 @@ const Pengguna = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left text-slate-500 dark:text-slate-400">
-              <thead className="text-xs text-slate-700 uppercase bg-slate-50 dark:bg-slate-700/50 dark:text-slate-300">
-                <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold">
-                  <th className="px-6 py-4 shadow-[inset_0_-2px_0_0_#ffffff]">Nama Lengkap</th>
-                  <th className="px-6 py-4 shadow-[inset_0_-2px_0_0_#ffffff]">Username</th>
-                  <th className="px-6 py-4 shadow-[inset_0_-2px_0_0_#ffffff]">NIP / Jabatan</th>
-                  <th className="px-6 py-4 shadow-[inset_0_-2px_0_0_#ffffff]">Peran (Role)</th>
-                  <th className="px-6 py-4 text-center shadow-[inset_0_-2px_0_0_#ffffff]">Aksi</th>
+              <thead className="text-xs text-slate-700 uppercase ">
+                <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double text-xs uppercase font-bold">
+                  <th className="px-6 py-4 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
+                    Nama Lengkap
+                  </th>
+                  <th className="px-6 py-4 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
+                    Username
+                  </th>
+                  <th className="px-6 py-4 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
+                    NIP / Jabatan
+                  </th>
+                  <th className="px-6 py-4 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
+                    Peran (Role)
+                  </th>
+                  <th className="px-6 py-4 text-center shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
+                    Aksi
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
@@ -245,7 +255,7 @@ const Pengguna = () => {
                   return (
                     <tr
                       key={userRow.id}
-                      className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors"
+                      className="bg-white  dark:bg-slate-800 dark:hover:bg-slate-700/30 dark:border-slate-700 transition-colors"
                     >
                       <td className="px-6 py-3 whitespace-nowrap align-top">
                         <div className="flex items-center gap-3">
@@ -275,10 +285,10 @@ const Pengguna = () => {
                         @{userRow.username}
                       </td>
                       <td className="px-6 py-3 whitespace-nowrap align-top">
-                        <div className="text-slate-700 dark:text-slate-300 font-medium text-xs">
+                        <div className="text-slate-700 dark:text-slate-200 font-medium text-xs">
                           {userRow.nip || '-'}
                         </div>
-                        <div className="text-slate-700 font-medium text-xs mt-0.5">
+                        <div className="text-slate-700 dark:text-slate-400 font-medium text-xs mt-0.5">
                           {userRow.jabatan || '-'}
                         </div>
                       </td>
@@ -300,28 +310,34 @@ const Pengguna = () => {
                         {canEdit ? (
                           <button
                             onClick={() => handleOpenEdit(userRow)}
-                            className="p-1  hover:text-orange-600 bg-slate-50 hover:bg-mauve-50 dark:bg-slate-800 dark:hover:bg-mauve-950/30 rounded-lg transition-all"
+                            className="p-1.5 text-mauve-700 dark:text-yellow-400 dark:hover:text-yellow-400 dark:hover:bg-slate-100/10  hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all"
                             title="Edit Pengguna"
                           >
-                            <Edit className="w-4 h-4 text-mauve-700" />
+                            <Edit className=" w-4 h-4 " />
                           </button>
                         ) : (
-                          <span className="p-1  dark:text-slate-600" title="Hak akses ditolak">
-                            <Edit className="w-4 h-4 text-mauve-700" />
+                          <span
+                            className="p-1.5  text-slate-300 dark:text-slate-600"
+                            title="Hak akses ditolak"
+                          >
+                            <Edit className="w-4 h-4 " />
                           </span>
                         )}
 
                         {canDelete ? (
                           <button
                             onClick={() => handleDelete(userRow)}
-                            className="p-1 hover:text-red-600 hover:bg-red-50 dark:bg-slate-800 dark:hover:bg-red-950/30 rounded-lg transition-all"
+                            className="p-1.5 text-mauve-700 dark:hover:bg-slate-100/10 hover:bg-red-50 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-400 rounded-lg transition-all"
                             title="Hapus Pengguna"
                           >
-                            <Trash2 className="w-4 h-4 text-mauve-700" />
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         ) : (
-                          <span className="p-1  dark:text-slate-600 " title="Tidak dapat dihapus">
-                            <Trash2 className="w-4 h-4 text-slate-300" />
+                          <span
+                            className="p-1.5  text-slate-300 dark:text-slate-600 "
+                            title="Tidak dapat dihapus karena anda adalah admin"
+                          >
+                            <Trash2 className="w-4 h-4 " />
                           </span>
                         )}
                       </td>
@@ -352,7 +368,7 @@ const Pengguna = () => {
               </div>
               <button
                 onClick={() => !submitting && setModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 transition-colors duration-200 dark:text-slate-200 dark:hover:text-slate-400 p-1 rounded-full hover:bg-slate-100/20"
+                className="text-slate-400 hover:text-slate-600 transition-colors duration-200 dark:text-slate-200 dark:hover:text-slate-200 p-1 rounded-full hover:bg-slate-100/20"
                 disabled={submitting}
               >
                 <X className="w-5 h-5" />
@@ -495,7 +511,7 @@ const Pengguna = () => {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="flex items-center gap-2 px-5 py-2 bg-emerald-600 dark:bg-emerald-800/40 dark:hover:bg-emerald-700/40 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 hover:shadow-emerald-600/20 transition-all disabled:opacity-50 cursor-pointer"
+                    className="flex items-center gap-2 px-5 py-2 bg-emerald-600 dark:bg-emerald-800 dark:hover:bg-emerald-700 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 hover:shadow-emerald-600/20 transition-all disabled:opacity-50 cursor-pointer"
                   >
                     {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                     <span>{editingId ? 'Simpan Perubahan' : 'Tambah Pengguna'}</span>

@@ -2098,12 +2098,12 @@ export const CetakLaporanBpk = () => {
         <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">
           Rekapitulasi Belanja Perjalanan Dinas (Audit BPK / APIP)
         </h2>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Format kertas pencetakan diatur otomatis menggunakan A3 Landscape.
         </p>
         <button
           onClick={() => window.print()}
-          className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-md cursor-pointer mt-2"
+          className="px-5 py-2.5 bg-indigo-600 dark:bg-emerald-500 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-md cursor-pointer mt-2"
         >
           Cetak Rekap Audit BPK
         </button>

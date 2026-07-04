@@ -155,7 +155,7 @@ const DaftarPejabat = () => {
               placeholder="Cari pejabat..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none dark:text-slate-100"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-500 focus:border-none dark:text-slate-100"
             />
           </div>
           {isAdminOrSuper && (
@@ -186,20 +186,22 @@ const DaftarPejabat = () => {
         ) : (
           <div className="overflow-x-auto rounded-2xl rounded-b-none">
             <table className="min-w-full divide-y divide-slate-100">
-              <thead className="">
-                <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
-                  <th className="px-6 py-3 text-center w-16 shadow-[inset_0_-2px_0_0_#ffffff]">
+              <thead className="text-xs uppercase">
+                <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double font-bold tracking-wider">
+                  <th className="px-6 py-3 text-center w-16 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     No
                   </th>
-                  <th className="px-6 py-3 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-6 py-3 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     Nama Lengkap
                   </th>
-                  <th className="px-6 py-3 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                  <th className="px-6 py-3 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                     Jabatan Resmi
                   </th>
-                  <th className="px-6 py-3 text-left shadow-[inset_0_-2px_0_0_#ffffff]">NIP</th>
+                  <th className="px-6 py-3 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
+                    NIP
+                  </th>
                   {isAdminOrSuper && (
-                    <th className="px-6 py-3 text-center w-24 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="px-6 py-3 text-center w-24 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Aksi
                     </th>
                   )}
@@ -209,7 +211,7 @@ const DaftarPejabat = () => {
                 {filteredPejabat.map((pejabat, idx) => (
                   <tr
                     key={pejabat.id}
-                    className="bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800/70 transition-colors"
+                    className="bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700/30 transition-colors"
                   >
                     <td className="px-6 py-3 text-center text-sm font-medium text-slate-700">
                       {idx + 1}
@@ -227,14 +229,14 @@ const DaftarPejabat = () => {
                       <td className="px-6 py-3 whitespace-nowrap text-right space-x-2">
                         <button
                           onClick={() => handleOpenEdit(pejabat)}
-                          className="p-1.5 text-mauve-700 hover:text-amber-600 bg-slate-50 hover:bg-amber-50 dark:bg-slate-800 dark:hover:bg-amber-950/30 rounded-lg transition-all"
+                          className="p-1.5 text-mauve-700 dark:text-yellow-400 dark:hover:bg-slate-100/10 dark:hover:text-yellow-400 hover:text-amber-600 hover:bg-amber-50 dark:bg-slate-800 rounded-lg transition-all"
                           title="Edit Pejabat"
                         >
                           <Edit className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => handleDelete(pejabat)}
-                          className="p-1.5 text-mauve-700 hover:text-red-600 bg-slate-50 hover:bg-red-50 dark:bg-slate-800 dark:hover:bg-red-950/30 rounded-lg transition-all"
+                          className="p-1.5 text-mauve-700 dark:text-rose-400 dark:hover:bg-slate-100/10 dark:hover:text-rose-400 hover:text-red-600 hover:bg-red-50 dark:bg-slate-800 rounded-lg transition-all"
                           title="Hapus Pejabat"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -257,8 +259,8 @@ const DaftarPejabat = () => {
             if (e.target === e.currentTarget) setModalOpen(false);
           }}
         >
-          <div className="bg-white dark:bg-slate-800 w-full max-w-md rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden">
-            <div className="flex justify-between items-start p-6 bg-gradient-to-r from-emerald-600 to-teal-500 text-white">
+          <div className="bg-white dark:bg-slate-800 dark:border-slate-700 w-full max-w-md rounded-3xl shadow-xl border border-slate-100  overflow-hidden">
+            <div className="flex justify-between items-start p-6 bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-800 dark:to-teal-700 text-white">
               <div className="flex items-center gap-2.5">
                 <ShieldAlert className="w-5 h-5" />
                 <h3 className="text-lg font-bold text-slate-100 dark:text-slate-50">
@@ -349,7 +351,7 @@ const DaftarPejabat = () => {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 hover:shadow-emerald-600/20 transition-all disabled:opacity-50 cursor-pointer"
+                    className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-800 dark:hover:bg-emerald-700 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 hover:shadow-emerald-600/20 transition-all disabled:opacity-50 cursor-pointer"
                   >
                     {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                     <span>{editingId ? 'Simpan Perubahan' : 'Tambah Pejabat'}</span>

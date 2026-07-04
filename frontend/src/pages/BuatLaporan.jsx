@@ -1163,13 +1163,13 @@ const BuatLaporan = () => {
 
       {/* --- LIST VIEW --- */}
       {view === 'list' && (
-        <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
+        <div className="bg-white p-6 md:p-8 dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-600 shadow-sm space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-slate-800 tracking-tight">
+              <h1 className="text-2xl font-bold text-slate-800 tracking-tight dark:text-slate-200">
                 HASIL PERJALANAN DINAS
               </h1>
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-slate-500 dark:text-slate-400">
                 Kelola Laporan Perjalanan Dinas Jabatan dan Pembatalan Tugas.
               </p>
             </div>
@@ -1192,7 +1192,7 @@ const BuatLaporan = () => {
           </div>
 
           {/* Tabs header & Filters */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 pb-2 gap-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-600 pb-2 gap-4">
             <div className="flex gap-2">
               <button
                 onClick={() => {
@@ -1201,7 +1201,7 @@ const BuatLaporan = () => {
                 }}
                 className={`px-4 py-2 text-sm font-semibold rounded-t-2xl rounded-l-none transition-all duration-200 ${
                   activeTab === 'laporan'
-                    ? 'bg-mauve-500 text-white'
+                    ? 'bg-mauve-500 dark:bg-slate-100 text-white dark:text-mauve-700'
                     : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
                 }`}
               >
@@ -1214,7 +1214,7 @@ const BuatLaporan = () => {
                 }}
                 className={`px-4 py-2 text-sm font-semibold rounded-t-2xl rounded-l-none transition-all duration-200 ${
                   activeTab === 'pembatalan'
-                    ? 'bg-mauve-500 text-white'
+                    ? 'bg-mauve-500 dark:bg-slate-100 text-white dark:text-mauve-700'
                     : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
                 }`}
               >
@@ -1236,20 +1236,20 @@ const BuatLaporan = () => {
                       setSearch(e.target.value);
                       setPage(1);
                     }}
-                    className="w-full pl-9 pr-4 py-2 text-sm border border-slate-300 rounded-xl focus:outline-none focus:border-none focus:ring-2 focus:ring-mauve-500"
+                    className="w-full pl-9 pr-4 py-2 text-sm dark:text-slate-200 dark:focus:bg-slate-900 border border-slate-300 dark:border-slate-600 dark:bg-slate-900 rounded-xl focus:outline-none focus:border-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-500"
                   />
                 </div>
               )}
 
               <div className="flex items-center gap-2">
-                <span className="text-xs text-slate-400 font-medium">Limit:</span>
+                <span className="text-sm text-slate-400 font-medium">Tampilkan:</span>
                 <select
                   value={limit}
                   onChange={(e) => {
                     setLimit(parseInt(e.target.value));
                     setPage(1);
                   }}
-                  className="px-2 py-1 text-xs border border-slate-300 rounded-lg text-slate-600 focus:outline-none focus:border-none focus:ring-1 focus:ring-mauve-500"
+                  className="px-1 py-1.5 text-sm border border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 rounded-xl text-slate-600 focus:outline-none focus:border-none focus:ring-1 focus:ring-mauve-500"
                 >
                   <option value={5}>5</option>
                   <option value={15}>15</option>
@@ -1271,27 +1271,27 @@ const BuatLaporan = () => {
           ) : activeTab === 'laporan' ? (
             <div className="space-y-4">
               <div className="overflow-x-auto rounded-2xl rounded-b-none">
-                <table className="min-w-full divide-y divide-slate-100">
+                <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-600">
                   <thead className="">
-                    <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold">
-                      <th className="py-3 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double text-xs uppercase font-bold">
+                      <th className="py-3 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                         No
                       </th>
-                      <th className="py-3 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                      <th className="py-3 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                         Judul Laporan
                       </th>
-                      <th className="py-3 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                      <th className="py-3 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                         Nomor SPT Terkait
                       </th>
-                      <th className="py-3 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                      <th className="py-3 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                         Tanggal Laporan
                       </th>
-                      <th className="py-3 px-6 pl-16 text-center shadow-[inset_0_-2px_0_0_#ffffff]">
+                      <th className="py-3 pr-3 pl-20 text-center shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                         Aksi
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 text-sm text-slate-600">
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-600 text-sm text-slate-600">
                     {laporanList.length === 0 ? (
                       <tr>
                         <td colSpan={5} className="py-10 text-center text-slate-400">
@@ -1300,36 +1300,40 @@ const BuatLaporan = () => {
                       </tr>
                     ) : (
                       laporanList.map((item, idx) => (
-                        <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
-                          <td className="py-3 px-4 text-center text-slate-800 align-top">
+                        <tr key={item.id} className="dark:hover:bg-slate-700/30 transition-colors">
+                          <td className="py-3 px-4 text-center text-slate-800 font-medium dark:text-slate-200 align-top">
                             {(page - 1) * limit + idx + 1}.
                           </td>
-                          <td className="py-3 px-4 text-slate-800 align-top">{item.judul}</td>
-                          <td className="py-3 px-4 text-slate-800 align-top">{item.nomor_surat}</td>
-                          <td className="py-3 px-4 text-slate-800 align-top">
+                          <td className="py-3 px-4 text-slate-800 font-medium dark:text-slate-200 align-top">
+                            {item.judul}
+                          </td>
+                          <td className="py-3 px-4 text-slate-800 font-medium dark:text-slate-200 align-top">
+                            {item.nomor_surat}
+                          </td>
+                          <td className="py-3 px-4 text-slate-800 font-medium dark:text-slate-200 align-top">
                             {formatDate(item.tanggal_laporan)}
                           </td>
-                          <td className="py-3 px-4 text-right align-top">
+                          <td className="py-3  pr-4 pl-0  text-center align-top">
                             <div className="flex items-center justify-end gap-3.5">
-                              <a
+                              <button
                                 href={`/cetak/laporan/${item.id}`}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="p-1.5 text-mauve-900/90 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-all"
+                                className="p-1.5 text-mauve-700 dark:text-green-400 dark:hover:text-green-400 dark:hover:bg-slate-100/10 hover:bg-green-50 hover:text-green-600 rounded-lg transition-all"
                                 title="Cetak Laporan"
                               >
                                 <Printer size={16} />
-                              </a>
+                              </button>
                               <button
                                 onClick={() => openFormView(item.id)}
-                                className="p-1.5 text-mauve-900/90 hover:text-amber-600 hover:bg-slate-100 rounded-lg transition-all"
+                                className="p-1.5 text-mauve-700 dark:text-yellow-400 dark:hover:text-yellow-400 dark:hover:bg-slate-100/10 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all"
                                 title="Edit Laporan"
                               >
                                 <Edit size={16} />
                               </button>
                               <button
                                 onClick={() => handleDeleteLaporan(item.id)}
-                                className="p-1.5 text-mauve-900/90 hover:text-rose-600 hover:bg-slate-100 rounded-lg transition-all"
+                                className="p-1.5 text-mauve-700 dark:text-rose-400 dark:hover:text-rose-400 dark:hover:bg-slate-100/10 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
                                 title="Hapus Laporan"
                               >
                                 <Trash2 size={16} />
@@ -1345,7 +1349,7 @@ const BuatLaporan = () => {
 
               {/* Pagination controls - PERBAIKAN */}
               {!loading && totalItems > 0 && (
-                <div className="flex items-center justify-between border-t border-slate-100 pt-4 px-1">
+                <div className="flex items-center justify-between border-t border-slate-100 dark:border-none pt-4 px-1">
                   <span className="text-xs text-slate-500">
                     Menampilkan Halaman <span className="font-semibold">{page}</span> dari{' '}
                     <span className="font-semibold">{totalPages}</span> ({totalItems} total data)
@@ -1387,30 +1391,30 @@ const BuatLaporan = () => {
           ) : (
             <div className="space-y-4">
               <div className="overflow-x-auto rounded-2xl rounded-b-none">
-                <table className="min-w-full divide-y divide-slate-100">
-                  <thead className="">
-                    <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
-                      <th className="py-3.5 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
+                <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-600 text-xs">
+                  <thead className="uppercase">
+                    <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double font-bold tracking-wider">
+                      <th className="py-3.5 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                         No
                       </th>
-                      <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                      <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                         Nomor SPT
                       </th>
-                      <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                      <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                         Tanggal Batal
                       </th>
-                      <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                      <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                         Nama Pelaksana
                       </th>
-                      <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                      <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                         Alasan
                       </th>
-                      <th className="py-3.5 px-4 text-right shadow-[inset_0_-2px_0_0_#ffffff]">
+                      <th className="py-3.5 px-4 text-right shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                         Aksi
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 text-sm text-slate-600">
+                  <tbody className="divide-y divide-slate-100  text-sm text-slate-600">
                     {canceledList.length === 0 ? (
                       <tr>
                         <td colSpan={6} className="py-10 text-center text-slate-400">
@@ -1420,45 +1424,45 @@ const BuatLaporan = () => {
                     ) : (
                       canceledList.map((item, idx) => (
                         <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
-                          <td className="py-4 px-4 text-center font-medium text-slate-400">
+                          <td className="py-3 px-4 text-center font-medium text-slate-400 dark:text-slate-200">
                             {(page - 1) * limit + idx + 1}.
                           </td>
-                          <td className="py-4 px-4 text-slate-800 font-mono text-xs">
+                          <td className="py-3 px-4 text-slate-800 font-mono text-xs dark:text-slate-200">
                             {item.nomor_surat}
                           </td>
-                          <td className="py-4 px-4 text-slate-500">
+                          <td className="py-3 px-4 text-slate-500 dark:text-slate-200">
                             {formatDate(item.tanggal_pembatalan)}
                           </td>
-                          <td className="py-4 px-4 font-semibold text-slate-700">
+                          <td className="py-3 px-4 font-semibold text-slate-700 dark:text-slate-200">
                             {item.pegawai_nama}
                           </td>
                           <td
-                            className="py-4 px-4 text-slate-500 truncate max-w-[200px]"
+                            className="py-3 px-4 text-slate-500 dark:text-slate-200 truncate max-w-[200px]"
                             title={item.alasan}
                           >
                             {item.alasan || '-'}
                           </td>
-                          <td className="py-4 px-4 text-right">
+                          <td className="py-3 px-4 text-right">
                             <div className="flex items-center justify-end gap-3.5">
                               <a
                                 href={`/cetak/pembatalan/${item.id}`}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-all"
+                                className="p-1.5 text-mauve-700 dark:text-green-400 dark:hover:text-green-400 dark:hover:bg-slate-100/10 hover:bg-green-50 rounded-lg transition-all"
                                 title="Cetak Surat Pembatalan"
                               >
                                 <Printer size={16} />
                               </a>
                               <button
                                 onClick={() => openCancelModal(item.id)}
-                                className="p-1.5 text-slate-400 hover:text-amber-600 hover:bg-slate-100 rounded-lg transition-all"
+                                className="p-1.5 text-mauve-700 dark:text-yellow-400 dark:hover:text-yellow-400 dark:hover:bg-slate-100/10 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all"
                                 title="Edit Pembatalan"
                               >
                                 <Edit size={16} />
                               </button>
                               <button
                                 onClick={() => handleDeleteCanceled(item)}
-                                className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-slate-100 rounded-lg transition-all"
+                                className="p-1.5 text-mauve-700 dark:text-rose-400 dark:hover:text-rose-400 dark:hover:bg-slate-100/10 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
                                 title="Hapus Pembatalan"
                               >
                                 <Trash2 size={16} />
@@ -1517,7 +1521,7 @@ const BuatLaporan = () => {
 
       {/* --- FORM VIEW (ADD / EDIT) --- */}
       {view === 'form' && (
-        <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
+        <div className="bg-white p-6 md:p-8 rounded-3xl dark:bg-slate-800 border border-slate-100 dark:border-slate-600 shadow-sm space-y-6">
           <div className="flex items-center justify-between border-b border-slate-100 pb-5">
             <div className="flex items-center gap-3">
               <button
@@ -1527,10 +1531,10 @@ const BuatLaporan = () => {
                 <ArrowLeft size={18} />
               </button>
               <div>
-                <h1 className="text-xl font-bold text-slate-800 tracking-tight">
+                <h1 className="text-xl font-bold text-slate-800 dark:text-slate-200 tracking-tight">
                   {isEditMode ? 'EDIT LAPORAN PERJADIN' : 'BUAT LAPORAN BARU'}
                 </h1>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   Isi data laporan perjalanan dinas dan sesuaikan biaya realisasinya.
                 </p>
               </div>
@@ -1556,9 +1560,9 @@ const BuatLaporan = () => {
 
           <form onSubmit={handleSubmitReport} className="space-y-8">
             {/* 1. Header Information */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50/50 p-6 rounded-2xl border border-slate-100">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50/50 dark:bg-teal-900 p-6 rounded-2xl border border-slate-100 dark:border-slate-600">
               <div>
-                <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
                   Nomor SPT
                 </label>
                 <select
@@ -1566,7 +1570,7 @@ const BuatLaporan = () => {
                   onChange={handleSptChange}
                   disabled={isEditMode}
                   required
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed text-slate-800 font-medium"
+                  className="w-full px-3 py-2 border border-slate-200 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-emerald-400 dark:focus:ring-2 dark:focus:border-none dark:border-slate-600 dark:bg-slate-900/70 bg-white disabled:bg-slate-100 dark:disabled:bg-slate-700 disabled:cursor-not-allowed text-slate-800 font-medium"
                 >
                   <option value="">-- Pilih SPT --</option>
                   {sptOptions.map((opt) => (
@@ -1577,7 +1581,7 @@ const BuatLaporan = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
                   Tanggal Laporan
                 </label>
                 <input
@@ -1587,11 +1591,11 @@ const BuatLaporan = () => {
                     setForm((prev) => ({ ...prev, tanggal_laporan: e.target.value }))
                   }
                   required
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 bg-white text-slate-800 dark:bg-slate-900/70 dark:text-slate-200 dark:focus:ring-emerald-400 dark:focus-ring-2"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
                   Tempat Laporan Dibuat
                 </label>
                 <input

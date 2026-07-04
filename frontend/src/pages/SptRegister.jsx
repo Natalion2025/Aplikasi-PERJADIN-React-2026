@@ -399,7 +399,7 @@ const SptRegister = () => {
               }}
               className={`px-4 py-2.5 rounded-t-2xl rounded-l-none  text-sm font-semibold tracking-wide transition-all ${
                 activeTab === 'spt'
-                  ? 'bg-mauve-500 text-white'
+                  ? 'bg-mauve-500 dark:bg-slate-100 dark:text-mauve-700 text-white'
                   : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
               }`}
             >
@@ -412,7 +412,7 @@ const SptRegister = () => {
               }}
               className={`px-4 py-2.5 rounded-t-2xl rounded-l-none text-sm font-semibold tracking-wide transition-all ${
                 activeTab === 'sppd'
-                  ? 'bg-mauve-500 text-white'
+                  ? 'bg-mauve-500 dark:bg-slate-100 dark:text-mauve-700 text-white'
                   : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
               }`}
             >
@@ -422,7 +422,7 @@ const SptRegister = () => {
 
           <div className="flex items-center gap-3 w-full md:w-auto">
             {/* Search Input */}
-            <div className="relative flex-1 md:w-72 focus-within:bg-white">
+            <div className="relative flex-1 md:w-72">
               <Search className="absolute left-3.5 top-1/2  -translate-y-1/2 h-4 w-4 text-slate-400" />
               <input
                 type="text"
@@ -431,7 +431,7 @@ const SptRegister = () => {
                 }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-slate-300 dark:border-slate-700  border dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none "
+                className="w-full pl-10 pr-4 py-2 border border-slate-300 dark:border-slate-700  border dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-500 dark:focus:bg-slate-900 focus:border-none "
               />
             </div>
 
@@ -446,7 +446,7 @@ const SptRegister = () => {
                     setSptPage(1);
                     setSppdPage(1);
                   }}
-                  className="px-2.5 py-1.5  bg-white dark:bg-slate-900 rounded-lg outline-none  text-slate-800 dark:text-slate-200"
+                  className="px-1 py-1.5  bg-white dark:bg-slate-900 rounded-lg outline-none  text-slate-800 dark:text-slate-200"
                 >
                   <option value={5}>5</option>
                   <option value={15}>15</option>
@@ -469,24 +469,24 @@ const SptRegister = () => {
             /* ================= REGISTER SPT TABLE ================= */
             <div className="overflow-x-auto rounded-2xl rounded-b-none ">
               <table className="min-w-full text-left border-collapse text-sm">
-                <thead>
-                  <tr className="bg-red-500/60   text-slate-100 border-b-2 border-red-500/60 border-double font-semibold dark:bg-slate-800/50 dark:text-slate-400">
-                    <th className="py-3  pl-6 pr-3 text-center  w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
+                <thead className="text-xs uppercase">
+                  <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double font-bold">
+                    <th className="py-3 pl-6 pr-3 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       No.
                     </th>
-                    <th className="py-3 px-4 w-60 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-4 w-60 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Nomor & Tgl Surat
                     </th>
-                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Maksud Perjalanan
                     </th>
-                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Pegawai Ditugaskan
                     </th>
-                    <th className="py-3 whitespace-nowrap px-4 w-52 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 whitespace-nowrap px-4 w-52 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Lokasi Tujuan
                     </th>
-                    <th className="py-3 px-6 w-64 text-center shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-6 w-64 text-center shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Aksi
                     </th>
                   </tr>
@@ -591,7 +591,7 @@ const SptRegister = () => {
                                   e.stopPropagation();
                                   setOpenDropdownId(openDropdownId === spt.id ? null : spt.id);
                                 }}
-                                className="dropdown-trigger inline-flex items-center gap-1.5 px-3 py-2 bg-red-100/40 hover:bg-indigo-100/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 text-red-900/90 dark:text-indigo-400 text-xs font-bold rounded-xl transition-all shadow-sm active:scale-95"
+                                className="dropdown-trigger inline-flex items-center gap-1.5 px-3 py-2 bg-red-100/40 hover:bg-indigo-100/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 text-red-900/90 dark:text-emerald-500 text-xs font-bold rounded-xl transition-all shadow-sm active:scale-95"
                               >
                                 <span>Aksi</span>
                                 <ChevronDown
@@ -705,20 +705,24 @@ const SptRegister = () => {
             /* ================= REGISTER SPPD TABLE ================= */
             <div className="overflow-x-auto rounded-2xl rounded-b-none">
               <table className="w-full text-left border-collapse text-sm">
-                <thead>
-                  <tr className="bg-red-500/60 text-slate-100 border-b-2 border-red-500/60 border-double font-semibold dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-400">
-                    <th className="py-3 px-6 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
+                <thead className="text-xs uppercase">
+                  <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double font-bold">
+                    <th className="py-3 px-6 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       No.
                     </th>
-                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">Nomor SPD</th>
-                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
+                      Nomor SPD
+                    </th>
+                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Nomor Surat Tugas
                     </th>
-                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">Pegawai</th>
-                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
+                      Pegawai
+                    </th>
+                    <th className="py-3 px-4 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Maksud Perjalanan
                     </th>
-                    <th className="py-3 px-6 text-center w-28 shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3 px-6 text-center w-28 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Aksi
                     </th>
                   </tr>
@@ -777,16 +781,16 @@ const SptRegister = () => {
                           </td>
                           <td className="py-3 px-6 text-right align-top">
                             {/* Print Individual SPPD sheet */}
-                            <a
+                            <button
                               href={`/cetak/sppd-detail/${sppd.id}`}
                               target="_blank"
                               rel="noreferrer"
-                              className="inline-flex flex-row gap-2 whitespace-nowrap items-center font-medium justify-center p-2 text-slate-700 text-xs hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-colors"
+                              className="inline-flex flex-row gap-2 whitespace-nowrap items-center font-medium justify-center p-1.5 text-mauve-700 hover:text-green-600 dark:text-green-400 dark:hover:text-green-400 text-xs hover:bg-green-50 dark:hover:bg-slate-100/10 rounded-lg transition-colors"
                               title="Cetak SPPD Individu"
                             >
-                              <Printer className="h-4 w-4 stroke-red-900/90" />
+                              <Printer className="h-4 w-4" />
                               Cetak SPD
-                            </a>
+                            </button>
                           </td>
                         </tr>
                       );

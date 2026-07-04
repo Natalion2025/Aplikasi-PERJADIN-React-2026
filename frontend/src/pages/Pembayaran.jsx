@@ -675,13 +675,13 @@ const Pembayaran = () => {
       )}
 
       {/* Page Header */}
-      <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-100 shadow-sm space-y-6">
+      <div className="bg-white p-6 md:p-8 rounded-3xl dark:bg-slate-800 border border-slate-100 dark:border-slate-600 shadow-sm space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200 tracking-tight">
               MANAJEMEN PEMBAYARAN
             </h1>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-slate-500 dark:text-slate-400">
               Buat kuitansi bukti pembayaran perjalanan dinas dan bukti pengeluaran riil.
             </p>
           </div>
@@ -704,7 +704,7 @@ const Pembayaran = () => {
         </div>
 
         {/* Tabs & Limits */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 pb-2 gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-600 pb-2 gap-4">
           <div className="flex gap-2">
             <button
               onClick={() => {
@@ -713,7 +713,7 @@ const Pembayaran = () => {
               }}
               className={`px-4 py-2 text-sm font-semibold rounded-t-2xl rounded-l-none transition-all duration-200 ${
                 activeTab === 'pembayaran'
-                  ? 'bg-mauve-500 text-white'
+                  ? 'bg-mauve-500 dark:bg-slate-100 text-white dark:text-mauve-700'
                   : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
               }`}
             >
@@ -726,7 +726,7 @@ const Pembayaran = () => {
               }}
               className={`px-4 py-2 text-sm font-semibold rounded-t-2xl rounded-l-none transition-all duration-200 ${
                 activeTab === 'riil'
-                  ? 'bg-mauve-500 text-white'
+                  ? 'bg-mauve-500 dark:bg-slate-100 text-white dark:text-mauve-700'
                   : 'text-slate-600 hover:bg-mauve-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-700/50 dark:hover:text-slate-200'
               }`}
             >
@@ -735,14 +735,14 @@ const Pembayaran = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-400 font-medium">Limit Tampilan:</span>
+            <span className="text-sm text-slate-400 font-medium">Tampilkan:</span>
             <select
               value={limit}
               onChange={(e) => {
                 setLimit(parseInt(e.target.value));
                 setPage(1);
               }}
-              className="px-2 py-1 text-xs border border-slate-200 rounded-lg text-slate-600 focus:outline-none focus:border-mauve-500"
+              className="px-1 py-1.5 text-sm border border-slate-200 dark:bg-slate-900 dark:border-slate-600 rounded-xl dark:text-slate-200 dark:bg-slate-50 text-slate-600 focus:outline-none focus:border-mauve-500"
             >
               <option value={5}>5</option>
               <option value={15}>15</option>
@@ -763,30 +763,30 @@ const Pembayaran = () => {
         ) : activeTab === 'pembayaran' ? (
           <div className="space-y-4">
             <div className="overflow-x-auto rounded-2xl rounded-b-none">
-              <table className="min-w-full divide-y divide-slate-100">
-                <thead className="">
-                  <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
-                    <th className="py-3.5 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
+              <table className="min-w-full divide-y divide-slate-100 dark:bg-slate-800 text-xs">
+                <thead className="uppercase">
+                  <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double font-bold tracking-wider">
+                    <th className="py-3.5 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       No
                     </th>
-                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       No & Tgl ST
                     </th>
-                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       No & Tgl Bukti
                     </th>
-                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Penerima
                     </th>
-                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Nominal
                     </th>
-                    <th className="py-3.5 px-4 text-center shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3.5 px-4 text-center shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Aksi
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-sm text-slate-600">
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-600 text-sm text-slate-600">
                   {pembayaranList.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="py-10 text-center text-slate-400">
@@ -795,53 +795,53 @@ const Pembayaran = () => {
                     </tr>
                   ) : (
                     pembayaranList.map((item, idx) => (
-                      <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
-                        <td className="py-4 px-4 text-center font-medium text-slate-800 align-top">
+                      <tr key={item.id} className="dark:hover:bg-slate-700/30 transition-colors">
+                        <td className="py-3 px-4 text-center font-medium text-slate-800 dark:text-slate-200 align-top">
                           {(page - 1) * limit + idx + 1}.
                         </td>
-                        <td className="py-4 px-4 align-top">
-                          <span className="font-medium text-slate-700 block text-xs">
+                        <td className="py-3 px-4 align-top">
+                          <span className="font-medium text-slate-700 dark:text-slate-200 block text-xs">
                             {item.nomor_surat}
                           </span>
-                          <span className="text-xs text-slate-500 font-medium">
+                          <span className="text-xs text-slate-500 font-medium dark:text-slate-400">
                             {formatDate(item.tanggal_surat)}
                           </span>
                         </td>
-                        <td className="py-4 px-4 align-top">
-                          <span className="font-medium text-slate-700 text-xs whitespace-nowrap block">
+                        <td className="py-3 px-4 align-top">
+                          <span className="font-medium text-slate-700 dark:text-slate-200 text-xs whitespace-nowrap block">
                             {item.nomor_bukti}
                           </span>
-                          <span className="text-slate-500 font-medium text-xs">
+                          <span className="text-slate-500 font-medium text-xs dark:text-slate-400">
                             {formatDate(item.tanggal_bukti)}
                           </span>
                         </td>
-                        <td className="py-4 px-4 text-xs font-semibold text-slate-800 whitespace-pre-line align-top">
+                        <td className="py-3 px-4 text-xs font-semibold text-slate-800 dark:text-slate-200 whitespace-pre-line align-top">
                           {item.nama_penerima}
                         </td>
-                        <td className="py-4 px-4 text-slate-700 font-medium align-top">
+                        <td className="py-3 px-4 text-slate-700 dark:text-slate-200 font-medium align-top">
                           {formatCurrency(item.nominal_bayar)}
                         </td>
-                        <td className="py-4 px-4 items-center flex text-center">
+                        <td className="py-3  pr-2 pl-6 items-center flex text-center">
                           <div className="flex gap-3">
                             <a
                               href={`/cetak/pembayaran/${item.id}`}
                               target="_blank"
                               rel="noreferrer"
-                              className="p-1.5 text-mauve-700 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-all"
+                              className="p-1.5 text-mauve-700 dark:text-green-400 dark:hover:text-green-400 hover:text-green-600 dark:hover:bg-slate-100/10 hover:bg-green-50 rounded-lg transition-all"
                               title="Cetak Bukti Pembayaran"
                             >
                               <Printer size={16} />
                             </a>
                             <button
                               onClick={() => openPembayaranModal(item.id)}
-                              className="p-1.5 text-mauve-700 hover:text-amber-600 hover:bg-slate-100 rounded-lg transition-all"
+                              className="p-1.5 text-mauve-700 dark:text-yellow-400 dark:hover:text-yellow-400 dark:hover:bg-slate-100/10 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all"
                               title="Edit Bukti Bayar"
                             >
                               <Edit size={16} />
                             </button>
                             <button
                               onClick={() => handleDeletePembayaran(item.id)}
-                              className="p-1.5 text-mauve-700 hover:text-rose-600 hover:bg-slate-100 rounded-lg transition-all"
+                              className="p-1.5 text-mauve-700 dark:text-rose-400 dark:hover:text-rose-400 dark:hover:bg-slate-100/10 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
                               title="Hapus Bukti Bayar"
                             >
                               <Trash2 size={16} />
@@ -857,8 +857,8 @@ const Pembayaran = () => {
 
             {/* Pagination Bukti Bayar */}
             {!loading && totalItems > 0 && (
-              <div className="flex items-center justify-between border-t border-slate-100 pt-4 px-1">
-                <span className="text-xs text-slate-500">
+              <div className="flex items-center justify-between border-t border-slate-100 dark:border-none pt-4 px-1">
+                <span className="text-xs text-slate-500 dark:text-slate-400">
                   Menampilkan Halaman <span className="font-semibold">{page}</span> dari{' '}
                   <span className="font-semibold">{totalPages}</span> ({totalItems} total data)
                 </span>
@@ -902,27 +902,27 @@ const Pembayaran = () => {
         ) : (
           <div className="space-y-4">
             <div className="overflow-x-auto rounded-2xl rounded-b-none">
-              <table className="min-w-full divide-y divide-slate-100">
-                <thead className="">
-                  <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
-                    <th className="py-3.5 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
+              <table className="min-w-full divide-y divide-slate-100 text-xs">
+                <thead className="uppercase">
+                  <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double font-bold tracking-wider">
+                    <th className="py-3.5 px-4 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       No
                     </th>
-                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Nama Pelaksana
                     </th>
-                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Uraian
                     </th>
-                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3.5 px-4 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Jumlah
                     </th>
-                    <th className="py-3.5 px-4 text-center shadow-[inset_0_-2px_0_0_#ffffff]">
+                    <th className="py-3.5 px-4 text-center shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                       Aksi
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-sm text-slate-600">
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-600 text-sm text-slate-600">
                   {riilList.length === 0 ? (
                     <tr>
                       <td colSpan={5} className="py-10 text-center text-slate-400">
@@ -931,38 +931,40 @@ const Pembayaran = () => {
                     </tr>
                   ) : (
                     riilList.map((item, idx) => (
-                      <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
-                        <td className="py-4 px-4 text-center font-medium text-slate-700">
+                      <tr key={item.id} className="dark:hover:bg-slate-700/30 transition-colors">
+                        <td className="py-3 px-4 text-center font-medium text-slate-700 dark:text-slate-200">
                           {(page - 1) * limit + idx + 1}.
                         </td>
-                        <td className="py-4 px-4 font-semibold text-slate-700">
+                        <td className="py-3 px-4 font-semibold text-slate-700 dark:text-slate-200">
                           {item.nama_pegawai}
                         </td>
-                        <td className="py-4 px-4 text-slate-700">{item.uraian}</td>
-                        <td className="py-4 px-4 font-bold text-slate-700">
+                        <td className="py-3 px-4 text-slate-700 dark:text-slate-200">
+                          {item.uraian}
+                        </td>
+                        <td className="py-3 px-4 font-bold text-slate-700 dark:text-slate-200">
                           {formatCurrency(item.jumlah)}
                         </td>
-                        <td className="py-4 px-4 text-center">
+                        <td className="py-3 px-4 text-center">
                           <div className="flex items-center justify-center gap-3">
-                            <a
+                            <button
                               href={`/cetak/pengeluaran-riil/${item.id}`}
                               target="_blank"
                               rel="noreferrer"
-                              className="p-1.5 text-mauve-700 hover:text-indigo-600 hover:bg-slate-100 rounded-lg transition-all"
+                              className="p-1.5 text-mauve-700 dark:text-green-400 dark:hover:text-green-400 hover:text-green-600 dark:hover:bg-slate-100/10 hover:bg-slate-100 rounded-lg transition-all"
                               title="Cetak Pengeluaran Riil"
                             >
                               <Printer size={16} />
-                            </a>
+                            </button>
                             <button
                               onClick={() => openRiilModal(item.id)}
-                              className="p-1.5 text-mauve-700 hover:text-amber-600 hover:bg-slate-100 rounded-lg transition-all"
+                              className="p-1.5 text-mauve-700 dark:text-yellow-400 dark:hover:text-yellow-400 dark:hover:bg-slate-100/10 hover:text-amber-600 hover:bg-slate-100 rounded-lg transition-all"
                               title="Edit Pengeluaran Riil"
                             >
                               <Edit size={16} />
                             </button>
                             <button
                               onClick={() => handleDeleteRiil(item.id)}
-                              className="p-1.5 text-mauve-700 hover:text-rose-600 hover:bg-slate-100 rounded-lg transition-all"
+                              className="p-1.5 text-mauve-700 dark:text-rose-400 dark:hover:text-rose-400 dark:hover:bg-slate-100/10 hover:text-rose-600 hover:bg-slate-100 rounded-lg transition-all"
                               title="Hapus Pengeluaran Riil"
                             >
                               <Trash2 size={16} />
@@ -978,8 +980,8 @@ const Pembayaran = () => {
 
             {/* Pagination Riil */}
             {!loading && totalItems > 0 && (
-              <div className="flex items-center justify-between border-t border-slate-100 pt-4 px-1">
-                <span className="text-xs text-slate-400">
+              <div className="flex items-center justify-between border-t border-slate-100 dark:border-none pt-4 px-1">
+                <span className="text-xs text-slate-500 dark:text-slate-400">
                   Menampilkan Halaman <span className="font-semibold">{page}</span> dari{' '}
                   <span className="font-semibold">{totalPages}</span> ({totalItems} total data)
                 </span>
@@ -1031,9 +1033,9 @@ const Pembayaran = () => {
             if (e.target === e.currentTarget) setPembayaranModalOpen(false);
           }}
         >
-          <div className="w-full max-w-5xl bg-white rounded-3xl border border-slate-100 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 text-left">
+          <div className="w-full max-w-5xl bg-white dark:bg-slate-800 dark:border-slate-700 rounded-3xl border border-slate-100 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 text-left">
             {/* Header */}
-            <div className="px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 text-white flex items-center justify-between">
+            <div className="px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-800 dark:to-teal-700 text-white flex items-center justify-between">
               <div>
                 <h3 className="font-bold text-lg leading-tight">
                   {pembayaranEditId ? 'Edit Bukti Pembayaran' : 'Buat Bukti Pembayaran Baru'}
@@ -1044,7 +1046,7 @@ const Pembayaran = () => {
               </div>
               <button
                 onClick={() => setPembayaranModalOpen(false)}
-                className="text-emerald-100 hover:text-white p-1 hover:bg-white/10 rounded-xl transition-all"
+                className="text-emerald-100 hover:text-white p-1  hover:bg-white/10 rounded-xl transition-all"
               >
                 <X size={20} />
               </button>
@@ -1053,11 +1055,11 @@ const Pembayaran = () => {
             {/* Form Body */}
             <form
               onSubmit={handlePembayaranSubmit}
-              className="flex-1  overflow-y-auto p-6 pb-4 space-y-4"
+              className="flex-1  overflow-y-auto dark:bg-slate-800 p-6 pb-4 space-y-4"
             >
               <div className="grid grid-cols-1 md:grid-cols-2   gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
                     Nomor Bukti
                   </label>
                   <input
@@ -1068,11 +1070,11 @@ const Pembayaran = () => {
                     }
                     required
                     placeholder="Contoh: 001/KWT/VI/2026"
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none bg-white"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500  mb-1.5">
                     Tanggal Bukti
                   </label>
                   <input
@@ -1082,14 +1084,19 @@ const Pembayaran = () => {
                       setPembayaranForm((prev) => ({ ...prev, tanggal_bukti: e.target.value }))
                     }
                     required
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none bg-white
+                    
+                    /* PERBAIKAN: Style untuk ikon kalender di dark mode */
+                    dark:[color-scheme:dark] 
+                    dark:[&::-webkit-calendar-picker-indicator]:filter-invert
+                    "
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
                     Register SPT
                   </label>
                   <select
@@ -1097,7 +1104,7 @@ const Pembayaran = () => {
                     onChange={handleSptChange}
                     required
                     disabled={!!pembayaranEditId}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
                   >
                     <option value="">-- Pilih SPT --</option>
                     {allSpts.map((s) => (
@@ -1109,7 +1116,7 @@ const Pembayaran = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
                     Kode/Mata Anggaran
                   </label>
                   <select
@@ -1117,7 +1124,7 @@ const Pembayaran = () => {
                     onChange={handleAnggaranChange}
                     required
                     disabled={!!pembayaranEditId}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
                   >
                     <option value="">-- Pilih Anggaran --</option>
                     {allAnggaran.map((a) => (
@@ -1130,7 +1137,7 @@ const Pembayaran = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
                   Nama Penerima Pembayaran
                 </label>
                 <textarea
@@ -1141,13 +1148,13 @@ const Pembayaran = () => {
                   }
                   required
                   placeholder="Nama pelaksana yang menerima pembayaran..."
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
                     Uraian Pembayaran
                   </label>
                   <textarea
@@ -1158,12 +1165,12 @@ const Pembayaran = () => {
                     }
                     required
                     placeholder="Uraian kuitansi..."
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
                     Pejabat Pembuat Teknis Kegiatan (PPTK)
                   </label>
                   <select
@@ -1173,7 +1180,7 @@ const Pembayaran = () => {
                     }
                     required
                     disabled={!!pembayaranEditId}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
                   >
                     <option value="">-- Pilih PPTK --</option>
                     {allPptk.map((p) => (
@@ -1233,37 +1240,37 @@ const Pembayaran = () => {
                       <div className="overflow-x-auto rounded-2xl rounded-b-none">
                         <table className="min-w-full divide-y divide-slate-100">
                           <thead className="">
-                            <tr className="bg-mauve-500 text-slate-100 border-b-2 border-mauve-500 border-double text-xs uppercase font-bold tracking-wider">
-                              <th className="py-2.5 px-3 text-center w-10 shadow-[inset_0_-2px_0_0_#ffffff]">
+                            <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double text-xs uppercase font-bold tracking-wider">
+                              <th className="py-2.5 px-3 text-center w-10 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                                 No
                               </th>
-                              <th className="py-2.5 px-3 text-left shadow-[inset_0_-2px_0_0_#ffffff] min-w-[150px]">
+                              <th className="py-2.5 px-3 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b] min-w-[150px]">
                                 Nama
                               </th>
-                              <th className="py-2.5 px-3 text-left shadow-[inset_0_-2px_0_0_#ffffff] min-w-[180px]">
+                              <th className="py-2.5 px-3 text-left shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b] min-w-[180px]">
                                 Uraian Pengeluaran
                               </th>
-                              <th className="py-2.5 px-3 text-right shadow-[inset_0_-2px_0_0_#ffffff] whitespace-nowrap">
+                              <th className="py-2.5 px-3 text-right shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b] whitespace-nowrap">
                                 Tarif Satuan
                               </th>
-                              <th className="py-2.5 px-3 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff]">
+                              <th className="py-2.5 px-3 text-center w-12 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                                 Satuan
                               </th>
-                              <th className="py-2.5 px-3 text-center w-10 shadow-[inset_0_-2px_0_0_#ffffff]">
+                              <th className="py-2.5 px-3 text-center w-10 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b]">
                                 Qty
                               </th>
-                              <th className="py-2.5 px-3 text-right shadow-[inset_0_-2px_0_0_#ffffff] whitespace-nowrap">
+                              <th className="py-2.5 px-3 text-right shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b] whitespace-nowrap">
                                 Jumlah Biaya
                               </th>
-                              <th className="py-2.5 px-3 text-center w-32 shadow-[inset_0_-2px_0_0_#ffffff] min-w-[120px]">
+                              <th className="py-2.5 px-3 text-center w-32 shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b] min-w-[120px]">
                                 Panjar (Uang Muka)
                               </th>
-                              <th className="py-2.5 px-3 text-right shadow-[inset_0_-2px_0_0_#ffffff] whitespace-nowrap">
+                              <th className="py-2.5 px-3 text-right shadow-[inset_0_-2px_0_0_#ffffff] dark:shadow-[inset_0_-2px_0_0_#1e293b] whitespace-nowrap">
                                 Total Dibayar
                               </th>
                             </tr>
                           </thead>
-                          <tbody className="divide-y divide-slate-100 text-slate-600">
+                          <tbody className="divide-y divide-slate-100 dark:divide-slate-600 text-slate-600">
                             {rincianPengeluaran.penerima.map((pInfo, pIdx) => {
                               const exp =
                                 rincianPengeluaran.pengeluaran.find(
@@ -1486,17 +1493,17 @@ const Pembayaran = () => {
               )}
 
               {/* Modal Actions */}
-              <div className="flex items-center sticky bottom-0 justify-end gap-3 pt-5 border-t border-slate-100 mt-6">
+              <div className="flex items-center sticky bottom-0 justify-end gap-3 pt-5 border-t dark:border-none border-slate-100 mt-6">
                 <button
                   type="button"
                   onClick={() => setPembayaranModalOpen(false)}
-                  className="px-5 py-2.5 border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl text-sm font-semibold transition-all"
+                  className="px-5 py-2.5 border border-slate-300 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-100/10 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl text-sm font-semibold transition-all"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all"
+                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-800 dark:hover:bg-emerald-700 text-white rounded-2xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all"
                 >
                   Simpan Bukti Pembayaran
                 </button>
@@ -1514,9 +1521,9 @@ const Pembayaran = () => {
             if (e.target === e.currentTarget) setRiilModalOpen(false);
           }}
         >
-          <div className="w-full max-w-lg bg-white rounded-3xl border border-slate-100 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 text-left">
+          <div className="w-full max-w-lg bg-white rounded-3xl dark:bg-slate-800 dark:border-slate-700 border border-slate-100 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 text-left">
             {/* Header */}
-            <div className="px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 text-white flex items-center justify-between">
+            <div className="px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-800 dark:to-teal-700 text-white flex items-center justify-between">
               <div>
                 <h3 className="font-bold text-lg leading-tight">
                   {riilEditId ? 'Edit Pengeluaran Riil' : 'Tambah Pengeluaran Riil'}
@@ -1534,9 +1541,9 @@ const Pembayaran = () => {
             </div>
 
             {/* Body */}
-            <form onSubmit={handleRiilSubmit} className="flex-1 overflow-y-auto p-6 space-y-4">
+            <form onSubmit={handleRiilSubmit} className="flex-1  overflow-y-auto p-6 space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                <label className="block text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
                   Nomor SPT
                 </label>
                 <select
@@ -1544,7 +1551,7 @@ const Pembayaran = () => {
                   onChange={handleRiilSptChange}
                   required
                   disabled={!!riilEditId}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
                 >
                   <option value="">-- Pilih SPT --</option>
                   {riilSptList.map((s) => (
@@ -1556,7 +1563,7 @@ const Pembayaran = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                <label className="block text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
                   Nama Pelaksana
                 </label>
                 <select
@@ -1564,7 +1571,7 @@ const Pembayaran = () => {
                   onChange={(e) => setRiilForm((prev) => ({ ...prev, pegawai_id: e.target.value }))}
                   required
                   disabled={!riilForm.spt_id || loadingRiilPelaksana || !!riilEditId}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 dark:disabled:bg-slate-700 disabled:cursor-not-allowed"
                 >
                   {loadingRiilPelaksana ? (
                     <option>Memuat Pelaksana...</option>
@@ -1588,7 +1595,7 @@ const Pembayaran = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                <label className="block text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
                   Uraian Pengeluaran
                 </label>
                 <textarea
@@ -1597,12 +1604,12 @@ const Pembayaran = () => {
                   onChange={(e) => setRiilForm((prev) => ({ ...prev, uraian: e.target.value }))}
                   required
                   placeholder="Contoh: Biaya taksi bandara ke hotel pergi-pulang"
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-500 dark:focus:ring-2 focus-border-none bg-white"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                <label className="block text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
                   Jumlah Pengeluaran
                 </label>
                 <input
@@ -1616,22 +1623,22 @@ const Pembayaran = () => {
                     }))
                   }
                   required
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-right font-medium text-slate-800 bg-white"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-500 dark:focus:ring-2 focus-border-none text-right font-medium text-slate-800 bg-white"
                 />
               </div>
 
               {/* Actions */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100 mt-4">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100 dark:border-none mt-4">
                 <button
                   type="button"
                   onClick={() => setRiilModalOpen(false)}
-                  className="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl text-sm font-semibold transition-all"
+                  className="px-4 py-2 border border-slate-200 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-100/10 hover:bg-slate-50 text-slate-700 rounded-xl text-sm font-semibold transition-all"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all"
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-800 dark:hover:bg-emerald-700 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all"
                 >
                   Simpan Pengeluaran
                 </button>
