@@ -357,7 +357,7 @@ const Agenda = () => {
               placeholder="Cari agenda, tujuan, pegawai..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 pr-4 py-2 w-full md:w-64 rounded-xl border border-slate-200 focus:border-none dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500 dark:focus:ring-emerald-500 transition-all text-slate-800 dark:text-slate-200"
+              className="pl-9 pr-4 py-2 w-full md:w-64 rounded-xl border border-slate-200 focus:border-none dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500 dark:focus:ring-emerald-600/20 transition-all text-slate-800 dark:text-slate-200 dark:focus:border-emerald-500"
             />
             {searchQuery && (
               <button

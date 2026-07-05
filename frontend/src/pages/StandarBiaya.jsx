@@ -541,7 +541,7 @@ const StandarBiaya = () => {
             placeholder="Cari dalam tabel..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none dark:text-slate-100"
+            className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
           />
         </div>
       </div>
@@ -723,7 +723,7 @@ const StandarBiaya = () => {
                   type="file"
                   accept=".xlsx, .xls"
                   onChange={handleFileUpload}
-                  className="hidden"
+                  className="hidden dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   disabled={uploading}
                 />
               </label>

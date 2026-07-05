@@ -363,7 +363,7 @@ const TambahSpt = () => {
                   placeholder="Contoh: 090/10/SPT/2026"
                   value={form.nomor_surat}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                  className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 />
                 {nomorSuratError && (
                   <div className="flex items-center gap-1.5 mt-2 text-xs text-red-600 font-semibold">
@@ -382,7 +382,7 @@ const TambahSpt = () => {
                   required
                   value={form.tanggal_surat}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                  className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 />
               </div>
             </div>
@@ -398,7 +398,7 @@ const TambahSpt = () => {
                 placeholder="Contoh: Menindaklanjuti Surat Undangan Rapat dari Sekretaris Daerah Pemkab Melawi nomor 005/12/Setda..."
                 value={form.dasar_surat}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
               />
             </div>
           </div>
@@ -428,7 +428,7 @@ const TambahSpt = () => {
                 required
                 value={form.pejabat_pemberi_tugas_id}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
               >
                 <option value="">-- Pilih Pejabat --</option>
                 {pejabatList.map((p) => (
@@ -466,7 +466,7 @@ const TambahSpt = () => {
                         required
                         value={assignment.id}
                         onChange={(e) => handlePegawaiChange(index, e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                        className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                       >
                         <option value="">-- Pilih Pegawai --</option>
                         {pegawaiList.map((p) => (
@@ -486,7 +486,7 @@ const TambahSpt = () => {
                           value="0"
                           checked={assignment.pengikut === '0'}
                           onChange={() => handlePengikutChange(index, '0')}
-                          className="h-3.5 w-3.5 text-indigo-600"
+                          className="h-3.5 w-3.5 text-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                         />
                         Utama (Bukan Pengikut)
                       </label>
@@ -498,7 +498,7 @@ const TambahSpt = () => {
                           value="1"
                           checked={assignment.pengikut === '1'}
                           onChange={() => handlePengikutChange(index, '1')}
-                          className="h-3.5 w-3.5 text-indigo-600"
+                          className="h-3.5 w-3.5 text-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                         />
                         Pengikut
                       </label>
@@ -544,7 +544,7 @@ const TambahSpt = () => {
                 placeholder="Contoh: Melakukan koordinasi sistem informasi Command Center di Dinas Kominfo Kota Pontianak..."
                 value={form.maksud_perjalanan}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
               />
             </div>
 
@@ -564,7 +564,7 @@ const TambahSpt = () => {
                   setDestinationDropdownOpen(true);
                 }}
                 onFocus={() => setDestinationDropdownOpen(true)}
-                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
               />
 
               {destinationDropdownOpen && (
@@ -609,7 +609,7 @@ const TambahSpt = () => {
                   required
                   value={form.tempat_berangkat}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 />
               </div>
 
@@ -623,7 +623,7 @@ const TambahSpt = () => {
                   required
                   value={form.tanggal_berangkat}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 />
               </div>
 
@@ -637,7 +637,7 @@ const TambahSpt = () => {
                   required
                   value={form.tanggal_kembali}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 />
               </div>
             </div>
@@ -654,7 +654,7 @@ const TambahSpt = () => {
                     readOnly
                     placeholder="Otomatis dihitung"
                     value={form.lama_perjalanan ? `${form.lama_perjalanan} Hari` : ''}
-                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 text-slate-500 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold"
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 text-slate-500 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                   <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                 </div>
@@ -668,7 +668,7 @@ const TambahSpt = () => {
                   name="kendaraan"
                   value={form.kendaraan}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 >
                   <option value="Transportasi Umum">Transportasi Umum</option>
                   <option value="Kendaraan Pribadi">Kendaraan Pribadi</option>
@@ -705,7 +705,7 @@ const TambahSpt = () => {
                       value="APBD Murni"
                       checked={form.sumber_dana === 'APBD Murni'}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-indigo-600"
+                      className="h-4 w-4 text-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                     APBD Murni
                   </label>
@@ -716,7 +716,7 @@ const TambahSpt = () => {
                       value="APBD Perubahan"
                       checked={form.sumber_dana === 'APBD Perubahan'}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-indigo-600"
+                      className="h-4 w-4 text-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                     APBD Perubahan
                   </label>
@@ -732,7 +732,7 @@ const TambahSpt = () => {
                   required
                   value={form.anggaran_id}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 >
                   <option value="">-- Pilih Mata Anggaran --</option>
                   {anggaranList.map((a) => {
@@ -769,7 +769,7 @@ const TambahSpt = () => {
                 placeholder="Isi keterangan lain jika diperlukan..."
                 value={form.keterangan}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
               />
             </div>
           </div>

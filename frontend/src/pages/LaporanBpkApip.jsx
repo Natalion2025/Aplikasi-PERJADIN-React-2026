@@ -279,19 +279,21 @@ const LaporanBpkApip = () => {
 
             <div className="flex items-center gap-2">
               <span className="text-sm text-slate-400 font-semibold">Tampilkan:</span>
-              <select
-                value={limit}
-                onChange={(e) => {
-                  setLimit(parseInt(e.target.value));
-                  setPage(1);
-                }}
-                className="px-1 py-1.5 text-sm dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600 border border-slate-200 rounded-lg text-slate-600 bg-white focus:outline-none focus:border-indigo-500"
-              >
-                <option value={5}>5</option>
-                <option value={15}>15</option>
-                <option value={25}>25</option>
-                <option value={50}>50</option>
-              </select>
+              <div className="px-1 py-1.5 dark:bg-slate-900 bg-white  dark:border-slate-700 border border-slate-200 rounded-xl focus:ring-mauve-500 focus:ring-2 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                <select
+                  value={limit}
+                  onChange={(e) => {
+                    setLimit(parseInt(e.target.value));
+                    setPage(1);
+                  }}
+                  className=" text-sm dark:bg-slate-900 dark:text-slate-200 text-slate-600 outline-none "
+                >
+                  <option value={5}>5</option>
+                  <option value={15}>15</option>
+                  <option value={25}>25</option>
+                  <option value={50}>50</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>

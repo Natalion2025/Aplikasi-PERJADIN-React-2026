@@ -199,7 +199,7 @@ const Pengguna = () => {
               placeholder="Cari pengguna..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 dark:focus:ring-emerald-500 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none dark:text-slate-100"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 dark:focus:ring-emerald-600/20 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-none dark:text-slate-100 dark:focus:border-emerald-500"
             />
           </div>
           {isAllowedToCreate && (
@@ -403,7 +403,7 @@ const Pengguna = () => {
                       onChange={handleChange}
                       required
                       placeholder="Contoh: Budi Santoso"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -419,7 +419,7 @@ const Pengguna = () => {
                       onChange={handleChange}
                       required
                       placeholder="budi_s"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 font-mono"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 font-mono dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -434,7 +434,7 @@ const Pengguna = () => {
                       onChange={handleChange}
                       required
                       disabled={currentUser?.role === 'admin' && form.role !== 'user'}
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     >
                       <option value="user">User / Operator</option>
                       {currentUser?.role === 'superadmin' && (
@@ -463,7 +463,7 @@ const Pengguna = () => {
                       onChange={handleChange}
                       required={!editingId}
                       placeholder="••••••••"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -478,7 +478,7 @@ const Pengguna = () => {
                       value={form.nip}
                       onChange={handleChange}
                       placeholder="19901234567890"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -493,7 +493,7 @@ const Pengguna = () => {
                       value={form.jabatan}
                       onChange={handleChange}
                       placeholder="Contoh: Bendahara Pengeluaran"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
                 </div>

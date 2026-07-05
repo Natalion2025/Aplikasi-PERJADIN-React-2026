@@ -132,7 +132,7 @@ const Profil = () => {
 
             <label className="absolute bottom-0 right-0 p-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full cursor-pointer shadow-lg transition-all">
               <Upload className="w-4 h-4" />
-              <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+              <input type="file" accept="image/*" onChange={handleFileChange} className="hidden dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500" />
             </label>
           </div>
 
@@ -194,7 +194,7 @@ const Profil = () => {
                     value={form.name}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -213,7 +213,7 @@ const Profil = () => {
                     onChange={handleChange}
                     required
                     disabled={user?.role === 'superadmin'}
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 disabled:opacity-60 disabled:cursor-not-allowed font-mono"
+                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 disabled:opacity-60 disabled:cursor-not-allowed font-mono dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
                 {user?.role === 'superadmin' && (
@@ -236,7 +236,7 @@ const Profil = () => {
                     value={form.nip}
                     onChange={handleChange}
                     placeholder="Masukkan NIP Anda"
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -254,7 +254,7 @@ const Profil = () => {
                     value={form.jabatan}
                     onChange={handleChange}
                     placeholder="Contoh: Staff Sub-Bagian Keuangan"
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100"
+                    className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
               </div>

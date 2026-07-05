@@ -201,7 +201,7 @@ const Pegawai = () => {
                 setSearch(e.target.value);
                 setCurrentPage(1); // Reset ke halaman pertama saat mencari
               }}
-              className="w-[70%] pl-11 pr-4 py-2.5  border border-slate-300 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-600 rounded-2xl text-slate-800  placeholder-slate-400 focus:outline-none focus:border-none focus:ring-2 dark:focus:ring-emerald-500 focus:ring-mauve-500 focus:bg-white transition-all text-sm"
+              className="w-[70%] pl-11 pr-4 py-2.5  border border-slate-300 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-600 rounded-2xl text-slate-800  placeholder-slate-400 focus:border-transparent focus:outline-none focus:ring-2 dark:focus:ring-emerald-600/20 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:border-emerald-500"
             />
           </div>
           <span className="text-xs font-semibold text-slate-400 dark:bg-slate-800 dark:text-indigo-400 dark:border-indigo-400 bg-slate-50 border border-slate-150 px-3 py-1.5 rounded-xl">
@@ -398,7 +398,7 @@ const Pegawai = () => {
                     value={form.nama_lengkap}
                     onChange={handleChange}
                     placeholder="Contoh: Budi Santoso, S.H."
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -414,7 +414,7 @@ const Pegawai = () => {
                     value={form.nip}
                     onChange={handleChange}
                     placeholder="Contoh: 198001012010011001"
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm font-mono"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm font-mono dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -430,7 +430,7 @@ const Pegawai = () => {
                       value={form.pangkat}
                       onChange={handleChange}
                       placeholder="Contoh: Pembina"
-                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm"
+                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -443,7 +443,7 @@ const Pegawai = () => {
                       name="golongan"
                       value={form.golongan}
                       onChange={handleChange}
-                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm"
+                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     >
                       <option value="">Pilih Golongan</option>
                       <option value="I/a">I/a - Juru Muda</option>
@@ -479,7 +479,7 @@ const Pegawai = () => {
                     value={form.jabatan}
                     onChange={handleChange}
                     placeholder="Contoh: Kepala Bidang Keuangan"
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -494,7 +494,7 @@ const Pegawai = () => {
                     value={form.bidang}
                     onChange={handleChange}
                     placeholder="Contoh: Bidang Anggaran"
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
               </div>

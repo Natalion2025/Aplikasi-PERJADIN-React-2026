@@ -736,19 +736,21 @@ const Pembayaran = () => {
 
           <div className="flex items-center gap-2">
             <span className="text-sm text-slate-400 font-medium">Tampilkan:</span>
-            <select
-              value={limit}
-              onChange={(e) => {
-                setLimit(parseInt(e.target.value));
-                setPage(1);
-              }}
-              className="px-1 py-1.5 text-sm border border-slate-200 dark:bg-slate-900 dark:border-slate-600 rounded-xl dark:text-slate-200 dark:bg-slate-50 text-slate-600 focus:outline-none focus:border-mauve-500"
-            >
-              <option value={5}>5</option>
-              <option value={15}>15</option>
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-            </select>
+            <div className="px-1 py-1.5 border border-slate-200 dark:bg-slate-900 dark:border-slate-800 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+              <select
+                value={limit}
+                onChange={(e) => {
+                  setLimit(parseInt(e.target.value));
+                  setPage(1);
+                }}
+                className=" text-sm  dark:text-slate-200 dark:bg-slate-900 text-slate-600 outline-none "
+              >
+                <option value={5}>5</option>
+                <option value={15}>15</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -1070,7 +1072,7 @@ const Pembayaran = () => {
                     }
                     required
                     placeholder="Contoh: 001/KWT/VI/2026"
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none bg-white"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none bg-white dark:focus:border-emerald-500"
                   />
                 </div>
                 <div>
@@ -1084,12 +1086,11 @@ const Pembayaran = () => {
                       setPembayaranForm((prev) => ({ ...prev, tanggal_bukti: e.target.value }))
                     }
                     required
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none bg-white
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none bg-white
                     
                     /* PERBAIKAN: Style untuk ikon kalender di dark mode */
                     dark:[color-scheme:dark] 
-                    dark:[&::-webkit-calendar-picker-indicator]:filter-invert
-                    "
+                    dark:[&::-webkit-calendar-picker-indicator]:filter-invert dark:focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -1104,7 +1105,7 @@ const Pembayaran = () => {
                     onChange={handleSptChange}
                     required
                     disabled={!!pembayaranEditId}
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:border-emerald-500"
                   >
                     <option value="">-- Pilih SPT --</option>
                     {allSpts.map((s) => (
@@ -1124,7 +1125,7 @@ const Pembayaran = () => {
                     onChange={handleAnggaranChange}
                     required
                     disabled={!!pembayaranEditId}
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:border-emerald-500"
                   >
                     <option value="">-- Pilih Anggaran --</option>
                     {allAnggaran.map((a) => (
@@ -1148,7 +1149,7 @@ const Pembayaran = () => {
                   }
                   required
                   placeholder="Nama pelaksana yang menerima pembayaran..."
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white dark:focus:border-emerald-500"
                 />
               </div>
 
@@ -1165,7 +1166,7 @@ const Pembayaran = () => {
                     }
                     required
                     placeholder="Uraian kuitansi..."
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -1180,7 +1181,7 @@ const Pembayaran = () => {
                     }
                     required
                     disabled={!!pembayaranEditId}
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-2 dark:focus:ring-emerald-500 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:border-emerald-500"
                   >
                     <option value="">-- Pilih PPTK --</option>
                     {allPptk.map((p) => (
@@ -1415,7 +1416,7 @@ const Pembayaran = () => {
                                                 ),
                                               }))
                                             }
-                                            className="w-24 text-center px-1.5 py-1 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 font-bold"
+                                            className="w-24 text-center px-1.5 py-1 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 font-bold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                           />
                                         </td>
                                       )}
@@ -1436,7 +1437,7 @@ const Pembayaran = () => {
                                               [`${pInfo.id}_${row.type}`]: formatted,
                                             }));
                                           }}
-                                          className="w-28 text-right px-1.5 py-1 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 font-bold text-slate-800"
+                                          className="w-28 text-right px-1.5 py-1 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 font-bold text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                         />
                                       </td>
                                     </tr>
@@ -1551,7 +1552,7 @@ const Pembayaran = () => {
                   onChange={handleRiilSptChange}
                   required
                   disabled={!!riilEditId}
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 >
                   <option value="">-- Pilih SPT --</option>
                   {riilSptList.map((s) => (
@@ -1571,7 +1572,7 @@ const Pembayaran = () => {
                   onChange={(e) => setRiilForm((prev) => ({ ...prev, pegawai_id: e.target.value }))}
                   required
                   disabled={!riilForm.spt_id || loadingRiilPelaksana || !!riilEditId}
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 dark:disabled:bg-slate-700 disabled:cursor-not-allowed"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 dark:disabled:bg-slate-700 disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 >
                   {loadingRiilPelaksana ? (
                     <option>Memuat Pelaksana...</option>
@@ -1604,7 +1605,7 @@ const Pembayaran = () => {
                   onChange={(e) => setRiilForm((prev) => ({ ...prev, uraian: e.target.value }))}
                   required
                   placeholder="Contoh: Biaya taksi bandara ke hotel pergi-pulang"
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-500 dark:focus:ring-2 focus-border-none bg-white"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus-border-none bg-white dark:focus:border-emerald-500"
                 />
               </div>
 
@@ -1623,7 +1624,7 @@ const Pembayaran = () => {
                     }))
                   }
                   required
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-500 dark:focus:ring-2 focus-border-none text-right font-medium text-slate-800 bg-white"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus-border-none text-right font-medium text-slate-800 bg-white dark:focus:border-emerald-500"
                 />
               </div>
 

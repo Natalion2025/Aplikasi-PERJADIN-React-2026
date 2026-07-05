@@ -431,14 +431,14 @@ const SptRegister = () => {
                 }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-slate-300 dark:border-slate-700  border dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-500 dark:focus:bg-slate-900 focus:border-none "
+                className="w-full pl-10 pr-4 py-2 border border-slate-300 dark:border-slate-700  border dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-600/20 dark:focus:bg-slate-900 focus:border-transparent dark:focus:border-emerald-500"
               />
             </div>
 
             {/* Limit Selector */}
             <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 flex-shrink-0">
               <span>Tampilkan:</span>
-              <div className="relative border border-slate-300 dark:border-slate-700 focus-within:outline-none focus-within:ring focus-within:ring-mauve-500 focus-within:border-none rounded-lg">
+              <div className="relative border border-slate-300 px-1 py-2 dark:bg-slate-900  dark:border-slate-700 focus-within:outline-none focus-within:ring-2 focus-within:ring-mauve-500 focus-within:border-transparent rounded-xl dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
                 <select
                   value={limit}
                   onChange={(e) => {
@@ -446,7 +446,7 @@ const SptRegister = () => {
                     setSptPage(1);
                     setSppdPage(1);
                   }}
-                  className="px-1 py-1.5  bg-white dark:bg-slate-900 rounded-lg outline-none  text-slate-800 dark:text-slate-200"
+                  className=" bg-white dark:bg-slate-900 outline-none text-slate-800  dark:text-slate-200 "
                 >
                   <option value={5}>5</option>
                   <option value={15}>15</option>
@@ -905,7 +905,7 @@ const SptRegister = () => {
                       onChange={(e) =>
                         setPanjarForm((prev) => ({ ...prev, tempat: e.target.value }))
                       }
-                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
                   <div>
@@ -919,7 +919,7 @@ const SptRegister = () => {
                       onChange={(e) =>
                         setPanjarForm((prev) => ({ ...prev, tanggal_panjar: e.target.value }))
                       }
-                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
                 </div>
@@ -932,7 +932,7 @@ const SptRegister = () => {
                     required
                     value={panjarForm.spt_id}
                     onChange={(e) => handlePanjarSptChange(e.target.value)}
-                    className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                    className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   >
                     <option value="">-- Pilih SPT --</option>
                     {allSptsForPanjar.map((s) => (
@@ -956,7 +956,7 @@ const SptRegister = () => {
                       onChange={(e) =>
                         setPanjarForm((prev) => ({ ...prev, pelaksana_id: e.target.value }))
                       }
-                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 disabled:opacity-50"
+                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 disabled:opacity-50 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     >
                       {loadingPelaksana ? (
                         <option>Memuat pelaksana...</option>
@@ -982,7 +982,7 @@ const SptRegister = () => {
                       onChange={(e) =>
                         setPanjarForm((prev) => ({ ...prev, bendahara_id: e.target.value }))
                       }
-                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     >
                       <option value="">-- Pilih Bendahara --</option>
                       {allPegawai
@@ -1006,7 +1006,7 @@ const SptRegister = () => {
                     onChange={(e) =>
                       setPanjarForm((prev) => ({ ...prev, pejabat_id: e.target.value }))
                     }
-                    className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                    className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   >
                     <option value="">-- Pilih Pejabat --</option>
                     {allPegawai
@@ -1043,7 +1043,7 @@ const SptRegister = () => {
                           placeholder="Uraian Biaya (misal: Uang Harian)"
                           value={item.uraian}
                           onChange={(e) => handleRincianChange(idx, 'uraian', e.target.value)}
-                          className="w-full sm:flex-1 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                          className="w-full sm:flex-1 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                         />
                         <input
                           type="text"
@@ -1051,14 +1051,14 @@ const SptRegister = () => {
                           placeholder="Jumlah (Rp)"
                           value={item.jumlah ? formatNumber(item.jumlah) : ''}
                           onChange={(e) => handleRincianChange(idx, 'jumlah', e.target.value)}
-                          className="w-full sm:w-44 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-right font-medium"
+                          className="w-full sm:w-44 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-right font-medium dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                         />
                         <input
                           type="text"
                           placeholder="Keterangan"
                           value={item.keterangan}
                           onChange={(e) => handleRincianChange(idx, 'keterangan', e.target.value)}
-                          className="w-full sm:w-48 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                          className="w-full sm:w-48 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                         />
                         <button
                           type="button"

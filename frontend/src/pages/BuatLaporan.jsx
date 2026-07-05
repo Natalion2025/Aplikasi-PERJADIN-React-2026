@@ -1236,26 +1236,28 @@ const BuatLaporan = () => {
                       setSearch(e.target.value);
                       setPage(1);
                     }}
-                    className="w-full pl-9 pr-4 py-2 text-sm dark:text-slate-200 dark:focus:bg-slate-900 border border-slate-300 dark:border-slate-600 dark:bg-slate-900 rounded-xl focus:outline-none focus:border-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-500"
+                    className="w-full pl-9 pr-4 py-2 text-sm dark:text-slate-200 dark:focus:bg-slate-900 border border-slate-300 dark:border-slate-700 dark:bg-slate-900 rounded-xl focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
               )}
 
               <div className="flex items-center gap-2">
                 <span className="text-sm text-slate-400 font-medium">Tampilkan:</span>
-                <select
-                  value={limit}
-                  onChange={(e) => {
-                    setLimit(parseInt(e.target.value));
-                    setPage(1);
-                  }}
-                  className="px-1 py-1.5 text-sm border border-slate-300 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200 rounded-xl text-slate-600 focus:outline-none focus:border-none focus:ring-1 focus:ring-mauve-500"
-                >
-                  <option value={5}>5</option>
-                  <option value={15}>15</option>
-                  <option value={25}>25</option>
-                  <option value={50}>50</option>
-                </select>
+                <div className="px-1 py-1.5 border border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 rounded-xl text-slate-600 focus-within:border-transparent focus-within:ring-2 focus-within:ring-mauve-500 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                  <select
+                    value={limit}
+                    onChange={(e) => {
+                      setLimit(parseInt(e.target.value));
+                      setPage(1);
+                    }}
+                    className=" text-sm  outline-none dark:bg-slate-900"
+                  >
+                    <option value={5}>5</option>
+                    <option value={15}>15</option>
+                    <option value={25}>25</option>
+                    <option value={50}>50</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -1570,7 +1572,7 @@ const BuatLaporan = () => {
                   onChange={handleSptChange}
                   disabled={isEditMode}
                   required
-                  className="w-full px-3 py-2 border border-slate-200 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-emerald-400 dark:focus:ring-2 dark:focus:border-none dark:border-slate-600 dark:bg-slate-900/70 bg-white disabled:bg-slate-100 dark:disabled:bg-slate-700 disabled:cursor-not-allowed text-slate-800 font-medium"
+                  className="w-full px-3 py-2 border border-slate-200 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 dark:border-slate-600 dark:bg-slate-900/70 bg-white disabled:bg-slate-100 dark:disabled:bg-slate-700 disabled:cursor-not-allowed text-slate-800 font-medium"
                 >
                   <option value="">-- Pilih SPT --</option>
                   {sptOptions.map((opt) => (
@@ -1591,7 +1593,7 @@ const BuatLaporan = () => {
                     setForm((prev) => ({ ...prev, tanggal_laporan: e.target.value }))
                   }
                   required
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 bg-white text-slate-800 dark:bg-slate-900/70 dark:text-slate-200 dark:focus:ring-emerald-400 dark:focus-ring-2"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 bg-white text-slate-800 dark:bg-slate-900/70 dark:text-slate-200 dark:focus:ring-emerald-600/20 dark:focus-ring-2 dark:focus:border-emerald-500"
                 />
               </div>
               <div>
@@ -1603,7 +1605,7 @@ const BuatLaporan = () => {
                   value={form.tempat_laporan}
                   onChange={(e) => setForm((prev) => ({ ...prev, tempat_laporan: e.target.value }))}
                   required
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 />
               </div>
             </div>
@@ -1635,7 +1637,7 @@ const BuatLaporan = () => {
                         value={form.judul}
                         onChange={(e) => setForm((prev) => ({ ...prev, judul: e.target.value }))}
                         required
-                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 shadow-sm"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 shadow-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                       />
                     </div>
 
@@ -1671,7 +1673,7 @@ const BuatLaporan = () => {
                                     e.target.checked
                                   )
                                 }
-                                className="mt-1 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer disabled:cursor-not-allowed"
+                                className="mt-1 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                               />
                               <div className="text-xs">
                                 <span className="font-bold text-slate-800 block">
@@ -1701,7 +1703,7 @@ const BuatLaporan = () => {
                           readOnly
                           rows={2}
                           value={form.dasar_perjalanan}
-                          className="w-full px-3 py-2 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none"
+                          className="w-full px-3 py-2 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                         />
                       </div>
                       <div>
@@ -1712,7 +1714,7 @@ const BuatLaporan = () => {
                           readOnly
                           rows={2}
                           value={form.tujuan_perjalanan}
-                          className="w-full px-3 py-2 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none"
+                          className="w-full px-3 py-2 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                         />
                       </div>
                     </div>
@@ -1726,7 +1728,7 @@ const BuatLaporan = () => {
                           type="text"
                           readOnly
                           value={form.lama_dan_tanggal_perjalanan}
-                          className="w-full px-3 py-2 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none"
+                          className="w-full px-3 py-2 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                         />
                       </div>
                       <div>
@@ -1737,7 +1739,7 @@ const BuatLaporan = () => {
                           type="text"
                           readOnly
                           value={form.kode_anggaran_display}
-                          className="w-full px-3 py-2 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none"
+                          className="w-full px-3 py-2 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                         />
                       </div>
                     </div>
@@ -1762,7 +1764,7 @@ const BuatLaporan = () => {
                         onChange={(e) =>
                           setForm((prev) => ({ ...prev, deskripsi_kronologis: e.target.value }))
                         }
-                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 shadow-sm"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 shadow-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                       />
                     </div>
                     <div>
@@ -1773,7 +1775,7 @@ const BuatLaporan = () => {
                         type="text"
                         readOnly
                         value={form.tempat_dikunjungi}
-                        className="w-full px-3 py-2.5 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none"
+                        className="w-full px-3 py-2.5 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                       />
                     </div>
                     <div>
@@ -1787,7 +1789,7 @@ const BuatLaporan = () => {
                         onChange={(e) =>
                           setForm((prev) => ({ ...prev, hasil_dicapai: e.target.value }))
                         }
-                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 shadow-sm"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 shadow-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                       />
                     </div>
                   </div>
@@ -1853,7 +1855,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl"
+                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       >
                                         <option>Bus</option>
                                         <option>Taksi</option>
@@ -1876,7 +1878,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2">
@@ -1893,7 +1895,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2">
@@ -1910,7 +1912,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2">
@@ -1926,7 +1928,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-slate-600"
+                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-slate-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2">
@@ -1943,7 +1945,7 @@ const BuatLaporan = () => {
                                             formatCurrency(e.target.value)
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl text-right font-medium text-slate-800"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl text-right font-medium text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-3">
@@ -1960,7 +1962,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-3">
@@ -1977,7 +1979,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-4 flex items-center gap-4">
@@ -1997,7 +1999,7 @@ const BuatLaporan = () => {
                                                 'berangkat'
                                               )
                                             }
-                                            className="text-indigo-600"
+                                            className="text-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                           />
                                           <span>Berangkat</span>
                                         </label>
@@ -2016,7 +2018,7 @@ const BuatLaporan = () => {
                                                 'kembali'
                                               )
                                             }
-                                            className="text-indigo-600"
+                                            className="text-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                           />
                                           <span>Kembali</span>
                                         </label>
@@ -2070,7 +2072,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl"
+                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       >
                                         <option>Hotel</option>
                                         <option>Ditanggung Panitia</option>
@@ -2091,7 +2093,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-3">
@@ -2108,7 +2110,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-3">
@@ -2126,7 +2128,7 @@ const BuatLaporan = () => {
                                             formatCurrency(e.target.value)
                                           )
                                         }
-                                        className={`w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl text-right font-medium ${
+                                        className={`w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl text-right font-medium dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 ${
                                           row.readOnlyHarga
                                             ? 'bg-slate-100 text-slate-500 cursor-not-allowed'
                                             : 'text-slate-800'
@@ -2147,7 +2149,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-slate-600"
+                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-slate-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-3">
@@ -2164,7 +2166,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-slate-600"
+                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-slate-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2 flex items-center gap-1.5">
@@ -2181,7 +2183,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-center font-bold"
+                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-center font-bold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                       <span className="text-xs text-slate-400">malam</span>
                                     </div>
@@ -2191,7 +2193,7 @@ const BuatLaporan = () => {
                                         placeholder="Total Akomodasi"
                                         readOnly
                                         value={row.nominal}
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 bg-slate-50 text-slate-600 rounded-xl text-right font-bold"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 bg-slate-50 text-slate-600 rounded-xl text-right font-bold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     {expData.akomodasi.length > 1 && (
@@ -2240,7 +2242,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl"
+                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       >
                                         <option>Bimbingan Teknis</option>
                                         <option>Kursus</option>
@@ -2261,7 +2263,7 @@ const BuatLaporan = () => {
                                             formatCurrency(e.target.value)
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl text-right font-medium text-slate-800"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl text-right font-medium text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                       <span className="text-xs text-slate-400">/kegiatan</span>
                                     </div>
@@ -2315,7 +2317,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2">
@@ -2332,7 +2334,7 @@ const BuatLaporan = () => {
                                             formatCurrency(e.target.value)
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl text-right font-medium text-slate-800"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl text-right font-medium text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2 flex items-center gap-1.5">
@@ -2349,7 +2351,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-center font-bold"
+                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-center font-bold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                       <span className="text-xs text-slate-400">hari</span>
                                     </div>
@@ -2359,7 +2361,7 @@ const BuatLaporan = () => {
                                         placeholder="Total (Rp)"
                                         readOnly
                                         value={row.nominal}
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 bg-slate-50 text-slate-600 rounded-xl text-right font-bold"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 bg-slate-50 text-slate-600 rounded-xl text-right font-bold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-3">
@@ -2376,7 +2378,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     {expData.lain_lain.length > 1 && (
@@ -2411,7 +2413,7 @@ const BuatLaporan = () => {
                       placeholder="Tuliskan kesimpulan dan saran/rekomendasi..."
                       value={form.kesimpulan}
                       onChange={(e) => setForm((prev) => ({ ...prev, kesimpulan: e.target.value }))}
-                      className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 shadow-sm"
+                      className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 shadow-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
                 </div>
@@ -2440,7 +2442,7 @@ const BuatLaporan = () => {
                           multiple
                           onChange={handleFileSelect}
                           accept="image/jpeg,image/png,application/pdf"
-                          className="hidden"
+                          className="hidden dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                         />
                       </label>
                       <span>atau seret dan lepas di sini</span>
@@ -2623,7 +2625,7 @@ const BuatLaporan = () => {
                   onChange={handleCancelSptChange}
                   required
                   disabled={!!cancelEditId}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 >
                   <option value="">-- Pilih SPT --</option>
                   {cancelSptList.map((spt) => (
@@ -2643,7 +2645,7 @@ const BuatLaporan = () => {
                   onChange={handleCancelPegawaiChange}
                   required
                   disabled={!cancelForm.spt_id || loadingCancelPegawai || !!cancelEditId}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 >
                   {loadingCancelPegawai ? (
                     <option>Memuat Pegawai...</option>
@@ -2685,7 +2687,7 @@ const BuatLaporan = () => {
                       setCancelForm((prev) => ({ ...prev, tempat_pembatalan: e.target.value }))
                     }
                     required
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
                 <div>
@@ -2699,7 +2701,7 @@ const BuatLaporan = () => {
                       setCancelForm((prev) => ({ ...prev, tanggal_pembatalan: e.target.value }))
                     }
                     required
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
               </div>
@@ -2713,7 +2715,7 @@ const BuatLaporan = () => {
                   value={cancelForm.alasan}
                   onChange={(e) => setCancelForm((prev) => ({ ...prev, alasan: e.target.value }))}
                   required
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 />
               </div>
 
@@ -2728,7 +2730,7 @@ const BuatLaporan = () => {
                       type="checkbox"
                       checked={cancelForm.ambilPanjar}
                       onChange={(e) => handlePanjarToggle(e.target.checked)}
-                      className="rounded text-indigo-600 focus:ring-indigo-500"
+                      className="rounded text-indigo-600 focus:ring-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                     <span className="text-xs text-slate-500 font-semibold">
                       Ambil dari Uang Muka
@@ -2744,7 +2746,7 @@ const BuatLaporan = () => {
                     onChange={(e) =>
                       setCancelForm((prev) => ({ ...prev, rincian_biaya: e.target.value }))
                     }
-                    className={`w-full px-3 py-2 border border-slate-200 rounded-xl text-sm ${
+                    className={`w-full px-3 py-2 border border-slate-200 rounded-xl text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 ${
                       cancelForm.ambilPanjar
                         ? 'bg-slate-100 text-slate-500 cursor-not-allowed'
                         : 'bg-white'
@@ -2761,7 +2763,7 @@ const BuatLaporan = () => {
                         nominal_biaya: formatCurrency(e.target.value),
                       }))
                     }
-                    className={`w-full px-3 py-2 border border-slate-200 rounded-xl text-sm text-right font-medium ${
+                    className={`w-full px-3 py-2 border border-slate-200 rounded-xl text-sm text-right font-medium dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 ${
                       cancelForm.ambilPanjar
                         ? 'bg-slate-100 text-slate-500 cursor-not-allowed'
                         : 'bg-white text-slate-800'

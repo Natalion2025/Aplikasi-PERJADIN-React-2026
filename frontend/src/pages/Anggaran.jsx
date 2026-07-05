@@ -233,7 +233,7 @@ const Anggaran = () => {
                 setSearch(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-[70%] pl-11 pr-4 py-2.5 dark:bg-slate-900 dark:text-slate-200 dark:focus:bg-slate-900 dark:focus:ring-emerald-500  border border-slate-300 dark:border-slate-600 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-none focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm"
+              className="w-[70%] pl-11 pr-4 py-2.5 dark:bg-slate-900 dark:text-slate-200 dark:focus:bg-slate-900   border border-slate-300 dark:border-slate-600 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2  focus:ring-mauve-500 focus:bg-white transition-all text-sm focus:border-transparent dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
             />
           </div>
         </div>
@@ -434,7 +434,7 @@ const Anggaran = () => {
                     value={form.bidang_urusan}
                     onChange={handleChange}
                     placeholder="Contoh: Urusan Otonomi Daerah"
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -449,7 +449,7 @@ const Anggaran = () => {
                     value={form.program}
                     onChange={handleChange}
                     placeholder="Contoh: Program Dukungan Administrasi"
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -465,7 +465,7 @@ const Anggaran = () => {
                       value={form.kegiatan}
                       onChange={handleChange}
                       placeholder="Contoh: Administrasi Keuangan"
-                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm"
+                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -480,7 +480,7 @@ const Anggaran = () => {
                       value={form.sub_kegiatan}
                       onChange={handleChange}
                       placeholder="Contoh: Penyediaan Gaji dan Tunjangan"
-                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm"
+                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
                 </div>
@@ -498,7 +498,7 @@ const Anggaran = () => {
                       value={form.mata_anggaran_kode}
                       onChange={handleChange}
                       placeholder="Contoh: 5.1.02.04"
-                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm font-mono"
+                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm font-mono dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -514,7 +514,7 @@ const Anggaran = () => {
                       value={form.nilai_anggaran}
                       onChange={handleChange}
                       placeholder="Contoh: 150000000"
-                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm font-semibold text-slate-800"
+                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm font-semibold text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
                 </div>
@@ -531,7 +531,7 @@ const Anggaran = () => {
                     value={form.mata_anggaran_nama}
                     onChange={handleChange}
                     placeholder="Contoh: Belanja Perjalanan Dinas Paket Biasa"
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -544,7 +544,7 @@ const Anggaran = () => {
                     name="pptk_id"
                     value={form.pptk_id}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   >
                     <option value="">Pilih PPTK (Pegawai)</option>
                     {pegawaiList.map((p) => (

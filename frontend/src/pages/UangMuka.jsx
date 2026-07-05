@@ -378,26 +378,28 @@ const UangMuka = () => {
                   setSearch(e.target.value);
                   setPage(1);
                 }}
-                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-500 focus:border-none"
+                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-600/20 focus:border-transparent dark:focus:border-emerald-500"
               />
             </div>
 
             {/* Limit selector */}
             <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 flex-shrink-0">
               <span className="">Tampilkan:</span>
-              <select
-                value={limit}
-                onChange={(e) => {
-                  setLimit(Number(e.target.value));
-                  setPage(1);
-                }}
-                className="px-1 py-1.5 text-sm border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 rounded-xl focus:outline-none focus:ring-1 focus:ring-mauve-500 focus:border-none text-slate-800 dark:text-slate-200"
-              >
-                <option value={5}>5</option>
-                <option value={15}>15</option>
-                <option value={25}>25</option>
-                <option value={50}>50</option>
-              </select>
+              <div className="border px-1 py-2 border-slate-200 dark:border-slate-700 dark:bg-slate-900 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500 focus-within:border-transparent dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                <select
+                  value={limit}
+                  onChange={(e) => {
+                    setLimit(Number(e.target.value));
+                    setPage(1);
+                  }}
+                  className=" text-sm  bg-white dark:bg-slate-900  outline-none  text-slate-800 dark:text-slate-200 "
+                >
+                  <option value={5}>5</option>
+                  <option value={15}>15</option>
+                  <option value={25}>25</option>
+                  <option value={50}>50</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -596,7 +598,7 @@ const UangMuka = () => {
                         required
                         value={form.tempat}
                         onChange={(e) => setForm((prev) => ({ ...prev, tempat: e.target.value }))}
-                        className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                        className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                       />
                     </div>
                     <div>
@@ -610,7 +612,7 @@ const UangMuka = () => {
                         onChange={(e) =>
                           setForm((prev) => ({ ...prev, tanggal_panjar: e.target.value }))
                         }
-                        className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                        className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                       />
                     </div>
                   </div>
@@ -624,7 +626,7 @@ const UangMuka = () => {
                       disabled={!!editId}
                       value={form.spt_id}
                       onChange={(e) => handleSptChange(e.target.value)}
-                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 disabled:opacity-70"
+                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 disabled:opacity-70 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     >
                       <option value="">-- Pilih SPT --</option>
                       {allSpts.map((s) => (
@@ -647,7 +649,7 @@ const UangMuka = () => {
                         onChange={(e) =>
                           setForm((prev) => ({ ...prev, pelaksana_id: e.target.value }))
                         }
-                        className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 disabled:opacity-50"
+                        className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 disabled:opacity-50 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                       >
                         {loadingPelaksana ? (
                           <option>Memuat pelaksana...</option>
@@ -673,7 +675,7 @@ const UangMuka = () => {
                         onChange={(e) =>
                           setForm((prev) => ({ ...prev, bendahara_id: e.target.value }))
                         }
-                        className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                        className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                       >
                         <option value="">-- Pilih Bendahara --</option>
                         {allPegawai
@@ -695,7 +697,7 @@ const UangMuka = () => {
                       required
                       value={form.pejabat_id}
                       onChange={(e) => setForm((prev) => ({ ...prev, pejabat_id: e.target.value }))}
-                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600"
+                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     >
                       <option value="">-- Pilih Pejabat --</option>
                       {allPegawai
@@ -734,7 +736,7 @@ const UangMuka = () => {
                             placeholder="Uraian Biaya (misal: Uang Harian)"
                             value={item.uraian}
                             onChange={(e) => handleRincianChange(idx, 'uraian', e.target.value)}
-                            className="w-full sm:flex-1 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                            className="w-full sm:flex-1 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                           />
                           <input
                             type="text"
@@ -742,14 +744,14 @@ const UangMuka = () => {
                             placeholder="Jumlah (Rp)"
                             value={item.jumlah ? formatNumber(item.jumlah) : ''}
                             onChange={(e) => handleRincianChange(idx, 'jumlah', e.target.value)}
-                            className="w-full sm:w-44 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-right font-semibold"
+                            className="w-full sm:w-44 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-right font-semibold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                           />
                           <input
                             type="text"
                             placeholder="Keterangan"
                             value={item.keterangan}
                             onChange={(e) => handleRincianChange(idx, 'keterangan', e.target.value)}
-                            className="w-full sm:w-48 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                            className="w-full sm:w-48 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                           />
                           <button
                             type="button"
