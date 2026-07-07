@@ -743,7 +743,7 @@ const Pembayaran = () => {
                   setLimit(parseInt(e.target.value));
                   setPage(1);
                 }}
-                className=" text-sm  dark:text-slate-200 dark:bg-slate-900 text-slate-600 outline-none "
+                className=" text-sm  dark:text-slate-200  dark:bg-slate-900 text-slate-600 outline-none "
               >
                 <option value={5}>5</option>
                 <option value={15}>15</option>
@@ -1072,7 +1072,7 @@ const Pembayaran = () => {
                     }
                     required
                     placeholder="Contoh: 001/KWT/VI/2026"
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none bg-white dark:focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent bg-white dark:focus:border-emerald-500"
                   />
                 </div>
                 <div>
@@ -1086,7 +1086,7 @@ const Pembayaran = () => {
                       setPembayaranForm((prev) => ({ ...prev, tanggal_bukti: e.target.value }))
                     }
                     required
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none bg-white
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 bg-white
                     
                     /* PERBAIKAN: Style untuk ikon kalender di dark mode */
                     dark:[color-scheme:dark] 
@@ -1105,11 +1105,13 @@ const Pembayaran = () => {
                     onChange={handleSptChange}
                     required
                     disabled={!!pembayaranEditId}
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:border-emerald-500"
                   >
-                    <option value="">-- Pilih SPT --</option>
+                    <option value="" className="dark:bg-slate-900">
+                      -- Pilih SPT --
+                    </option>
                     {allSpts.map((s) => (
-                      <option key={s.id} value={s.id}>
+                      <option key={s.id} value={s.id} className="dark:bg-slate-900">
                         {s.nomor_surat}
                       </option>
                     ))}
@@ -1125,11 +1127,13 @@ const Pembayaran = () => {
                     onChange={handleAnggaranChange}
                     required
                     disabled={!!pembayaranEditId}
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:border-emerald-500"
                   >
-                    <option value="">-- Pilih Anggaran --</option>
+                    <option value="" className="dark:bg-slate-900">
+                      -- Pilih Anggaran --
+                    </option>
                     {allAnggaran.map((a) => (
-                      <option key={a.id} value={a.id}>
+                      <option key={a.id} value={a.id} className="dark:bg-slate-900">
                         {a.mata_anggaran_kode} - {a.mata_anggaran_nama}
                       </option>
                     ))}
@@ -1149,7 +1153,7 @@ const Pembayaran = () => {
                   }
                   required
                   placeholder="Nama pelaksana yang menerima pembayaran..."
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white dark:focus:border-emerald-500"
                 />
               </div>
 
@@ -1166,7 +1170,7 @@ const Pembayaran = () => {
                     }
                     required
                     placeholder="Uraian kuitansi..."
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white dark:focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -1181,11 +1185,13 @@ const Pembayaran = () => {
                     }
                     required
                     disabled={!!pembayaranEditId}
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-none dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:border-emerald-500"
                   >
-                    <option value="">-- Pilih PPTK --</option>
+                    <option value="" className="dark:bg-slate-900">
+                      -- Pilih PPTK --
+                    </option>
                     {allPptk.map((p) => (
-                      <option key={p.id} value={p.id}>
+                      <option key={p.id} value={p.id} className="dark:bg-slate-900">
                         {p.nama_lengkap} (NIP: {p.nip || '-'})
                       </option>
                     ))}
@@ -1205,24 +1211,29 @@ const Pembayaran = () => {
                 rincianPengeluaran.penerima.length > 0 && (
                   <div className="space-y-4">
                     {/* Uang harian analysis */}
-                    <div className="p-4 border border-blue-100 bg-blue-50/20 rounded-2xl space-y-1.5 text-xs text-blue-800">
+                    <div className="p-4 border border-blue-100 dark:border-slate-700 bg-blue-50/20 dark:bg-slate-700/50 rounded-2xl space-y-1.5 text-xs text-blue-800">
                       <div className="flex items-center gap-1.5 font-bold mb-1">
-                        <Info size={14} className="text-blue-500" />
-                        <span>Analisis & Penerapan Uang Harian:</span>
+                        <Info size={14} className="text-blue-500 dark:text-yellow-400" />
+                        <span className="dark:text-yellow-400">
+                          Analisis & Penerapan Uang Harian:
+                        </span>
                       </div>
                       {rincianPengeluaran.penerima.map((p) => {
                         const harian = p.uang_harian || {};
                         const hasRepresentasi =
                           p.biaya_representasi && p.biaya_representasi.harga > 0;
                         return (
-                          <div key={p.id} className="space-y-0.5">
+                          <div key={p.id} className="space-y-0.5 dark:text-yellow-400">
                             <div>
-                              • <span className="font-semibold">{p.nama_lengkap}</span>: Uang Harian
-                              ({harian.golongan || 'N/A'}) ={' '}
+                              •{' '}
+                              <span className="font-semibold dark:text-yellow-400">
+                                {p.nama_lengkap}
+                              </span>
+                              : Uang Harian ({harian.golongan || 'N/A'}) ={' '}
                               {formatCurrency(harian.harga_satuan || 0)} / {harian.satuan || 'OH'}.
                             </div>
                             {hasRepresentasi && (
-                              <div className="pl-3 text-emerald-700">
+                              <div className="pl-3 text-emerald-700 dark:text-yellow-500">
                                 ↳ Ditambahkan Biaya Representasi (Eselon II) ={' '}
                                 {formatCurrency(p.biaya_representasi.harga)} /{' '}
                                 {p.biaya_representasi.satuan || 'OH'}.
@@ -1235,7 +1246,7 @@ const Pembayaran = () => {
 
                     {/* Table */}
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                      <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 uppercase tracking-wider mb-2">
                         Rincian Pengeluaran Realisasi
                       </label>
                       <div className="overflow-x-auto rounded-2xl rounded-b-none">
@@ -1369,39 +1380,44 @@ const Pembayaran = () => {
                               return (
                                 <React.Fragment key={pInfo.id}>
                                   {rows.map((row, rIdx) => (
-                                    <tr key={rIdx} className="hover:bg-slate-50/30 text-sm">
+                                    <tr
+                                      key={rIdx}
+                                      className="hover:bg-slate-50/30 text-sm dark:hover:bg-slate-700/20"
+                                    >
                                       {rIdx === 0 && (
                                         <>
                                           <td
-                                            className="py-3 px-3 text-center align-top border-r text-slate-400 font-medium"
+                                            className="py-3 px-3 text-center align-top border-x dark:border-slate-600/60 text-slate-400 dark:text-slate-200 font-medium"
                                             rowSpan={rows.length + 2}
                                           >
                                             {pIdx + 1}.
                                           </td>
                                           <td
-                                            className="py-3 px-3 font-semibold text-slate-800 align-top border-r"
+                                            className="py-3 px-3 font-semibold text-slate-800 dark:text-slate-200 border-r dark:border-r-slate-600/60 align-top border-r"
                                             rowSpan={rows.length + 2}
                                           >
                                             {pInfo.nama_lengkap}
                                           </td>
                                         </>
                                       )}
-                                      <td className="py-2.5 px-3 text-slate-500">{row.uraian}</td>
-                                      <td className="py-2.5 px-3 text-right whitespace-nowrap">
+                                      <td className="py-2.5 px-3 text-slate-500 dark:border-b-slate-600/60 dark:border-b dark:text-slate-200">
+                                        {row.uraian}
+                                      </td>
+                                      <td className="py-2.5 px-3 text-right whitespace-nowrap dark:border-b-slate-600/60 dark:border-b dark:text-slate-200">
                                         {formatCurrency(row.harga)}
                                       </td>
-                                      <td className="py-2.5 px-3 text-center text-slate-400 font-medium">
+                                      <td className="py-2.5 px-3 text-center text-slate-400 font-medium dark:border-b-slate-600/60 dark:border-b dark:text-slate-200">
                                         {row.satuan}
                                       </td>
-                                      <td className="py-2.5 px-3 text-center text-slate-400 font-medium">
+                                      <td className="py-2.5 px-3 text-center text-slate-400 font-medium dark:border-b-slate-600/60 dark:border-b dark:text-slate-200">
                                         {row.hari}
                                       </td>
-                                      <td className="py-2.5 px-3 text-right font-semibold text-slate-700 whitespace-nowrap">
+                                      <td className="py-2.5 px-3 text-right font-semibold text-slate-700 whitespace-nowrap dark:border-b dark:border-slate-600/60 dark:text-slate-200">
                                         {formatCurrency(row.total)}
                                       </td>
                                       {rIdx === 0 && (
                                         <td
-                                          className="py-3 px-3 text-center align-middle border-l border-r w-32 min-w-[120px]"
+                                          className="py-3 px-3 text-center align-middle border-x dark:border-slate-600/60 w-32 min-w-[120px]"
                                           rowSpan={rows.length}
                                         >
                                           <input
@@ -1416,11 +1432,11 @@ const Pembayaran = () => {
                                                 ),
                                               }))
                                             }
-                                            className="w-24 text-center px-1.5 py-1 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 font-bold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                            className="w-24 text-center px-1.5 py-1 text-xs dark:text-slate-200 border border-slate-200 dark:border-slate-500 rounded-lg focus:outline-none focus:border-indigo-500 font-bold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                           />
                                         </td>
                                       )}
-                                      <td className="py-3 px-3 text-right align-middle border-l border-r w-36 min-w-[140px]">
+                                      <td className="py-3 px-3 text-right align-middle border-x border-b dark:border-slate-600/60 w-36 min-w-[140px]">
                                         <input
                                           type="text"
                                           placeholder="Rp 0"
@@ -1437,36 +1453,36 @@ const Pembayaran = () => {
                                               [`${pInfo.id}_${row.type}`]: formatted,
                                             }));
                                           }}
-                                          className="w-28 text-right px-1.5 py-1 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 font-bold text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                          className="w-28 text-right px-1.5 py-1 text-xs border border-slate-200 dark:border-slate-500 dark:text-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 font-bold text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                         />
                                       </td>
                                     </tr>
                                   ))}
                                   {/* Total Panjar row per employee */}
-                                  <tr className="bg-slate-50/50 text-sm border-t border-slate-200">
+                                  <tr className="bg-slate-50/50 dark:bg-slate-900 dark:hover:bg-slate-900/70 text-sm border-t dark:border-slate-600/60 border-slate-200">
                                     <td
                                       colSpan={5}
-                                      className="py-2 px-3 text-right font-bold text-slate-500 border-t border-slate-200"
+                                      className="py-2 px-3 text-right font-bold text-slate-500 dark:text-slate-400 border-t border-slate-200"
                                     >
                                       Total Panjar Pegawai:
                                     </td>
                                     <td
-                                      className="py-2 px-3 text-right font-bold text-rose-600 border-slate-200 border-r border-r-mauve-900/90 border-t  whitespace-nowrap"
+                                      className="py-2 px-3 text-right font-bold text-rose-600 border-slate-200 border-r dark:border-slate-600/60 border-r-mauve-900/90 border-t  whitespace-nowrap"
                                       colSpan={2}
                                     >
                                       ({formatCurrency(panjar)})
                                     </td>
                                   </tr>
                                   {/* Total Dibayar row per employee */}
-                                  <tr className="bg-emerald-50/30 text-sm border-b border-slate-200">
+                                  <tr className="bg-emerald-50/30 dark:bg-slate-900 dark:hover:bg-slate-900/70 text-sm border-b dark:border-slate-600/60 border-slate-200">
                                     <td
                                       colSpan={5}
-                                      className="py-2 px-3 text-right font-bold text-emerald-800"
+                                      className="py-2 px-3 text-right font-bold text-emerald-800 dark:text-slate-200"
                                     >
                                       Jumlah Dibayarkan ke Pegawai:
                                     </td>
                                     <td
-                                      className="py-2 px-3 text-right font-bold text-emerald-700  border-r whitespace-nowrap"
+                                      className="py-2 px-3 text-right font-bold text-emerald-700  border-r dark:border-slate-600/60 whitespace-nowrap dark:text-slate-200"
                                       colSpan={2}
                                     >
                                       {formatCurrency(totalBayar)}
@@ -1476,12 +1492,15 @@ const Pembayaran = () => {
                               );
                             })}
                           </tbody>
-                          <tfoot className="bg-slate-50 text-slate-800 font-bold text-sm">
+                          <tfoot className="bg-slate-50 dark:bg-slate-900 text-slate-800 font-bold text-sm">
                             <tr>
-                              <td colSpan={8} className="py-3.5 px-4 text-right text-sm">
+                              <td
+                                colSpan={8}
+                                className="py-3.5 px-4 text-right text-sm dark:text-slate-200"
+                              >
                                 TOTAL KESELURUHAN DIBAYAR KUITANSI:
                               </td>
-                              <td className="py-3.5 px-4 text-right text-indigo-700 text-sm font-extrabold whitespace-nowrap">
+                              <td className="py-3.5 px-4 text-right text-indigo-700 text-sm font-extrabold whitespace-nowrap dark:text-slate-200">
                                 {formatCurrency(getGrandTotal())}
                               </td>
                             </tr>
@@ -1552,11 +1571,13 @@ const Pembayaran = () => {
                   onChange={handleRiilSptChange}
                   required
                   disabled={!!riilEditId}
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-transparent focus:ring-2 focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 >
-                  <option value="">-- Pilih SPT --</option>
+                  <option value="" className="dark:bg-slate-900">
+                    -- Pilih SPT --
+                  </option>
                   {riilSptList.map((s) => (
-                    <option key={s.id} value={s.id}>
+                    <option key={s.id} value={s.id} className="dark:bg-slate-900">
                       {s.nomor_surat}
                     </option>
                   ))}
@@ -1572,21 +1593,27 @@ const Pembayaran = () => {
                   onChange={(e) => setRiilForm((prev) => ({ ...prev, pegawai_id: e.target.value }))}
                   required
                   disabled={!riilForm.spt_id || loadingRiilPelaksana || !!riilEditId}
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 dark:disabled:bg-slate-700 disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-transparent focus:ring-2 focus:border-indigo-500 bg-white disabled:bg-slate-100 dark:disabled:bg-slate-700 disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 >
                   {loadingRiilPelaksana ? (
                     <option>Memuat Pelaksana...</option>
                   ) : riilPelaksanaList.length === 0 ? (
-                    <option value="">
+                    <option value="" className="dark:bg-slate-900">
                       {riilForm.spt_id
                         ? '-- Semua pelaksana sudah memiliki bukti bayar --'
                         : '-- Pilih SPT terlebih dahulu --'}
                     </option>
                   ) : (
                     <>
-                      <option value="">-- Pilih Pelaksana --</option>
+                      <option value="" className="dark:bg-slate-900">
+                        -- Pilih Pelaksana --
+                      </option>
                       {riilPelaksanaList.map((p) => (
-                        <option key={p.pegawai_id} value={p.pegawai_id}>
+                        <option
+                          key={p.pegawai_id}
+                          value={p.pegawai_id}
+                          className="dark:bg-slate-900"
+                        >
                           {p.nama_lengkap}
                         </option>
                       ))}
@@ -1605,7 +1632,7 @@ const Pembayaran = () => {
                   onChange={(e) => setRiilForm((prev) => ({ ...prev, uraian: e.target.value }))}
                   required
                   placeholder="Contoh: Biaya taksi bandara ke hotel pergi-pulang"
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus-border-none bg-white dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2  bg-white dark:focus:border-emerald-500"
                 />
               </div>
 
@@ -1624,7 +1651,7 @@ const Pembayaran = () => {
                     }))
                   }
                   required
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus-border-none text-right font-medium text-slate-800 bg-white dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 text-right font-medium text-slate-800 bg-white dark:focus:border-emerald-500"
                 />
               </div>
 
