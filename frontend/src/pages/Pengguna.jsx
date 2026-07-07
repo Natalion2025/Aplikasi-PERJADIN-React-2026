@@ -403,7 +403,7 @@ const Pengguna = () => {
                       onChange={handleChange}
                       required
                       placeholder="Contoh: Budi Santoso"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:placeholder-slate-500 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -419,7 +419,7 @@ const Pengguna = () => {
                       onChange={handleChange}
                       required
                       placeholder="budi_s"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 font-mono dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:placeholder-slate-500 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 font-mono dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -428,22 +428,30 @@ const Pengguna = () => {
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
                       Peran (Role)
                     </label>
-                    <select
-                      name="role"
-                      value={form.role}
-                      onChange={handleChange}
-                      required
-                      disabled={currentUser?.role === 'admin' && form.role !== 'user'}
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
-                    >
-                      <option value="user">User / Operator</option>
-                      {currentUser?.role === 'superadmin' && (
-                        <>
-                          <option value="admin">Admin</option>
-                          <option value="superadmin">Super Admin</option>
-                        </>
-                      )}
-                    </select>
+                    <div className="px-2 py-2.5 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500">
+                      <select
+                        name="role"
+                        value={form.role}
+                        onChange={handleChange}
+                        required
+                        disabled={currentUser?.role === 'admin' && form.role !== 'user'}
+                        className="w-full  bg-slate-50 dark:bg-slate-900/70  text-sm outline-none  dark:text-slate-200 "
+                      >
+                        <option value="user" className="">
+                          User / Operator
+                        </option>
+                        {currentUser?.role === 'superadmin' && (
+                          <>
+                            <option value="admin" className="dark:bg-slate-900">
+                              Admin
+                            </option>
+                            <option value="superadmin" className="dark:bg-slate-900">
+                              Super Admin
+                            </option>
+                          </>
+                        )}
+                      </select>
+                    </div>
                   </div>
 
                   {/* Password */}
@@ -463,7 +471,7 @@ const Pengguna = () => {
                       onChange={handleChange}
                       required={!editingId}
                       placeholder="••••••••"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:placeholder-slate-500 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -478,7 +486,7 @@ const Pengguna = () => {
                       value={form.nip}
                       onChange={handleChange}
                       placeholder="19901234567890"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:placeholder-slate-500 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -493,7 +501,7 @@ const Pengguna = () => {
                       value={form.jabatan}
                       onChange={handleChange}
                       placeholder="Contoh: Bendahara Pengeluaran"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:placeholder-slate-500 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
                 </div>
