@@ -171,7 +171,7 @@ const DaftarPejabat = () => {
       </div>
 
       {/* Main Table */}
-      <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-3xl shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700/50 rounded-3xl shadow-sm overflow-hidden">
         {loading ? (
           <div className="flex justify-center items-center py-20 gap-3 text-slate-400">
             <Loader2 className="w-6 h-6 animate-spin text-indigo-600" />
@@ -184,7 +184,7 @@ const DaftarPejabat = () => {
             <p className="text-xs text-slate-400">Silakan tambahkan data pejabat baru.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto rounded-2xl rounded-b-none">
+          <div className="overflow-x-auto rounded-2xl rounded-b-none ">
             <table className="min-w-full divide-y divide-slate-100">
               <thead className="text-xs uppercase">
                 <tr className="bg-mauve-500 dark:bg-slate-600/60 dark:text-slate-200 text-slate-100 border-b-2 border-mauve-500 dark:border-slate-600/60 border-double font-bold tracking-wider">
@@ -303,7 +303,7 @@ const DaftarPejabat = () => {
                     onChange={handleChange}
                     required
                     placeholder="Contoh: H. Darno, S.Sos., M.Si."
-                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -319,7 +319,7 @@ const DaftarPejabat = () => {
                     onChange={handleChange}
                     required
                     placeholder="Contoh: Kepala Dinas Perhubungan"
-                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -334,7 +334,7 @@ const DaftarPejabat = () => {
                     value={form.nip}
                     onChange={handleChange}
                     placeholder="Contoh: 19681023 199003 1 002"
-                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 

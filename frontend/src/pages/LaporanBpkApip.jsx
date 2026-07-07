@@ -202,7 +202,7 @@ const LaporanBpkApip = () => {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="bg-white p-6 dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-600 shadow-sm space-y-6">
+      <div className="bg-white p-6 dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700/50 shadow-sm space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200 tracking-tight">

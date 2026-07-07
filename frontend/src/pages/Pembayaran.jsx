@@ -675,7 +675,7 @@ const Pembayaran = () => {
       )}
 
       {/* Page Header */}
-      <div className="bg-white p-6 md:p-8 rounded-3xl dark:bg-slate-800 border border-slate-100 dark:border-slate-600 shadow-sm space-y-6">
+      <div className="bg-white p-6 md:p-8 rounded-3xl dark:bg-slate-800 border border-slate-100 dark:border-slate-700/50 shadow-sm space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200 tracking-tight">
@@ -1086,7 +1086,7 @@ const Pembayaran = () => {
                       setPembayaranForm((prev) => ({ ...prev, tanggal_bukti: e.target.value }))
                     }
                     required
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 bg-white
+                    className="w-full px-3 py-2 border border-slate-200 bg-white dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2
                     
                     /* PERBAIKAN: Style untuk ikon kalender di dark mode */
                     dark:[color-scheme:dark] 
@@ -1100,44 +1100,48 @@ const Pembayaran = () => {
                   <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
                     Register SPT
                   </label>
-                  <select
-                    value={pembayaranForm.spt_id}
-                    onChange={handleSptChange}
-                    required
-                    disabled={!!pembayaranEditId}
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:border-emerald-500"
-                  >
-                    <option value="" className="dark:bg-slate-900">
-                      -- Pilih SPT --
-                    </option>
-                    {allSpts.map((s) => (
-                      <option key={s.id} value={s.id} className="dark:bg-slate-900">
-                        {s.nomor_surat}
+                  <div className="px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
+                    <select
+                      value={pembayaranForm.spt_id}
+                      onChange={handleSptChange}
+                      required
+                      disabled={!!pembayaranEditId}
+                      className="w-full  text-sm outline-none "
+                    >
+                      <option value="" className="dark:bg-slate-900">
+                        -- Pilih SPT --
                       </option>
-                    ))}
-                  </select>
+                      {allSpts.map((s) => (
+                        <option key={s.id} value={s.id} className="dark:bg-slate-900">
+                          {s.nomor_surat}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
                     Kode/Mata Anggaran
                   </label>
-                  <select
-                    value={pembayaranForm.anggaran_id}
-                    onChange={handleAnggaranChange}
-                    required
-                    disabled={!!pembayaranEditId}
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:border-emerald-500"
-                  >
-                    <option value="" className="dark:bg-slate-900">
-                      -- Pilih Anggaran --
-                    </option>
-                    {allAnggaran.map((a) => (
-                      <option key={a.id} value={a.id} className="dark:bg-slate-900">
-                        {a.mata_anggaran_kode} - {a.mata_anggaran_nama}
+                  <div className="px-3 py-2 border border-slate-200 bg-white dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
+                    <select
+                      value={pembayaranForm.anggaran_id}
+                      onChange={handleAnggaranChange}
+                      required
+                      disabled={!!pembayaranEditId}
+                      className="w-full  text-sm outline-none  "
+                    >
+                      <option value="" className="dark:bg-slate-900">
+                        -- Pilih Anggaran --
                       </option>
-                    ))}
-                  </select>
+                      {allAnggaran.map((a) => (
+                        <option key={a.id} value={a.id} className="dark:bg-slate-900">
+                          {a.mata_anggaran_kode} - {a.mata_anggaran_nama}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
 
@@ -1178,24 +1182,26 @@ const Pembayaran = () => {
                   <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
                     Pejabat Pembuat Teknis Kegiatan (PPTK)
                   </label>
-                  <select
-                    value={pembayaranForm.pptk_id}
-                    onChange={(e) =>
-                      setPembayaranForm((prev) => ({ ...prev, pptk_id: e.target.value }))
-                    }
-                    required
-                    disabled={!!pembayaranEditId}
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:border-emerald-500"
-                  >
-                    <option value="" className="dark:bg-slate-900">
-                      -- Pilih PPTK --
-                    </option>
-                    {allPptk.map((p) => (
-                      <option key={p.id} value={p.id} className="dark:bg-slate-900">
-                        {p.nama_lengkap} (NIP: {p.nip || '-'})
+                  <div className="px-3 py-2 border border-slate-200 bg-white dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
+                    <select
+                      value={pembayaranForm.pptk_id}
+                      onChange={(e) =>
+                        setPembayaranForm((prev) => ({ ...prev, pptk_id: e.target.value }))
+                      }
+                      required
+                      disabled={!!pembayaranEditId}
+                      className="w-full  text-sm outline-none "
+                    >
+                      <option value="" className="dark:bg-slate-900">
+                        -- Pilih PPTK --
                       </option>
-                    ))}
-                  </select>
+                      {allPptk.map((p) => (
+                        <option key={p.id} value={p.id} className="dark:bg-slate-900">
+                          {p.nama_lengkap} (NIP: {p.nip || '-'})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
 
@@ -1566,60 +1572,66 @@ const Pembayaran = () => {
                 <label className="block text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
                   Nomor SPT
                 </label>
-                <select
-                  value={riilForm.spt_id}
-                  onChange={handleRiilSptChange}
-                  required
-                  disabled={!!riilEditId}
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-transparent focus:ring-2 focus:border-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
-                >
-                  <option value="" className="dark:bg-slate-900">
-                    -- Pilih SPT --
-                  </option>
-                  {riilSptList.map((s) => (
-                    <option key={s.id} value={s.id} className="dark:bg-slate-900">
-                      {s.nomor_surat}
+                <div className="px-3 py-2 border border-slate-200 bg-white focus-within:ring-mauve-500 focus-within:ring-2 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
+                  <select
+                    value={riilForm.spt_id}
+                    onChange={handleRiilSptChange}
+                    required
+                    disabled={!!riilEditId}
+                    className="w-full  text-sm outline-none"
+                  >
+                    <option value="" className="dark:bg-slate-900">
+                      -- Pilih SPT --
                     </option>
-                  ))}
-                </select>
+                    {riilSptList.map((s) => (
+                      <option key={s.id} value={s.id} className="dark:bg-slate-900">
+                        {s.nomor_surat}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
                   Nama Pelaksana
                 </label>
-                <select
-                  value={riilForm.pegawai_id}
-                  onChange={(e) => setRiilForm((prev) => ({ ...prev, pegawai_id: e.target.value }))}
-                  required
-                  disabled={!riilForm.spt_id || loadingRiilPelaksana || !!riilEditId}
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-transparent focus:ring-2 focus:border-indigo-500 bg-white disabled:bg-slate-100 dark:disabled:bg-slate-700 disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
-                >
-                  {loadingRiilPelaksana ? (
-                    <option>Memuat Pelaksana...</option>
-                  ) : riilPelaksanaList.length === 0 ? (
-                    <option value="" className="dark:bg-slate-900">
-                      {riilForm.spt_id
-                        ? '-- Semua pelaksana sudah memiliki bukti bayar --'
-                        : '-- Pilih SPT terlebih dahulu --'}
-                    </option>
-                  ) : (
-                    <>
+                <div className="px-3 py-2 border border-slate-200 bg-white dark:bg-slate-900/70 focus-within:ring-mauve-500 focus-within:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
+                  <select
+                    value={riilForm.pegawai_id}
+                    onChange={(e) =>
+                      setRiilForm((prev) => ({ ...prev, pegawai_id: e.target.value }))
+                    }
+                    required
+                    disabled={!riilForm.spt_id || loadingRiilPelaksana || !!riilEditId}
+                    className="w-full  text-sm outline-none "
+                  >
+                    {loadingRiilPelaksana ? (
+                      <option>Memuat Pelaksana...</option>
+                    ) : riilPelaksanaList.length === 0 ? (
                       <option value="" className="dark:bg-slate-900">
-                        -- Pilih Pelaksana --
+                        {riilForm.spt_id
+                          ? '-- Semua pelaksana sudah memiliki bukti bayar --'
+                          : '-- Pilih SPT terlebih dahulu --'}
                       </option>
-                      {riilPelaksanaList.map((p) => (
-                        <option
-                          key={p.pegawai_id}
-                          value={p.pegawai_id}
-                          className="dark:bg-slate-900"
-                        >
-                          {p.nama_lengkap}
+                    ) : (
+                      <>
+                        <option value="" className="dark:bg-slate-900">
+                          -- Pilih Pelaksana --
                         </option>
-                      ))}
-                    </>
-                  )}
-                </select>
+                        {riilPelaksanaList.map((p) => (
+                          <option
+                            key={p.pegawai_id}
+                            value={p.pegawai_id}
+                            className="dark:bg-slate-900"
+                          >
+                            {p.nama_lengkap}
+                          </option>
+                        ))}
+                      </>
+                    )}
+                  </select>
+                </div>
               </div>
 
               <div>
@@ -1632,7 +1644,7 @@ const Pembayaran = () => {
                   onChange={(e) => setRiilForm((prev) => ({ ...prev, uraian: e.target.value }))}
                   required
                   placeholder="Contoh: Biaya taksi bandara ke hotel pergi-pulang"
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2  bg-white dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-700/50 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-mauve-500 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2  bg-white dark:focus:border-emerald-500"
                 />
               </div>
 
@@ -1651,7 +1663,7 @@ const Pembayaran = () => {
                     }))
                   }
                   required
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 text-right font-medium text-slate-800 bg-white dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-700/50 dark:text-slate-200 rounded-xl text-sm outline-none focus:ring-mauve-500 dark:focus:ring-emerald-600/20  focus:border-transparent focus:ring-2 text-right font-medium text-slate-800 bg-white dark:focus:border-emerald-500"
                 />
               </div>
 
@@ -1660,7 +1672,7 @@ const Pembayaran = () => {
                 <button
                   type="button"
                   onClick={() => setRiilModalOpen(false)}
-                  className="px-4 py-2 border border-slate-200 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-100/10 hover:bg-slate-50 text-slate-700 rounded-xl text-sm font-semibold transition-all"
+                  className="px-4 py-2 border border-slate-200 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-100/10 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold transition-all"
                 >
                   Batal
                 </button>

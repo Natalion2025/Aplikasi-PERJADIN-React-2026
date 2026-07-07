@@ -105,7 +105,7 @@ const Setelan = () => {
       </div>
 
       {/* Theme Card */}
-      <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-4">
+      <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-700/50 shadow-sm space-y-4">
         <div>
           <h3 className="text-sm font-semibold text-slate-650 dark:text-slate-400 uppercase tracking-wider">
             Tampilan & Preferensi
