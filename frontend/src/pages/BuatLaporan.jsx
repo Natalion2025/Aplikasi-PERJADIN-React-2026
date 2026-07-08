@@ -1163,7 +1163,7 @@ const BuatLaporan = () => {
 
       {/* --- LIST VIEW --- */}
       {view === 'list' && (
-        <div className="bg-white p-6 md:p-8 dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-600 shadow-sm space-y-6">
+        <div className="bg-white p-6 md:p-8 dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700/50 shadow-sm space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-slate-800 tracking-tight dark:text-slate-200">
@@ -1176,7 +1176,7 @@ const BuatLaporan = () => {
             <div className="flex items-center gap-3 self-end sm:self-auto">
               <button
                 onClick={() => openCancelModal()}
-                className="flex items-center gap-2 px-4 py-2.5 bg-yellow-100 hover:bg-yellow-200 hover:border-yellow-300  text-orange-500 rounded-xl text-sm font-semibold border border-yellow-200 shadow-sm transition-all duration-200"
+                className="flex items-center gap-2 px-4 py-2.5 bg-yellow-100 hover:bg-yellow-200 hover:border-yellow-300  text-orange-500 rounded-2xl text-sm font-semibold border border-yellow-200 shadow-sm transition-all duration-200"
               >
                 <Ban size={16} />
                 <span>Batal Tugas</span>
@@ -1523,7 +1523,7 @@ const BuatLaporan = () => {
 
       {/* --- FORM VIEW (ADD / EDIT) --- */}
       {view === 'form' && (
-        <div className="bg-white p-6 md:p-8 rounded-3xl dark:bg-slate-800 border border-slate-100 dark:border-slate-600 shadow-sm space-y-6">
+        <div className="bg-white p-6 md:p-8 rounded-3xl dark:bg-slate-800 border border-slate-100 dark:border-slate-700/50 shadow-sm space-y-6">
           <div className="flex items-center justify-between border-b border-slate-100 pb-5">
             <div className="flex items-center gap-3">
               <button
@@ -1567,20 +1567,24 @@ const BuatLaporan = () => {
                 <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
                   Nomor SPT
                 </label>
-                <select
-                  value={form.spt_id}
-                  onChange={handleSptChange}
-                  disabled={isEditMode}
-                  required
-                  className="w-full px-3 py-2 border border-slate-200 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 dark:border-slate-600 dark:bg-slate-900/70 bg-white disabled:bg-slate-100 dark:disabled:bg-slate-700 disabled:cursor-not-allowed text-slate-800 font-medium"
-                >
-                  <option value="">-- Pilih SPT --</option>
-                  {sptOptions.map((opt) => (
-                    <option key={opt.id} value={opt.id}>
-                      {opt.nomor_surat}
+                <div className="px-3 py-2 border border-slate-200 dark:text-slate-200 rounded-xl focus-within:ring-2 focus-within:border-transparent focus-within:ring-mauve-500 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500 dark:border-slate-600 dark:bg-slate-900 bg-white disabled:bg-slate-100 dark:disabled:bg-slate-700 disabled:cursor-not-allowed text-slate-800 font-medium">
+                  <select
+                    value={form.spt_id}
+                    onChange={handleSptChange}
+                    disabled={isEditMode}
+                    required
+                    className="w-full  text-sm outline-none dark:bg-slate-900"
+                  >
+                    <option value="" className="dark:bg-slate-900">
+                      -- Pilih SPT --
                     </option>
-                  ))}
-                </select>
+                    {sptOptions.map((opt) => (
+                      <option key={opt.id} value={opt.id}>
+                        {opt.nomor_surat}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div>
                 <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
@@ -1593,7 +1597,11 @@ const BuatLaporan = () => {
                     setForm((prev) => ({ ...prev, tanggal_laporan: e.target.value }))
                   }
                   required
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500 bg-white text-slate-800 dark:bg-slate-900/70 dark:text-slate-200 dark:focus:ring-emerald-600/20 dark:focus-ring-2 dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm outline-none  appearance-none  focus:ring-2 focus:ring-mauve-500 bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600 focus:border-transparent dark:focus:ring-emerald-600/20 dark:focus-ring-2 dark:focus:border-emerald-500
+                  bg-no-repeat bg-right 
+                    [background-position-x:calc(100%-0.75rem)] 
+                    
+                    dark:[background-image:url('data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2724%27%20height=%2724%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%2364748b%27%20stroke-width=%272%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3e%3crect%20x=%273%27%20y=%274%27%20width=%2718%27%20height=%2718%27%20rx=%272%27%20ry=%272%27%3e%3c/rect%3e%3cline%20x1=%2716%27%20y1=%272%27%20x2=%2716%27%20y2=%276%27%3e%3c/line%3e%3cline%20x1=%278%27%20y1=%272%27%20x2=%278%27%20y2=%276%27%3e%3c/line%3e%3cline%20x1=%273%27%20y1=%2710%27%20x2=%2721%27%20y2=%2710%27%3e%3c/line%3e%3c/svg%3e')]"
                 />
               </div>
               <div>
@@ -1605,7 +1613,7 @@ const BuatLaporan = () => {
                   value={form.tempat_laporan}
                   onChange={(e) => setForm((prev) => ({ ...prev, tempat_laporan: e.target.value }))}
                   required
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 bg-white text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 dark:text-slate-200 dark:border-slate-600 dark:bg-slate-900"
                 />
               </div>
             </div>
