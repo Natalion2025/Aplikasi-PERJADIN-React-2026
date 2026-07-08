@@ -1072,7 +1072,7 @@ const Pembayaran = () => {
                     }
                     required
                     placeholder="Contoh: 001/KWT/VI/2026"
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent bg-white dark:focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-700/50 focus:ring-mauve-500 dark:text-slate-200 rounded-xl text-sm outline-none focus:ring-2 dark:focus:ring-emerald-600/20 focus:border-transparent bg-white dark:focus:border-emerald-500"
                   />
                 </div>
                 <div>
@@ -1086,11 +1086,14 @@ const Pembayaran = () => {
                       setPembayaranForm((prev) => ({ ...prev, tanggal_bukti: e.target.value }))
                     }
                     required
-                    className="w-full px-3 py-2 border border-slate-200 bg-white dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2
+                    className="w-full  px-3 py-2 border border-slate-200 bg-white dark:bg-slate-900/70 dark:border-slate-700/50 dark:text-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-mauve-500 focus:border-transparent dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500
                     
-                    /* PERBAIKAN: Style untuk ikon kalender di dark mode */
-                    dark:[color-scheme:dark] 
-                    dark:[&::-webkit-calendar-picker-indicator]:filter-invert dark:focus:border-emerald-500"
+                    /* PERBAIKAN: Menambahkan ikon kalender kustom sebagai background */
+                    bg-no-repeat bg-right 
+                    [background-position-x:calc(100%-0.75rem)] 
+                    
+                    dark:[background-image:url('data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2724%27%20height=%2724%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%2364748b%27%20stroke-width=%272%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3e%3crect%20x=%273%27%20y=%274%27%20width=%2718%27%20height=%2718%27%20rx=%272%27%20ry=%272%27%3e%3c/rect%3e%3cline%20x1=%2716%27%20y1=%272%27%20x2=%2716%27%20y2=%276%27%3e%3c/line%3e%3cline%20x1=%278%27%20y1=%272%27%20x2=%278%27%20y2=%276%27%3e%3c/line%3e%3cline%20x1=%273%27%20y1=%2710%27%20x2=%2721%27%20y2=%2710%27%3e%3c/line%3e%3c/svg%3e')]
+                    "
                   />
                 </div>
               </div>
@@ -1100,7 +1103,7 @@ const Pembayaran = () => {
                   <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
                     Register SPT
                   </label>
-                  <div className="px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
+                  <div className="px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-700/50 focus-within:ring-mauve-500 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
                     <select
                       value={pembayaranForm.spt_id}
                       onChange={handleSptChange}
@@ -1124,7 +1127,7 @@ const Pembayaran = () => {
                   <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
                     Kode/Mata Anggaran
                   </label>
-                  <div className="px-3 py-2 border border-slate-200 bg-white dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
+                  <div className="px-3 py-2 border border-slate-200 bg-white focus-within:ring-mauve-500 dark:bg-slate-900/70 dark:border-slate-700/50 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
                     <select
                       value={pembayaranForm.anggaran_id}
                       onChange={handleAnggaranChange}
@@ -1157,7 +1160,7 @@ const Pembayaran = () => {
                   }
                   required
                   placeholder="Nama pelaksana yang menerima pembayaran..."
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border focus:ring-mauve-500 border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm outline-none  bg-white dark:focus:border-emerald-500"
                 />
               </div>
 
@@ -1174,7 +1177,7 @@ const Pembayaran = () => {
                     }
                     required
                     placeholder="Uraian kuitansi..."
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white dark:focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-slate-200 focus:ring-mauve-500 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -1182,7 +1185,7 @@ const Pembayaran = () => {
                   <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
                     Pejabat Pembuat Teknis Kegiatan (PPTK)
                   </label>
-                  <div className="px-3 py-2 border border-slate-200 bg-white dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
+                  <div className="px-3 py-2 border border-slate-200 focus-within:ring-mauve-500 bg-white dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
                     <select
                       value={pembayaranForm.pptk_id}
                       onChange={(e) =>
@@ -1393,7 +1396,7 @@ const Pembayaran = () => {
                                       {rIdx === 0 && (
                                         <>
                                           <td
-                                            className="py-3 px-3 text-center align-top border-x dark:border-slate-600/60 text-slate-400 dark:text-slate-200 font-medium"
+                                            className="py-3 px-3 text-center align-top border-x border-slate-800 dark:border-slate-600/60 text-slate-800 dark:text-slate-200 font-medium"
                                             rowSpan={rows.length + 2}
                                           >
                                             {pIdx + 1}.
@@ -1406,19 +1409,19 @@ const Pembayaran = () => {
                                           </td>
                                         </>
                                       )}
-                                      <td className="py-2.5 px-3 text-slate-500 dark:border-b-slate-600/60 dark:border-b dark:text-slate-200">
+                                      <td className="py-2.5 px-3 text-slate-800 dark:border-b-slate-600/60 dark:border-b border-b border-b-slate-300/60 dark:text-slate-200">
                                         {row.uraian}
                                       </td>
-                                      <td className="py-2.5 px-3 text-right whitespace-nowrap dark:border-b-slate-600/60 dark:border-b dark:text-slate-200">
+                                      <td className="py-2.5 px-3 text-right text-slate-800 whitespace-nowrap dark:border-b-slate-600/60 dark:border-b border-b border-b-slate-300/60 dark:text-slate-200">
                                         {formatCurrency(row.harga)}
                                       </td>
-                                      <td className="py-2.5 px-3 text-center text-slate-400 font-medium dark:border-b-slate-600/60 dark:border-b dark:text-slate-200">
+                                      <td className="py-2.5 px-3 text-center text-slate-800 font-medium dark:border-b-slate-600/60 dark:border-b border-b border-b-slate-300/60 dark:text-slate-200">
                                         {row.satuan}
                                       </td>
-                                      <td className="py-2.5 px-3 text-center text-slate-400 font-medium dark:border-b-slate-600/60 dark:border-b dark:text-slate-200">
+                                      <td className="py-2.5 px-3 text-center text-slate-800 font-medium dark:border-b-slate-600/60 dark:border-b border-b border-b-slate-300/60 dark:text-slate-200">
                                         {row.hari}
                                       </td>
-                                      <td className="py-2.5 px-3 text-right font-semibold text-slate-700 whitespace-nowrap dark:border-b dark:border-slate-600/60 dark:text-slate-200">
+                                      <td className="py-2.5 px-3 text-right font-semibold text-slate-800 whitespace-nowrap dark:border-b border-b border-b-slate-300/60 dark:border-slate-600/60 dark:text-slate-200">
                                         {formatCurrency(row.total)}
                                       </td>
                                       {rIdx === 0 && (
@@ -1438,11 +1441,11 @@ const Pembayaran = () => {
                                                 ),
                                               }))
                                             }
-                                            className="w-24 text-center px-1.5 py-1 text-xs dark:text-slate-200 border border-slate-200 dark:border-slate-500 rounded-lg focus:outline-none focus:border-indigo-500 font-bold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                            className="w-24 text-center px-1.5 py-1 text-xs text-slate-800 dark:text-slate-200 border border-mauve-500 dark:border-slate-500 rounded-lg focus:outline-none focus:border-emerald-500 font-bold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                           />
                                         </td>
                                       )}
-                                      <td className="py-3 px-3 text-right align-middle border-x border-b dark:border-slate-600/60 w-36 min-w-[140px]">
+                                      <td className="py-3 px-3 text-right align-middle border-x border-b border-b border-b-slate-300/60 dark:border-slate-600/60 w-36 min-w-[140px]">
                                         <input
                                           type="text"
                                           placeholder="Rp 0"
@@ -1459,7 +1462,7 @@ const Pembayaran = () => {
                                               [`${pInfo.id}_${row.type}`]: formatted,
                                             }));
                                           }}
-                                          className="w-28 text-right px-1.5 py-1 text-xs border border-slate-200 dark:border-slate-500 dark:text-slate-200 rounded-lg focus:outline-none focus:border-indigo-500 font-bold text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                          className="w-28 text-right px-1.5 py-1 text-xs border border-mauve-500 dark:border-slate-500 dark:text-slate-200 rounded-lg focus:outline-none focus:border-emerald-500 font-bold text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                         />
                                       </td>
                                     </tr>
@@ -1468,7 +1471,7 @@ const Pembayaran = () => {
                                   <tr className="bg-slate-50/50 dark:bg-slate-900 dark:hover:bg-slate-900/70 text-sm border-t dark:border-slate-600/60 border-slate-200">
                                     <td
                                       colSpan={5}
-                                      className="py-2 px-3 text-right font-bold text-slate-500 dark:text-slate-400 border-t border-slate-200"
+                                      className="py-2 px-3 text-right font-bold text-slate-600 dark:text-slate-400 border-t border-slate-200"
                                     >
                                       Total Panjar Pegawai:
                                     </td>
@@ -1480,10 +1483,10 @@ const Pembayaran = () => {
                                     </td>
                                   </tr>
                                   {/* Total Dibayar row per employee */}
-                                  <tr className="bg-emerald-50/30 dark:bg-slate-900 dark:hover:bg-slate-900/70 text-sm border-b dark:border-slate-600/60 border-slate-200">
+                                  <tr className="bg-emerald-50/30 dark:bg-slate-900 dark:hover:bg-slate-900/70 text-sm border-b dark:border-slate-600/60 border-slate-200 border-b-slate-800">
                                     <td
                                       colSpan={5}
-                                      className="py-2 px-3 text-right font-bold text-emerald-800 dark:text-slate-200"
+                                      className="py-2 px-3 text-right font-bold text-slate-800 dark:text-slate-200"
                                     >
                                       Jumlah Dibayarkan ke Pegawai:
                                     </td>
@@ -1523,7 +1526,7 @@ const Pembayaran = () => {
                 <button
                   type="button"
                   onClick={() => setPembayaranModalOpen(false)}
-                  className="px-5 py-2.5 border border-slate-300 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-100/10 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl text-sm font-semibold transition-all"
+                  className="px-5 py-2.5 border border-slate-300 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-100/10 bg-white hover:bg-slate-200 text-slate-700 rounded-2xl text-sm font-semibold transition-all"
                 >
                   Batal
                 </button>
