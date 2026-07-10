@@ -218,7 +218,7 @@ const Anggaran = () => {
       </div>
 
       {/* Main Table Card */}
-      <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-600 shadow-sm space-y-6">
+      <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-700/50 shadow-sm space-y-6">
         {/* Search & Stats */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="relative w-full sm:max-w-md">
