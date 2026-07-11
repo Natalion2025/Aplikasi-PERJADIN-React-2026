@@ -391,23 +391,23 @@ const Anggaran = () => {
             if (e.target === e.currentTarget) setModalOpen(false);
           }}
         >
-          <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl border border-slate-100 flex flex-col max-h-[90vh] overflow-hidden">
+          <div className="bg-white rounded-3xl w-full max-w-xl shadow-2xl dark:border-slate-700 border dark:bg-slate-800 border-slate-100 flex flex-col max-h-[90vh] overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 text-white">
+            <div className="flex items-center justify-between px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-800 dark:to-teal-700 text-white">
               <h3 className="font-bold text-lg flex items-center gap-2">
                 <Wallet size={20} />
                 <span>{editId ? 'Ubah Mata Anggaran' : 'Tambah Mata Anggaran Baru'}</span>
               </h3>
               <button
                 onClick={() => setModalOpen(false)}
-                className="p-1.5 text-emerald-100 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+                className="p-1.5 text-emerald-100 hover:text-white rounded-full hover:bg-white/10 transition-colors"
               >
                 <X size={18} />
               </button>
             </div>
 
             {/* Form Body */}
-            <form onSubmit={handleSubmit} className="flex-1  p-6 space-y-4">
+            <form onSubmit={handleSubmit} className="flex-1  p-6 px-3 space-y-4">
               {error && (
                 <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs flex items-start gap-2.5">
                   <AlertCircle className="flex-shrink-0 mt-0.5" size={16} />
@@ -434,7 +434,7 @@ const Anggaran = () => {
                     value={form.bidang_urusan}
                     onChange={handleChange}
                     placeholder="Contoh: Urusan Otonomi Daerah"
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:bg-white dark:focus:bg-slate- transition-all dark:ring-2 focus:ring-mauve-500 text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -561,14 +561,14 @@ const Anggaran = () => {
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="flex-1 py-3 border border-slate-200 hover:bg-slate-50 text-slate-600 font-bold rounded-2xl text-sm transition-all"
+                  className="flex-1 py-3 border border-slate-200 hover:bg-slate-50 dark:bg-slate-200/10 text-slate-600 font-bold rounded-2xl text-sm transition-all"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-2xl text-sm shadow-lg shadow-emerald-600/10 hover:shadow-emerald-600/20 disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-emerald-600 dark:bg-emerald-800 dark:hover:bg-emerald-700  hover:bg-emerald-500 text-white font-bold rounded-2xl text-sm  hover:shadow-emerald-600/20 disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
                 >
                   {submitting ? (
                     <>

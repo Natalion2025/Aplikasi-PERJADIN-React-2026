@@ -859,12 +859,12 @@ const SptRegister = () => {
         >
           <div className="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-2xl w-full max-w-3xl flex flex-col max-h-[90vh] overflow-hidden animate-zoomIn">
             {/* Modal Header */}
-            <div className="flex justify-between items-center p-6 bg-gradient-to-r from-emerald-600 to-teal-500 text-white">
+            <div className="flex justify-between items-center p-6 bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-800 dark:to-teal-700 text-white">
               <div>
                 <h3 className="text-xl font-bold text-slate-100 dark:text-white">
                   Rincian Biaya Perjalanan Dinas (Uang Muka)
                 </h3>
-                <p className="text-slate-200 text-xs mt-1 dark:text-slate-400">
+                <p className="text-slate-200 text-xs mt-1 dark:text-slate-300">
                   Formulir pengajuan uang panjar pelaksana perjalanan dinas.
                 </p>
               </div>
@@ -919,7 +919,11 @@ const SptRegister = () => {
                       onChange={(e) =>
                         setPanjarForm((prev) => ({ ...prev, tanggal_panjar: e.target.value }))
                       }
-                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-transparent dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500
+                        bg-no-repeat bg-right 
+                    [background-position-x:calc(100%-0.75rem)] 
+                    
+                    dark:[background-image:url('data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2724%27%20height=%2724%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%2364748b%27%20stroke-width=%272%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3e%3crect%20x=%273%27%20y=%274%27%20width=%2718%27%20height=%2718%27%20rx=%272%27%20ry=%272%27%3e%3c/rect%3e%3cline%20x1=%2716%27%20y1=%272%27%20x2=%2716%27%20y2=%276%27%3e%3c/line%3e%3cline%20x1=%278%27%20y1=%272%27%20x2=%278%27%20y2=%276%27%3e%3c/line%3e%3cline%20x1=%273%27%20y1=%2710%27%20x2=%2721%27%20y2=%2710%27%3e%3c/line%3e%3c/svg%3e')]"
                     />
                   </div>
                 </div>
@@ -928,19 +932,27 @@ const SptRegister = () => {
                   <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
                     Nomor SPT / SPD Terkait
                   </label>
-                  <select
-                    required
-                    value={panjarForm.spt_id}
-                    onChange={(e) => handlePanjarSptChange(e.target.value)}
-                    className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
-                  >
-                    <option value="">-- Pilih SPT --</option>
-                    {allSptsForPanjar.map((s) => (
-                      <option key={s.id} value={s.id}>
-                        {s.nomor_surat} (Tujuan: {s.lokasi_tujuan})
+                  <div className="px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500 focus-within:border-transparent dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                    <select
+                      required
+                      value={panjarForm.spt_id}
+                      onChange={(e) => handlePanjarSptChange(e.target.value)}
+                      className="w-full  text-sm outline-none "
+                    >
+                      <option value="" className="dark:bg-slate-900 dark:text-slate-200">
+                        -- Pilih SPT --
                       </option>
-                    ))}
-                  </select>
+                      {allSptsForPanjar.map((s) => (
+                        <option
+                          key={s.id}
+                          value={s.id}
+                          className="dark:bg-slate-900 dark:text-slate-200"
+                        >
+                          {s.nomor_surat} (Tujuan: {s.lokasi_tujuan})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
                 {/* Pelaksana Perjalanan */}
@@ -949,50 +961,54 @@ const SptRegister = () => {
                     <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
                       Pegawai Pelaksana Perjalanan
                     </label>
-                    <select
-                      required
-                      disabled={loadingPelaksana || availablePelaksana.length === 0}
-                      value={panjarForm.pelaksana_id}
-                      onChange={(e) =>
-                        setPanjarForm((prev) => ({ ...prev, pelaksana_id: e.target.value }))
-                      }
-                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 disabled:opacity-50 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
-                    >
-                      {loadingPelaksana ? (
-                        <option>Memuat pelaksana...</option>
-                      ) : availablePelaksana.length === 0 ? (
-                        <option value="">-- Pilih SPT Terlebih Dahulu --</option>
-                      ) : (
-                        availablePelaksana.map((p) => (
-                          <option key={p.pegawai_id} value={p.pegawai_id}>
-                            {p.nama_lengkap} (NIP: {p.nip})
-                          </option>
-                        ))
-                      )}
-                    </select>
+                    <div className="px-1 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500 focus-within:border-transparent disabled:opacity-50 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                      <select
+                        required
+                        disabled={loadingPelaksana || availablePelaksana.length === 0}
+                        value={panjarForm.pelaksana_id}
+                        onChange={(e) =>
+                          setPanjarForm((prev) => ({ ...prev, pelaksana_id: e.target.value }))
+                        }
+                        className="w-full  text-sm outline-none "
+                      >
+                        {loadingPelaksana ? (
+                          <option>Memuat pelaksana...</option>
+                        ) : availablePelaksana.length === 0 ? (
+                          <option value="">-- Pilih SPT Terlebih Dahulu --</option>
+                        ) : (
+                          availablePelaksana.map((p) => (
+                            <option key={p.pegawai_id} value={p.pegawai_id}>
+                              {p.nama_lengkap} (NIP: {p.nip})
+                            </option>
+                          ))
+                        )}
+                      </select>
+                    </div>
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
                       Bendahara Pengeluaran
                     </label>
-                    <select
-                      required
-                      value={panjarForm.bendahara_id}
-                      onChange={(e) =>
-                        setPanjarForm((prev) => ({ ...prev, bendahara_id: e.target.value }))
-                      }
-                      className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
-                    >
-                      <option value="">-- Pilih Bendahara --</option>
-                      {allPegawai
-                        .filter((p) => p.jabatan && p.jabatan.toLowerCase().includes('bendahara'))
-                        .map((p) => (
-                          <option key={p.id} value={p.id}>
-                            {p.nama_lengkap} (NIP: {p.nip})
-                          </option>
-                        ))}
-                    </select>
+                    <div className="px-1 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500 focus-within:border-transparent dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                      <select
+                        required
+                        value={panjarForm.bendahara_id}
+                        onChange={(e) =>
+                          setPanjarForm((prev) => ({ ...prev, bendahara_id: e.target.value }))
+                        }
+                        className="w-full  text-sm outline-none "
+                      >
+                        <option value="">-- Pilih Bendahara --</option>
+                        {allPegawai
+                          .filter((p) => p.jabatan && p.jabatan.toLowerCase().includes('bendahara'))
+                          .map((p) => (
+                            <option key={p.id} value={p.id}>
+                              {p.nama_lengkap} (NIP: {p.nip})
+                            </option>
+                          ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -1000,23 +1016,27 @@ const SptRegister = () => {
                   <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
                     Pejabat Berwenang / Kepala Dinas
                   </label>
-                  <select
-                    required
-                    value={panjarForm.pejabat_id}
-                    onChange={(e) =>
-                      setPanjarForm((prev) => ({ ...prev, pejabat_id: e.target.value }))
-                    }
-                    className="w-full px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
-                  >
-                    <option value="">-- Pilih Pejabat --</option>
-                    {allPegawai
-                      .filter((p) => p.jabatan && p.jabatan.toLowerCase().includes('kepala dinas'))
-                      .map((p) => (
-                        <option key={p.id} value={p.id}>
-                          {p.nama_lengkap} - {p.jabatan}
-                        </option>
-                      ))}
-                  </select>
+                  <div className="px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500 focus-within:border-transparent dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                    <select
+                      required
+                      value={panjarForm.pejabat_id}
+                      onChange={(e) =>
+                        setPanjarForm((prev) => ({ ...prev, pejabat_id: e.target.value }))
+                      }
+                      className="w-full  text-sm outline-none "
+                    >
+                      <option value="">-- Pilih Pejabat --</option>
+                      {allPegawai
+                        .filter(
+                          (p) => p.jabatan && p.jabatan.toLowerCase().includes('kepala dinas')
+                        )
+                        .map((p) => (
+                          <option key={p.id} value={p.id}>
+                            {p.nama_lengkap} - {p.jabatan}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
                 </div>
 
                 {/* Perincian Biaya Dinamis */}
@@ -1043,7 +1063,7 @@ const SptRegister = () => {
                           placeholder="Uraian Biaya (misal: Uang Harian)"
                           value={item.uraian}
                           onChange={(e) => handleRincianChange(idx, 'uraian', e.target.value)}
-                          className="w-full sm:flex-1 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                          className="w-full sm:flex-1 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                         />
                         <input
                           type="text"
@@ -1051,14 +1071,14 @@ const SptRegister = () => {
                           placeholder="Jumlah (Rp)"
                           value={item.jumlah ? formatNumber(item.jumlah) : ''}
                           onChange={(e) => handleRincianChange(idx, 'jumlah', e.target.value)}
-                          className="w-full sm:w-44 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-right font-medium dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                          className="w-full sm:w-44 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-mauve-500 text-right font-medium dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                         />
                         <input
                           type="text"
                           placeholder="Keterangan"
                           value={item.keterangan}
                           onChange={(e) => handleRincianChange(idx, 'keterangan', e.target.value)}
-                          className="w-full sm:w-48 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                          className="w-full sm:w-48 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-850 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                         />
                         <button
                           type="button"
@@ -1076,11 +1096,11 @@ const SptRegister = () => {
             </div>
 
             {/* Modal Footer */}
-            <div className="flex justify-end items-center gap-3 p-6 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-850">
+            <div className="flex justify-end items-center gap-3 p-6 border-t border-slate-100 dark:border-t-0 dark:bg-slate-800 dark:border-slate-700 bg-slate-50 dark:bg-slate-850">
               <button
                 type="button"
                 onClick={() => setPanjarModalOpen(false)}
-                className="px-4 py-2 border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-semibold transition-all"
+                className="px-4 py-2 border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-200/10 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-semibold transition-all"
               >
                 Batal
               </button>
@@ -1088,7 +1108,7 @@ const SptRegister = () => {
                 type="submit"
                 form="panjar-form"
                 disabled={availablePelaksana.length === 0}
-                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-5 py-2 bg-emerald-600 dark:bg-emerald-800 dark:hover:bg-emerald-700 hover:bg-emerald-500 dark:hover:bg-emerald-700 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Simpan Uang Muka
               </button>
