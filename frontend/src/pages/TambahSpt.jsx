@@ -303,7 +303,7 @@ const TambahSpt = () => {
       <div className="flex items-center justify-between">
         <Link
           to="/spt"
-          className="flex items-center gap-2 text-sm text-slate-500 font-semibold hover:text-slate-800 transition-colors"
+          className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 dark:hover:text-slate-200 font-semibold hover:text-slate-800 transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           Kembali ke Register SPT
@@ -363,7 +363,7 @@ const TambahSpt = () => {
                   placeholder="Contoh: 090/10/SPT/2026"
                   value={form.nomor_surat}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                  className="w-full px-4 py-2.5 border border-slate-200 dark:placeholder:text-slate-500/70 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 />
                 {nomorSuratError && (
                   <div className="flex items-center gap-1.5 mt-2 text-xs text-red-600 font-semibold">
@@ -382,7 +382,11 @@ const TambahSpt = () => {
                   required
                   value={form.tanggal_surat}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                  className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 
+                  bg-no-repeat bg-right 
+                    [background-position-x:calc(100%-0.75rem)] 
+                    
+                    dark:[background-image:url('data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2724%27%20height=%2724%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%2364748b%27%20stroke-width=%272%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3e%3crect%20x=%273%27%20y=%274%27%20width=%2718%27%20height=%2718%27%20rx=%272%27%20ry=%272%27%3e%3c/rect%3e%3cline%20x1=%2716%27%20y1=%272%27%20x2=%2716%27%20y2=%276%27%3e%3c/line%3e%3cline%20x1=%278%27%20y1=%272%27%20x2=%278%27%20y2=%276%27%3e%3c/line%3e%3cline%20x1=%273%27%20y1=%2710%27%20x2=%2721%27%20y2=%2710%27%3e%3c/line%3e%3c/svg%3e')]"
                 />
               </div>
             </div>
@@ -398,7 +402,7 @@ const TambahSpt = () => {
                 placeholder="Contoh: Menindaklanjuti Surat Undangan Rapat dari Sekretaris Daerah Pemkab Melawi nomor 005/12/Setda..."
                 value={form.dasar_surat}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                className="w-full px-4 py-2.5 border border-slate-200 dark:placeholder:text-slate-500/70 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
               />
             </div>
           </div>
@@ -423,20 +427,22 @@ const TambahSpt = () => {
               <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
                 Pejabat Pemberi Tugas
               </label>
-              <select
-                name="pejabat_pemberi_tugas_id"
-                required
-                value={form.pejabat_pemberi_tugas_id}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
-              >
-                <option value="">-- Pilih Pejabat --</option>
-                {pejabatList.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.nama} - {p.jabatan}
-                  </option>
-                ))}
-              </select>
+              <div className="px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500 focus-within:border-transparent dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                <select
+                  name="pejabat_pemberi_tugas_id"
+                  required
+                  value={form.pejabat_pemberi_tugas_id}
+                  onChange={handleInputChange}
+                  className="w-full  text-sm focus:outline-none  dark:bg-slate-900"
+                >
+                  <option value="">-- Pilih Pejabat --</option>
+                  {pejabatList.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.nama} - {p.jabatan}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             <div className="space-y-4">
@@ -444,14 +450,16 @@ const TambahSpt = () => {
                 <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                   Daftar Pegawai yang Ditugaskan
                 </label>
-                <button
-                  type="button"
-                  onClick={handleAddPegawaiRow}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-indigo-600 dark:bg-slate-700 dark:text-indigo-400 dark:hover:bg-slate-650 rounded-lg text-xs font-bold transition-all"
-                >
-                  <Plus className="h-3.5 w-3.5" />
-                  Tambah Pegawai
-                </button>
+                <div className="">
+                  <button
+                    type="button"
+                    onClick={handleAddPegawaiRow}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-indigo-600 dark:bg-slate-700 dark:text-indigo-400 dark:hover:bg-slate-650 rounded-lg text-xs font-bold transition-all"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    Tambah Pegawai
+                  </button>
+                </div>
               </div>
 
               <div className="space-y-3.5">
@@ -461,14 +469,16 @@ const TambahSpt = () => {
                     className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 bg-slate-50/50 dark:bg-slate-900/20 rounded-2xl border border-slate-100/50 dark:border-slate-700/30"
                   >
                     {/* Pegawai select */}
-                    <div className="flex-1">
+                    <div className="flex-1 px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl focus:border-transparent focus-within:ring-2 focus-within:ring-mauve-500 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
                       <select
                         required
                         value={assignment.id}
                         onChange={(e) => handlePegawaiChange(index, e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                        className="w-full  text-xs focus:outline-none dark:bg-slate-900"
                       >
-                        <option value="">-- Pilih Pegawai --</option>
+                        <option value="" className="">
+                          -- Pilih Pegawai --
+                        </option>
                         {pegawaiList.map((p) => (
                           <option key={p.id} value={p.id}>
                             {p.nama_lengkap} (NIP: {p.nip})
@@ -544,7 +554,7 @@ const TambahSpt = () => {
                 placeholder="Contoh: Melakukan koordinasi sistem informasi Command Center di Dinas Kominfo Kota Pontianak..."
                 value={form.maksud_perjalanan}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                className="w-full px-4 py-2.5 border border-slate-200 dark:placeholder:text-slate-500/70 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
               />
             </div>
 
@@ -564,7 +574,7 @@ const TambahSpt = () => {
                   setDestinationDropdownOpen(true);
                 }}
                 onFocus={() => setDestinationDropdownOpen(true)}
-                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                className="w-full px-4 py-2.5 border border-slate-200 dark:placeholder:text-slate-500/70 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
               />
 
               {destinationDropdownOpen && (
@@ -609,7 +619,7 @@ const TambahSpt = () => {
                   required
                   value={form.tempat_berangkat}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 dark:placeholder:text-slate-500/70 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 />
               </div>
 
@@ -623,7 +633,8 @@ const TambahSpt = () => {
                   required
                   value={form.tanggal_berangkat}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 dark:placeholder:text-slate-500/70 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 
+                  "
                 />
               </div>
 
@@ -637,7 +648,7 @@ const TambahSpt = () => {
                   required
                   value={form.tanggal_kembali}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-slate-200 dark:placeholder:text-slate-500/70 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                 />
               </div>
             </div>
@@ -654,7 +665,7 @@ const TambahSpt = () => {
                     readOnly
                     placeholder="Otomatis dihitung"
                     value={form.lama_perjalanan ? `${form.lama_perjalanan} Hari` : ''}
-                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 text-slate-500 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 text-slate-500 border border-slate-200 dark:border-slate-700 outline-none dark:focus:ring-2 focus:border-transparent rounded-xl text-xs font-semibold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                   <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                 </div>
@@ -664,16 +675,18 @@ const TambahSpt = () => {
                 <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
                   Transportasi / Kendaraan
                 </label>
-                <select
-                  name="kendaraan"
-                  value={form.kendaraan}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
-                >
-                  <option value="Transportasi Umum">Transportasi Umum</option>
-                  <option value="Kendaraan Pribadi">Kendaraan Pribadi</option>
-                  <option value="Kendaraan Dinas">Kendaraan Dinas</option>
-                </select>
+                <div className="px-3 py-1 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500 focus-within:border-transparent dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                  <select
+                    name="kendaraan"
+                    value={form.kendaraan}
+                    onChange={handleInputChange}
+                    className="w-full  text-xs focus:outline-none dark:bg-slate-900"
+                  >
+                    <option value="Transportasi Umum">Transportasi Umum</option>
+                    <option value="Kendaraan Pribadi">Kendaraan Pribadi</option>
+                    <option value="Kendaraan Dinas">Kendaraan Dinas</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -727,23 +740,25 @@ const TambahSpt = () => {
                 <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
                   Kode Mata Anggaran
                 </label>
-                <select
-                  name="anggaran_id"
-                  required
-                  value={form.anggaran_id}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
-                >
-                  <option value="">-- Pilih Mata Anggaran --</option>
-                  {anggaranList.map((a) => {
-                    const infoKegiatan = [a.kegiatan, a.sub_kegiatan].filter(Boolean).join(' / ');
-                    return (
-                      <option key={a.id} value={a.id}>
-                        {a.mata_anggaran_kode} - {a.mata_anggaran_nama} ({infoKegiatan})
-                      </option>
-                    );
-                  })}
-                </select>
+                <div className="px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500 focus-within:border-transparent dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                  <select
+                    name="anggaran_id"
+                    required
+                    value={form.anggaran_id}
+                    onChange={handleInputChange}
+                    className="w-full  text-xs focus:outline-none dark:bg-slate-900"
+                  >
+                    <option value="">-- Pilih Mata Anggaran --</option>
+                    {anggaranList.map((a) => {
+                      const infoKegiatan = [a.kegiatan, a.sub_kegiatan].filter(Boolean).join(' / ');
+                      return (
+                        <option key={a.id} value={a.id}>
+                          {a.mata_anggaran_kode} - {a.mata_anggaran_nama} ({infoKegiatan})
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -769,7 +784,7 @@ const TambahSpt = () => {
                 placeholder="Isi keterangan lain jika diperlukan..."
                 value={form.keterangan}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2.5 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                className="w-full px-4 py-2.5 border border-slate-200 dark:placeholder:text-slate-500/70 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
               />
             </div>
           </div>
@@ -778,14 +793,14 @@ const TambahSpt = () => {
           <div className="flex items-center justify-end gap-3 pt-4">
             <Link
               to="/spt"
-              className="px-5 py-2.5 border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 font-semibold rounded-xl text-sm transition-all"
+              className="px-5 py-2.5 border border-slate-300 dark:border-slate-700 dark:hover:bg-slate-200/10  hover:bg-slate-100 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 font-semibold rounded-xl text-sm transition-all"
             >
               Batal
             </Link>
             <button
               type="submit"
               disabled={submitting}
-              className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-sm shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50"
+              className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 dark:bg-slate-200 dark:text-mauve-700 dark:hover:bg-slate-300 hover:bg-emerald-500 text-white font-semibold rounded-xl text-sm shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50"
             >
               {submitting ? (
                 <>

@@ -233,7 +233,7 @@ const Anggaran = () => {
                 setSearch(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-[70%] pl-11 pr-4 py-2.5 dark:bg-slate-900 dark:text-slate-200 dark:focus:bg-slate-900   border border-slate-300 dark:border-slate-600 rounded-2xl text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2  focus:ring-mauve-500 focus:bg-white transition-all text-sm focus:border-transparent dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+              className="w-[70%] pl-11 pr-4 py-2.5 dark:bg-slate-900 dark:text-slate-200 dark:focus:bg-slate-900   border border-slate-300 dark:border-slate-600/50 rounded-2xl text-slate-800 placeholder-slate-400 dark:placeholder:text-slate-500/50 focus:outline-none focus:ring-2  focus:ring-mauve-500 focus:bg-white transition-all text-sm focus:border-transparent dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
             />
           </div>
         </div>
@@ -407,7 +407,7 @@ const Anggaran = () => {
             </div>
 
             {/* Form Body */}
-            <form onSubmit={handleSubmit} className="flex-1  p-6 px-3 space-y-4">
+            <form onSubmit={handleSubmit} className="flex-1  p-6 pb-0 space-y-4 overflow-y-auto">
               {error && (
                 <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs flex items-start gap-2.5">
                   <AlertCircle className="flex-shrink-0 mt-0.5" size={16} />
@@ -422,7 +422,7 @@ const Anggaran = () => {
                 </div>
               )}
 
-              <div className="grid grid-cols-1 overflow-y-auto  max-h-[50vh] gap-4">
+              <div className="grid grid-cols-1  max-h-[50vh] gap-4">
                 {/* Bidang Urusan */}
                 <div>
                   <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
@@ -434,7 +434,7 @@ const Anggaran = () => {
                     value={form.bidang_urusan}
                     onChange={handleChange}
                     placeholder="Contoh: Urusan Otonomi Daerah"
-                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:bg-white dark:focus:bg-slate- transition-all dark:ring-2 focus:ring-mauve-500 text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -449,7 +449,7 @@ const Anggaran = () => {
                     value={form.program}
                     onChange={handleChange}
                     placeholder="Contoh: Program Dukungan Administrasi"
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -465,7 +465,7 @@ const Anggaran = () => {
                       value={form.kegiatan}
                       onChange={handleChange}
                       placeholder="Contoh: Administrasi Keuangan"
-                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -480,7 +480,7 @@ const Anggaran = () => {
                       value={form.sub_kegiatan}
                       onChange={handleChange}
                       placeholder="Contoh: Penyediaan Gaji dan Tunjangan"
-                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
                 </div>
@@ -498,7 +498,7 @@ const Anggaran = () => {
                       value={form.mata_anggaran_kode}
                       onChange={handleChange}
                       placeholder="Contoh: 5.1.02.04"
-                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm font-mono dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -514,7 +514,7 @@ const Anggaran = () => {
                       value={form.nilai_anggaran}
                       onChange={handleChange}
                       placeholder="Contoh: 150000000"
-                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm font-semibold text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
                 </div>
@@ -531,56 +531,60 @@ const Anggaran = () => {
                     value={form.mata_anggaran_nama}
                     onChange={handleChange}
                     placeholder="Contoh: Belanja Perjalanan Dinas Paket Biasa"
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
                 {/* PPTK Dropdown */}
-                <div>
+                <div className="pb-2">
                   <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
                     Pejabat Pelaksana Teknis Kegiatan (PPTK)
                   </label>
-                  <select
-                    name="pptk_id"
-                    value={form.pptk_id}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
-                  >
-                    <option value="">Pilih PPTK (Pegawai)</option>
-                    {pegawaiList.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.nama_lengkap} - NIP. {p.nip}
+                  <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus-within:bg-slate-900 dark:border-slate-700/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus-within:border-transparent focus-within:ring-2 focus-within:ring-mauve-500 focus-within:bg-white transition-all dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                    <select
+                      name="pptk_id"
+                      value={form.pptk_id}
+                      onChange={handleChange}
+                      className="w-full dark:bg-slate-900 dark:text-slate-200 outline-none text-sm "
+                    >
+                      <option value="" className="dark:bg-slate-900 dark:text-slate-200">
+                        Pilih PPTK (Pegawai)
                       </option>
-                    ))}
-                  </select>
+                      {pegawaiList.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.nama_lengkap} - NIP. {p.nip}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
-
-              {/* Footer Buttons */}
-              <div className="flex gap-3 border-t border-slate-100 pt-5 mt-6">
-                <button
-                  type="button"
-                  onClick={() => setModalOpen(false)}
-                  className="flex-1 py-3 border border-slate-200 hover:bg-slate-50 dark:bg-slate-200/10 text-slate-600 font-bold rounded-2xl text-sm transition-all"
-                >
-                  Batal
-                </button>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="flex-1 py-3 bg-emerald-600 dark:bg-emerald-800 dark:hover:bg-emerald-700  hover:bg-emerald-500 text-white font-bold rounded-2xl text-sm  hover:shadow-emerald-600/20 disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
-                >
-                  {submitting ? (
-                    <>
-                      <Loader2 size={16} className="animate-spin" />
-                      <span>Menyimpan...</span>
-                    </>
-                  ) : (
-                    'Simpan Anggaran'
-                  )}
-                </button>
-              </div>
             </form>
+
+            {/*Footer */}
+            <div className="flex gap-3 border-t p-4 dark:border-t-0 border-slate-100">
+              <button
+                type="button"
+                onClick={() => setModalOpen(false)}
+                className="flex-1 py-3 border border-slate-200 dark:border-slate-200/10 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-200/10 text-slate-600 font-bold rounded-2xl text-sm transition-all"
+              >
+                Batal
+              </button>
+              <button
+                type="submit"
+                disabled={submitting}
+                className="flex-1 py-3 bg-emerald-600 dark:bg-emerald-800 dark:hover:bg-emerald-700  hover:bg-emerald-500 text-white font-bold rounded-2xl text-sm  hover:shadow-emerald-600/20 disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
+              >
+                {submitting ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    <span>Menyimpan...</span>
+                  </>
+                ) : (
+                  'Simpan Anggaran'
+                )}
+              </button>
+            </div>
           </div>
         </div>
       )}

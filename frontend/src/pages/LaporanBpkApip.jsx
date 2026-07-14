@@ -279,7 +279,7 @@ const LaporanBpkApip = () => {
 
             <div className="flex items-center gap-2">
               <span className="text-sm text-slate-400 font-semibold">Tampilkan:</span>
-              <div className="px-1 py-1.5 dark:bg-slate-900 bg-white  dark:border-slate-700 border border-slate-200 rounded-xl focus:ring-mauve-500 focus:ring-2 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+              <div className="px-1 py-1.5 dark:bg-slate-900 bg-white  dark:border-slate-600/50 border border-slate-200 rounded-xl focus:ring-mauve-500 focus:ring-2 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
                 <select
                   value={limit}
                   onChange={(e) => {

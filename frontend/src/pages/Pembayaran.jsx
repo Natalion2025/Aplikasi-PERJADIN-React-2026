@@ -736,7 +736,7 @@ const Pembayaran = () => {
 
           <div className="flex items-center gap-2">
             <span className="text-sm text-slate-400 font-medium">Tampilkan:</span>
-            <div className="px-1 py-1.5 border border-slate-200 dark:bg-slate-900 dark:border-slate-800 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+            <div className="px-1 py-1.5 border border-slate-200 dark:bg-slate-900 dark:border-slate-600/50 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
               <select
                 value={limit}
                 onChange={(e) => {

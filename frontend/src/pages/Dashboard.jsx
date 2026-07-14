@@ -300,7 +300,7 @@ const Dashboard = () => {
       {/* Metrics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Metric 1 */}
-        <div className="bg-white p-6 rounded-3xl dark:bg-slate-800 dark:border-slate-600 shadow-sm border border-slate-100 flex items-center justify-between group hover:shadow-md transition-all">
+        <div className="bg-white p-6 rounded-3xl dark:bg-slate-800 dark:border-slate-700/50 shadow-sm border border-slate-100 flex items-center justify-between group hover:shadow-md transition-all">
           <div className="space-y-1">
             <p className="text-xs font-semibold text-slate-400 dark:text-slate-200 uppercase tracking-wider">
               Total Perjalanan
@@ -318,7 +318,7 @@ const Dashboard = () => {
         </div>
 
         {/* Metric 2 */}
-        <div className="bg-white p-6 rounded-3xl dark:bg-slate-800 dark:border-slate-600 shadow-sm border border-slate-100 flex items-center justify-between group hover:shadow-md transition-all">
+        <div className="bg-white p-6 rounded-3xl dark:bg-slate-800 dark:border-slate-700/50 shadow-sm border border-slate-100 flex items-center justify-between group hover:shadow-md transition-all">
           <div className="space-y-1">
             <p className="text-xs font-semibold text-slate-400 dark:text-slate-200 uppercase tracking-wider">
               Perjalanan Bulan Ini
@@ -334,7 +334,7 @@ const Dashboard = () => {
         </div>
 
         {/* Metric 3 */}
-        <div className="bg-white p-6 rounded-3xl dark:bg-slate-800 dark:border-slate-600 shadow-sm border border-slate-100 flex items-center justify-between group hover:shadow-md transition-all">
+        <div className="bg-white p-6 rounded-3xl dark:bg-slate-800 dark:border-slate-700/50 shadow-sm border border-slate-100 flex items-center justify-between group hover:shadow-md transition-all">
           <div className="space-y-1">
             <p className="text-xs font-semibold text-slate-400 dark:text-slate-200 uppercase tracking-wider">
               Realisasi Keuangan
@@ -355,7 +355,7 @@ const Dashboard = () => {
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Donut Chart: Anggaran */}
-        <div className="bg-white p-6 rounded-3xl dark:bg-slate-800 dark:border-slate-600 shadow-sm border border-slate-100 flex flex-col justify-between min-h-[400px]">
+        <div className="bg-white p-6 rounded-3xl dark:bg-slate-800 dark:border-slate-700/50 shadow-sm border border-slate-100 flex flex-col justify-between min-h-[400px]">
           <h4 className="text-base font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2 mb-4">
             <TrendingUp size={18} className="text-indigo-600 dark:text-indigo-400" />
             <span className="dark:text-slate-200">Realisasi vs Sisa Anggaran</span>
@@ -390,7 +390,7 @@ const Dashboard = () => {
         </div>
 
         {/* Line Chart: Perjalanan */}
-        <div className="bg-white p-6 rounded-3xl dark:bg-slate-800 dark:border-slate-600 shadow-sm border border-slate-100 flex flex-col min-h-[400px]">
+        <div className="bg-white p-6 rounded-3xl dark:bg-slate-800 dark:border-slate-700/50 shadow-sm border border-slate-100 flex flex-col min-h-[400px]">
           <h4 className="text-base font-bold text-slate-800 flex items-center gap-2 mb-6">
             <TrendingUp size={18} className="text-indigo-600 dark:text-indigo-400" />
             <span className="dark:text-slate-200">
@@ -404,7 +404,7 @@ const Dashboard = () => {
       </div>
 
       {/* Table Section: On Duty Employees */}
-      <div className="bg-white p-6 rounded-3xl dark:bg-slate-800 shadow-sm border border-slate-100">
+      <div className="bg-white p-6 rounded-3xl dark:bg-slate-800 dark:border-slate-700/50 shadow-sm border border-slate-100">
         <h4 className="text-base font-bold text-slate-800 dark:text-slate-200 mb-4">
           Pegawai yang Sedang Berdinas Bulan Ini
         </h4>
@@ -434,9 +434,12 @@ const Dashboard = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 text-sm">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-600/60 text-sm">
                 {paginatedPegawai.map((pegawai, index) => (
-                  <tr key={index} className="hover:bg-slate-50/30 transition-colors">
+                  <tr
+                    key={index}
+                    className="hover:bg-slate-50/30 transition-colors dark:hover:bg-slate-700/20"
+                  >
                     <td className="px-4 pl-0 py-3 text-center text-slate-500 dark:text-slate-200">
                       {(currentPage - 1) * itemsPerPage + index + 1}
                     </td>

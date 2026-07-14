@@ -1236,14 +1236,14 @@ const BuatLaporan = () => {
                       setSearch(e.target.value);
                       setPage(1);
                     }}
-                    className="w-full pl-9 pr-4 py-2 text-sm dark:text-slate-200 dark:focus:bg-slate-900 border border-slate-300 dark:border-slate-700 dark:bg-slate-900 rounded-xl focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full pl-9 pr-4 py-2 text-sm dark:text-slate-200 dark:focus:bg-slate-900 border border-slate-300 dark:border-slate-600/50 dark:bg-slate-900 rounded-xl focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
               )}
 
               <div className="flex items-center gap-2">
                 <span className="text-sm text-slate-400 font-medium">Tampilkan:</span>
-                <div className="px-1 py-1.5 border border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 rounded-xl text-slate-600 focus-within:border-transparent focus-within:ring-2 focus-within:ring-mauve-500 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                <div className="px-1 py-1.5 border border-slate-300 dark:border-slate-600/50 dark:bg-slate-900 dark:text-slate-200 rounded-xl text-slate-600 focus-within:border-transparent focus-within:ring-2 focus-within:ring-mauve-500 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
                   <select
                     value={limit}
                     onChange={(e) => {
@@ -1524,11 +1524,11 @@ const BuatLaporan = () => {
       {/* --- FORM VIEW (ADD / EDIT) --- */}
       {view === 'form' && (
         <div className="bg-white p-6 md:p-8 rounded-3xl dark:bg-slate-800 border border-slate-100 dark:border-slate-700/50 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-5">
+          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-600 pb-5">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setView('list')}
-                className="p-2 border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-xl transition-all"
+                className="p-2 border border-slate-200 text-slate-600 dark:border-slate-600 dark:text-slate-400 dark:hover:bg-slate-200/10 hover:bg-slate-50 rounded-xl transition-all"
               >
                 <ArrowLeft size={18} />
               </button>
@@ -1544,7 +1544,7 @@ const BuatLaporan = () => {
             <button
               onClick={handleSubmitReport}
               disabled={submitting}
-              className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50"
+              className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 dark:bg-slate-200 dark:text-mauve-700 dark:hover:bg-slate-100 hover:bg-emerald-500 text-white rounded-2xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50"
             >
               {submitting ? (
                 <>
@@ -1567,7 +1567,7 @@ const BuatLaporan = () => {
                 <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
                   Nomor SPT
                 </label>
-                <div className="px-3 py-2 border border-slate-200 dark:text-slate-200 rounded-xl focus-within:ring-2 focus-within:border-transparent focus-within:ring-mauve-500 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500 dark:border-slate-600 dark:bg-slate-900 bg-white disabled:bg-slate-100 dark:disabled:bg-slate-700 disabled:cursor-not-allowed text-slate-800 font-medium">
+                <div className="px-3 py-1.5 border border-slate-200 dark:text-slate-200 rounded-xl focus-within:ring-2 focus-within:border-transparent focus-within:ring-mauve-500 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500 dark:border-slate-600 dark:bg-slate-900 bg-white disabled:bg-slate-100 dark:disabled:bg-slate-700 disabled:cursor-not-allowed text-slate-800 font-medium">
                   <select
                     value={form.spt_id}
                     onChange={handleSptChange}
@@ -1613,7 +1613,7 @@ const BuatLaporan = () => {
                   value={form.tempat_laporan}
                   onChange={(e) => setForm((prev) => ({ ...prev, tempat_laporan: e.target.value }))}
                   required
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 bg-white text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 dark:text-slate-200 dark:border-slate-600 dark:bg-slate-900"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 bg-white text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 dark:text-slate-200 dark:border-slate-600 dark:bg-slate-900"
                 />
               </div>
             </div>
@@ -1629,14 +1629,16 @@ const BuatLaporan = () => {
               <>
                 {/* 2. Informasi Dasar */}
                 <div className="space-y-4">
-                  <div className="flex items-center gap-2 pb-1 border-b border-slate-100">
-                    <FileText className="w-5 h-5 text-indigo-600" />
-                    <h3 className="text-md font-bold text-slate-800">1. Informasi Dasar</h3>
+                  <div className="flex items-center gap-2 pb-1 border-b dark:border-slate-600 border-slate-100">
+                    <FileText className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                    <h3 className="text-md font-bold text-slate-800 dark:text-slate-300">
+                      1. Informasi Dasar
+                    </h3>
                   </div>
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                      <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
                         Judul Laporan
                       </label>
                       <input
@@ -1645,13 +1647,13 @@ const BuatLaporan = () => {
                         value={form.judul}
                         onChange={(e) => setForm((prev) => ({ ...prev, judul: e.target.value }))}
                         required
-                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 shadow-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 dark:bg-slate-900 dark:placeholder:text-slate-500/70 dark:border-slate-600/50 rounded-xl text-sm focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 dark:text-slate-200 bg-white text-slate-800 shadow-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                       />
                     </div>
 
                     {/* Penandatangan Checkbox Container */}
-                    <div className="p-4 border border-slate-100 rounded-2xl bg-slate-50/30 space-y-3">
-                      <p className="text-xs font-semibold text-slate-500">
+                    <div className="p-4 border border-slate-100 rounded-2xl bg-slate-50/30 dark:bg-zinc-800 dark:border-slate-600/50 space-y-3">
+                      <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">
                         Pilih penandatangan laporan (otomatis dicentang dari pelaksana SPT):
                       </p>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1666,8 +1668,8 @@ const BuatLaporan = () => {
                                 isCanceled
                                   ? 'border-red-100 bg-red-50/20 opacity-60 cursor-not-allowed'
                                   : selectedSigners.includes(p.pegawai_id.toString())
-                                    ? 'border-indigo-100 bg-indigo-50/30'
-                                    : 'border-slate-100 bg-white hover:bg-slate-50'
+                                    ? 'border-indigo-100 dark:border-emerald-500  dark:bg-slate-900 bg-indigo-50/30'
+                                    : 'border-slate-100 dark:bg-slate-900 dark:border-slate-600/50 bg-white hover:bg-slate-700/20'
                               }`}
                             >
                               <input
@@ -1684,10 +1686,10 @@ const BuatLaporan = () => {
                                 className="mt-1 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                               />
                               <div className="text-xs">
-                                <span className="font-bold text-slate-800 block">
+                                <span className="font-bold text-slate-800 dark:text-slate-200 block">
                                   {p.nama_lengkap}
                                 </span>
-                                <span className="text-slate-500 block">
+                                <span className="text-slate-500 dark:text-slate-400 block">
                                   NIP. {p.nip || '-'} | {p.jabatan}
                                 </span>
                                 {isCanceled && (
@@ -1704,14 +1706,14 @@ const BuatLaporan = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                        <label className="block text-xs font-semibold text-slate-500 mb-1.5 dark:text-slate-400">
                           Dasar Perjalanan Dinas (Otomatis)
                         </label>
                         <textarea
                           readOnly
                           rows={2}
                           value={form.dasar_perjalanan}
-                          className="w-full px-3 py-2 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                          className="w-full px-3 py-2 border border-slate-200 dark:border-slate-600/50 bg-slate-100 dark:bg-slate-900 outline-none dark:text-slate-200 text-slate-500 rounded-xl text-sm cursor-not-allowed"
                         />
                       </div>
                       <div>
@@ -1722,32 +1724,32 @@ const BuatLaporan = () => {
                           readOnly
                           rows={2}
                           value={form.tujuan_perjalanan}
-                          className="w-full px-3 py-2 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                          className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900 dark:border-slate-600/50 dark:text-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                        <label className="block text-xs font-semibold text-slate-500 mb-1.5 dark:text-slate-400">
                           Lama & Tanggal Perjalanan (Otomatis)
                         </label>
                         <input
                           type="text"
                           readOnly
                           value={form.lama_dan_tanggal_perjalanan}
-                          className="w-full px-3 py-2 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                          className="w-full px-3 py-2 border border-slate-200 bg-slate-100 dark:bg-slate-900 dark:border-slate-600/50 dark:text-slate-200 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                        <label className="block text-xs font-semibold text-slate-500 mb-1.5 dark:text-slate-400">
                           Mata Anggaran yang Dipakai (Otomatis)
                         </label>
                         <input
                           type="text"
                           readOnly
                           value={form.kode_anggaran_display}
-                          className="w-full px-3 py-2 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                          className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50  bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none"
                         />
                       </div>
                     </div>
@@ -1755,14 +1757,16 @@ const BuatLaporan = () => {
                 </div>
 
                 {/* 3. Rincian Kegiatan */}
-                <div className="space-y-4 pt-4 border-t border-slate-100">
-                  <div className="flex items-center gap-2 pb-1 border-b border-slate-100">
-                    <Info className="w-5 h-5 text-indigo-600" />
-                    <h3 className="text-md font-bold text-slate-800">2. Rincian Kegiatan</h3>
+                <div className="space-y-4 pt-4">
+                  <div className="flex items-center gap-2 pb-1 border-b border-slate-100 dark:border-slate-600">
+                    <Info className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                    <h3 className="text-md font-bold text-slate-800 dark:text-slate-300">
+                      2. Rincian Kegiatan
+                    </h3>
                   </div>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                      <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
                         Deskripsi Perjalanan (Secara Kronologis)
                       </label>
                       <textarea
@@ -1772,22 +1776,22 @@ const BuatLaporan = () => {
                         onChange={(e) =>
                           setForm((prev) => ({ ...prev, deskripsi_kronologis: e.target.value }))
                         }
-                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 shadow-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 dark:placeholder:text-slate-500/50 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 rounded-xl text-sm focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 bg-white text-slate-800 shadow-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                      <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
                         Tempat yang Dikunjungi (Otomatis)
                       </label>
                       <input
                         type="text"
                         readOnly
                         value={form.tempat_dikunjungi}
-                        className="w-full px-3 py-2.5 border border-slate-200 bg-slate-100 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                        className="w-full px-3 py-2.5 border border-slate-200 bg-slate-100 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 focus:border-transparent focus:ring-2 text-slate-500 rounded-xl text-sm cursor-not-allowed focus:outline-none dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                      <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
                         Hasil yang Dicapai
                       </label>
                       <textarea
@@ -1797,7 +1801,7 @@ const BuatLaporan = () => {
                         onChange={(e) =>
                           setForm((prev) => ({ ...prev, hasil_dicapai: e.target.value }))
                         }
-                        className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 shadow-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                        className="w-full px-3.5 py-2.5 border border-slate-200 dark:placeholder:text-slate-500/50 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 rounded-xl text-sm focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 bg-white text-slate-800 shadow-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                       />
                     </div>
                   </div>
@@ -1805,10 +1809,12 @@ const BuatLaporan = () => {
 
                 {/* 4. Rincian Pengeluaran Per Pegawai */}
                 {selectedSigners.length > 0 && (
-                  <div className="space-y-6 pt-4 border-t border-slate-100">
-                    <div className="flex items-center gap-2 pb-1 border-b border-slate-100">
-                      <Coins className="w-5 h-5 text-indigo-600" />
-                      <h3 className="text-md font-bold text-slate-800">3. Rincian Pengeluaran</h3>
+                  <div className="space-y-6 pt-4">
+                    <div className="flex items-center gap-2 pb-1 border-b border-slate-100 dark:border-slate-600">
+                      <Coins className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                      <h3 className="text-md font-bold text-slate-800 dark:text-slate-300">
+                        3. Rincian Pengeluaran
+                      </h3>
                     </div>
 
                     <div className="space-y-8">
@@ -1820,10 +1826,10 @@ const BuatLaporan = () => {
                         return (
                           <div
                             key={signerId}
-                            className="border border-slate-100 rounded-3xl p-5 md:p-6 bg-slate-50/20 space-y-6"
+                            className="border border-slate-100 dark:border-slate-600/50 rounded-3xl p-5 md:p-6 bg-slate-50/20 dark:bg-slate-700/70  space-y-6"
                           >
-                            <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
-                              <h4 className="text-md font-bold text-indigo-700">
+                            <div className="border-b border-slate-100 dark:border-slate-500 pb-3 flex items-center justify-between">
+                              <h4 className="text-md font-bold text-indigo-700 dark:text-emerald-400">
                                 Rincian Pengeluaran Untuk: {peg.nama_lengkap}
                               </h4>
                               <span className="text-xs bg-indigo-50 text-indigo-600 font-semibold px-3 py-1 rounded-xl">
@@ -1834,13 +1840,13 @@ const BuatLaporan = () => {
                             {/* Transportasi */}
                             <div className="space-y-4">
                               <div className="flex items-center justify-between">
-                                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 uppercase tracking-wider">
                                   Transportasi (Pergi & Pulang)
                                 </label>
                                 <button
                                   type="button"
                                   onClick={() => addExpenseRow(signerId, 'transportasi')}
-                                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1"
+                                  className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300 hover:text-indigo-800  flex items-center gap-1"
                                 >
                                   <Plus size={14} /> Add Transportasi
                                 </button>
@@ -1849,9 +1855,9 @@ const BuatLaporan = () => {
                                 {expData.transportasi.map((row, idx) => (
                                   <div
                                     key={idx}
-                                    className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-white border border-slate-100 rounded-2xl relative"
+                                    className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-600/50  rounded-2xl relative"
                                   >
-                                    <div className="md:col-span-2">
+                                    <div className="md:col-span-2 dark:bg-slate-900 dark:text-slate-200 focus-within:ring-mauve-500 focus-within:border-transparent dark:border-slate-600/50 focus-within:ring-2 px-2 py-1 border border-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
                                       <select
                                         value={row.jenis}
                                         onChange={(e) =>
@@ -1863,7 +1869,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full  outline-none text-xs dark:bg-slate-900"
                                       >
                                         <option>Bus</option>
                                         <option>Taksi</option>
@@ -1886,7 +1892,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2">
@@ -1903,7 +1909,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2">
@@ -1920,7 +1926,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2">
@@ -1936,7 +1942,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-slate-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2">
@@ -1953,7 +1959,7 @@ const BuatLaporan = () => {
                                             formatCurrency(e.target.value)
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl text-right font-medium text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-3">
@@ -1970,7 +1976,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-3">
@@ -1987,12 +1993,12 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-4 flex items-center gap-4">
                                       <div className="flex gap-3">
-                                        <label className="flex items-center gap-1 text-[11px] text-slate-600">
+                                        <label className="flex items-center gap-1 text-[11px] text-slate-600 dark:text-slate-400">
                                           <input
                                             type="radio"
                                             name={`arah_${signerId}_${idx}`}
@@ -2011,7 +2017,7 @@ const BuatLaporan = () => {
                                           />
                                           <span>Berangkat</span>
                                         </label>
-                                        <label className="flex items-center gap-1 text-[11px] text-slate-600">
+                                        <label className="flex items-center gap-1 text-[11px] text-slate-600 dark:text-slate-400">
                                           <input
                                             type="radio"
                                             name={`arah_${signerId}_${idx}`}
@@ -2049,15 +2055,15 @@ const BuatLaporan = () => {
                             </div>
 
                             {/* Akomodasi */}
-                            <div className="space-y-4 pt-4 border-t border-slate-100">
+                            <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-600 ">
                               <div className="flex items-center justify-between">
-                                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 uppercase tracking-wider">
                                   Akomodasi / Penginapan
                                 </label>
                                 <button
                                   type="button"
                                   onClick={() => addExpenseRow(signerId, 'akomodasi')}
-                                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1"
+                                  className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300 hover:text-indigo-800 flex items-center gap-1"
                                 >
                                   <Plus size={14} /> Add Akomodasi
                                 </button>
@@ -2066,9 +2072,9 @@ const BuatLaporan = () => {
                                 {expData.akomodasi.map((row, idx) => (
                                   <div
                                     key={idx}
-                                    className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-white border border-slate-100 rounded-2xl relative"
+                                    className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-white border border-slate-100 dark:bg-slate-800 dark:border-slate-600/50 rounded-2xl relative"
                                   >
-                                    <div className="md:col-span-3">
+                                    <div className="md:col-span-3 px-2 py-1 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50  focus-within:ring-2 rounded-xl focus-within:border-transparent focus-within:ring-mauve-500 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
                                       <select
                                         value={row.jenis}
                                         onChange={(e) =>
@@ -2080,7 +2086,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs outline-none dark:bg-slate-900"
                                       >
                                         <option>Hotel</option>
                                         <option>Ditanggung Panitia</option>
@@ -2101,7 +2107,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-3">
@@ -2118,7 +2124,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-3">
@@ -2136,10 +2142,10 @@ const BuatLaporan = () => {
                                             formatCurrency(e.target.value)
                                           )
                                         }
-                                        className={`w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl text-right font-medium dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 ${
+                                        className={`w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 ${
                                           row.readOnlyHarga
                                             ? 'bg-slate-100 text-slate-500 cursor-not-allowed'
-                                            : 'text-slate-800'
+                                            : 'text-slate-800 dark:text-slate-200'
                                         }`}
                                       />
                                     </div>
@@ -2157,7 +2163,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-slate-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-3">
@@ -2174,7 +2180,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-slate-600 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2 flex items-center gap-1.5">
@@ -2191,7 +2197,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-center font-bold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                       <span className="text-xs text-slate-400">malam</span>
                                     </div>
@@ -2201,7 +2207,7 @@ const BuatLaporan = () => {
                                         placeholder="Total Akomodasi"
                                         readOnly
                                         value={row.nominal}
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 bg-slate-50 text-slate-600 rounded-xl text-right font-bold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     {expData.akomodasi.length > 1 && (
@@ -2219,15 +2225,15 @@ const BuatLaporan = () => {
                             </div>
 
                             {/* Kontribusi */}
-                            <div className="space-y-4 pt-4 border-t border-slate-100">
+                            <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-600">
                               <div className="flex items-center justify-between">
-                                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 uppercase tracking-wider">
                                   Kontribusi (BIMTEK/Diklat/Kursus)
                                 </label>
                                 <button
                                   type="button"
                                   onClick={() => addExpenseRow(signerId, 'kontribusi')}
-                                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1"
+                                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 flex items-center gap-1"
                                 >
                                   <Plus size={14} /> Add Kontribusi
                                 </button>
@@ -2236,9 +2242,9 @@ const BuatLaporan = () => {
                                 {expData.kontribusi.map((row, idx) => (
                                   <div
                                     key={idx}
-                                    className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-white border border-slate-100 rounded-2xl relative"
+                                    className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-white border border-slate-100 dark:bg-slate-800 dark:border-slate-600/50 rounded-2xl relative"
                                   >
-                                    <div className="md:col-span-6">
+                                    <div className="md:col-span-6 w-full px-2.5 py-1 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus-within:ring-2 rounded-xl focus-within:border-transparent focus-within:ring-mauve-500 dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
                                       <select
                                         value={row.jenis}
                                         onChange={(e) =>
@@ -2250,7 +2256,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs outline-none dark:bg-slate-900"
                                       >
                                         <option>Bimbingan Teknis</option>
                                         <option>Kursus</option>
@@ -2271,7 +2277,7 @@ const BuatLaporan = () => {
                                             formatCurrency(e.target.value)
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl text-right font-medium text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                       <span className="text-xs text-slate-400">/kegiatan</span>
                                     </div>
@@ -2292,15 +2298,15 @@ const BuatLaporan = () => {
                             </div>
 
                             {/* Lain-Lain */}
-                            <div className="space-y-4 pt-4 border-t border-slate-100">
+                            <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-600">
                               <div className="flex items-center justify-between">
-                                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 uppercase tracking-wider">
                                   Pengeluaran Lain-lain (Sewa Mobil, dll)
                                 </label>
                                 <button
                                   type="button"
                                   onClick={() => addExpenseRow(signerId, 'lain_lain')}
-                                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1"
+                                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 flex items-center gap-1"
                                 >
                                   <Plus size={14} /> Add Lain-lain
                                 </button>
@@ -2309,7 +2315,7 @@ const BuatLaporan = () => {
                                 {expData.lain_lain.map((row, idx) => (
                                   <div
                                     key={idx}
-                                    className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-white border border-slate-100 rounded-2xl relative"
+                                    className="grid grid-cols-1 md:grid-cols-12 gap-3 p-4 bg-white border border-slate-100 rounded-2xl dark:bg-slate-800 dark:border-slate-600/50 relative"
                                   >
                                     <div className="md:col-span-3">
                                       <input
@@ -2325,7 +2331,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2">
@@ -2342,7 +2348,7 @@ const BuatLaporan = () => {
                                             formatCurrency(e.target.value)
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl text-right font-medium text-slate-800 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-2 flex items-center gap-1.5">
@@ -2359,7 +2365,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2 py-2 border border-slate-200 rounded-xl text-center font-bold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                       <span className="text-xs text-slate-400">hari</span>
                                     </div>
@@ -2369,7 +2375,7 @@ const BuatLaporan = () => {
                                         placeholder="Total (Rp)"
                                         readOnly
                                         value={row.nominal}
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 bg-slate-50 text-slate-600 rounded-xl text-right font-bold dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     <div className="md:col-span-3">
@@ -2386,7 +2392,7 @@ const BuatLaporan = () => {
                                             e.target.value
                                           )
                                         }
-                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                                        className="w-full text-xs px-2.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                                       />
                                     </div>
                                     {expData.lain_lain.length > 1 && (
@@ -2410,10 +2416,12 @@ const BuatLaporan = () => {
                 )}
 
                 {/* 5. Kesimpulan */}
-                <div className="space-y-4 pt-4 border-t border-slate-100">
-                  <div className="flex items-center gap-2 pb-1 border-b border-slate-100">
-                    <FileCheck className="w-5 h-5 text-indigo-600" />
-                    <h3 className="text-md font-bold text-slate-800">4. Kesimpulan</h3>
+                <div className="space-y-4 pt-4 ">
+                  <div className="flex items-center gap-2 pb-1 border-b border-slate-100 dark:border-slate-600">
+                    <FileCheck className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                    <h3 className="text-md font-bold text-slate-800 dark:text-slate-300">
+                      4. Kesimpulan
+                    </h3>
                   </div>
                   <div>
                     <textarea
@@ -2421,16 +2429,16 @@ const BuatLaporan = () => {
                       placeholder="Tuliskan kesimpulan dan saran/rekomendasi..."
                       value={form.kesimpulan}
                       onChange={(e) => setForm((prev) => ({ ...prev, kesimpulan: e.target.value }))}
-                      className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-800 shadow-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full text-xs px-3.5 py-2 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-600/50 outline-none dark:placeholder:text-slate-500/50 focus:ring-2 focus:ring-mauve-500 focus:border-transparent rounded-xl dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
                 </div>
 
                 {/* 6. Lampiran (Bukti Perjalanan) */}
-                <div className="space-y-4 pt-4 border-t border-slate-100">
-                  <div className="flex items-center gap-2 pb-1 border-b border-slate-100">
-                    <Upload className="w-5 h-5 text-indigo-600" />
-                    <h3 className="text-md font-bold text-slate-800">
+                <div className="space-y-4 pt-4 ">
+                  <div className="flex items-center gap-2 pb-1 border-b border-slate-100 dark:border-slate-600">
+                    <Upload className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                    <h3 className="text-md font-bold text-slate-800 dark:text-slate-300">
                       5. Lampiran (Bukti Perjalanan)
                     </h3>
                   </div>
@@ -2439,11 +2447,11 @@ const BuatLaporan = () => {
                   <div
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={handleFileDrop}
-                    className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-2xl bg-slate-50/20 transition-all cursor-pointer text-center relative"
+                    className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-2xl dark:bg-slate-700 bg-slate-50/20 transition-all cursor-pointer text-center relative"
                   >
                     <Upload className="w-10 h-10 text-slate-300 mb-3" />
-                    <div className="flex flex-wrap items-center justify-center text-sm font-semibold text-slate-600 gap-1">
-                      <label className="text-indigo-600 hover:underline cursor-pointer">
+                    <div className="flex flex-wrap items-center justify-center text-sm font-semibold text-slate-600 dark:text-slate-400 gap-1">
+                      <label className="text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer">
                         <span>Pilih file untuk diupload</span>
                         <input
                           type="file"
@@ -2463,7 +2471,7 @@ const BuatLaporan = () => {
                   {/* List of files */}
                   {(existingFiles.length > 0 || newFiles.length > 0) && (
                     <div className="mt-4 space-y-3">
-                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                      <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                         Daftar Lampiran:
                       </p>
 
@@ -2473,7 +2481,7 @@ const BuatLaporan = () => {
                         return (
                           <div
                             key={file.id}
-                            className="flex items-center justify-between p-3 bg-slate-50 border border-slate-150 rounded-xl"
+                            className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900 border border-slate-150 rounded-xl"
                           >
                             <div className="flex items-center gap-3">
                               {isImage ? (
@@ -2518,7 +2526,7 @@ const BuatLaporan = () => {
                         return (
                           <div
                             key={idx}
-                            className="flex items-center justify-between p-3 bg-white border border-slate-200 rounded-xl"
+                            className="flex items-center justify-between p-3 bg-white border border-slate-200 rounded-xl dark:bg-slate-900 dark:border-slate-600/50"
                           >
                             <div className="flex items-center gap-3">
                               {isImage ? (
@@ -2533,7 +2541,7 @@ const BuatLaporan = () => {
                                 </div>
                               )}
                               <div>
-                                <span className="text-sm font-semibold text-slate-700 truncate block max-w-xs">
+                                <span className="text-sm font-semibold text-slate-700 dark:text-slate-600 truncate block max-w-xs">
                                   {file.name}
                                 </span>
                                 <span className="text-[10px] text-emerald-600 font-semibold uppercase tracking-wider block">
@@ -2556,18 +2564,18 @@ const BuatLaporan = () => {
                 </div>
 
                 {/* Submit Actions */}
-                <div className="flex items-center justify-end gap-3 pt-6 border-t border-slate-100 mt-6">
+                <div className="flex items-center justify-end gap-3 pt-6 border-t border-slate-100 dark:border-slate-600 mt-6">
                   <button
                     type="button"
                     onClick={() => setView('list')}
-                    className="px-5 py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-2xl text-sm font-semibold transition-all"
+                    className="px-5 py-2.5 border border-slate-200 hover:bg-slate-50 dark:hover:bg-slate-200/10 dark:border-slate-200/10 dark:text-slate-200 text-slate-700 rounded-2xl text-sm font-semibold transition-all"
                   >
                     Batal
                   </button>
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50"
+                    className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 dark:bg-slate-200 dark:text-mauve-700 dark:hover:bg-slate-100 hover:bg-emerald-500 text-white rounded-2xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50"
                   >
                     {submitting ? (
                       <>

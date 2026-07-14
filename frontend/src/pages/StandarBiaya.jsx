@@ -541,7 +541,7 @@ const StandarBiaya = () => {
             placeholder="Cari dalam tabel..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-transparent dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+            className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-transparent dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
           />
         </div>
       </div>

@@ -378,14 +378,14 @@ const UangMuka = () => {
                   setSearch(e.target.value);
                   setPage(1);
                 }}
-                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-600/20 focus:border-transparent dark:focus:border-emerald-500"
+                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-600/50 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-600/20 focus:border-transparent dark:focus:border-emerald-500"
               />
             </div>
 
             {/* Limit selector */}
             <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 flex-shrink-0">
               <span className="">Tampilkan:</span>
-              <div className="border px-1 py-2 border-slate-200 dark:border-slate-700 dark:bg-slate-900 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500 focus-within:border-transparent dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+              <div className="border px-1 py-2 border-slate-200 dark:border-slate-600/50 dark:bg-slate-900 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500 focus-within:border-transparent dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
                 <select
                   value={limit}
                   onChange={(e) => {
@@ -561,7 +561,7 @@ const UangMuka = () => {
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 overflow-y-auto space-y-6 flex-1">
+            <div className="p-6 pb-0 overflow-y-auto space-y-6 flex-1">
               {success && (
                 <div className="p-3 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 rounded-xl text-sm border border-emerald-100 dark:border-emerald-900/30">
                   {success}

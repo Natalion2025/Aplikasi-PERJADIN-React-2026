@@ -73,7 +73,7 @@ const Agenda = () => {
       badge: 'bg-emerald-500 text-white',
       dot: 'bg-emerald-500',
       label: 'Perjalanan Dinas Biasa / Tetap',
-      gradient: 'from-emerald-600 to-teal-700',
+      gradient: 'from-emerald-600 to-teal-700 dark:from-emerald-800 dark:to-teal-700',
     };
 
     if (!kode) return defaultTheme;
@@ -357,7 +357,7 @@ const Agenda = () => {
               placeholder="Cari agenda, tujuan, pegawai..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 pr-4 py-2 w-full md:w-64 rounded-xl border border-slate-200 focus:border-none dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500 dark:focus:ring-emerald-600/20 transition-all text-slate-800 dark:text-slate-200 dark:focus:border-emerald-500"
+              className="pl-9 pr-4 py-2 w-full md:w-64 rounded-xl border border-slate-200 focus:border-transparent dark:border-slate-700/50 bg-white dark:bg-slate-800 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500 dark:focus:ring-emerald-600/20 dark:placeholder:text-slate-500/50 transition-all text-slate-800 dark:text-slate-200 dark:focus:border-emerald-500"
             />
             {searchQuery && (
               <button
@@ -635,7 +635,7 @@ const Agenda = () => {
                       const dayEvents = filteredEvents.filter((e) => isEventOnDate(e, dayObj.date));
 
                       let cellClass =
-                        'min-h-24 sm:min-h-28 p-2 transition-all flex flex-col gap-1 border-t border-l border-slate-300/50 dark:border-slate-700/50 ';
+                        'min-h-24 sm:min-h-28 p-2 transition-all flex flex-col gap-1 cursor-pointer border-t border-l border-slate-300/50 dark:border-slate-700/50 ';
 
                       if (!dayObj.isCurrentMonth) {
                         cellClass += 'opacity-40 dark:opacity-20 ';
@@ -925,7 +925,7 @@ const Agenda = () => {
               </div>
               <button
                 onClick={() => setModalOpen(false)}
-                className="p-1.5 hover:bg-white/10 rounded-xl transition-all cursor-pointer text-white"
+                className="p-1.5 hover:bg-white/10 rounded-full transition-all cursor-pointer text-white"
               >
                 <X className="h-5 w-5" />
               </button>
