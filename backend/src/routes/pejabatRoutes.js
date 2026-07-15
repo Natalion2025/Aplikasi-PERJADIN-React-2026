@@ -26,9 +26,39 @@ const runQuery = (sql, params = []) =>
   });
 
 router.get("/pejabat", isApiAuthenticated, async (req, res) => {
+  const { q = "", page = 1, limit = 5 } = req.query;
+  const pageNum = parseInt(page, 10) || 1;
+  const limitNum = parseInt(limit, 10) || 5;
+  const offset = (pageNum - 1) * limitNum;
+
   try {
-    const rows = await dbAll("SELECT * FROM pejabat ORDER BY id", []);
-    res.json(rows);
+    let whereClause = "";
+    const params = [];
+    if (q) {
+      whereClause = `WHERE nama LIKE ? OR jabatan LIKE ? OR nip LIKE ?`;
+      const searchTerm = `%${q}%`;
+      params.push(searchTerm, searchTerm, searchTerm);
+    }
+
+    const totalResult = await dbGet(
+      `SELECT COUNT(*) as total FROM pejabat ${whereClause}`,
+      params,
+    );
+    const totalItems = totalResult.total;
+    const totalPages = Math.ceil(totalItems / limitNum);
+
+    const dataSql = `SELECT * FROM pejabat ${whereClause} ORDER BY id LIMIT ? OFFSET ?`;
+    const rows = await dbAll(dataSql, [...params, limitNum, offset]);
+
+    res.json({
+      data: rows,
+      pagination: {
+        page: pageNum,
+        limit: limitNum,
+        totalItems,
+        totalPages,
+      },
+    });
   } catch (err) {
     console.error("[API ERROR] Gagal mengambil data pejabat:", err);
     res.status(500).json({ error: err.message });

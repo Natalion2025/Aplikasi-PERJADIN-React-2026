@@ -4,6 +4,8 @@ import {
   Printer,
   Loader2,
   ChevronLeft,
+  ChevronsLeft,
+  ChevronsRight,
   ChevronRight,
   Info,
   Calendar,
@@ -357,17 +359,25 @@ const LaporanBpkApip = () => {
             {/* Pagination Audit List */}
             {!loading && totalItems > 0 && (
               <div className="flex items-center justify-between border-t border-slate-100 dark:border-slate-600 pt-4 px-1">
-                <span className="text-xs text-slate-500 font-medium">
-                  Menampilkan Halaman <span className="font-bold text-slate-500">{page}</span> dari{' '}
-                  <span className="font-bold text-slate-500">{totalPages}</span> ({totalItems} total
-                  data)
+                <span className="text-xs dark:text-slate-400 text-slate-500  font-medium">
+                  Menampilkan Halaman <span className="font-bold">{page}</span> dari{' '}
+                  <span className="font-bold">{totalPages}</span> (
+                  <span className="font-bold">{totalItems}</span> total data)
                 </span>
                 {totalPages > 1 && (
                   <div className="flex items-center gap-1.5">
                     <button
+                      onClick={() => setPage(1)}
+                      disabled={page === 1}
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-500 dark:text-slate-300 disabled:opacity-40 hover:bg-slate-50 dark:hover:bg-slate-700/40"
+                      title="Halaman Pertama"
+                    >
+                      <ChevronsLeft size={16} />
+                    </button>
+                    <button
                       onClick={() => setPage((p) => Math.max(1, p - 1))}
                       disabled={page === 1}
-                      className="p-1.5 border border-slate-200 rounded-lg text-slate-500 disabled:opacity-40 hover:bg-slate-50"
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-500 dark:text-slate-300 disabled:opacity-40 hover:bg-slate-50 dark:hover:bg-slate-700/40"
                     >
                       <ChevronLeft size={16} />
                     </button>
@@ -375,10 +385,10 @@ const LaporanBpkApip = () => {
                       <button
                         key={num}
                         onClick={() => setPage(num)}
-                        className={`w-8 h-8 rounded-lg text-xs font-semibold ${
+                        className={`w-8 h-8 rounded-lg text-xs font-semibold transition-all ${
                           page === num
-                            ? 'bg-indigo-600 text-white shadow-md'
-                            : 'border border-slate-200 text-slate-600 hover:bg-slate-50'
+                            ? 'bg-indigo-600 dark:bg-indigo-800 text-white shadow-md'
+                            : 'border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/40'
                         }`}
                       >
                         {num}
@@ -387,9 +397,17 @@ const LaporanBpkApip = () => {
                     <button
                       onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                       disabled={page === totalPages}
-                      className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 hover:bg-slate-50"
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 hover:bg-slate-50 dark:hover:bg-slate-700/40"
                     >
                       <ChevronRight size={16} />
+                    </button>
+                    <button
+                      onClick={() => setPage(totalPages)}
+                      disabled={page === totalPages}
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-500 dark:text-slate-300 disabled:opacity-40 hover:bg-slate-50 dark:hover:bg-slate-700/40"
+                      title="Halaman Terakhir"
+                    >
+                      <ChevronsRight size={16} />
                     </button>
                   </div>
                 )}

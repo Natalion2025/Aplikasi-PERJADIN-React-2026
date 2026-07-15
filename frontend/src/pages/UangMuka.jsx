@@ -11,6 +11,8 @@ import {
   Coins,
   Loader2,
   ChevronLeft,
+  ChevronsLeft,
+  ChevronsRight,
   ChevronRight,
   Calendar,
   User,
@@ -503,28 +505,59 @@ const UangMuka = () => {
 
           {/* Pagination */}
           <div className="flex flex-col sm:flex-row items-center justify-between p-5 border-t border-slate-100 dark:border-slate-700/50 bg-slate-50/30 dark:bg-slate-800/10 gap-4">
-            <span className="text-xs text-slate-500 dark:text-slate-400">
-              Menampilkan Halaman{' '}
-              <span className="font-semibold text-slate-500 dark:text-slate-200">{page}</span> dari{' '}
-              <span className="font-semibold text-slate-500 dark:text-slate-200">{totalPages}</span>{' '}
-              ({totalItems} total data)
+            <span className="text-xs dark:text-slate-400 text-slate-500 font-medium">
+              Menampilkan Halaman <span className="font-bold  ">{page}</span> dari{' '}
+              <span className="font-bold  ">{totalPages}</span> (
+              <span className="font-bold">{totalItems}</span> total data)
             </span>
 
             <div className="flex items-center gap-2">
               <button
+                onClick={() => setPage(1)}
+                disabled={page === 1}
+                className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/40 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
+                title="Halaman Pertama"
+              >
+                <ChevronsLeft className="h-4 w-4" />
+              </button>
+              <button
                 onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
                 disabled={page === 1}
-                className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
+                className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/40 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
+                title="Sebelumnya"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
 
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+                <button
+                  key={num}
+                  onClick={() => setPage(num)}
+                  className={`px-3.5 py-1.5 rounded-xl border text-xs font-bold transition-all ${
+                    page === num
+                      ? 'bg-indigo-600 dark:bg-indigo-800 text-white border-indigo-600'
+                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/40'
+                  }`}
+                >
+                  {num}
+                </button>
+              ))}
+
               <button
                 onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
                 disabled={page === totalPages}
-                className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
+                className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/40 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
+                title="Berikutnya"
               >
                 <ChevronRight className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => setPage(totalPages)}
+                disabled={page === totalPages}
+                className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/40 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
+                title="Halaman Terakhir"
+              >
+                <ChevronsRight className="h-4 w-4" />
               </button>
             </div>
           </div>

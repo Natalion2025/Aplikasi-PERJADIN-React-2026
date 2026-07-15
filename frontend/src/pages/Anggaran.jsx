@@ -9,6 +9,10 @@ import {
   X,
   Wallet,
   AlertCircle,
+  ChevronsLeft,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsRight,
   CheckCircle2,
 } from 'lucide-react';
 
@@ -20,7 +24,7 @@ const Anggaran = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const itemsPerPage = 5;
+  const [limit, setLimit] = useState(5);
 
   // State Form / Modal
   const [modalOpen, setModalOpen] = useState(false);
@@ -49,7 +53,7 @@ const Anggaran = () => {
         params: {
           q: search,
           page: currentPage,
-          limit: itemsPerPage,
+          limit: limit,
         },
       });
 
@@ -80,7 +84,7 @@ const Anggaran = () => {
 
   useEffect(() => {
     fetchAnggaran();
-  }, [currentPage, search]);
+  }, [currentPage, search, limit]);
 
   useEffect(() => {
     fetchPegawaiOptions();
@@ -116,7 +120,7 @@ const Anggaran = () => {
 
     // Panggil detail dari backend untuk melengkapi form (termasuk bidang_urusan dan pptk_id)
     try {
-      setSubmitting(true);
+      setSubmitting(true); // Tampilkan loader di dalam modal
       const res = await axios.get(`/api/anggaran/${anggaran.id}`);
       const data = res.data;
       setForm({
@@ -126,9 +130,7 @@ const Anggaran = () => {
         sub_kegiatan: data.sub_kegiatan || '',
         mata_anggaran_kode: data.mata_anggaran_kode || '',
         mata_anggaran_nama: data.mata_anggaran_nama || '',
-        nilai_anggaran: data.nilai_anggaran
-          ? String(data.nilai_anggaran).replace(/\.00$/, '').replace(/\./g, '')
-          : '',
+        nilai_anggaran: data.nilai_anggaran || '',
         pptk_id: data.pptk_id || '',
       });
       setModalOpen(true);
@@ -136,7 +138,7 @@ const Anggaran = () => {
       console.error('Gagal memuat detail anggaran:', err);
       setError('Gagal memuat detail data anggaran.');
     } finally {
-      setSubmitting(false);
+      setSubmitting(false); // Sembunyikan loader setelah selesai
     }
   };
 
@@ -236,6 +238,29 @@ const Anggaran = () => {
               className="w-[70%] pl-11 pr-4 py-2.5 dark:bg-slate-900 dark:text-slate-200 dark:focus:bg-slate-900   border border-slate-300 dark:border-slate-600/50 rounded-2xl text-slate-800 placeholder-slate-400 dark:placeholder:text-slate-500/50 focus:outline-none focus:ring-2  focus:ring-mauve-500 focus:bg-white transition-all text-sm focus:border-transparent dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
             />
           </div>
+          <div className="flex flex-row gap-4 items-center">
+            <span className="text-xs font-semibold text-mauve-500 dark:bg-slate-800 dark:text-indigo-400 dark:border-indigo-400 bg-slate-50 border border-mauve-500 px-3 py-1.5 rounded-xl">
+              Total: {totalItems} Anggaran
+            </span>
+            <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 flex-shrink-0">
+              <span>Tampilkan:</span>
+              <div className="relative border border-slate-300 px-1 py-2 dark:bg-slate-900  dark:border-slate-600/50 focus-within:outline-none focus-within:ring-2 focus-within:ring-mauve-500 focus-within:border-transparent rounded-xl dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                <select
+                  value={limit}
+                  onChange={(e) => {
+                    setLimit(Number(e.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className=" bg-white dark:bg-slate-900 outline-none text-slate-800  dark:text-slate-200 "
+                >
+                  <option value={5}>5</option>
+                  <option value={15}>15</option>
+                  <option value={25}>25</option>
+                  <option value={50}>50</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Table Data */}
@@ -282,7 +307,7 @@ const Anggaran = () => {
                     className="hover:bg-slate-50/20 dark:hover:bg-slate-700/30 transition-colors"
                   >
                     <td className="px-5 py-3 text-slate-800 dark:text-slate-200 text-center align-top">
-                      {(currentPage - 1) * itemsPerPage + index + 1}
+                      {(currentPage - 1) * limit + index + 1}
                     </td>
                     <td className="px-5 py-3 align-top">
                       <p className=" text-slate-800 dark:text-slate-200">
@@ -345,17 +370,28 @@ const Anggaran = () => {
         {/* Pagination Controls */}
         {!loading && totalItems > 0 && (
           <div className="flex items-center justify-between dark:border-none border-t border-slate-100 dark:border-slate-600 pt-5">
-            <span className="text-xs text-slate-400">
-              Menampilkan Halaman {currentPage} dari {totalPages} ({totalItems} total data)
+            <span className="text-xs dark:text-slate-400 text-slate-500 font-medium">
+              Menampilkan Halaman <span className="font-bold">{currentPage}</span> dari{' '}
+              <span className="font-bold">{totalPages}</span> (
+              <span className="font-bold">{totalItems}</span> total data)
             </span>
             {totalPages > 1 && (
               <div className="flex gap-2">
                 <button
                   disabled={currentPage === 1}
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                  className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                  onClick={() => setCurrentPage(1)}
+                  className="p-2 rounded-xl border border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                  title="Halaman Pertama"
                 >
-                  Sebelumnya
+                  <ChevronsLeft size={16} />
+                </button>
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  className="p-2 rounded-xl border border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                  title="Sebelumnya"
+                >
+                  <ChevronLeft size={16} />
                 </button>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
                   <button
@@ -363,8 +399,8 @@ const Anggaran = () => {
                     onClick={() => setCurrentPage(num)}
                     className={`px-4 py-2 rounded-xl border text-xs font-bold transition-all ${
                       currentPage === num
-                        ? 'bg-indigo-600 text-white border-indigo-600'
-                        : 'border-slate-200 text-slate-600 hover:bg-slate-50 active:bg-slate-100'
+                        ? 'bg-indigo-600 dark:bg-indigo-800 dark:text-slate-200 text-white border-indigo-600'
+                        : 'border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-slate-600 hover:bg-slate-50 active:bg-slate-100'
                     }`}
                   >
                     {num}
@@ -373,9 +409,18 @@ const Anggaran = () => {
                 <button
                   disabled={currentPage === totalPages}
                   onClick={() => setCurrentPage(currentPage + 1)}
-                  className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                  className="p-2 rounded-xl border border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                  title="Berikutnya"
                 >
-                  Berikutnya
+                  <ChevronRight size={16} />
+                </button>
+                <button
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage(totalPages)}
+                  className="p-2 rounded-xl border border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                  title="Halaman Terakhir"
+                >
+                  <ChevronsRight size={16} />
                 </button>
               </div>
             )}
@@ -407,7 +452,11 @@ const Anggaran = () => {
             </div>
 
             {/* Form Body */}
-            <form onSubmit={handleSubmit} className="flex-1  p-6 pb-0 space-y-4 overflow-y-auto">
+            <form
+              id="anggaran-form"
+              onSubmit={handleSubmit}
+              className="flex-1  p-6 pb-0 space-y-4 overflow-y-auto"
+            >
               {error && (
                 <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs flex items-start gap-2.5">
                   <AlertCircle className="flex-shrink-0 mt-0.5" size={16} />
@@ -572,6 +621,7 @@ const Anggaran = () => {
               </button>
               <button
                 type="submit"
+                form="anggaran-form"
                 disabled={submitting}
                 className="flex-1 py-3 bg-emerald-600 dark:bg-emerald-800 dark:hover:bg-emerald-700  hover:bg-emerald-500 text-white font-bold rounded-2xl text-sm  hover:shadow-emerald-600/20 disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
               >

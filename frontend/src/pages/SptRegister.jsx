@@ -11,6 +11,8 @@ import {
   X,
   Check,
   ChevronLeft,
+  ChevronsLeft,
+  ChevronsRight,
   ChevronRight,
   AlertCircle,
   Users,
@@ -598,9 +600,9 @@ const SptRegister = () => {
                                   className={`h-3.5 w-3.5 transition-transform duration-200 ${openDropdownId === spt.id ? 'rotate-180' : ''}`}
                                 />
                               </button>
-
+                              {/*Dropdowm Aksi*/}
                               {openDropdownId === spt.id && (
-                                <div className="dropdown-menu absolute shrink-0 z-150 right-6 mt-1.5 w-52 bg-red-900 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl rounded-2xl py-1.5 text-left divide-y divide-slate-100 dark:divide-slate-700/50">
+                                <div className="dropdown-menu absolute shrink-0 z-150 right-6 mt-1.5 w-52 bg-mauve-500 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl rounded-2xl py-1.5 text-left divide-y divide-slate-100 dark:divide-slate-700/50">
                                   {/* Section Cetak */}
                                   <div className="py-1">
                                     <div className="px-3 py-1 text-[9px] font-bold text-slate-200 uppercase tracking-wider">
@@ -803,20 +805,28 @@ const SptRegister = () => {
 
           {/* Pagination Controls */}
           <div className="flex flex-col sm:flex-row items-center justify-between p-5 border-t border-slate-100 dark:border-slate-700/50 bg-slate-50/30 dark:bg-slate-800/10 gap-4">
-            <span className="text-xs text-slate-500 dark:text-slate-400">
+            <span className="text-xs dark:text-slate-400 text-slate-500 font-medium">
               Menampilkan Halaman{' '}
-              <span className="font-semibold text-slate-500 dark:text-slate-200">
-                {activeTab === 'spt' ? sptPage : sppdPage}
-              </span>{' '}
-              dari{' '}
-              <span className="font-semibold text-slate-500 dark:text-slate-200">
+              <span className="font-bold ">{activeTab === 'spt' ? sptPage : sppdPage}</span> dari{' '}
+              <span className="font-bold ">
                 {activeTab === 'spt' ? sptPagination.totalPages : sppdPagination.totalPages}
               </span>{' '}
-              ({activeTab === 'spt' ? sptPagination.totalItems : sppdPagination.totalItems} total
-              data)
+              (
+              <span className="font-bold">
+                {activeTab === 'spt' ? sptPagination.totalItems : sppdPagination.totalItems}
+              </span>{' '}
+              total data)
             </span>
 
             <div className="flex items-center gap-2">
+              <button
+                disabled={(activeTab === 'spt' ? sptPage : sppdPage) === 1}
+                onClick={() => (activeTab === 'spt' ? setSptPage(1) : setSppdPage(1))}
+                className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/40 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
+                title="Halaman Pertama"
+              >
+                <ChevronsLeft className="h-4 w-4" />
+              </button>
               <button
                 onClick={() =>
                   activeTab === 'spt'
@@ -824,10 +834,31 @@ const SptRegister = () => {
                     : setSppdPage((prev) => Math.max(prev - 1, 1))
                 }
                 disabled={activeTab === 'spt' ? sptPage === 1 : sppdPage === 1}
-                className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
+                className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/40 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
+                title="Sebelumnya"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
+
+              {Array.from(
+                {
+                  length:
+                    activeTab === 'spt' ? sptPagination.totalPages : sppdPagination.totalPages,
+                },
+                (_, i) => i + 1
+              ).map((num) => (
+                <button
+                  key={num}
+                  onClick={() => (activeTab === 'spt' ? setSptPage(num) : setSppdPage(num))}
+                  className={`px-3.5 py-1.5 rounded-xl border text-xs font-bold transition-all ${
+                    (activeTab === 'spt' ? sptPage : sppdPage) === num
+                      ? 'bg-indigo-600 dark:bg-indigo-800 text-white border-indigo-600'
+                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/40'
+                  }`}
+                >
+                  {num}
+                </button>
+              ))}
 
               <button
                 onClick={() =>
@@ -840,9 +871,25 @@ const SptRegister = () => {
                     ? sptPage === sptPagination.totalPages
                     : sppdPage === sppdPagination.totalPages
                 }
-                className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
+                className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/40 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
+                title="Berikutnya"
               >
                 <ChevronRight className="h-4 w-4" />
+              </button>
+              <button
+                disabled={
+                  (activeTab === 'spt' ? sptPage : sppdPage) ===
+                  (activeTab === 'spt' ? sptPagination.totalPages : sppdPagination.totalPages)
+                }
+                onClick={() =>
+                  activeTab === 'spt'
+                    ? setSptPage(sptPagination.totalPages)
+                    : setSppdPage(sppdPagination.totalPages)
+                }
+                className="p-2 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/40 disabled:opacity-50 disabled:cursor-not-allowed text-slate-600 dark:text-slate-400"
+                title="Halaman Terakhir"
+              >
+                <ChevronsRight className="h-4 w-4" />
               </button>
             </div>
           </div>

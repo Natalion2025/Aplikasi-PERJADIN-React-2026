@@ -11,6 +11,8 @@ import {
   Coins,
   Loader2,
   ChevronLeft,
+  ChevronsLeft,
+  ChevronsRight,
   ChevronRight,
   Calendar,
   User,
@@ -1352,16 +1354,25 @@ const BuatLaporan = () => {
               {/* Pagination controls - PERBAIKAN */}
               {!loading && totalItems > 0 && (
                 <div className="flex items-center justify-between border-t border-slate-100 dark:border-none pt-4 px-1">
-                  <span className="text-xs text-slate-500">
-                    Menampilkan Halaman <span className="font-semibold">{page}</span> dari{' '}
-                    <span className="font-semibold">{totalPages}</span> ({totalItems} total data)
+                  <span className="text-xs dark:text-slate-400 text-slate-500 font-medium">
+                    Menampilkan Halaman <span className="font-bold">{page}</span> dari{' '}
+                    <span className="font-bold">{totalPages}</span> (
+                    <span className="font-bold">{totalItems}</span> total data)
                   </span>
                   {totalPages > 1 && (
                     <div className="flex items-center gap-1.5">
                       <button
+                        onClick={() => setPage(1)}
+                        disabled={page === 1}
+                        className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
+                        title="Halaman Pertama"
+                      >
+                        <ChevronsLeft size={16} />
+                      </button>
+                      <button
                         onClick={() => setPage((p) => Math.max(1, p - 1))}
                         disabled={page === 1}
-                        className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50"
+                        className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
                       >
                         <ChevronLeft size={16} />
                       </button>
@@ -1369,10 +1380,10 @@ const BuatLaporan = () => {
                         <button
                           key={num}
                           onClick={() => setPage(num)}
-                          className={`w-8 h-8 rounded-lg text-xs font-semibold ${
+                          className={`w-8 h-8 rounded-lg text-xs font-semibold transition-all ${
                             page === num
-                              ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10'
-                              : 'border border-slate-200 text-slate-600 hover:bg-slate-50'
+                              ? 'bg-indigo-600 dark:bg-indigo-800 text-white shadow-md shadow-indigo-600/10'
+                              : 'border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/40'
                           }`}
                         >
                           {num}
@@ -1381,9 +1392,17 @@ const BuatLaporan = () => {
                       <button
                         onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                         disabled={page === totalPages}
-                        className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50"
+                        className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
                       >
                         <ChevronRight size={16} />
+                      </button>
+                      <button
+                        onClick={() => setPage(totalPages)}
+                        disabled={page === totalPages}
+                        className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
+                        title="Halaman Terakhir"
+                      >
+                        <ChevronsRight size={16} />
                       </button>
                     </div>
                   )}
@@ -1481,15 +1500,23 @@ const BuatLaporan = () => {
               {/* Pagination canceled */}
               {totalPages > 1 && (
                 <div className="flex items-center justify-between border-t border-slate-100 pt-4 px-1">
-                  <span className="text-xs text-slate-400">
-                    Menampilkan <span className="font-semibold">{canceledList.length}</span> dari{' '}
-                    <span className="font-semibold">{totalItems}</span> data pembatalan
+                  <span className="text-xs dark:text-slate-400 text-slate-500 font-medium">
+                    Menampilkan <span className="font-bold">{canceledList.length}</span> dari{' '}
+                    <span className="font-bold">{totalItems}</span> data pembatalan
                   </span>
                   <div className="flex items-center gap-1.5">
                     <button
+                      onClick={() => setPage(1)}
+                      disabled={page === 1}
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
+                      title="Halaman Pertama"
+                    >
+                      <ChevronsLeft size={16} />
+                    </button>
+                    <button
                       onClick={() => setPage((p) => Math.max(1, p - 1))}
                       disabled={page === 1}
-                      className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50"
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
                     >
                       <ChevronLeft size={16} />
                     </button>
@@ -1497,10 +1524,10 @@ const BuatLaporan = () => {
                       <button
                         key={num}
                         onClick={() => setPage(num)}
-                        className={`w-8 h-8 rounded-lg text-xs font-semibold ${
+                        className={`w-8 h-8 rounded-lg text-xs font-semibold transition-all ${
                           page === num
-                            ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/10'
-                            : 'border border-slate-200 text-slate-600 hover:bg-slate-50'
+                            ? 'bg-indigo-600 dark:bg-indigo-800 text-white shadow-md shadow-indigo-600/10'
+                            : 'border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/40'
                         }`}
                       >
                         {num}
@@ -1509,9 +1536,17 @@ const BuatLaporan = () => {
                     <button
                       onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                       disabled={page === totalPages}
-                      className="p-1.5 border border-slate-200 rounded-lg text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50"
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
                     >
                       <ChevronRight size={16} />
+                    </button>
+                    <button
+                      onClick={() => setPage(totalPages)}
+                      disabled={page === totalPages}
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
+                      title="Halaman Terakhir"
+                    >
+                      <ChevronsRight size={16} />
                     </button>
                   </div>
                 </div>

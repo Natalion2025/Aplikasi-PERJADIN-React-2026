@@ -9,6 +9,10 @@ import {
   Trash2,
   Loader2,
   X,
+  ChevronsLeft,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsRight,
   AlertCircle,
   CheckCircle2,
   ShieldAlert,
@@ -20,6 +24,10 @@ const DaftarPejabat = () => {
   const [pejabatList, setPejabatList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+  const [limit, setLimit] = useState(5);
 
   // Modals & form state
   const [modalOpen, setModalOpen] = useState(false);
@@ -38,8 +46,16 @@ const DaftarPejabat = () => {
     try {
       setLoading(true);
       setError('');
-      const response = await axios.get('/api/pejabat');
-      setPejabatList(response.data || []);
+      const response = await axios.get('/api/pejabat', {
+        params: { q: searchQuery, page: currentPage, limit: limit },
+      });
+      if (response.data) {
+        setPejabatList(response.data.data || []);
+        if (response.data.pagination) {
+          setTotalPages(response.data.pagination.totalPages || 1);
+          setTotalItems(response.data.pagination.totalItems || 0);
+        }
+      }
     } catch (err) {
       console.error('Gagal mengambil daftar pejabat:', err);
       setError('Gagal memuat daftar pejabat penandatangan.');
@@ -50,7 +66,7 @@ const DaftarPejabat = () => {
 
   useEffect(() => {
     fetchPejabat();
-  }, []);
+  }, [currentPage, limit, searchQuery]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -154,7 +170,10 @@ const DaftarPejabat = () => {
               type="text"
               placeholder="Cari pejabat..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setCurrentPage(1);
+              }}
               className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:focus:ring-emerald-600/20 focus:border-transparent dark:placeholder:text-slate-500/50 dark:text-slate-200 dark:focus:border-emerald-500"
             />
           </div>
@@ -213,8 +232,8 @@ const DaftarPejabat = () => {
                     key={pejabat.id}
                     className="bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700/30 transition-colors"
                   >
-                    <td className="px-6 py-3 text-center text-sm font-medium text-slate-700">
-                      {idx + 1}
+                    <td className="px-6 py-3 text-center text-sm font-medium text-slate-700 dark:text-slate-300">
+                      {(currentPage - 1) * limit + idx + 1}
                     </td>
                     <td className="px-6 py-3 whitespace-nowrap font-semibold text-sm text-slate-700 dark:text-slate-100">
                       {pejabat.nama}
@@ -247,6 +266,55 @@ const DaftarPejabat = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+        {/* Pagination Controls */}
+        {!loading && totalItems > 0 && (
+          <div className="flex items-center justify-between border-t pb-6 pl-6  border-slate-100 dark:border-none pt-5 px-2">
+            <span className="text-xs dark:text-slate-400 text-slate-500 font-medium">
+              Menampilkan Halaman <span className="font-bold">{currentPage}</span> dari{' '}
+              <span className="font-bold">{totalPages}</span> (
+              <span className="font-bold">{totalItems}</span> total data)
+            </span>
+            {totalPages > 1 && (
+              <div className="flex gap-2">
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(1)}
+                  className="p-2 rounded-xl border border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                  title="Halaman Pertama"
+                >
+                  <ChevronsLeft size={16} />
+                </button>
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  className="p-2 rounded-xl border border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+                  <button
+                    key={num}
+                    onClick={() => setCurrentPage(num)}
+                    className={`px-4 py-2 rounded-xl border text-xs font-bold transition-all ${
+                      currentPage === num
+                        ? 'bg-indigo-600 dark:bg-indigo-800 text-white border-indigo-600'
+                        : 'border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/40'
+                    }`}
+                  >
+                    {num}
+                  </button>
+                ))}
+                <button
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  className="p-2 rounded-xl border border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                >
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

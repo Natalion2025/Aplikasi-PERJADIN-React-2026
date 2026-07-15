@@ -11,6 +11,8 @@ import {
   Coins,
   Loader2,
   ChevronLeft,
+  ChevronsLeft,
+  ChevronsRight,
   ChevronRight,
   Calendar,
   User,
@@ -860,26 +862,35 @@ const Pembayaran = () => {
             {/* Pagination Bukti Bayar */}
             {!loading && totalItems > 0 && (
               <div className="flex items-center justify-between border-t border-slate-100 dark:border-none pt-4 px-1">
-                <span className="text-xs text-slate-500 dark:text-slate-400">
-                  Menampilkan Halaman <span className="font-semibold">{page}</span> dari{' '}
-                  <span className="font-semibold">{totalPages}</span> ({totalItems} total data)
+                <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                  Menampilkan Halaman <span className="font-bold">{page}</span> dari{' '}
+                  <span className="font-bold">{totalPages}</span> (
+                  <span className="font-bold">{totalItems}</span> total data)
                 </span>
                 {totalPages > 1 && (
                   <div className="flex items-center gap-1.5">
                     <button
+                      onClick={() => setPage(1)}
+                      disabled={page === 1}
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
+                      title="Halaman Pertama"
+                    >
+                      <ChevronsLeft size={16} />
+                    </button>
+                    <button
                       onClick={() => setPage((p) => Math.max(1, p - 1))}
                       disabled={page === 1}
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
                     >
                       <ChevronLeft size={16} />
                     </button>
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => {
                       const isCurrent = page === num;
-                      const baseClasses =
-                        'w-8 h-8 rounded-lg text-xs font-semibold transition-all duration-200';
+                      const baseClasses = 'w-8 h-8 rounded-lg text-xs font-semibold transition-all';
                       const activeClasses =
-                        'bg-indigo-600 text-white shadow-md shadow-indigo-600/10';
+                        'bg-indigo-600 dark:bg-indigo-800 text-white shadow-md shadow-indigo-600/10';
                       const inactiveClasses =
-                        'border border-slate-200 text-slate-600 hover:bg-slate-50';
+                        'border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/40';
                       return (
                         <button
                           key={num}
@@ -893,8 +904,17 @@ const Pembayaran = () => {
                     <button
                       onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                       disabled={page === totalPages}
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
                     >
                       <ChevronRight size={16} />
+                    </button>
+                    <button
+                      onClick={() => setPage(totalPages)}
+                      disabled={page === totalPages}
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
+                      title="Halaman Terakhir"
+                    >
+                      <ChevronsRight size={16} />
                     </button>
                   </div>
                 )}
@@ -990,19 +1010,27 @@ const Pembayaran = () => {
                 {totalPages > 1 && (
                   <div className="flex items-center gap-1.5">
                     <button
+                      onClick={() => setPage(1)}
+                      disabled={page === 1}
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
+                      title="Halaman Pertama"
+                    >
+                      <ChevronsLeft size={16} />
+                    </button>
+                    <button
                       onClick={() => setPage((p) => Math.max(1, p - 1))}
                       disabled={page === 1}
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
                     >
                       <ChevronLeft size={16} />
                     </button>
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => {
                       const isCurrent = page === num;
-                      const baseClasses =
-                        'w-8 h-8 rounded-lg text-xs font-semibold transition-all duration-200';
+                      const baseClasses = 'w-8 h-8 rounded-lg text-xs font-semibold transition-all';
                       const activeClasses =
-                        'bg-indigo-600 text-white shadow-md shadow-indigo-600/10';
+                        'bg-indigo-600 dark:bg-indigo-800 text-white shadow-md shadow-indigo-600/10';
                       const inactiveClasses =
-                        'border border-slate-200 text-slate-600 hover:bg-slate-50';
+                        'border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/40';
                       return (
                         <button
                           key={num}
@@ -1016,8 +1044,17 @@ const Pembayaran = () => {
                     <button
                       onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                       disabled={page === totalPages}
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
                     >
                       <ChevronRight size={16} />
+                    </button>
+                    <button
+                      onClick={() => setPage(totalPages)}
+                      disabled={page === totalPages}
+                      className="p-1.5 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700/40"
+                      title="Halaman Terakhir"
+                    >
+                      <ChevronsRight size={16} />
                     </button>
                   </div>
                 )}

@@ -30,12 +30,48 @@ router.get(
   isApiAuthenticated,
   isApiAdminOrSuperAdmin,
   async (req, res) => {
+    const { q = "" } = req.query;
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 5;
+    const offset = (page - 1) * limit;
+
     try {
-      const users = await dbAll(
-        "SELECT id, username, name, role, nip, jabatan, foto_profil FROM users ORDER BY name ASC",
-        [],
+      // Base query
+      let baseQuery = `FROM users`;
+      let whereClauses = [];
+      let params = [];
+
+      if (q) {
+        whereClauses.push(`(name LIKE ? OR username LIKE ? OR jabatan LIKE ?)`);
+        const searchTerm = `%${q}%`;
+        params.push(searchTerm, searchTerm, searchTerm);
+      }
+
+      if (whereClauses.length > 0) {
+        baseQuery += ` WHERE ${whereClauses.join(" AND ")}`;
+      }
+
+      // Get total items for pagination
+      const totalResult = await dbGet(
+        `SELECT COUNT(*) as total ${baseQuery}`,
+        params,
       );
-      res.json(users);
+      const totalItems = totalResult.total;
+      const totalPages = Math.ceil(totalItems / limit);
+
+      // Get paginated data
+      const dataSql = `SELECT id, username, name, role, nip, jabatan, foto_profil ${baseQuery} ORDER BY name ASC LIMIT ? OFFSET ?`;
+      const users = await dbAll(dataSql, [...params, limit, offset]);
+
+      res.json({
+        data: users,
+        pagination: {
+          page: page,
+          limit: limit,
+          totalItems,
+          totalPages,
+        },
+      });
     } catch (err) {
       console.error("[API ERROR] Gagal mengambil daftar pengguna:", err);
       res.status(500).json({ message: "Terjadi kesalahan pada server." });

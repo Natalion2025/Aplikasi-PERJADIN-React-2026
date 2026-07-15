@@ -8,6 +8,10 @@ import {
   Loader2,
   X,
   UserPlus,
+  ChevronsLeft,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsRight,
   AlertCircle,
   CheckCircle2,
 } from 'lucide-react';
@@ -19,7 +23,7 @@ const Pegawai = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const itemsPerPage = 5;
+  const [limit, setLimit] = useState(5);
 
   // State Form / Modal
   const [modalOpen, setModalOpen] = useState(false);
@@ -45,7 +49,7 @@ const Pegawai = () => {
         params: {
           q: search,
           page: currentPage,
-          limit: itemsPerPage,
+          limit: limit,
         },
       });
 
@@ -66,7 +70,7 @@ const Pegawai = () => {
 
   useEffect(() => {
     fetchPegawai();
-  }, [currentPage, search]);
+  }, [currentPage, search, limit]);
 
   // Handle input form change
   const handleChange = (e) => {
@@ -204,9 +208,29 @@ const Pegawai = () => {
               className="w-[70%] pl-11 pr-4 py-2.5  border border-slate-300 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-600/50 dark:placeholder:text-slate-500/50 rounded-2xl text-slate-800  placeholder-slate-400 focus:border-transparent focus:outline-none focus:ring-2 dark:focus:ring-emerald-600/20 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:border-emerald-500"
             />
           </div>
-          <span className="text-xs font-semibold text-slate-400 dark:bg-slate-800 dark:text-indigo-400 dark:border-indigo-400 bg-slate-50 border border-slate-150 px-3 py-1.5 rounded-xl">
-            Total: {totalItems} Pegawai
-          </span>
+          <div className="flex flex-row gap-4 items-center">
+            <span className="text-xs font-semibold text-mauve-500 dark:bg-slate-800 dark:text-indigo-400 dark:border-indigo-400 bg-slate-50 border border-mauve-500 px-3 py-1.5 rounded-xl">
+              Total: {totalItems} Pegawai
+            </span>
+            <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 flex-shrink-0">
+              <span>Tampilkan:</span>
+              <div className="relative border border-slate-300 px-1 py-2 dark:bg-slate-900  dark:border-slate-600/50 focus-within:outline-none focus-within:ring-2 focus-within:ring-mauve-500 focus-within:border-transparent rounded-xl dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                <select
+                  value={limit}
+                  onChange={(e) => {
+                    setLimit(Number(e.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className=" bg-white dark:bg-slate-900 outline-none text-slate-800  dark:text-slate-200 "
+                >
+                  <option value={5}>5</option>
+                  <option value={15}>15</option>
+                  <option value={25}>25</option>
+                  <option value={50}>50</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Table Data */}
@@ -253,7 +277,7 @@ const Pegawai = () => {
                     className="hover:bg-slate-50/20 dark:hover:bg-slate-700/30  transition-colors"
                   >
                     <td className="px-3 py-3 text-center text-slate-800 dark:text-slate-200 align-top">
-                      {(currentPage - 1) * itemsPerPage + index + 1}
+                      {(currentPage - 1) * limit + index + 1}
                     </td>
                     <td className="px-3 py-3">
                       <p className="font-semibold text-slate-800 dark:text-slate-200">
@@ -307,17 +331,27 @@ const Pegawai = () => {
         {/* Pagination Controls */}
         {!loading && totalItems > 0 && (
           <div className="flex items-center justify-between border-t border-slate-100 dark:border-none pt-5">
-            <span className="text-xs text-slate-400">
-              Menampilkan Halaman {currentPage} dari {totalPages} ({totalItems} total data)
+            <span className="text-xs dark:text-slate-400 text-slate-500 font-medium">
+              Menampilkan Halaman <span className="font-bold">{currentPage}</span> dari{' '}
+              <span className="font-bold">{totalPages}</span> (
+              <span className="font-bold">{totalItems}</span> total data)
             </span>
             {totalPages > 1 && (
               <div className="flex gap-2">
                 <button
                   disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(1)}
+                  className="p-2 rounded-xl border border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                  title="Halaman Pertama"
+                >
+                  <ChevronsLeft size={16} />
+                </button>
+                <button
+                  disabled={currentPage === 1}
                   onClick={() => setCurrentPage(currentPage - 1)}
                   className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
                 >
-                  Sebelumnya
+                  <ChevronLeft size={16} />
                 </button>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
                   <button
@@ -337,7 +371,15 @@ const Pegawai = () => {
                   onClick={() => setCurrentPage(currentPage + 1)}
                   className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
                 >
-                  Berikutnya
+                  <ChevronRight size={16} />
+                </button>
+                <button
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage(totalPages)}
+                  className="p-2 rounded-xl border border-slate-200 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700/40 text-xs font-bold text-slate-600 hover:bg-slate-50 active:bg-slate-100 disabled:opacity-40 disabled:hover:bg-transparent transition-all"
+                  title="Halaman Terakhir"
+                >
+                  <ChevronsRight size={16} />
                 </button>
               </div>
             )}
