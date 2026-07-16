@@ -72,7 +72,9 @@ const TambahSpt = () => {
       ]);
 
       const semuaPegawai = pegawaiRes.data?.data || pegawaiRes.data || [];
-      const pejabatDaerah = pejabatRes.data || [];
+      // PERBAIKAN: Data pejabat dari API berada di dalam properti 'data'.
+      // Jika tidak ada, fallback ke array kosong.
+      const pejabatDaerah = pejabatRes.data?.data || pejabatRes.data || [];
 
       // Add Sekda to Pejabat Pemberi Tugas if found
       const sekda = semuaPegawai.find(

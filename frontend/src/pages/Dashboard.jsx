@@ -145,8 +145,12 @@ const Dashboard = () => {
   const tooltipBodyColor = isDarkMode ? '#e2e8f0' : '#475569'; // slate-200 vs slate-600
 
   // Perhitungan Donut Chart
-  const totalRealisasi = anggaranList.reduce((sum, a) => sum + (a.realisasi || 0), 0);
-  const totalNilaiAnggaran = anggaranList.reduce((sum, a) => sum + (a.nilai_anggaran || 0), 0);
+  // PERBAIKAN: Gunakan parseFloat untuk memastikan nilai adalah angka sebelum dijumlahkan.
+  const totalRealisasi = anggaranList.reduce((sum, a) => sum + (parseFloat(a.realisasi) || 0), 0);
+  const totalNilaiAnggaran = anggaranList.reduce(
+    (sum, a) => sum + (parseFloat(a.nilai_anggaran) || 0),
+    0
+  );
   const totalSisaAnggaran = totalNilaiAnggaran - totalRealisasi;
   const realisasiPersen =
     totalNilaiAnggaran > 0 ? ((totalRealisasi / totalNilaiAnggaran) * 100).toFixed(1) : 0;
