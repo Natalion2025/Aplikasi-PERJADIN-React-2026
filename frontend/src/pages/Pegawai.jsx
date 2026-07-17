@@ -396,9 +396,9 @@ const Pegawai = () => {
           }}
         >
           {/* Modal Content Card */}
-          <div className=" rounded-3xl w-full max-w-lg shadow-2xl dark:border-slate-700 border border-slate-100 flex flex-col max-h-[90vh] overflow-hidden">
+          <div className=" rounded-3xl w-full max-w-lg shadow-2xl dark:border-slate-700 dark:border flex flex-col max-h-[90vh] overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-800 dark:to-teal-700 text-white">
+            <div className="flex items-center justify-between px-6 py-5 dark:bg-gradient-to-r bg-linear-to-l/hsl from-rose-300 to-rose-900 dark:from-emerald-800 dark:to-teal-700 text-white">
               <h3 className="font-bold text-lg flex items-center gap-2">
                 <UserPlus size={20} />
                 <span>{editId ? 'Ubah Data Pegawai' : 'Tambah Pegawai Baru'}</span>
@@ -414,7 +414,7 @@ const Pegawai = () => {
             {/* Form Body */}
             <form
               onSubmit={handleSubmit}
-              className="flex-1  p-6 space-y-4 dark:bg-slate-800 overflow-y-auto"
+              className="flex-1  p-6 space-y-4 bg-mauve-200 dark:bg-slate-800 overflow-y-auto"
             >
               {error && (
                 <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs flex items-start gap-2.5">
@@ -433,7 +433,7 @@ const Pegawai = () => {
               <div className=" grid grid-cols-1 gap-4  max-h-[50vh]">
                 {/* Nama Lengkap */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-bold dark:text-slate-400 text-slate-600 uppercase tracking-wider mb-1.5">
                     Nama Lengkap *
                   </label>
                   <input
@@ -443,13 +443,13 @@ const Pegawai = () => {
                     value={form.nama_lengkap}
                     onChange={handleChange}
                     placeholder="Contoh: Budi Santoso, S.H."
-                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 dark:focus:bg-slate-900 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:ring-2 dark:text-slate-200 focus:outline-none focus:border-transparent focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 dark:focus:bg-slate-900 border border-mauve-300 rounded-xl text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-mauve-500 dark:text-slate-200 focus:outline-none focus:border-transparent focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
                 {/* NIP */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
                     NIP (Nomor Induk Pegawai) *
                   </label>
                   <input
@@ -459,14 +459,14 @@ const Pegawai = () => {
                     value={form.nip}
                     onChange={handleChange}
                     placeholder="Contoh: 198001012010011001"
-                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 dark:focus:bg-slate-900 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:ring-2 dark:text-slate-200 focus:outline-none focus:border-transparent focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 dark:focus:bg-slate-900 border border-mauve-300 rounded-xl text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-mauve-500 dark:text-slate-200 focus:outline-none focus:border-transparent focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   {/* Pangkat */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                    <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
                       Pangkat
                     </label>
                     <input
@@ -475,16 +475,16 @@ const Pegawai = () => {
                       value={form.pangkat}
                       onChange={handleChange}
                       placeholder="Contoh: Pembina"
-                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 dark:focus:bg-slate-900 dark:text-slate-200 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-mauve-500 focus:outline-none focus:border-transparent focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 dark:focus:bg-slate-900 dark:text-slate-200 border border-mauve-300 rounded-xl text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-mauve-500 focus:outline-none focus:border-transparent focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
                   {/* Golongan */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                    <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
                       Golongan
                     </label>
-                    <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 dark:focus:bg-slate-900 dark:text-slate-200 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus-within:ring-2 focus-within:ring-mauve-500 focus-within:outline-none focus-within:border-transparent bg-white transition-all text-sm dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                    <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 dark:focus:bg-slate-900 dark:text-slate-200 border border-mauve-300 rounded-xl text-slate-800 placeholder-slate-400 focus-within:ring-2 focus-within:ring-mauve-500 focus-within:outline-none focus-within:border-transparent bg-white transition-all text-sm dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
                       <select
                         name="golongan"
                         value={form.golongan}
@@ -516,7 +516,7 @@ const Pegawai = () => {
 
                 {/* Jabatan */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
                     Jabatan *
                   </label>
                   <input
@@ -526,13 +526,13 @@ const Pegawai = () => {
                     value={form.jabatan}
                     onChange={handleChange}
                     placeholder="Contoh: Kepala Bidang Keuangan"
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 dark:bg-slate-900 dark:placeholder:text-slate-500/50 dark:border-slate-700/50 dark:focus:bg-slate-900 dark:text-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-mauve-300 dark:bg-slate-900 dark:placeholder:text-slate-500/50 dark:border-slate-700/50 dark:focus:bg-slate-900 dark:text-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
                 {/* Bidang / Urusan */}
                 <div className="pb-2">
-                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
                     Bidang / Bagian
                   </label>
                   <input
@@ -541,24 +541,24 @@ const Pegawai = () => {
                     value={form.bidang}
                     onChange={handleChange}
                     placeholder="Contoh: Bidang Anggaran"
-                    className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:placeholder:text-slate-500/50 dark:border-slate-700/50 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 dark:focus:bg-slate-900 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4 py-2.5 bg-slate-50 border border-mauve-300 dark:bg-slate-900 dark:text-slate-200 dark:placeholder:text-slate-500/50 dark:border-slate-700/50 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 ring-mauve-500 dark:focus:bg-slate-900 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
               </div>
             </form>
             {/* Footer Buttons */}
-            <div className="flex gap-3 dark:bg-slate-800 p-4 border-t dark:border-t-0 border-slate-100 ">
+            <div className="flex gap-3 bg-mauve-200 justify-end dark:bg-slate-800 p-4 border-t dark:border-t-0 border-slate-100 ">
               <button
                 type="button"
                 onClick={() => setModalOpen(false)}
-                className="flex-1 py-3 border border-slate-200 dark:hover:bg-slate-200/10 dark:border-slate-600/50 dark:bg-slate-800 dark:text-slate-200 hover:bg-slate-50 text-slate-600 font-bold rounded-2xl text-sm transition-all"
+                className="w-1/5 py-2 border border-slate-300 hover:shadow-lg bg-white hover:shadow-mauve-700/20 dark:shadow-none dark:hover:bg-slate-200/10 hover:scale-101 duration-200 ease-in dark:border-slate-600/50 dark:bg-slate-800 dark:text-slate-200 hover:bg-slate-50 text-mauve-700 font-bold rounded-2xl text-sm transition-all"
               >
                 Batal
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-800 dark:hover:bg-emerald-700 text-white font-bold rounded-2xl text-sm shadow-lg shadow-emerald-600/10 hover:shadow-emerald-600/20 disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
+                className="w-1/3 py-2 hover:shadow-lg bg-white hover:shadow-mauve-700/20 dark:shadow-none dark:border-0 border hover:scale-101 duration-200 ease-in  border-mauve-700 hover:bg-mauve-100 text-mauve-700 dark:bg-emerald-800 dark:hover:bg-emerald-700 font-bold rounded-2xl text-sm shadow-lg   disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
               >
                 {submitting ? (
                   <>

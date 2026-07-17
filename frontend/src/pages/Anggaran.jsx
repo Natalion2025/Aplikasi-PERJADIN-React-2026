@@ -436,9 +436,9 @@ const Anggaran = () => {
             if (e.target === e.currentTarget) setModalOpen(false);
           }}
         >
-          <div className="bg-white rounded-3xl w-full max-w-xl shadow-2xl dark:border-slate-700 border dark:bg-slate-800 border-slate-100 flex flex-col max-h-[90vh] overflow-hidden">
+          <div className="bg-mauve-200 rounded-3xl w-full max-w-xl shadow-2xl dark:border-slate-700 dark:border dark:bg-slate-800 flex flex-col max-h-[90vh] overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-800 dark:to-teal-700 text-white">
+            <div className="flex items-center justify-between px-6 py-5 bg-linear-to-l/hsl from-rose-300 to-rose-900 dark:bg-gradient-to-r  dark:from-emerald-800 dark:to-teal-700 text-white">
               <h3 className="font-bold text-lg flex items-center gap-2">
                 <Wallet size={20} />
                 <span>{editId ? 'Ubah Mata Anggaran' : 'Tambah Mata Anggaran Baru'}</span>
@@ -474,7 +474,7 @@ const Anggaran = () => {
               <div className="grid grid-cols-1  max-h-[50vh] gap-4">
                 {/* Bidang Urusan */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-bold dark:text-slate-400 text-slate-600 uppercase tracking-wider mb-1.5">
                     Bidang / Urusan
                   </label>
                   <input
@@ -483,13 +483,13 @@ const Anggaran = () => {
                     value={form.bidang_urusan}
                     onChange={handleChange}
                     placeholder="Contoh: Urusan Otonomi Daerah"
-                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:text-slate-200 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-mauve-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
                 {/* Program */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-bold dark:text-slate-400 text-slate-600 uppercase tracking-wider mb-1.5">
                     Nama Program
                   </label>
                   <input
@@ -498,14 +498,14 @@ const Anggaran = () => {
                     value={form.program}
                     onChange={handleChange}
                     placeholder="Contoh: Program Dukungan Administrasi"
-                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:text-slate-200 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-mauve-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Kegiatan */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                    <label className="block text-xs font-bold dark:text-slate-400 text-slate-600 uppercase tracking-wider mb-1.5">
                       Kegiatan
                     </label>
                     <input
@@ -514,13 +514,13 @@ const Anggaran = () => {
                       value={form.kegiatan}
                       onChange={handleChange}
                       placeholder="Contoh: Administrasi Keuangan"
-                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:text-slate-200 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-mauve-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
                   {/* Sub Kegiatan */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                    <label className="block text-xs font-bold dark:text-slate-400 text-slate-600 uppercase tracking-wider mb-1.5">
                       Sub Kegiatan
                     </label>
                     <input
@@ -529,7 +529,7 @@ const Anggaran = () => {
                       value={form.sub_kegiatan}
                       onChange={handleChange}
                       placeholder="Contoh: Penyediaan Gaji dan Tunjangan"
-                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:text-slate-200 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-mauve-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
                 </div>
@@ -537,7 +537,7 @@ const Anggaran = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Kode Rekening */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                    <label className="block text-xs font-bold dark:text-slate-400 text-slate-600 uppercase tracking-wider mb-1.5">
                       Kode Mata Anggaran *
                     </label>
                     <input
@@ -547,13 +547,13 @@ const Anggaran = () => {
                       value={form.mata_anggaran_kode}
                       onChange={handleChange}
                       placeholder="Contoh: 5.1.02.04"
-                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:text-slate-200 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-mauve-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
                   {/* Nilai Anggaran */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                    <label className="block text-xs font-bold dark:text-slate-400 text-slate-600 uppercase tracking-wider mb-1.5">
                       Nilai Pagu Anggaran (Rp) *
                     </label>
                     <input
@@ -563,14 +563,14 @@ const Anggaran = () => {
                       value={form.nilai_anggaran}
                       onChange={handleChange}
                       placeholder="Contoh: 150000000"
-                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:text-slate-200 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-mauve-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
                 </div>
 
                 {/* Nama Rekening */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-bold dark:text-slate-400 text-slate-600 uppercase tracking-wider mb-1.5">
                     Nama Mata Anggaran *
                   </label>
                   <input
@@ -580,16 +580,16 @@ const Anggaran = () => {
                     value={form.mata_anggaran_nama}
                     onChange={handleChange}
                     placeholder="Contoh: Belanja Perjalanan Dinas Paket Biasa"
-                    className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4 py-2.5 bg-slate-50 dark:text-slate-200 dark:bg-slate-900 dark:focus:bg-slate-900 dark:border-slate-700/50 dark:placeholder:text-slate-500/50 border border-mauve-300 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-mauve-500 focus:bg-white transition-all text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
                 {/* PPTK Dropdown */}
                 <div className="pb-2">
-                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-bold dark:text-slate-400 text-slate-600 uppercase tracking-wider mb-1.5">
                     Pejabat Pelaksana Teknis Kegiatan (PPTK)
                   </label>
-                  <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-900 dark:focus-within:bg-slate-900 dark:border-slate-700/50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus-within:border-transparent focus-within:ring-2 focus-within:ring-mauve-500 focus-within:bg-white transition-all dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                  <div className="px-4 py-2.5 bg-slate-50 dark:text-slate-200 dark:bg-slate-900 dark:focus-within:bg-slate-900 dark:border-slate-700/50 border border-mauve-300 dark:text-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus-within:border-transparent focus-within:ring-2 focus-within:ring-mauve-500 focus-within:bg-white transition-all dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
                     <select
                       name="pptk_id"
                       value={form.pptk_id}
@@ -611,11 +611,11 @@ const Anggaran = () => {
             </form>
 
             {/*Footer */}
-            <div className="flex gap-3 border-t p-4 dark:border-t-0 border-slate-100">
+            <div className="flex gap-3 justify-end border-t p-4 dark:border-t-0 border-slate-100">
               <button
                 type="button"
                 onClick={() => setModalOpen(false)}
-                className="flex-1 py-3 border border-slate-200 dark:border-slate-200/10 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-200/10 text-slate-600 font-bold rounded-2xl text-sm transition-all"
+                className="py-2 w-1/5 border border-slate-300 dark:bg-slate-800 hover:shadow-lg hover:shadow-mauve-700/20 dark:shadow-none hover:scale-101 duration-200 ease-in dark:border-slate-200/10 dark:text-white bg-white hover:bg-mauve-100 dark:hover:bg-slate-200/10 text-mauve-700 font-bold rounded-2xl text-sm transition-all"
               >
                 Batal
               </button>
@@ -623,7 +623,7 @@ const Anggaran = () => {
                 type="submit"
                 form="anggaran-form"
                 disabled={submitting}
-                className="flex-1 py-3 bg-emerald-600 dark:bg-emerald-800 dark:hover:bg-emerald-700  hover:bg-emerald-500 text-white font-bold rounded-2xl text-sm  hover:shadow-emerald-600/20 disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
+                className="py-2 w-1/3 hover:shadow-lg bg-white hover:shadow-mauve-700/20 dark:text-white dark:shadow-none dark:border-0 border hover:scale-101 duration-200 ease-in  border-mauve-700 hover:bg-mauve-100 text-mauve-700  dark:bg-emerald-800 dark:hover:bg-emerald-700  font-bold rounded-2xl text-sm   disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
               >
                 {submitting ? (
                   <>

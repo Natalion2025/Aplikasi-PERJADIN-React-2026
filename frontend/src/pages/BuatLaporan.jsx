@@ -2643,9 +2643,9 @@ const BuatLaporan = () => {
             if (e.target === e.currentTarget) setCancelModalOpen(false);
           }}
         >
-          <div className="w-full max-w-lg bg-white rounded-3xl border border-slate-100 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
+          <div className="w-full max-w-lg bg-mauve-200 dark:bg-slate-800 rounded-3xl dark:border shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
             {/* Modal Header */}
-            <div className="px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 text-white flex items-center justify-between">
+            <div className="px-6 py-5 bg-linear-to-l/hsl from-rose-300 to-rose-900 dark:bg-gradient-to-r dark:from-emerald-800 dark:to-teal-700 text-white flex items-center justify-between">
               <div>
                 <h3 className="font-bold text-lg leading-tight">
                   {cancelEditId ? 'Edit Formulir Pembatalan Tugas' : 'Formulir Pembatalan Tugas'}
@@ -2656,7 +2656,7 @@ const BuatLaporan = () => {
               </div>
               <button
                 onClick={() => setCancelModalOpen(false)}
-                className="text-red-100 hover:text-white p-1 hover:bg-white/10 rounded-xl transition-all"
+                className="text-slate-200 hover:text-white p-1 hover:bg-white/10 rounded-xl transition-all"
               >
                 <X size={20} />
               </button>
@@ -2668,55 +2668,59 @@ const BuatLaporan = () => {
               className="flex-1 overflow-y-auto p-6 space-y-4 text-left"
             >
               <div>
-                <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
                   Nomor SPT yang Dibatalkan
                 </label>
-                <select
-                  value={cancelForm.spt_id}
-                  onChange={handleCancelSptChange}
-                  required
-                  disabled={!!cancelEditId}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
-                >
-                  <option value="">-- Pilih SPT --</option>
-                  {cancelSptList.map((spt) => (
-                    <option key={spt.id} value={spt.id}>
-                      {spt.nomor_surat} {spt.status === 'dibatalkan' ? ' (Dibatalkan)' : ''}
-                    </option>
-                  ))}
-                </select>
+                <div className="px-3 py-2 border dark:bg-slate-900 border-mauve-300 rounded-xl focus-within:border-transparent focus-within:ring-2 focus-within:ring-mauve-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                  <select
+                    value={cancelForm.spt_id}
+                    onChange={handleCancelSptChange}
+                    required
+                    disabled={!!cancelEditId}
+                    className="w-full  text-sm focus:outline-none dark:bg-slate-900 dark:text-slate-200"
+                  >
+                    <option value="">-- Pilih SPT --</option>
+                    {cancelSptList.map((spt) => (
+                      <option key={spt.id} value={spt.id}>
+                        {spt.nomor_surat} {spt.status === 'dibatalkan' ? ' (Dibatalkan)' : ''}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
                   Pegawai yang Dibatalkan
                 </label>
-                <select
-                  value={cancelForm.pegawai_id}
-                  onChange={handleCancelPegawaiChange}
-                  required
-                  disabled={!cancelForm.spt_id || loadingCancelPegawai || !!cancelEditId}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
-                >
-                  {loadingCancelPegawai ? (
-                    <option>Memuat Pegawai...</option>
-                  ) : cancelPegawaiList.length === 0 ? (
-                    <option value="">
-                      {cancelForm.spt_id
-                        ? '-- Semua pegawai sudah melapor --'
-                        : '-- Pilih SPT terlebih dahulu --'}
-                    </option>
-                  ) : (
-                    <>
-                      <option value="">-- Pilih Pegawai --</option>
-                      {cancelPegawaiList.map((p) => (
-                        <option key={p.pegawai_id} value={p.pegawai_id}>
-                          {p.nama_lengkap} (NIP: {p.nip || '-'})
-                        </option>
-                      ))}
-                    </>
-                  )}
-                </select>
+                <div className="px-3 py-2 border border-mauve-300 dark:bg-slate-900 dark:text-slate-200 rounded-xl focus-within:border-transparent focus-within:ring-2 focus-within:ring-mauve-500 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                  <select
+                    value={cancelForm.pegawai_id}
+                    onChange={handleCancelPegawaiChange}
+                    required
+                    disabled={!cancelForm.spt_id || loadingCancelPegawai || !!cancelEditId}
+                    className="w-full  text-sm focus:outline-none dark:bg-slate-900 dark:text-slate-200"
+                  >
+                    {loadingCancelPegawai ? (
+                      <option>Memuat Pegawai...</option>
+                    ) : cancelPegawaiList.length === 0 ? (
+                      <option value="">
+                        {cancelForm.spt_id
+                          ? '-- Semua pegawai sudah melapor --'
+                          : '-- Pilih SPT terlebih dahulu --'}
+                      </option>
+                    ) : (
+                      <>
+                        <option value="">-- Pilih Pegawai --</option>
+                        {cancelPegawaiList.map((p) => (
+                          <option key={p.pegawai_id} value={p.pegawai_id}>
+                            {p.nama_lengkap} (NIP: {p.nip || '-'})
+                          </option>
+                        ))}
+                      </>
+                    )}
+                  </select>
+                </div>
               </div>
 
               {cancelNotif && (
@@ -2728,7 +2732,7 @@ const BuatLaporan = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                  <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
                     Tempat Pembatalan
                   </label>
                   <input
@@ -2738,7 +2742,7 @@ const BuatLaporan = () => {
                       setCancelForm((prev) => ({ ...prev, tempat_pembatalan: e.target.value }))
                     }
                     required
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-mauve-300 bg-white rounded-xl text-sm focus:outline-none focus:border-transparent focus:ring-mauve-500 focus:ring-2 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 dark:bg-slate-900 dark:text-slate-200"
                   />
                 </div>
                 <div>
@@ -2752,13 +2756,13 @@ const BuatLaporan = () => {
                       setCancelForm((prev) => ({ ...prev, tanggal_pembatalan: e.target.value }))
                     }
                     required
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-mauve-300 bg-white rounded-xl text-sm focus:outline-none focus:border-transparent focus:ring-mauve-500 focus:ring-2 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 dark:bg-slate-900 dark:text-slate-200"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
                   Alasan Pembatalan
                 </label>
                 <textarea
@@ -2766,14 +2770,14 @@ const BuatLaporan = () => {
                   value={cancelForm.alasan}
                   onChange={(e) => setCancelForm((prev) => ({ ...prev, alasan: e.target.value }))}
                   required
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-mauve-300 bg-white rounded-xl text-sm focus:outline-none focus:border-transparent focus:ring-mauve-500 focus:ring-2 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 dark:bg-slate-900 dark:text-slate-200"
                 />
               </div>
 
               {/* Rincian Biaya Hangus */}
               <div className="border-t border-slate-100 pt-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
                     Perincian Biaya Hangus
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
@@ -2783,7 +2787,7 @@ const BuatLaporan = () => {
                       onChange={(e) => handlePanjarToggle(e.target.checked)}
                       className="rounded text-indigo-600 focus:ring-indigo-500 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
-                    <span className="text-xs text-slate-500 font-semibold">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold">
                       Ambil dari Uang Muka
                     </span>
                   </label>
@@ -2797,10 +2801,10 @@ const BuatLaporan = () => {
                     onChange={(e) =>
                       setCancelForm((prev) => ({ ...prev, rincian_biaya: e.target.value }))
                     }
-                    className={`w-full px-3 py-2 border border-slate-200 rounded-xl text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 ${
+                    className={`w-full px-3 py-2 border border-mauve-300 dark:placeholder:text-500/50 rounded-xl dark:bg-slate-900 focus:ring-2 focus:border-transparent focus:outline-none focus:ring-mauve-500 text-sm dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 ${
                       cancelForm.ambilPanjar
-                        ? 'bg-slate-100 text-slate-500 cursor-not-allowed'
-                        : 'bg-white'
+                        ? 'bg-slate-100 dark:text-slate-700 text-slate-300  cursor-not-allowed'
+                        : 'bg-white dark:text-slate-400'
                     }`}
                   />
                   <input
@@ -2814,37 +2818,36 @@ const BuatLaporan = () => {
                         nominal_biaya: formatCurrency(e.target.value),
                       }))
                     }
-                    className={`w-full px-3 py-2 border border-slate-200 rounded-xl text-sm text-right font-medium dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 ${
+                    className={`w-full px-3 py-2 border border-mauve-300 focus:outline-none dark:placeholder-500/50 dark:bg-slate-900 focus:border-transparent focus:ring-2 focus:ring-mauve-500 rounded-xl text-sm text-right font-medium dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500 ${
                       cancelForm.ambilPanjar
-                        ? 'bg-slate-100 text-slate-500 cursor-not-allowed'
-                        : 'bg-white text-slate-800'
+                        ? 'bg-slate-100 text-slate-300 dark:text-slate-700 cursor-not-allowed'
+                        : 'bg-white dark:text-slate-400'
                     }`}
                   />
                 </div>
-                <p className="text-[10px] text-slate-400 font-medium">
+                <p className="text-[10px] dark:text-slate-400 text-slate-500  font-medium">
                   Isi manual jika tidak ada uang muka, atau aktifkan checkbox untuk mengambil data
                   otomatis dari data Panjar yang ada.
                 </p>
               </div>
-
-              {/* Modal Actions */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
-                <button
-                  type="button"
-                  onClick={() => setCancelModalOpen(false)}
-                  className="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-xl text-sm font-semibold transition-all"
-                >
-                  Kembali
-                </button>
-                <button
-                  type="submit"
-                  disabled={!!cancelNotif && !cancelEditId}
-                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-semibold shadow-md shadow-red-600/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {cancelEditId ? 'Simpan Perubahan' : 'Batalkan Tugas'}
-                </button>
-              </div>
             </form>
+            {/* Modal Footer */}
+            <div className="flex items-center justify-end gap-3 p-4 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => setCancelModalOpen(false)}
+                className="px-4 py-2 border border-slate-300 dark:shadow-none hover:bg-slate-50 hover:shadow-lg hover:shadow-slate-700/20  text-mauve-700 rounded-2xl text-sm font-semibold transition-all"
+              >
+                Kembali
+              </button>
+              <button
+                type="submit"
+                disabled={!!cancelNotif && !cancelEditId}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 dark:shadow-none hover:shadow-lg hover:shadow-red-600/20 text-white rounded-2xl text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {cancelEditId ? 'Simpan Perubahan' : 'Batalkan Tugas'}
+              </button>
+            </div>
           </div>
         </div>
       )}
