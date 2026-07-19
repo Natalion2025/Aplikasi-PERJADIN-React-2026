@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { Lock, Loader2, CheckCircle2, AlertCircle, Sun, Moon, Type } from 'lucide-react';
+import { Lock, Loader2, CheckCircle2, AlertCircle, Sun, Moon, Type, Languages } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n'; // Impor instance i18n
 
 const Setelan = () => {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [passwords, setPasswords] = useState({
     newPassword: '',
     confirmPassword: '',
@@ -54,6 +57,10 @@ const Setelan = () => {
     } // 'base' (normal) tidak memerlukan kelas tambahan
   };
 
+  const handleLanguageChange = (lang) => {
+    i18n.changeLanguage(lang);
+  };
+
   const handleSubmitPassword = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -61,13 +68,13 @@ const Setelan = () => {
     setSuccess('');
 
     if (passwords.newPassword.length < 6) {
-      setError('Password baru minimal harus 6 karakter.');
+      setError(t('feedback.password_min_char'));
       setLoading(false);
       return;
     }
 
     if (passwords.newPassword !== passwords.confirmPassword) {
-      setError('Konfirmasi password tidak sesuai.');
+      setError(t('feedback.password_mismatch'));
       setLoading(false);
       return;
     }
@@ -82,11 +89,11 @@ const Setelan = () => {
         newPassword: passwords.newPassword,
       });
 
-      setSuccess(response.data.message || 'Password berhasil diperbarui.');
+      setSuccess(response.data.message || t('feedback.password_update_success'));
       setPasswords({ newPassword: '', confirmPassword: '' });
     } catch (err) {
       console.error('Gagal merubah password:', err);
-      setError(err.response?.data?.message || 'Terjadi kesalahan saat memperbarui password.');
+      setError(err.response?.data?.message || t('feedback.password_update_fail'));
     } finally {
       setLoading(false);
     }
@@ -97,20 +104,18 @@ const Setelan = () => {
       {/* Title */}
       <div>
         <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
-          Pengaturan Aplikasi
+          {t('settings.title')}
         </h1>
-        <p className="text-sm text-slate-500 font-medium">
-          Kelola preferensi tampilan, tema, dan keamanan akun Anda.
-        </p>
+        <p className="text-sm text-slate-500 font-medium">{t('settings.subtitle')}</p>
       </div>
 
       {/* Theme Card */}
       <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-700/50 shadow-sm space-y-4">
         <div>
           <h3 className="text-sm font-semibold text-slate-650 dark:text-slate-400 uppercase tracking-wider">
-            Tampilan & Preferensi
+            {t('settings.display_preferences')}
           </h3>
-          <p className="text-xs text-slate-400 mt-0.5">Atur tema gelap dan kustomisasi visual.</p>
+          <p className="text-xs text-slate-400 mt-0.5">{t('settings.display_subtitle')}</p>
         </div>
         <div className="flex items-center justify-between py-2 border-t border-slate-100 dark:border-slate-700 pt-4">
           <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
@@ -119,7 +124,7 @@ const Setelan = () => {
             ) : (
               <Sun className="w-5 h-5 text-amber-500" />
             )}
-            <span className="text-sm font-medium">Mode Tampilan Gelap</span>
+            <span className="text-sm font-medium">{t('settings.dark_mode')}</span>
           </div>
           <button
             onClick={handleToggleTheme}
@@ -139,7 +144,7 @@ const Setelan = () => {
         <div className="flex items-center justify-between py-2 border-t border-slate-100 dark:border-slate-700 pt-4">
           <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
             <Type className="w-5 h-5 text-slate-500" />
-            <span className="text-sm font-medium">Ukuran Tulisan</span>
+            <span className="text-sm font-medium">{t('settings.font_size')}</span>
           </div>
           <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-700 p-1 rounded-xl">
             <button
@@ -150,7 +155,7 @@ const Setelan = () => {
                   : 'text-slate-500 dark:text-slate-400'
               }`}
             >
-              Kecil
+              {t('settings.font_sm')}
             </button>
             <button
               onClick={() => handleFontSizeChange('base')}
@@ -160,7 +165,7 @@ const Setelan = () => {
                   : 'text-slate-500 dark:text-slate-400'
               }`}
             >
-              Normal
+              {t('settings.font_base')}
             </button>
             <button
               onClick={() => handleFontSizeChange('lg')}
@@ -170,7 +175,37 @@ const Setelan = () => {
                   : 'text-slate-500 dark:text-slate-400'
               }`}
             >
-              Besar
+              {t('settings.font_lg')}
+            </button>
+          </div>
+        </div>
+
+        {/* Language Setting */}
+        <div className="flex items-center justify-between py-2 border-t border-slate-100 dark:border-slate-700 pt-4">
+          <div className="flex items-center gap-2 text-slate-700 dark:text-slate-200">
+            <Languages className="w-5 h-5 text-slate-500" />
+            <span className="text-sm font-medium">{t('settings.language')}</span>
+          </div>
+          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-700 p-1 rounded-xl">
+            <button
+              onClick={() => handleLanguageChange('id')}
+              className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                i18n.language === 'id'
+                  ? 'bg-white dark:bg-slate-600 text-indigo-600 dark:text-white shadow-sm'
+                  : 'text-slate-500 dark:text-slate-400'
+              }`}
+            >
+              Indonesia
+            </button>
+            <button
+              onClick={() => handleLanguageChange('en')}
+              className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                i18n.language === 'en'
+                  ? 'bg-white dark:bg-slate-600 text-indigo-600 dark:text-white shadow-sm'
+                  : 'text-slate-500 dark:text-slate-400'
+              }`}
+            >
+              English
             </button>
           </div>
         </div>
@@ -180,11 +215,9 @@ const Setelan = () => {
       <div className="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-6">
         <div>
           <h3 className="text-sm font-semibold text-slate-650 dark:text-slate-400 uppercase tracking-wider">
-            Keamanan & Ubah Password
+            {t('settings.security_title')}
           </h3>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Ubah kata sandi secara berkala untuk menjaga keamanan akses sistem.
-          </p>
+          <p className="text-xs text-slate-400 mt-0.5">{t('settings.security_subtitle')}</p>
         </div>
 
         {error && (
@@ -205,7 +238,7 @@ const Setelan = () => {
           {/* New Password */}
           <div>
             <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
-              Password Baru
+              {t('settings.new_password')}
             </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
@@ -215,7 +248,7 @@ const Setelan = () => {
                 value={passwords.newPassword}
                 onChange={handlePasswordChange}
                 required
-                placeholder="Minimal 6 karakter"
+                placeholder={t('settings.new_password_placeholder')}
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
               />
             </div>
@@ -224,7 +257,7 @@ const Setelan = () => {
           {/* Confirm Password */}
           <div>
             <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
-              Konfirmasi Password Baru
+              {t('settings.confirm_password')}
             </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
@@ -234,7 +267,7 @@ const Setelan = () => {
                 value={passwords.confirmPassword}
                 onChange={handlePasswordChange}
                 required
-                placeholder="Ketik ulang password baru"
+                placeholder={t('settings.confirm_password_placeholder')}
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
               />
             </div>
@@ -248,7 +281,7 @@ const Setelan = () => {
               className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all disabled:opacity-50 cursor-pointer"
             >
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-              <span>Ubah Password</span>
+              <span>{t('settings.change_password_button')}</span>
             </button>
           </div>
         </form>

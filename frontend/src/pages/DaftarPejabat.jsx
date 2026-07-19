@@ -327,8 +327,8 @@ const DaftarPejabat = () => {
             if (e.target === e.currentTarget) setModalOpen(false);
           }}
         >
-          <div className="bg-white dark:bg-slate-800 dark:border-slate-700 w-full max-w-md rounded-3xl shadow-xl border border-slate-100  overflow-hidden">
-            <div className="flex justify-between items-start p-6 bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-800 dark:to-teal-700 text-white">
+          <div className="bg-mauve-200 dark:bg-slate-800 dark:border-slate-700 w-full max-w-md rounded-3xl shadow-xl dark:border   overflow-hidden">
+            <div className="flex justify-between items-start p-6 bg-linear-to-l/hsl from-rose-300 to-rose-900  dark:bg-gradient-to-r dark:from-emerald-800 dark:to-teal-700 text-white">
               <div className="flex items-center gap-2.5">
                 <ShieldAlert className="w-5 h-5" />
                 <h3 className="text-lg font-bold text-slate-100 dark:text-slate-50">
@@ -337,7 +337,7 @@ const DaftarPejabat = () => {
               </div>
               <button
                 onClick={() => !submitting && setModalOpen(false)}
-                className="text-slate-100 p-1 hover:text-slate-200 hover:bg-slate-100/30 hover:rounded-full transition-all duration-300"
+                className="text-slate-200 p-1  hover:bg-slate-100/30 hover:rounded-full transition-all duration-300"
                 disabled={submitting}
               >
                 <X className="w-5 h-5" />
@@ -371,7 +371,7 @@ const DaftarPejabat = () => {
                     onChange={handleChange}
                     required
                     placeholder="Contoh: H. Darno, S.Sos., M.Si."
-                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4.5 py-2.5 bg-white dark:bg-slate-900 dark:placeholder:text-slate-500/50 border border-mauve-300 dark:border-slate-800 rounded-xl text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-200 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -387,7 +387,7 @@ const DaftarPejabat = () => {
                     onChange={handleChange}
                     required
                     placeholder="Contoh: Kepala Dinas Perhubungan"
-                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4.5 py-2.5 bg-white dark:bg-slate-900 dark:placeholder:text-slate-500/50 border border-mauve-300 dark:border-slate-800 rounded-xl text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-200 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -402,7 +402,7 @@ const DaftarPejabat = () => {
                     value={form.nip}
                     onChange={handleChange}
                     placeholder="Contoh: 19681023 199003 1 002"
-                    className="w-full px-4.5 py-2.5 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                    className="w-full px-4.5 py-2.5 bg-white dark:bg-slate-900 dark:placeholder:text-slate-500/50 border border-mauve-300 dark:border-slate-800 rounded-xl text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-200 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                   />
                 </div>
 
@@ -412,14 +412,14 @@ const DaftarPejabat = () => {
                     type="button"
                     onClick={() => setModalOpen(false)}
                     disabled={submitting}
-                    className="px-4.5 py-2 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50"
+                    className="px-4.5 py-2 border border-slate-300 bg-white dark:bg-slate-800 dark:shadow-none hover:shadow-lg hover:shadow-mauve-700/20 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-2xl text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50"
                   >
                     Batal
                   </button>
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-800 dark:hover:bg-emerald-700 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 hover:shadow-emerald-600/20 transition-all disabled:opacity-50 cursor-pointer"
+                    className="flex items-center gap-2 px-5 py-2 bg-white hover:bg-mauve-100 dark:bg-emerald-800 dark:shadow-none dark:hover:bg-emerald-700  rounded-2xl text-sm font-semibold hover:shadow-lg hover:shadow-mauve-700/20 dark:text-slate-200 text-mauve-700 dark:border-0 border border-mauve-700  hover:shadow-emerald-600/20 transition-all disabled:opacity-50 cursor-pointer"
                   >
                     {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                     <span>{editingId ? 'Simpan Perubahan' : 'Tambah Pejabat'}</span>

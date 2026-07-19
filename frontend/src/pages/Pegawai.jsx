@@ -551,14 +551,14 @@ const Pegawai = () => {
               <button
                 type="button"
                 onClick={() => setModalOpen(false)}
-                className="w-1/5 py-2 border border-slate-300 hover:shadow-lg bg-white hover:shadow-mauve-700/20 dark:shadow-none dark:hover:bg-slate-200/10 hover:scale-101 duration-200 ease-in dark:border-slate-600/50 dark:bg-slate-800 dark:text-slate-200 hover:bg-slate-50 text-mauve-700 font-bold rounded-2xl text-sm transition-all"
+                className="w-1/5 py-2 border border-slate-300 hover:shadow-lg bg-white hover:shadow-mauve-700/20 dark:shadow-none dark:hover:bg-slate-200/10 duration-200 ease-in dark:border-slate-600/50 dark:bg-slate-800 dark:text-slate-200 hover:bg-slate-50 text-mauve-700 font-bold rounded-2xl text-sm transition-all"
               >
                 Batal
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-1/3 py-2 hover:shadow-lg bg-white hover:shadow-mauve-700/20 dark:shadow-none dark:border-0 border hover:scale-101 duration-200 ease-in  border-mauve-700 hover:bg-mauve-100 text-mauve-700 dark:bg-emerald-800 dark:hover:bg-emerald-700 font-bold rounded-2xl text-sm shadow-lg   disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
+                className="w-1/3 py-2 hover:shadow-lg bg-white hover:shadow-mauve-700/20 dark:shadow-none dark:border-0 border duration-200 ease-in-out  border-mauve-700 hover:bg-mauve-100 text-mauve-700 dark:bg-emerald-800 dark:hover:bg-emerald-700 font-bold rounded-2xl text-sm   disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
               >
                 {submitting ? (
                   <>

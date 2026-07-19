@@ -426,8 +426,8 @@ const Pengguna = () => {
             if (e.target === e.currentTarget && !submitting) setModalOpen(false);
           }}
         >
-          <div className="bg-white dark:bg-slate-800 w-full max-w-lg rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden">
-            <div className="flex justify-between items-start p-6 bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-800 dark:to-teal-700 text-white">
+          <div className="bg-mauve-200 dark:bg-slate-800 w-full max-w-lg rounded-3xl shadow-xl dark:border dark:border-slate-700 overflow-hidden">
+            <div className="flex justify-between items-start p-6 bg-linear-to-l/hsl from-rose-300 to-rose-900 dark:bg-gradient-to-r dark:from-emerald-800 dark:to-teal-700 text-white">
               <div className="flex items-center gap-2.5">
                 <UserPlus className="w-5 h-5" />
                 <h3 className="text-lg font-bold text-slate-100 dark:text-slate-50">
@@ -436,7 +436,7 @@ const Pengguna = () => {
               </div>
               <button
                 onClick={() => !submitting && setModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 transition-colors duration-200 dark:text-slate-200 dark:hover:text-slate-200 p-1 rounded-full hover:bg-slate-100/20"
+                className="text-slate-200  transition-colors duration-200 dark:text-slate-200 dark:hover:text-slate-200 p-1 rounded-full hover:bg-slate-100/20"
                 disabled={submitting}
               >
                 <X className="w-5 h-5" />
@@ -471,7 +471,7 @@ const Pengguna = () => {
                       onChange={handleChange}
                       required
                       placeholder="Contoh: Budi Santoso"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:placeholder-slate-500 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4.5 py-2.5 bg-white dark:placeholder-slate-500/50 dark:bg-slate-900 border border-mauve-300 dark:border-slate-800 rounded-xl text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -487,7 +487,7 @@ const Pengguna = () => {
                       onChange={handleChange}
                       required
                       placeholder="budi_s"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:placeholder-slate-500 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 font-mono dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4.5 py-2.5 bg-white dark:placeholder-slate-500/50 dark:bg-slate-900 border border-mauve-300 dark:border-slate-800 rounded-xl text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 font-mono dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -496,14 +496,14 @@ const Pengguna = () => {
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5">
                       Peran (Role)
                     </label>
-                    <div className="px-2 py-2.5 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl focus-within:ring-2 focus-within:ring-mauve-500  dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
+                    <div className="px-2 py-2.5 dark:bg-slate-900 bg-white border border-mauve-300 dark:border-slate-800 rounded-xl focus-within:border-transparent focus-within:ring-2 focus-within:ring-mauve-500  dark:focus-within:ring-emerald-600/20 dark:focus-within:border-emerald-500">
                       <select
                         name="role"
                         value={form.role}
                         onChange={handleChange}
                         required
                         disabled={currentUser?.role === 'admin' && form.role !== 'user'}
-                        className="w-full  bg-slate-50 dark:bg-slate-900/70  text-sm outline-none  dark:text-slate-200 "
+                        className="w-full  bg-white dark:bg-slate-900  text-sm outline-none  dark:text-slate-200 "
                       >
                         <option value="user" className="">
                           User / Operator
@@ -539,7 +539,7 @@ const Pengguna = () => {
                       onChange={handleChange}
                       required={!editingId}
                       placeholder="••••••••"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:placeholder-slate-500 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4.5 py-2.5 bg-white dark:placeholder-slate-500/50 dark:bg-slate-900 border border-mauve-300 dark:border-slate-800 rounded-xl text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -554,7 +554,7 @@ const Pengguna = () => {
                       value={form.nip}
                       onChange={handleChange}
                       placeholder="19901234567890"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:placeholder-slate-500 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4.5 py-2.5 bg-white dark:placeholder-slate-500/50 dark:bg-slate-900 border border-mauve-300 dark:border-slate-800 rounded-xl text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
 
@@ -569,7 +569,7 @@ const Pengguna = () => {
                       value={form.jabatan}
                       onChange={handleChange}
                       placeholder="Contoh: Bendahara Pengeluaran"
-                      className="w-full px-4.5 py-2.5 bg-slate-50 dark:placeholder-slate-500 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
+                      className="w-full px-4.5 py-2.5 bg-white dark:placeholder:text-slate-500/50 dark:bg-slate-900 border border-mauve-300 dark:border-slate-800 rounded-xl text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-mauve-500 dark:text-slate-100 dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500"
                     />
                   </div>
                 </div>
@@ -580,14 +580,14 @@ const Pengguna = () => {
                     type="button"
                     onClick={() => setModalOpen(false)}
                     disabled={submitting}
-                    className="px-4.5 py-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors disabled:opacity-50"
+                    className="px-4.5 py-2 border border-slate-300 dark:text-slate-200 dark:border-slate-700 text-mauve-700 bg-white dark:bg-slate-800 hover:shadow-lg hover:shadow-mauve-700/20 rounded-2xl text-sm font-semibold hover:bg-mauve-100 dark:hover:bg-slate-700 transition-colors disabled:opacity-50"
                   >
                     Batal
                   </button>
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="flex items-center gap-2 px-5 py-2 bg-emerald-600 dark:bg-emerald-800 dark:hover:bg-emerald-700 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 hover:shadow-emerald-600/20 transition-all disabled:opacity-50 cursor-pointer"
+                    className="flex items-center gap-2 px-5 py-2 bg-white dark:bg-emerald-800 dark:hover:bg-emerald-700 hover:bg-mauve-100 text-mauve-700 dark:text-slate-200 rounded-2xl text-sm font-semibold hover:shadow-lg hover:shadow-mauve-700/20 dark:border-0 border border-mauve-700 transition-all disabled:opacity-50 cursor-pointer"
                   >
                     {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                     <span>{editingId ? 'Simpan Perubahan' : 'Tambah Pengguna'}</span>

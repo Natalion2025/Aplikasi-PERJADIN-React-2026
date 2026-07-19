@@ -1072,9 +1072,9 @@ const Pembayaran = () => {
             if (e.target === e.currentTarget) setPembayaranModalOpen(false);
           }}
         >
-          <div className="w-full max-w-5xl bg-white dark:bg-slate-800 dark:border-slate-700 rounded-3xl border border-slate-100 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 text-left">
+          <div className="w-full max-w-5xl bg-mauve-200 dark:bg-slate-800 dark:border-slate-700 rounded-3xl dark:border  shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 text-left">
             {/* Header */}
-            <div className="px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-800 dark:to-teal-700 text-white flex items-center justify-between">
+            <div className="px-6 py-5 bg-linear-to-l/hsl from-rose-300 to-rose-900 dark:bg-gradient-to-r  dark:from-emerald-800 dark:to-teal-700 text-white flex items-center justify-between">
               <div>
                 <h3 className="font-bold text-lg leading-tight">
                   {pembayaranEditId ? 'Edit Bukti Pembayaran' : 'Buat Bukti Pembayaran Baru'}
@@ -1098,7 +1098,7 @@ const Pembayaran = () => {
             >
               <div className="grid grid-cols-1 md:grid-cols-2   gap-4">
                 <div>
-                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
+                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-600 mb-1.5">
                     Nomor Bukti
                   </label>
                   <input
@@ -1109,11 +1109,11 @@ const Pembayaran = () => {
                     }
                     required
                     placeholder="Contoh: 001/KWT/VI/2026"
-                    className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-700/50 focus:ring-mauve-500 dark:text-slate-200 rounded-xl text-sm outline-none focus:ring-2 dark:focus:ring-emerald-600/20 focus:border-transparent bg-white dark:focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-mauve-300 dark:bg-slate-900/70 dark:border-slate-700/50 focus:ring-mauve-500 dark:text-slate-200 rounded-xl text-sm outline-none focus:ring-2 dark:focus:ring-emerald-600/20 focus:border-transparent bg-white dark:focus:border-emerald-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500  mb-1.5">
+                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-600  mb-1.5">
                     Tanggal Bukti
                   </label>
                   <input
@@ -1123,7 +1123,7 @@ const Pembayaran = () => {
                       setPembayaranForm((prev) => ({ ...prev, tanggal_bukti: e.target.value }))
                     }
                     required
-                    className="w-full  px-3 py-2 border border-slate-200 bg-white dark:bg-slate-900/70 dark:border-slate-700/50 dark:text-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-mauve-500 focus:border-transparent dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500
+                    className="w-full  px-3 py-2 border border-mauve-300 bg-white dark:bg-slate-900/70 dark:border-slate-700/50 dark:text-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-mauve-500 focus:border-transparent dark:focus:ring-emerald-600/20 dark:focus:border-emerald-500
                     
                     /* PERBAIKAN: Menambahkan ikon kalender kustom sebagai background */
                     bg-no-repeat bg-right 
@@ -1137,10 +1137,10 @@ const Pembayaran = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
+                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-600 mb-1.5">
                     Register SPT
                   </label>
-                  <div className="px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-700/50 focus-within:ring-mauve-500 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
+                  <div className="px-3 py-2 border border-mauve-300 dark:bg-slate-900 dark:border-slate-700/50 focus-within:ring-mauve-500 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
                     <select
                       value={pembayaranForm.spt_id}
                       onChange={handleSptChange}
@@ -1161,10 +1161,10 @@ const Pembayaran = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
+                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-600 mb-1.5">
                     Kode/Mata Anggaran
                   </label>
-                  <div className="px-3 py-2 border border-slate-200 bg-white focus-within:ring-mauve-500 dark:bg-slate-900/70 dark:border-slate-700/50 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
+                  <div className="px-3 py-2 border border-mauve-300 bg-white focus-within:ring-mauve-500 dark:bg-slate-900 dark:border-slate-700/50 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
                     <select
                       value={pembayaranForm.anggaran_id}
                       onChange={handleAnggaranChange}
@@ -1186,7 +1186,7 @@ const Pembayaran = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
+                <label className="block text-xs font-semibold dark:text-slate-400 text-slate-600 mb-1.5">
                   Nama Penerima Pembayaran
                 </label>
                 <textarea
@@ -1197,13 +1197,13 @@ const Pembayaran = () => {
                   }
                   required
                   placeholder="Nama pelaksana yang menerima pembayaran..."
-                  className="w-full px-3 py-2 border focus:ring-mauve-500 border-slate-200 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm outline-none  bg-white dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border focus:ring-mauve-500 border-mauve-300 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm outline-none  bg-white dark:focus:border-emerald-500"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
+                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-600 mb-1.5">
                     Uraian Pembayaran
                   </label>
                   <textarea
@@ -1214,15 +1214,15 @@ const Pembayaran = () => {
                     }
                     required
                     placeholder="Uraian kuitansi..."
-                    className="w-full px-3 py-2 border border-slate-200 focus:ring-mauve-500 dark:bg-slate-900/70 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white dark:focus:border-emerald-500"
+                    className="w-full px-3 py-2 border border-mauve-300 focus:ring-mauve-500 dark:bg-slate-900 dark:focus:ring-emerald-600/20 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 bg-white dark:focus:border-emerald-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-500 mb-1.5">
+                  <label className="block text-xs font-semibold dark:text-slate-400 text-slate-600 mb-1.5">
                     Pejabat Pembuat Teknis Kegiatan (PPTK)
                   </label>
-                  <div className="px-3 py-2 border border-slate-200 focus-within:ring-mauve-500 bg-white dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
+                  <div className="px-3 py-2 border border-mauve-300 focus-within:ring-mauve-500 bg-white dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
                     <select
                       value={pembayaranForm.pptk_id}
                       onChange={(e) =>
@@ -1505,25 +1505,25 @@ const Pembayaran = () => {
                                     </tr>
                                   ))}
                                   {/* Total Panjar row per employee */}
-                                  <tr className="bg-slate-50/50 dark:bg-slate-900 dark:hover:bg-slate-900/70 text-sm border-t dark:border-slate-600/60 border-slate-200">
+                                  <tr className="bg-mauve-100/50 dark:bg-slate-900 dark:hover:bg-slate-900/70 text-sm border-t dark:border-slate-600/60 border-slate-200 border-b-slate-300/70">
                                     <td
                                       colSpan={5}
-                                      className="py-2 px-3 text-right font-bold text-slate-600 dark:text-slate-400 border-t border-slate-200"
+                                      className="py-2 px-3 text-right font-bold text-slate-800 dark:text-slate-400 "
                                     >
                                       Total Panjar Pegawai:
                                     </td>
                                     <td
-                                      className="py-2 px-3 text-right font-bold text-rose-600 border-slate-200 border-r dark:border-slate-600/60 border-r-mauve-900/90 border-t  whitespace-nowrap"
+                                      className="py-2 px-3 text-right font-bold text-rose-600 border-slate-200 border-r dark:border-slate-600/60 border-r-mauve-900/90 border-t border-t-slate-300/70 whitespace-nowrap"
                                       colSpan={2}
                                     >
                                       ({formatCurrency(panjar)})
                                     </td>
                                   </tr>
                                   {/* Total Dibayar row per employee */}
-                                  <tr className="bg-emerald-50/30 dark:bg-slate-900 dark:hover:bg-slate-900/70 text-sm border-b dark:border-slate-600/60 border-slate-200 border-b-slate-800">
+                                  <tr className="bg-mauve-100/50 dark:bg-slate-900 dark:hover:bg-slate-900/70 text-sm border-b dark:border-slate-600/60 border-slate-200 border-b-slate-800">
                                     <td
                                       colSpan={5}
-                                      className="py-2 px-3 text-right font-bold text-slate-800 dark:text-slate-200"
+                                      className="py-2 px-3 text-right font-bold text-slate-800 dark:text-slate-200 border-t border-slate-300/70 dark:border-t-slate-600/60"
                                     >
                                       Jumlah Dibayarkan ke Pegawai:
                                     </td>
@@ -1563,13 +1563,13 @@ const Pembayaran = () => {
                 <button
                   type="button"
                   onClick={() => setPembayaranModalOpen(false)}
-                  className="px-5 py-2.5 border border-slate-300 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-100/10 bg-white hover:bg-slate-200 text-slate-700 rounded-2xl text-sm font-semibold transition-all"
+                  className="px-5 py-2.5 border border-slate-300 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-100/10 bg-white hover:bg-mauve-100 hover:shadow-lg hover:shadow-mauve-700/20 text-slate-700 rounded-2xl text-sm font-semibold transition-all"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-800 dark:hover:bg-emerald-700 text-white rounded-2xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all"
+                  className="px-5 py-2.5 bg-white hover:bg-mauve-100 dark:bg-emerald-800 dark:hover:bg-emerald-700 text-mauve-700 rounded-2xl text-sm font-semibold hover:shadow-lg hover:shadow-mauve-700/20 dark:text-slate-200 text-mauve-700 dark:border-0 border border-mauve-700  transition-all"
                 >
                   Simpan Bukti Pembayaran
                 </button>
@@ -1587,9 +1587,9 @@ const Pembayaran = () => {
             if (e.target === e.currentTarget) setRiilModalOpen(false);
           }}
         >
-          <div className="w-full max-w-lg bg-white rounded-3xl dark:bg-slate-800 dark:border-slate-700 border border-slate-100 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 text-left">
+          <div className="w-full max-w-lg bg-mauve-200 rounded-3xl dark:bg-slate-800 dark:border-slate-700 dark:border  shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200 text-left">
             {/* Header */}
-            <div className="px-6 py-5 bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-800 dark:to-teal-700 text-white flex items-center justify-between">
+            <div className="px-6 py-5 bg-linear-to-l/hsl from-rose-300 to-rose-900 dark:bg-gradient-to-r  dark:from-emerald-800 dark:to-teal-700 text-white flex items-center justify-between">
               <div>
                 <h3 className="font-bold text-lg leading-tight">
                   {riilEditId ? 'Edit Pengeluaran Riil' : 'Tambah Pengeluaran Riil'}
@@ -1600,7 +1600,7 @@ const Pembayaran = () => {
               </div>
               <button
                 onClick={() => setRiilModalOpen(false)}
-                className="text-teal-100 hover:text-white p-1 hover:bg-white/10 rounded-xl transition-all"
+                className="text-slate-200 p-1 hover:bg-white/10 rounded-xl transition-all"
               >
                 <X size={20} />
               </button>
@@ -1609,10 +1609,10 @@ const Pembayaran = () => {
             {/* Body */}
             <form onSubmit={handleRiilSubmit} className="flex-1  overflow-y-auto p-6 space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
+                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
                   Nomor SPT
                 </label>
-                <div className="px-3 py-2 border border-slate-200 bg-white focus-within:ring-mauve-500 focus-within:ring-2 dark:bg-slate-900/70 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
+                <div className="px-3 py-2 border border-mauve-300 bg-white focus-within:ring-mauve-500 focus-within:ring-2 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
                   <select
                     value={riilForm.spt_id}
                     onChange={handleRiilSptChange}
@@ -1633,10 +1633,10 @@ const Pembayaran = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
+                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
                   Nama Pelaksana
                 </label>
-                <div className="px-3 py-2 border border-slate-200 bg-white dark:bg-slate-900/70 focus-within:ring-mauve-500 focus-within:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
+                <div className="px-3 py-2 border border-mauve-300 bg-white dark:bg-slate-900 focus-within:ring-mauve-500 focus-within:ring-2 dark:border-slate-800 dark:text-slate-200 rounded-xl dark:focus-within:ring-emerald-600/20 focus-within:border-transparent focus-within:ring-2 bg-white disabled:bg-slate-100 disabled:cursor-not-allowed dark:focus-within:border-emerald-500">
                   <select
                     value={riilForm.pegawai_id}
                     onChange={(e) =>
@@ -1675,7 +1675,7 @@ const Pembayaran = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
+                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
                   Uraian Pengeluaran
                 </label>
                 <textarea
@@ -1684,12 +1684,12 @@ const Pembayaran = () => {
                   onChange={(e) => setRiilForm((prev) => ({ ...prev, uraian: e.target.value }))}
                   required
                   placeholder="Contoh: Biaya taksi bandara ke hotel pergi-pulang"
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-700/50 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-mauve-500 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2  bg-white dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-mauve-300 dark:bg-slate-900 dark:border-slate-700/50 dark:text-slate-200 rounded-xl text-sm focus:outline-none focus:ring-mauve-500 dark:focus:ring-emerald-600/20 focus:border-transparent focus:ring-2  bg-white dark:focus:border-emerald-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-slate-500 dark:text-slate-400 mb-1.5">
+                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-400 mb-1.5">
                   Jumlah Pengeluaran
                 </label>
                 <input
@@ -1703,27 +1703,26 @@ const Pembayaran = () => {
                     }))
                   }
                   required
-                  className="w-full px-3 py-2 border border-slate-200 dark:bg-slate-900/70 dark:border-slate-700/50 dark:text-slate-200 rounded-xl text-sm outline-none focus:ring-mauve-500 dark:focus:ring-emerald-600/20  focus:border-transparent focus:ring-2 text-right font-medium text-slate-800 bg-white dark:focus:border-emerald-500"
+                  className="w-full px-3 py-2 border border-mauve-300 dark:bg-slate-900 dark:border-slate-700/50 dark:text-slate-200 rounded-xl text-sm outline-none focus:ring-mauve-500 dark:focus:ring-emerald-600/20  focus:border-transparent focus:ring-2 text-right font-medium text-slate-800 bg-white dark:focus:border-emerald-500"
                 />
               </div>
-
-              {/* Actions */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100 dark:border-none mt-4">
-                <button
-                  type="button"
-                  onClick={() => setRiilModalOpen(false)}
-                  className="px-4 py-2 border border-slate-200 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-100/10 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold transition-all"
-                >
-                  Batal
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-800 dark:hover:bg-emerald-700 text-white rounded-xl text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all"
-                >
-                  Simpan Pengeluaran
-                </button>
-              </div>
             </form>
+            {/* Modal Footer Actions */}
+            <div className="flex items-center justify-end gap-3 p-4 border-t border-slate-100 dark:border-none mt-4">
+              <button
+                type="button"
+                onClick={() => setRiilModalOpen(false)}
+                className="px-4 py-2 border border-slate-300 bg-white hover:shadow-lg hover:shadow-mauve-700/20 dark:shadow-none dark:bg-slate-800 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-100/10 hover:bg-mauve-100 text-mauve-700 rounded-xl text-sm font-semibold transition-all"
+              >
+                Batal
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-white dark:text-slate-200 hover:bg-mauve-100 dark:bg-emerald-800 dark:hover:bg-emerald-700 text-mauve-700 rounded-2xl text-sm font-semibold hover:shadow-lg hover:shadow-mauve-700/20 dark:shadow-none dark:border-0 border border-mauve-700  transition-all"
+              >
+                Simpan Pengeluaran
+              </button>
+            </div>
           </div>
         </div>
       )}

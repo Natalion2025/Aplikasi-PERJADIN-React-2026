@@ -1,0 +1,53 @@
+{
+  "settings": {
+    "title": "Pengaturan Aplikasi",
+    "subtitle": "Kelola preferensi tampilan, tema, dan keamanan akun Anda.",
+    "display_preferences": "Tampilan & Preferensi",
+    "display_subtitle": "Atur tema gelap dan kustomisasi visual.",
+    "dark_mode": "Mode Tampilan Gelap",
+    "font_size": "Ukuran Tulisan",
+    "font_sm": "Kecil",
+    "font_base": "Normal",
+    "font_lg": "Besar",
+    "language": "Bahasa",
+    "language_subtitle": "Pilih bahasa antarmuka aplikasi.",
+    "security_title": "Keamanan & Ubah Password",
+    "security_subtitle": "Ubah kata sandi secara berkala untuk menjaga keamanan akses sistem.",
+    "new_password": "Password Baru",
+    "new_password_placeholder": "Minimal 6 karakter",
+    "confirm_password": "Konfirmasi Password Baru",
+    "confirm_password_placeholder": "Ketik ulang password baru",
+    "change_password_button": "Ubah Password"
+  },
+  "feedback": {
+    "password_min_char": "Password baru minimal harus 6 karakter.",
+    "password_mismatch": "Konfirmasi password tidak sesuai.",
+    "password_update_success": "Password berhasil diperbarui.",
+    "password_update_fail": "Terjadi kesalahan saat memperbarui password."
+  },
+  "sidebar": {
+    "main_menu": "Menu Utama",
+    "dashboard": "Dashboard",
+    "calendar": "Agenda / Kalender",
+    "employee_data": "Data Pegawai",
+    "budget": "Mata Anggaran",
+    "assignment_letter": "Surat Tugas (SPT)",
+    "advance_payment": "Panjar (Uang Muka)",
+    "travel_report": "Laporan Perjadin",
+    "payment": "Pembayaran",
+    "audit_report": "Laporan BPK / APIP",
+    "cost_standard": "Standar Biaya (SBU)",
+    "officials_list": "Daftar Pejabat",
+    "settings_users": "Pengaturan & Pengguna",
+    "user_management": "Manajemen User",
+    "app_settings": "Pengaturan Aplikasi",
+    "logout_session": "Keluar Sesi",
+    "logout_confirm": "Apakah Anda yakin ingin keluar dari aplikasi?"
+  },
+  "header": {
+    "app_admin": "Aplikasi Administrasi",
+    "app_title": "Perjalanan Dinas Pemkab Melawi",
+    "change_profile": "Ubah Profil",
+    "change_password": "Ubah Password"
+  }
+}

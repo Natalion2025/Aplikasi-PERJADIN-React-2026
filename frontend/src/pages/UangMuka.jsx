@@ -839,7 +839,7 @@ const UangMuka = () => {
                 type="submit"
                 form="panjar-form"
                 disabled={submitting || availablePelaksana.length === 0}
-                className="px-5 py-2 bg-white border hover:shadow-lg hover:shadow-mauve-700/20 dark:shadow-none dark:border-0 hover:scale-101 duration-200 transition-all ease-in  border-mauve-700 hover:bg-mauve-100 text-mauve-700 dark:text-slate-200 rounded-2xl dark:bg-emerald-800 dark:hover:bg-emerald-700 text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50"
+                className="px-5 py-2 bg-white border hover:shadow-lg hover:shadow-mauve-700/20 dark:shadow-none dark:border-0 duration-200 transition-all ease-in-out  border-mauve-700 hover:bg-mauve-100 text-mauve-700 dark:text-slate-200 rounded-2xl dark:bg-emerald-800 dark:hover:bg-emerald-700 text-sm font-semibold shadow-md shadow-emerald-600/10 transition-all disabled:opacity-50"
               >
                 {submitting ? 'Menyimpan...' : 'Simpan Uang Muka'}
               </button>

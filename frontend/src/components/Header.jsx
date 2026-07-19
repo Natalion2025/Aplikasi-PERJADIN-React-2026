@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import profilePic from '../assets/pns_female_profile.png';
 import { Bell, Menu, User, Settings, LogOut, ChevronDown, CalendarDays } from 'lucide-react';
 
 const Header = ({ toggleSidebar }) => {
+  const { t, i18n } = useTranslation(); // Ambil instance i18n
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [notifCount, setNotifCount] = useState(0);
@@ -28,10 +30,10 @@ const Header = ({ toggleSidebar }) => {
       const interval = setInterval(fetchNotifCount, 300000);
       return () => clearInterval(interval);
     }
-  }, [user]);
+  }, [user, i18n.language]); // Tambahkan i18n.language sebagai dependency
 
   const handleLogout = async () => {
-    const confirmed = window.confirm('Apakah Anda yakin ingin keluar dari aplikasi?');
+    const confirmed = window.confirm(t('sidebar.logout_confirm'));
     if (confirmed) {
       await logout();
       navigate('/login');
@@ -58,10 +60,10 @@ const Header = ({ toggleSidebar }) => {
         </button>
         <div className="hidden md:flex flex-col">
           <h2 className="text-sm font-semibold text-white uppercase tracking-wider">
-            Aplikasi Administrasi
+            {t('header.app_admin')}
           </h2>
           <h1 className="text-lg font-bold text-slate-800 leading-tight">
-            Perjalanan Dinas Pemkab Melawi
+            {t('header.app_title')}
           </h1>
         </div>
       </div>
@@ -129,7 +131,7 @@ const Header = ({ toggleSidebar }) => {
                   className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition-colors"
                 >
                   <User size={16} />
-                  <span>Ubah Profil</span>
+                  <span>{t('header.change_profile')}</span>
                 </Link>
                 <Link
                   to="/setelan"
@@ -137,7 +139,7 @@ const Header = ({ toggleSidebar }) => {
                   className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition-colors"
                 >
                   <Settings size={16} />
-                  <span>Ubah Password</span>
+                  <span>{t('header.change_password')}</span>
                 </Link>
 
                 <hr className="border-slate-100 my-1" />
@@ -150,7 +152,7 @@ const Header = ({ toggleSidebar }) => {
                   className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 text-left transition-colors"
                 >
                   <LogOut size={16} />
-                  <span>Keluar Sesi</span>
+                  <span>{t('sidebar.logout_session')}</span>
                 </button>
               </div>
             </>

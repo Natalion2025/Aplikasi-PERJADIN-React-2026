@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
+import { useMemo } from 'react';
 import {
   LayoutDashboard,
   Users,
@@ -9,8 +11,6 @@ import {
   FileCheck,
   Settings,
   LogOut,
-  Calendar,
-  Building,
   Coins,
   ChevronLeft,
   UserCheck,
@@ -21,14 +21,14 @@ import logoMelawi from '../assets/logo_kab_Melawi.png';
 import ShieldUserIcon from '../assets/shield-user.svg';
 import HatGlasses from '../assets/hat-glasses.svg';
 import BookAlert from '../assets/book-alert.svg';
-import { Title } from 'chart.js';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const { user, logout } = useAuth();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const confirmed = window.confirm('Apakah Anda yakin ingin keluar dari aplikasi?');
+    const confirmed = window.confirm(t('sidebar.logout_confirm'));
     if (confirmed) {
       await logout();
       navigate('/login');
@@ -37,36 +37,47 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const isAdminOrSuper = user && (user.role === 'admin' || user.role === 'superadmin');
 
-  const menuItems = [
-    { path: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
-    { path: '/agenda', label: 'Agenda / Kalender', icon: <CalendarDays size={20} /> },
-    { path: '/pegawai', label: 'Data Pegawai', icon: <Users size={20} /> },
-    { path: '/anggaran', label: 'Mata Anggaran', icon: <Wallet size={20} /> },
-    { path: '/spt', label: 'Surat Tugas (SPT)', icon: <FileText size={20} /> },
-    { path: '/uang-muka', label: 'Panjar (Uang Muka)', icon: <Coins size={20} /> },
-    { path: '/buat-laporan', label: 'Laporan Perjadin', icon: <FileCheck size={20} /> },
-    { path: '/pembayaran', label: 'Pembayaran', icon: <HandCoins size={20} /> },
-    {
-      path: '/laporan-bpk-apip',
-      label: 'Laporan BPK / APIP',
-      icon: <img src={HatGlasses} alt="hat-glasses" size={20} className="invert" />,
-    },
-    {
-      path: '/standar-biaya',
-      label: 'Standar Biaya (SBU)',
-      icon: <img src={BookAlert} alt="book-alert" size={20} className="invert" />,
-    },
-    { path: '/daftar-pejabat', label: 'Daftar Pejabat', icon: <UserCheck size={20} /> },
-  ];
+  // Gunakan useMemo agar menu tidak dibuat ulang di setiap render, kecuali saat bahasa berubah
+  const menuItems = useMemo(
+    () => [
+      { path: '/dashboard', label: t('sidebar.dashboard'), icon: <LayoutDashboard size={20} /> },
+      { path: '/agenda', label: t('sidebar.calendar'), icon: <CalendarDays size={20} /> },
+      { path: '/pegawai', label: t('sidebar.employee_data'), icon: <Users size={20} /> },
+      { path: '/anggaran', label: t('sidebar.budget'), icon: <Wallet size={20} /> },
+      { path: '/spt', label: t('sidebar.assignment_letter'), icon: <FileText size={20} /> },
+      { path: '/uang-muka', label: t('sidebar.advance_payment'), icon: <Coins size={20} /> },
+      { path: '/buat-laporan', label: t('sidebar.travel_report'), icon: <FileCheck size={20} /> },
+      { path: '/pembayaran', label: t('sidebar.payment'), icon: <HandCoins size={20} /> },
+      {
+        path: '/laporan-bpk-apip',
+        label: t('sidebar.audit_report'),
+        icon: <img src={HatGlasses} alt="hat-glasses" size={20} className="invert" />,
+      },
+      {
+        path: '/standar-biaya',
+        label: t('sidebar.cost_standard'),
+        icon: <img src={BookAlert} alt="book-alert" size={20} className="invert" />,
+      },
+      {
+        path: '/daftar-pejabat',
+        label: t('sidebar.officials_list'),
+        icon: <UserCheck size={20} />,
+      },
+    ],
+    [i18n.language]
+  ); // Tambahkan dependency i18n.language
 
-  const adminItems = [
-    {
-      path: '/pengguna',
-      label: 'Manajemen User',
-      icon: <img src={ShieldUserIcon} alt="shield-user" className="w-5 h-5 invert" />,
-    },
-    { path: '/setelan', label: 'Pengaturan Aplikasi', icon: <Settings size={20} /> },
-  ];
+  const adminItems = useMemo(
+    () => [
+      {
+        path: '/pengguna',
+        label: t('sidebar.user_management'),
+        icon: <img src={ShieldUserIcon} alt="shield-user" className="w-5 h-5 invert" />,
+      },
+      { path: '/setelan', label: t('sidebar.app_settings'), icon: <Settings size={20} /> },
+    ],
+    [i18n.language]
+  ); // Tambahkan dependency i18n.language
 
   // Logika scroll untuk menyembunyikan/menampilkan tombol logout
   const [isLogoutVisible, setIsLogoutVisible] = useState(true);
@@ -141,33 +152,38 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           {/* Nav Links */}
           <nav className="flex-1 pr-7 pl-[13px] -ml-1  py-6 space-y-1.5">
             <div
-              className={`text-xs font-semibold text-slate-300 uppercase tracking-wider px-3 mb-2 transition-opacity duration-300 ease-in-out ${isOpen ? 'opacity-100' : 'hidden'}`}
+              className={`text-xs font-semibold text-slate-300/70 uppercase tracking-wider px-3 mb-2 transition-opacity duration-300 ease-in-out ${isOpen ? 'opacity-100' : 'hidden'}`}
             >
-              Menu Utama
+              {t('sidebar.main_menu')}
             </div>
             {menuItems.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
-                  `flex items-center gap-3.5  px-3 -mr-[15px]  py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${
+                  `flex items-center gap-3.5  px-3 pb-[3px] -mr-[15px] group pt-1.5 rounded-2xl text-md font-bold transition-all duration-200 group ${
                     isActive
-                      ? 'bg-slate-800/60 text-white shadow-lg shadow-indigo-600/20'
-                      : 'text-white hover:bg-slate-800/60 hover:text-white'
+                      ? 'bg-slate-900/60 text-white shadow-md shadow-yellow-400/20'
+                      : 'text-mauve-200  hover:text-white    '
                   }`
                 }
               >
-                <span
-                  className="group-hover:scale-105 transition-transform flex-shrink-0"
-                  title={isOpen ? '' : item.label}
-                >
-                  {item.icon}
-                </span>
-                <span
-                  className={`transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0 md:hidden'}`}
-                >
-                  {item.label}
-                </span>
+                <div className="flex flex-col justify-center items-center">
+                  <div className="flex flex-row gap-3 items-center">
+                    <span
+                      className="group-hover:scale-105 transition-transform flex-shrink-0"
+                      title={isOpen ? '' : item.label}
+                    >
+                      {item.icon}
+                    </span>
+                    <span
+                      className={`transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0 md:hidden'}`}
+                    >
+                      {item.label}
+                    </span>
+                  </div>
+                  <div className="scale-x-0 group-hover:scale-x-100 origin-center  group-hover:w-full h-[2px] mt-1  bg-slate-200 transition-transform duration-300 ease-in-out"></div>
+                </div>
               </NavLink>
             ))}
 
@@ -175,12 +191,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             {isAdminOrSuper && (
               <>
                 <div
-                  className={` font-semibold text-slate-300 uppercase tracking-wider  mt-6 mb-2 transition-all duration-300 ease-in-out ${isOpen ? 'border-none px-3' : 'border border-slate-300/50 border-2 px-5'}`}
+                  className={` font-semibold text-slate-300/70 uppercase tracking-wider  mt-6 mb-2 transition-all duration-300 ease-in-out ${isOpen ? 'border-none px-3' : 'border border-slate-300/50 border-2 px-5'}`}
                 >
                   <span
                     className={`text-xs transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'hidden'}`}
                   >
-                    Pengaturan & Pengguna
+                    {t('sidebar.settings_users')}
                   </span>
                 </div>
                 {adminItems.map((item) => (
@@ -188,21 +204,26 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     key={item.path}
                     to={item.path}
                     className={({ isActive }) =>
-                      `flex items-center gap-3 px-3 -mr-[15px] py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${
+                      `flex items-center gap-3 px-3 -mr-[15px] py-1.5 pb-[3px] rounded-2xl text-md font-bold transition-all duration-200 group ${
                         isActive
-                          ? 'bg-slate-800/60 text-white shadow-lg shadow-indigo-600/20'
-                          : 'text-white hover:bg-slate-800/60 hover:text-white'
+                          ? 'bg-slate-900/60 text-white shadow-md shadow-yellow-400/20'
+                          : 'text-slate-200 hover:bg-slate-800/60 hover:text-white'
                       }`
                     }
                   >
-                    <span className="group-hover:scale-105 transition-transform flex-shrink-0">
-                      {item.icon}
-                    </span>
-                    <span
-                      className={`transition-opacity duration-300 ease-in-out ${isOpen ? 'opacity-100' : 'opacity-0 md:hidden'}`}
-                    >
-                      {item.label}
-                    </span>
+                    <div className="flex flex-col justify-center items-center">
+                      <div className="flex flex-row gap-3 items-center">
+                        <span className="group-hover:scale-105 transition-transform flex-shrink-0">
+                          {item.icon}
+                        </span>
+                        <span
+                          className={`transition-opacity duration-300 ease-in-out ${isOpen ? 'opacity-100' : 'opacity-0 md:hidden'}`}
+                        >
+                          {item.label}
+                        </span>
+                      </div>
+                      <div className="scale-x-0 group-hover:scale-x-100 origin-center  group-hover:w-full h-[2px] mt-1  bg-slate-200 transition-transform duration-300 ease-in-out"></div>
+                    </div>
                   </NavLink>
                 ))}
               </>
@@ -216,13 +237,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           >
             <button
               onClick={handleLogout}
-              className="w-full flex items-center  justify-center gap-2 py-2.5 px-4 rounded-xl text-md font-bold bg-red-600/10 hover:bg-red-800 text-white hover:text-white border transition-all duration-200"
+              className="w-full flex items-center  justify-center gap-2 py-2.5 px-4 rounded-2xl text-md font-bold bg-red-600/10 hover:bg-rose-600/50 text-white hover:text-white border border-slate-200/10 transition-all duration-200"
             >
               <LogOut size={16} className="flex shrink-0" />
               <span
                 className={`transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100' : 'hidden'}`}
               >
-                Keluar Sesi
+                {t('sidebar.logout_session')}
               </span>
             </button>
           </div>

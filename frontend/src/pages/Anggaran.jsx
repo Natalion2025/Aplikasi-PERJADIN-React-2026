@@ -615,7 +615,7 @@ const Anggaran = () => {
               <button
                 type="button"
                 onClick={() => setModalOpen(false)}
-                className="py-2 w-1/5 border border-slate-300 dark:bg-slate-800 hover:shadow-lg hover:shadow-mauve-700/20 dark:shadow-none hover:scale-101 duration-200 ease-in dark:border-slate-200/10 dark:text-white bg-white hover:bg-mauve-100 dark:hover:bg-slate-200/10 text-mauve-700 font-bold rounded-2xl text-sm transition-all"
+                className="py-2 w-1/5 border border-slate-300 dark:bg-slate-800 hover:shadow-lg hover:shadow-mauve-700/20 dark:shadow-none duration-200 ease-in-out dark:border-slate-200/10 dark:text-white bg-white hover:bg-mauve-100 dark:hover:bg-slate-200/10 text-mauve-700 font-bold rounded-2xl text-sm transition-all"
               >
                 Batal
               </button>
@@ -623,7 +623,7 @@ const Anggaran = () => {
                 type="submit"
                 form="anggaran-form"
                 disabled={submitting}
-                className="py-2 w-1/3 hover:shadow-lg bg-white hover:shadow-mauve-700/20 dark:text-white dark:shadow-none dark:border-0 border hover:scale-101 duration-200 ease-in  border-mauve-700 hover:bg-mauve-100 text-mauve-700  dark:bg-emerald-800 dark:hover:bg-emerald-700  font-bold rounded-2xl text-sm   disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
+                className="py-2 w-1/3 hover:shadow-lg bg-white hover:shadow-mauve-700/20 dark:text-white dark:shadow-none dark:border-0 border  duration-200 ease-in-out  border-mauve-700 hover:bg-mauve-100 text-mauve-700  dark:bg-emerald-800 dark:hover:bg-emerald-700  font-bold rounded-2xl text-sm   disabled:bg-emerald-600/40 transition-all flex items-center justify-center gap-2"
               >
                 {submitting ? (
                   <>
